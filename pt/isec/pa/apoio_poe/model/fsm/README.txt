@@ -1,0 +1,1 @@
+Contém a hierarquia dos estados

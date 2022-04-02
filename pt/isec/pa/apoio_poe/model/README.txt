@@ -1,0 +1,1 @@
+Classe que constitui a fachada de acesso à lógica

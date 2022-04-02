@@ -1,0 +1,1 @@
+Classes que implementam a interface em modo de texto
