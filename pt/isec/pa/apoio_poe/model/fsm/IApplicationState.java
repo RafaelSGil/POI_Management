@@ -6,5 +6,6 @@ public interface IApplicationState
     boolean checkData();
     boolean editData();
     boolean deleteData();
-    
+
+    ApplicationState getState();
 }
