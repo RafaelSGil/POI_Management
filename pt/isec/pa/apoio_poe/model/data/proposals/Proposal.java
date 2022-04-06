@@ -1,4 +1,6 @@
 package pt.isec.pa.apoio_poe.model.data.proposals;
+import java.util.Objects;
+
 import pt.isec.pa.apoio_poe.model.data.person.Student;
 
 abstract public class Proposal {
@@ -13,6 +15,7 @@ abstract public class Proposal {
         this.student = student;
     }
 
+
     public String getIdOfProposal(){return idOfProposal;}
 
     public void setIdOfProposal(String idOfProposal){this.idOfProposal = idOfProposal;}
@@ -22,4 +25,10 @@ abstract public class Proposal {
     public void setTitle(String title){this.title = title;}
 
     public long getStudent(){return student.getId();}
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(idOfProposal);
+    }
+
 }

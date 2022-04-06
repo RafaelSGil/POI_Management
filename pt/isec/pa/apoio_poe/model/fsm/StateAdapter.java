@@ -13,7 +13,7 @@ public class StateAdapter implements IApplicationState{
     }
 
     @Override
-    public boolean InsertData() {
+    public boolean insertData() {
         return false;
     }
 

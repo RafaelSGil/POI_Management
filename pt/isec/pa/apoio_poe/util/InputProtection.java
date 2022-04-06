@@ -27,6 +27,7 @@ public class InputProtection {
         if (onlyOneWord) {
             Scanner auxsc = new Scanner(value);
             value = auxsc.next();  // this can/should be improved
+            auxsc.close();
         }
         return value;
     }

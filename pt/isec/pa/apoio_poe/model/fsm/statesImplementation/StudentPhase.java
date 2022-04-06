@@ -16,4 +16,5 @@ public class StudentPhase extends StateAdapter {
     public ApplicationState getState() {
         return ApplicationState.STUDENT_PHASE;
     }
+    
 }
