@@ -3,8 +3,6 @@ package pt.isec.pa.apoio_poe.model.fsm;
 import pt.isec.pa.apoio_poe.model.application.Application;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 
-import javax.naming.Context;
-
 public class StateAdapter implements IApplicationState{
     protected ApplicationContext context;
     protected Application application;
@@ -32,5 +30,10 @@ public class StateAdapter implements IApplicationState{
     @Override
     public boolean deleteData() {
         return false;
+    }
+
+    @Override
+    public ApplicationState getState() {
+        return null;
     }
 }
