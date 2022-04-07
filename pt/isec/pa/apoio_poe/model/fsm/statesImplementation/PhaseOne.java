@@ -11,6 +11,25 @@ public class PhaseOne extends StateAdapter {
         super(context, application);
     }
 
+    @Override
+    public boolean chooseType(String type) {
+        if(type.equals("Students"))
+        {
+            setState(ApplicationState.STUDENT_PHASE);
+            return true;
+        }
+        else if(type.equals("Professors"))
+        {
+            setState(ApplicationState.PROFESSOR_PHASE);
+            return true;
+        }
+        else if(type.equals("Proposals"))
+        {
+            setState(ApplicationState.PROPOSAL_PHASE);
+            return true;
+        }
+        return false;
+    }
 
     @Override
     public ApplicationState getState() {

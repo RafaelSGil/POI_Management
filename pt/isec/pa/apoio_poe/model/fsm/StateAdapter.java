@@ -36,4 +36,13 @@ public class StateAdapter implements IApplicationState{
     public ApplicationState getState() {
         return null;
     }
+
+    @Override
+    public boolean chooseType(String type) {
+        return false;
+    }
+
+    protected void setState(ApplicationState state){
+        context.setState(state.createState(context, application));
+    }
 }

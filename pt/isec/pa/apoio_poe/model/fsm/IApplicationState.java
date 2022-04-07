@@ -6,6 +6,6 @@ public interface IApplicationState
     boolean checkData();
     boolean editData();
     boolean deleteData();
-
+    boolean chooseType(String type);
     ApplicationState getState();
 }
