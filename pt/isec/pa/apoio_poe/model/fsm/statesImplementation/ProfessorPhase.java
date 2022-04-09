@@ -39,4 +39,16 @@ public class ProfessorPhase extends StateAdapter {
     public boolean deleteData(String identifier) {
         return data.removeProfessorGivenItsEmail(identifier);
     }
+
+    @Override
+    public boolean closeState(ApplicationState state) {
+        setState(ApplicationState.PROFESSOR_LOCKED);
+        return true;
+    }
+
+    @Override
+    public boolean studentManager() {
+        setState(ApplicationState.STUDENT);
+        return true;
+    }
 }
