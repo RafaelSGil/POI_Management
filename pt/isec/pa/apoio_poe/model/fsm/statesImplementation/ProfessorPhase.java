@@ -25,19 +25,7 @@ public class ProfessorPhase extends StateAdapter {
             return false;
 
         List<List<String>> attributes = Files.openFile(file);
-        Iterator<List<String>> attributesIterator = attributes.iterator();
-
-        String name;
-        String email;
-        boolean advisor;
-
-        while (attributesIterator.hasNext()) {
-            name = attributesIterator.next().get(0);
-            email = attributesIterator.next().get(1);
-            advisor = Boolean.parseBoolean(attributesIterator.next().get(2));
-
-            data.addProfessor(name, email, advisor);
-        }
+        data.addProfessorFile(attributes);
 
         return true;
     }

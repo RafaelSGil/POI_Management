@@ -5,9 +5,8 @@ import pt.isec.pa.apoio_poe.model.data.proposals.AutoProposal;
 import pt.isec.pa.apoio_poe.model.data.proposals.Internship;
 import pt.isec.pa.apoio_poe.model.data.proposals.Project;
 import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
-import java.util.Map;
-import java.util.ArrayList;
-import java.util.HashMap;
+
+import java.util.*;
 
 public class Data {
     Map<String, ArrayList<Proposal>> proposals;
@@ -24,94 +23,189 @@ public class Data {
         this.proposals.put("autoproposals", null);
     }
 
-    public boolean addStudent(String name, String email, long id, String course, String courseBranch,
-            double classification, boolean internship) {
+    public void addStudentFile(List<List<String>> attributes){
+        Iterator<List<String>> attributesIterator = attributes.iterator();
+
+        String name;
+        String email;
+        String course;
+        String courseBranch;
+        long id;
+        double classification;
+        boolean internship;
+
+        while (attributesIterator.hasNext()) {
+
+            id = Long.parseLong(attributesIterator.next().get(0));
+            name = attributesIterator.next().get(1);
+            email = attributesIterator.next().get(2);
+            course = attributesIterator.next().get(3);
+            courseBranch = attributesIterator.next().get(4);
+            classification = Double.parseDouble(attributesIterator.next().get(5));
+            internship = Boolean.parseBoolean(attributesIterator.next().get(6));
+
+            addStudent(name, email, id, course, courseBranch, classification, internship);
+        }
+    }
+
+    public void addStudent(String name, String email, long id, String course, String courseBranch,
+                           double classification, boolean internship) {
 
         if (name == null || email == null || course == null || courseBranch == null)
-            return false;
+            return;
 
         if (persons.get("students").contains(Student.createDummyStudent(id)))
-            return false;
+            return;
 
-        return persons.get("students")
+        persons.get("students")
                 .add((Student.createStudent(name, email, id, course, courseBranch, classification, internship)));
     }
 
-    public boolean addProfessor(String name, String email, boolean advisor) {
+    public void addProfessorFile(List<List<String>> attributes){
+        Iterator<List<String>> attributesIterator = attributes.iterator();
 
-        if (name == null || email == null)
-            return false;
+        String name;
+        String email;
+        boolean advisor;
 
-        if (persons.get("professors").contains(Professor.createDummyProfessor(email)))
-            return false;
+        while (attributesIterator.hasNext()) {
+            name = attributesIterator.next().get(0);
+            email = attributesIterator.next().get(1);
+            advisor = Boolean.parseBoolean(attributesIterator.next().get(2));
 
-        return persons.get("professors").add(Professor.createProfessor(name, email, advisor));
+            addProfessor(name, email, advisor);
+        }
     }
 
-    public boolean addInternship(String idOfProposal, String title, Student student, String branch,
-            String nameOfCompany) {
+    public void addProfessor(String name, String email, boolean advisor) {
+
+        if (name == null || email == null)
+            return;
+
+        if (persons.get("professors").contains(Professor.createDummyProfessor(email)))
+            return;
+
+        persons.get("professors").add(Professor.createProfessor(name, email, advisor));
+    }
+
+    public void addProposalFile(List<List<String>> attributes){
+        Iterator<List<String>> attributesIterator = attributes.iterator();
+
+        String idOfProposal;
+        String title;
+        Student student;
+        String branch;
+        Professor professor;
+        String nameOfCompany;
+        String first;
+
+        while (attributesIterator.hasNext()) {
+            first = attributesIterator.next().get(0);
+
+            if (first.equals("T1")) { // Internship
+                idOfProposal = attributesIterator.next().get(1);
+                branch = attributesIterator.next().get(2);
+                title = attributesIterator.next().get(3);
+                nameOfCompany = attributesIterator.next().get(4);
+
+                if (attributesIterator.next().size() > 5) {
+                    student = (Student) Student.createDummyStudent(Long.parseLong(attributesIterator.next().get(5)));
+
+                    addInternship(idOfProposal, title, student, branch, nameOfCompany);
+                } else {
+                    addInternshipWithoutStudent(idOfProposal, title, branch, nameOfCompany);
+                }
+            }
+
+            else if (first.equals("T2")) { // Project
+                idOfProposal = attributesIterator.next().get(1);
+                branch = attributesIterator.next().get(2);
+                title = attributesIterator.next().get(3);
+                professor = (Professor) Professor.createDummyProfessor(attributesIterator.next().get(4));
+
+                if (attributesIterator.next().size() > 5) {
+                    student = (Student) Student.createDummyStudent(Long.parseLong(attributesIterator.next().get(5)));
+
+                    addProject(idOfProposal, title, student, branch, professor);
+                } else {
+                    addProjectWithoutStudent(idOfProposal, title, branch, professor);
+                }
+            }
+
+            else if (first.equals("T3")) { // Auto proposal
+                idOfProposal = attributesIterator.next().get(1);
+                title = attributesIterator.next().get(2);
+                student = (Student) Student.createDummyStudent(Long.parseLong(attributesIterator.next().get(3)));
+
+                addAutoProposal(idOfProposal, title, student);
+            }
+        }
+    }
+
+    public void addInternship(String idOfProposal, String title, Student student, String branch,
+                              String nameOfCompany) {
         if (idOfProposal == null || title == null || nameOfCompany == null)
-            return false;
+            return;
 
         if (proposals.get("internships").contains(Internship.createDummyInternship(idOfProposal)))
-            return false;
+            return;
 
         if (!(persons.get("students").contains(Student.createDummyStudent(student.getId()))))
-            return false;
+            return;
 
-        return proposals.get("internships")
+        proposals.get("internships")
                 .add(Internship.createInternship(idOfProposal, title, student, branch, nameOfCompany));
     }
 
-    public boolean addInternshipWithoutStudent(String idOfProposal, String title, String branch, String nameOfCompany) {
+    public void addInternshipWithoutStudent(String idOfProposal, String title, String branch, String nameOfCompany) {
         if (idOfProposal == null || title == null || nameOfCompany == null)
-            return false;
+            return;
 
         if (proposals.get("internships").contains(Internship.createDummyInternship(idOfProposal)))
-            return false;
+            return;
 
-        return proposals.get("internships")
+        proposals.get("internships")
                 .add(Internship.createInternship(idOfProposal, title, null, branch, nameOfCompany));
     }
 
-    public boolean addProject(String idOfProposal, String title, Student student, String branch, Professor professor) {
+    public void addProject(String idOfProposal, String title, Student student, String branch, Professor professor) {
         if (idOfProposal == null || title == null || branch == null)
-            return false;
+            return;
 
         if (!(persons.get("professors").contains(Professor.createDummyProfessor(professor.getEmail()))))
-            return false;
+            return;
 
         if (!(persons.get("students").contains(Student.createDummyStudent(student.getId()))))
-            return false;
+            return;
 
         if (proposals.get("projects").contains(Project.createDummyProject(idOfProposal)))
-            return false;
+            return;
 
-        return proposals.get("projects").add(Project.createProject(idOfProposal, title, student, branch, professor));
+        proposals.get("projects").add(Project.createProject(idOfProposal, title, student, branch, professor));
     }
 
-    public boolean addProjectWithoutStudent(String idOfProposal, String title, String branch, Professor professor) {
+    public void addProjectWithoutStudent(String idOfProposal, String title, String branch, Professor professor) {
         if (idOfProposal == null || title == null || branch == null)
-            return false;
+            return;
 
         if (proposals.get("projects").contains(Internship.createDummyInternship(idOfProposal)))
-            return false;
+            return;
 
-        return proposals.get("projects")
+        proposals.get("projects")
                 .add(Project.createProject(idOfProposal, title, null, branch, professor));
     }
 
-    public boolean addAutoProposal(String idOfProposal, String title, Student student) {
+    public void addAutoProposal(String idOfProposal, String title, Student student) {
         if (idOfProposal == null || title == null)
-            return false;
+            return;
 
         if (!(persons.get("students").contains(Student.createDummyStudent(student.getId()))))
-            return false;
+            return;
 
         if (proposals.get("autoproposals").contains(AutoProposal.createDummyAutoProposal(idOfProposal)))
-            return false;
+            return;
 
-        return proposals.get("autoproposals").add(AutoProposal.createAutoProposal(idOfProposal, title, student));
+        proposals.get("autoproposals").add(AutoProposal.createAutoProposal(idOfProposal, title, student));
     }
 
     public String getStudentGivenItsID(long idOfStudent) {

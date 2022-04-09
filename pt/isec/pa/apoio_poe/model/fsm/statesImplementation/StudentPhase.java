@@ -22,28 +22,8 @@ public class StudentPhase extends StateAdapter {
             return false;
 
         List<List<String>> attributes = Files.openFile(file);
-        Iterator<List<String>> attributesIterator = attributes.iterator();
+        data.addStudentFile(attributes);
 
-        String name;
-        String email;
-        String course;
-        String courseBranch;
-        long id;
-        double classification;
-        boolean internship;
-
-        while (attributesIterator.hasNext()) {
-
-            id = Long.parseLong(attributesIterator.next().get(0));
-            name = attributesIterator.next().get(1);
-            email = attributesIterator.next().get(2);
-            course = attributesIterator.next().get(3);
-            courseBranch = attributesIterator.next().get(4);
-            classification = Double.parseDouble(attributesIterator.next().get(5));
-            internship = Boolean.parseBoolean(attributesIterator.next().get(6));
-
-            data.addStudent(name, email, id, course, courseBranch, classification, internship);
-        }
         return true;
     }
 

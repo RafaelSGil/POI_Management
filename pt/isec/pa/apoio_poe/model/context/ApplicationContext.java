@@ -30,7 +30,7 @@ public class ApplicationContext {
         return state.insertData(file);
     }
 
-    public boolean checkData() {
+    public String checkData() {
         return state.checkData();
     }
 
