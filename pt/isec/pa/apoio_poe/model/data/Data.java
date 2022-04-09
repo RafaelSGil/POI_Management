@@ -27,6 +27,7 @@ public class Data {
 
     public void addStudentFile(List<List<String>> attributes) {
         Iterator<List<String>> attributesIterator = attributes.iterator();
+        Iterator listsOfListsIterator = attributes.iterator();
 
         String name;
         String email;
@@ -36,18 +37,48 @@ public class Data {
         double classification;
         boolean internship;
 
-        while (attributesIterator.hasNext()) {
+        while (listsOfListsIterator.hasNext()) {
+            List<String> list = new ArrayList<String>();
+            list = (List<String>) listsOfListsIterator.next();
 
-            id = Long.parseLong(attributesIterator.next().get(0));
-            name = attributesIterator.next().get(1);
-            email = attributesIterator.next().get(2);
-            course = attributesIterator.next().get(3);
-            courseBranch = attributesIterator.next().get(4);
-            classification = Double.parseDouble(attributesIterator.next().get(5));
-            internship = Boolean.parseBoolean(attributesIterator.next().get(6));
+            Iterator eachListIterator = list.iterator();
 
-            addStudent(name, email, id, course, courseBranch, classification, internship);
+            while (eachListIterator.hasNext()) {
+                id = Long.parseLong((String) eachListIterator.next());
+                System.out.print("\n[DEBUG] " + id);
+                name = (String) eachListIterator.next();
+                System.out.print("\n[DEBUG] " + name);
+                email = (String) eachListIterator.next();
+                System.out.print("\n[DEBUG] " + email);
+                course = (String) eachListIterator.next();
+                System.out.print("\n[DEBUG] " + course);
+                courseBranch = (String) eachListIterator.next();
+                System.out.print("\n[DEBUG] " + courseBranch);
+                classification = Double.parseDouble((String) eachListIterator.next());
+                System.out.print("\n[DEBUG] " + classification);
+                internship = Boolean.parseBoolean((String) eachListIterator.next());
+                System.out.print("\n[DEBUG] " + internship);
+
+                addStudent(name, email, id, course, courseBranch, classification, internship);
+
+            }
         }
+
+        /*
+         * while (attributesIterator.hasNext()) {
+         * 
+         * id = Long.parseLong(attributesIterator.next().get(0));
+         * name = attributesIterator.next().get(1);
+         * email = attributesIterator.next().get(2);
+         * course = attributesIterator.next().get(3);
+         * courseBranch = attributesIterator.next().get(4);
+         * classification = Double.parseDouble(attributesIterator.next().get(5));
+         * internship = Boolean.parseBoolean(attributesIterator.next().get(6));
+         * 
+         * addStudent(name, email, id, course, courseBranch, classification,
+         * internship);
+         * }
+         */
     }
 
     public void addStudent(String name, String email, long id, String course, String courseBranch,
