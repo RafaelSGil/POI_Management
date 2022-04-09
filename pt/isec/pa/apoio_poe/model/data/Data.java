@@ -26,7 +26,7 @@ public class Data {
     }
 
     public void addStudentFile(List<List<String>> attributes) {
-        Iterator<List<String>> attributesIterator = attributes.iterator();
+
         Iterator listsOfListsIterator = attributes.iterator();
 
         String name;
@@ -45,40 +45,17 @@ public class Data {
 
             while (eachListIterator.hasNext()) {
                 id = Long.parseLong((String) eachListIterator.next());
-                System.out.print("\n[DEBUG] " + id);
                 name = (String) eachListIterator.next();
-                System.out.print("\n[DEBUG] " + name);
                 email = (String) eachListIterator.next();
-                System.out.print("\n[DEBUG] " + email);
                 course = (String) eachListIterator.next();
-                System.out.print("\n[DEBUG] " + course);
                 courseBranch = (String) eachListIterator.next();
-                System.out.print("\n[DEBUG] " + courseBranch);
                 classification = Double.parseDouble((String) eachListIterator.next());
-                System.out.print("\n[DEBUG] " + classification);
                 internship = Boolean.parseBoolean((String) eachListIterator.next());
-                System.out.print("\n[DEBUG] " + internship);
 
                 addStudent(name, email, id, course, courseBranch, classification, internship);
 
             }
         }
-
-        /*
-         * while (attributesIterator.hasNext()) {
-         * 
-         * id = Long.parseLong(attributesIterator.next().get(0));
-         * name = attributesIterator.next().get(1);
-         * email = attributesIterator.next().get(2);
-         * course = attributesIterator.next().get(3);
-         * courseBranch = attributesIterator.next().get(4);
-         * classification = Double.parseDouble(attributesIterator.next().get(5));
-         * internship = Boolean.parseBoolean(attributesIterator.next().get(6));
-         * 
-         * addStudent(name, email, id, course, courseBranch, classification,
-         * internship);
-         * }
-         */
     }
 
     public void addStudent(String name, String email, long id, String course, String courseBranch,
@@ -94,18 +71,25 @@ public class Data {
     }
 
     public void addProfessorFile(List<List<String>> attributes) {
-        Iterator<List<String>> attributesIterator = attributes.iterator();
+        Iterator listsOfListsIterator = attributes.iterator();
 
         String name;
         String email;
         boolean advisor;
 
-        while (attributesIterator.hasNext()) {
-            name = attributesIterator.next().get(0);
-            email = attributesIterator.next().get(1);
-            advisor = Boolean.parseBoolean(attributesIterator.next().get(2));
+        while (listsOfListsIterator.hasNext()) {
+            List<String> list = new ArrayList<String>();
+            list = (List<String>) listsOfListsIterator.next();
 
-            addProfessor(name, email, advisor);
+            Iterator eachListIterator = list.iterator();
+
+            while (eachListIterator.hasNext()) {
+                name = (String) eachListIterator.next();
+                email = (String) eachListIterator.next();
+                advisor = Boolean.parseBoolean((String) eachListIterator.next());
+
+                addProfessor(name, email, advisor);
+            }
         }
     }
 
@@ -271,6 +255,7 @@ public class Data {
         if (email == null) {
             return false;
         }
+        System.out.println("\n\n[DEBUG] Here!");
 
         return professors.remove(Professor.createDummyProfessor(email));
     }

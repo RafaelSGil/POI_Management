@@ -1,0 +1,5 @@
+Álvaro Santos,ans@isec.pt, true
+João Durães,jduraes@isec.pt, true
+José Marinho,fafe@isec.pt, false
+Ricardo Silva,rmc.silva@isec.pt, true
+Sarah Cunha,sarah.cunha@isec.pt, true

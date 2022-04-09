@@ -83,6 +83,6 @@ public class Student extends Person {
     public String toString() {
         return String.format(
                 "%s with number = %d and email = %s, from the course %s and branch %s, has a classification of %f and internship habilitation = %b",
-                super.getName(), id, super.getEmail(), classification, internship);
+                super.getName(), id, super.getEmail(), course, courseBranch, classification, internship);
     }
 }
