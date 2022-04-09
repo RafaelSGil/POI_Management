@@ -18,21 +18,22 @@ public class StateAdapter implements IApplicationState {
         startMap();
     }
 
-    private void startMap(){
-        // initializes the map with all enum states and gives them the value false, which means the state has not yet been locked
+    private void startMap() {
+        // initializes the map with all enum states and gives them the value false,
+        // which means the state has not yet been locked
 
-        for(ApplicationState state : ApplicationState.values()){
+        for (ApplicationState state : ApplicationState.values()) {
             lockedPhases.put(state, false);
         }
     }
 
-    protected boolean isLocked(ApplicationState state){
+    protected boolean isLocked(ApplicationState state) {
         // checks if given state is already locked
 
         return lockedPhases.get(state);
     }
 
-    protected void lockPhase(ApplicationState state){
+    protected void lockPhase(ApplicationState state) {
         // locks the given state by attributing it a true value
 
         lockedPhases.put(state, true);
@@ -53,11 +54,6 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean editData() {
-        return false;
-    }
-
-    @Override
     public boolean deleteData(String identifier) {
         return false;
     }
@@ -73,7 +69,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean closeState(ApplicationState state) {
+    public boolean closeState() {
         return false;
     }
 
@@ -204,6 +200,11 @@ public class StateAdapter implements IApplicationState {
 
     @Override
     public boolean listStudentsWihoutProposalsWithCandidature() {
+        return false;
+    }
+
+    @Override
+    public boolean editData(String identifier) {
         return false;
     }
 }

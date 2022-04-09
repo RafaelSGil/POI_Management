@@ -18,7 +18,7 @@ public class Professor extends Person {
         this.advisor = advisor;
     }
 
-    public static Person createProfessor(String name, String email, boolean advisor) {
+    public static Professor createProfessor(String name, String email, boolean advisor) {
         return new Professor(name, email, advisor);
     }
 

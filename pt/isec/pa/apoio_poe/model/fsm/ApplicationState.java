@@ -38,6 +38,7 @@ public enum ApplicationState {
             case PROPOSAL_ATTRIBUTION_LOCKED -> new ProposalAttributionPhaseLocked(context, data);
             case PROFESSOR_ATTRIBUTION -> new ProfessorAttribuitionPhase(context, data);
             case SEARCH -> new SearchPhase(context, data);
+            default -> null;
         };
     }
 }

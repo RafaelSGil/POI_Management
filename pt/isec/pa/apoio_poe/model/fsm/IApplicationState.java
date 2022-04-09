@@ -5,13 +5,13 @@ public interface IApplicationState {
 
     String checkData();
 
-    boolean editData();
+    boolean editData(String identifier);
 
     boolean deleteData(String identifier);
 
     boolean chooseType(String type);
 
-    boolean closeState(ApplicationState state);
+    boolean closeState();
 
     boolean studentManager();
 

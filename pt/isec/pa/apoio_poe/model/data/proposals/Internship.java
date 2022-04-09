@@ -1,16 +1,20 @@
 package pt.isec.pa.apoio_poe.model.data.proposals;
 
+import java.util.List;
+
 import pt.isec.pa.apoio_poe.model.data.person.Student;
 
 public class Internship extends MidProposal {
     private String nameOfCompany;
 
-    public Internship(String idOfProposal, String title, Student student, String branch, String nameOfCompany) {
+    public Internship(String idOfProposal, String title, Student student, List<String> branch,
+            String nameOfCompany) {
         super(idOfProposal, title, student, branch);
         this.nameOfCompany = nameOfCompany;
     }
 
-    public static Internship createInternship(String idOfProposal, String title, Student student, String branch,
+    public static Internship createInternship(String idOfProposal, String title, Student student,
+            List<String> branch,
             String nameOfCompany) {
         return new Internship(idOfProposal, title, student, branch, nameOfCompany);
     }

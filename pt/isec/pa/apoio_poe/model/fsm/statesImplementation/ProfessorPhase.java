@@ -6,7 +6,6 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.csv_files.Files;
 import java.util.List;
-import java.util.Iterator;
 
 public class ProfessorPhase extends StateAdapter {
 
@@ -41,14 +40,26 @@ public class ProfessorPhase extends StateAdapter {
     }
 
     @Override
-    public boolean closeState(ApplicationState state) {
-        setState(ApplicationState.PROFESSOR_LOCKED);
+    public boolean studentManager() {
+        setState(ApplicationState.STUDENT);
         return true;
     }
 
     @Override
-    public boolean studentManager() {
-        setState(ApplicationState.STUDENT);
+    public boolean proposalManager() {
+        setState(ApplicationState.PROPOSAL);
+        return true;
+    }
+
+    @Override
+    public boolean closeState() {
+        if (data.lockPhase1()) {
+            setState(ApplicationState.PROFESSOR_LOCKED);
+            lockPhase(ApplicationState.STUDENT);
+            lockPhase(ApplicationState.PROFESSOR);
+            lockPhase(ApplicationState.PROPOSAL);
+        }
+
         return true;
     }
 }

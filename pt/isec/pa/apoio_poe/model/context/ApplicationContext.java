@@ -34,12 +34,28 @@ public class ApplicationContext {
         return state.checkData();
     }
 
-    public boolean editData() {
-        return state.editData();
+    public boolean editData(String identifier) {
+        return state.editData(identifier);
     }
 
     public boolean deleteData(String identifier) {
         return state.deleteData(identifier);
+    }
+
+    public boolean closeState() {
+        return state.closeState();
+    }
+
+    public boolean professorManager() {
+        return state.professorManager();
+    }
+
+    public boolean proposalManager() {
+        return state.proposalManager();
+    }
+
+    public boolean studentManager() {
+        return state.studentManager();
     }
 
     @Override

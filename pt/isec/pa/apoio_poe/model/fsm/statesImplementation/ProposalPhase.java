@@ -5,9 +5,7 @@ import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import java.util.List;
-import java.util.Iterator;
 import pt.isec.pa.apoio_poe.csv_files.Files;
-import pt.isec.pa.apoio_poe.model.data.person.*;
 
 public class ProposalPhase extends StateAdapter {
 
@@ -22,6 +20,8 @@ public class ProposalPhase extends StateAdapter {
 
         List<List<String>> attributes = Files.openFile(file);
 
+        data.addProposalFile(attributes);
+
         return true;
     }
 
@@ -34,4 +34,29 @@ public class ProposalPhase extends StateAdapter {
     public ApplicationState getState() {
         return ApplicationState.PROPOSAL;
     }
+
+    @Override
+    public boolean professorManager() {
+        setState(ApplicationState.PROFESSOR);
+        return true;
+    }
+
+    @Override
+    public boolean studentManager() {
+        setState(ApplicationState.STUDENT);
+        return true;
+    }
+
+    @Override
+    public boolean closeState() {
+        if (data.lockPhase1()) {
+            setState(ApplicationState.PROPOSAL_LOCKED);
+            lockPhase(ApplicationState.STUDENT);
+            lockPhase(ApplicationState.PROFESSOR);
+            lockPhase(ApplicationState.PROPOSAL);
+        }
+
+        return true;
+    }
+
 }
