@@ -1,13 +1,13 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
 public interface IApplicationState {
-    boolean insertData();
+    boolean insertData(String file);
 
-    boolean checkData();
+    String checkData();
 
     boolean editData();
 
-    boolean deleteData();
+    boolean deleteData(String identifier);
 
     boolean chooseType(String type);
 
@@ -30,6 +30,40 @@ public interface IApplicationState {
     boolean listAutoProposalWithouCandidatures();
 
     boolean listAutoProposalWithCandidatures();
+
+    boolean proposalAttributionManager();
+
+    boolean associateAttribution();
+
+    boolean nonAssociateAttribution();
+
+    boolean manualAttribution();
+
+    boolean listStudents();
+
+    boolean listProposals();
+
+    boolean professorAttributionManager();
+
+    boolean listStudentsWithProposalWihoutProfessor();
+
+    boolean listStudentsWithProposalAndProfessor();
+
+    boolean averageProfessorAtribuitions();
+
+    boolean minimumProfessorAtribuitions();
+
+    boolean maximumProfessorAtribuitions();
+
+    boolean specificProfessorAtribuitions();
+
+    boolean listProposalsWithAtribuitions();
+
+    boolean listProposalsWihoutAtribuitions();
+
+    boolean listStudentsWithProposals();
+
+    boolean listStudentsWihoutProposalsWithCandidature();
 
     ApplicationState getState();
 }
