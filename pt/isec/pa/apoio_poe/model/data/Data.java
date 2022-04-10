@@ -105,7 +105,7 @@ public class Data {
     }
 
     public void addProposalFile(List<List<String>> attributes) {
-        Iterator<List<String>> attributesIterator = attributes.iterator();
+        Iterator<List<String>> listOfListsIterator = attributes.iterator();
 
         String idOfProposal;
         String title;
@@ -115,17 +115,20 @@ public class Data {
         String nameOfCompany;
         String first;
 
-        while (attributesIterator.hasNext()) {
-            first = attributesIterator.next().get(0);
+        while (listOfListsIterator.hasNext()) {
+            List<String> list = new ArrayList<String>();
+            list = (List<String>) listOfListsIterator.next();
 
-            if (first.equals("T1")) { // Internship
-                idOfProposal = attributesIterator.next().get(1);
-                branch = List.of(attributesIterator.next().get(2).split("[|]+"));
-                title = attributesIterator.next().get(3);
-                nameOfCompany = attributesIterator.next().get(4);
+            Iterator eachListIterator = list.iterator();
 
-                if (attributesIterator.next().size() > 5) {
-                    student = (Student) Student.createDummyStudent(Long.parseLong(attributesIterator.next().get(5)));
+            if (list.get(0).equals("T1")) { // Internship
+                idOfProposal = (String) eachListIterator.next();
+                branch = List.of(((String) eachListIterator.next()).split("[|]+"));
+                title = (String) eachListIterator.next();
+                nameOfCompany = (String) eachListIterator.next();
+
+                if (list.size() > 5) {
+                    student = (Student) Student.createDummyStudent(Long.parseLong((String) eachListIterator.next()));
 
                     addInternship(idOfProposal, title, student, branch, nameOfCompany);
                 } else {
@@ -133,14 +136,14 @@ public class Data {
                 }
             }
 
-            else if (first.equals("T2")) { // Project
-                idOfProposal = attributesIterator.next().get(1);
-                branch = List.of(attributesIterator.next().get(2).split("[|]+"));
-                title = attributesIterator.next().get(3);
-                professor = (Professor) Professor.createDummyProfessor(attributesIterator.next().get(4));
+            else if (list.get(0).equals("T2")) { // Project
+                idOfProposal = (String) eachListIterator.next();
+                branch = List.of(((String) eachListIterator.next()).split("[|]+"));
+                title = (String) eachListIterator.next();
+                professor = (Professor) Professor.createDummyProfessor((String) eachListIterator.next());
 
-                if (attributesIterator.next().size() > 5) {
-                    student = (Student) Student.createDummyStudent(Long.parseLong(attributesIterator.next().get(5)));
+                if (list.size() > 5) {
+                    student = (Student) Student.createDummyStudent(Long.parseLong((String) eachListIterator.next()));
 
                     addProject(idOfProposal, title, student, branch, professor);
                 } else {
@@ -148,10 +151,10 @@ public class Data {
                 }
             }
 
-            else if (first.equals("T3")) { // Auto proposal
-                idOfProposal = attributesIterator.next().get(1);
-                title = attributesIterator.next().get(2);
-                student = (Student) Student.createDummyStudent(Long.parseLong(attributesIterator.next().get(3)));
+            else if (list.get(0).equals("T3")) { // Auto proposal
+                idOfProposal = (String) eachListIterator.next();
+                title = (String) eachListIterator.next();
+                student = (Student) Student.createDummyStudent(Long.parseLong((String) eachListIterator.next()));
 
                 addAutoProposal(idOfProposal, title, student);
             }
@@ -181,8 +184,9 @@ public class Data {
         if (midProposals.get("internships").contains(Internship.createDummyInternship(idOfProposal)))
             return;
 
-        midProposals.get("internships")
-                .add(Internship.createInternship(idOfProposal, title, null, branch, nameOfCompany));
+        midProposals.get("internships").add(Internship.createInternship(idOfProposal, title, null, branch,
+                nameOfCompany));
+
     }
 
     public void addProject(String idOfProposal, String title, Student student, List<String> branch,
@@ -255,8 +259,6 @@ public class Data {
         if (email == null) {
             return false;
         }
-        System.out.println("\n\n[DEBUG] Here!");
-
         return professors.remove(Professor.createDummyProfessor(email));
     }
 
@@ -316,6 +318,31 @@ public class Data {
 
         for (Professor professor : professors) {
             sb.append(professor.toString()).append("\n");
+        }
+        return sb.toString();
+    }
+
+    public String getAllProjects() {
+        StringBuilder sb = new StringBuilder();
+
+        if (autoproposals.size() == 0 && midProposals.size() == 0) {
+            sb.append("No projects registered");
+            return sb.toString();
+        }
+
+        sb.append(("AutoProposals: \n"));
+        for (Proposal auto : autoproposals.get("autoproposals")) {
+            sb.append(auto.toString()).append("\n");
+        }
+
+        sb.append("Projects: \n");
+        for (MidProposal mid : midProposals.get("projects")) {
+            sb.append(mid.toString()).append("\n");
+        }
+
+        sb.append("InternShips: \n");
+        for (MidProposal mid : midProposals.get("internships")) {
+            sb.append(mid.toString()).append("\n");
         }
         return sb.toString();
     }

@@ -131,8 +131,8 @@ public class CommandLineUI {
     public boolean proposalPhase() {
         System.out.println("Current state: " + context.getState());
 
-        int input = InputProtection.chooseOption(null, "Insert professor data", "Delete professor data",
-                "Edit professor data", "Consult professor data", "Student Management", "Professor Management",
+        int input = InputProtection.chooseOption(null, "Insert project data", "Delete project data",
+                "Edit project data", "Consult project data", "Student Management", "Professor Management",
                 "Close state");
 
         switch (input) {

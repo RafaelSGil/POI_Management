@@ -48,6 +48,11 @@ public class ProposalPhase extends StateAdapter {
     }
 
     @Override
+    public String checkData() {
+        return data.getAllProjects();
+    }
+
+    @Override
     public boolean closeState() {
         if (data.lockPhase1()) {
             setState(ApplicationState.PROPOSAL_LOCKED);
