@@ -31,4 +31,14 @@ public class ProfessorPhaseLocked extends StateAdapter {
     public String checkData() {
         return data.getAllProfessors();
     }
+
+    @Override
+    public boolean candidatureManager() {
+        if(isLocked(ApplicationState.CANDIDATURE)){
+            setState(ApplicationState.CANDIDATURE_LOCKED);
+            return true;
+        }
+        setState(ApplicationState.CANDIDATURE);
+        return true;
+    }
 }

@@ -58,6 +58,10 @@ public class ApplicationContext {
         return state.studentManager();
     }
 
+    public boolean candidatureManager(){
+        return state.candidatureManager();
+    }
+
     @Override
     public String toString() {
         return data + ", phase = " + state + "\n";

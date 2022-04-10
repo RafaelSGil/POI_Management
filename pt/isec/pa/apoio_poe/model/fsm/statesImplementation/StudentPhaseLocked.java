@@ -32,4 +32,14 @@ public class StudentPhaseLocked extends StateAdapter {
         setState(ApplicationState.PROPOSAL_LOCKED);
         return true;
     }
+    @Override
+    public boolean candidatureManager() {
+        if(isLocked(ApplicationState.CANDIDATURE)){
+            setState(ApplicationState.CANDIDATURE_LOCKED);
+            return true;
+        }
+        setState(ApplicationState.CANDIDATURE);
+        return true;
+    }
+
 }

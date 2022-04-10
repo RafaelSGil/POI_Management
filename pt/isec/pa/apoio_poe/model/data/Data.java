@@ -113,7 +113,6 @@ public class Data {
         List<String> branch;
         Professor professor;
         String nameOfCompany;
-        String first;
 
         while (listOfListsIterator.hasNext()) {
             List<String> list = new ArrayList<String>();
@@ -268,10 +267,7 @@ public class Data {
         if(removeProjectsGiveItsID(idOfProposal))
             return true;
 
-        if(removeAutoProposalGiveItsID(idOfProposal))
-            return true;
-
-        return false;
+        return removeAutoProposalGiveItsID(idOfProposal);
     }
 
     public boolean removeInternshipsGivenItsID(String idOfProposal) {
@@ -401,4 +397,113 @@ public class Data {
                 && (counterSiStudents <= counterSiProposals);
     }
 
+    public Proposal checkAssociationProposals(String identifier){
+        //checks if a given proposal is already associated with a student
+
+        if(internships.contains(Internship.createDummyInternship(identifier))){
+            for(MidProposal internship : internships){
+                if(internship.getIdOfProposal().equals(identifier)){
+                    if(internship.getStudent() == -1){
+                        return internship;
+                    }
+                }
+            }
+        }
+        if(projects.contains(Project.createDummyProject(identifier))){
+            for(MidProposal project : projects){
+                if(project.getIdOfProposal().equals(identifier)){
+                    if(project.getStudent() == -1){
+                        return project;
+                    }
+                }
+            }
+        }
+        if(autoproposals.contains(AutoProposal.createDummyAutoProposal(identifier))){
+            for(Proposal autoproposal : autoproposals){
+                if(autoproposal.getIdOfProposal().equals(identifier)){
+                    if(autoproposal.getStudent() == -1){
+                        return autoproposal;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public void addCandidature(long idStudent, List<String> proposals){
+        if(students.contains(Student.createDummyStudent(idStudent)))
+            return;
+
+        String proposalID;
+        Proposal proposal;
+
+        Iterator list = proposals.iterator();
+
+        while(list.hasNext()){
+            proposalID = (String) list.next();
+
+            if((proposal = checkAssociationProposals(proposalID)) != null){
+                for(Person student : students){
+                    if(((Student)student).getId() == idStudent){
+                       proposal.setStudent((Student)student);
+                    }
+                }
+            }
+        }
+
+    }
+
+    public void addCandidatureFile(List<List<String>> attributes){
+        Iterator listsOfListsIterator = attributes.iterator();
+
+        long id;
+        List<String> proposals;
+
+        while (listsOfListsIterator.hasNext()) {
+            List<String> list;
+            list = (List<String>) listsOfListsIterator.next();
+
+            Iterator eachListIterator = list.iterator();
+
+            while (eachListIterator.hasNext()) {
+                id = Long.parseLong((String) eachListIterator.next());
+                proposals = List.of((String) eachListIterator.next());
+
+                addCandidature(id, proposals);
+            }
+        }
+
+    }
+
+    public String getCandidatures(){
+        StringBuilder sb = new StringBuilder();
+
+        if (autoproposals.size() == 0 && internships.size() == 0 && projects.size() == 0) {
+            sb.append("No projects registered");
+            return sb.toString();
+        }
+
+        sb.append(("AutoProposals: \n"));
+        for (Proposal auto : autoproposals) {
+            if(auto.getStudent() != -1){
+                sb.append(auto).append("\n");
+            }
+        }
+
+        sb.append("Projects: \n");
+        for (MidProposal mid : projects) {
+            if(mid.getStudent() != -1){
+                sb.append(mid).append("\n");
+            }
+        }
+
+        sb.append("InternShips: \n");
+        for (MidProposal mid : internships) {
+            if(mid.getStudent() != -1){
+                sb.append(mid.toString()).append("\n");
+            }
+        }
+        return sb.toString();
+    }
 }

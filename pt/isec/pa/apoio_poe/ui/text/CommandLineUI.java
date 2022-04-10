@@ -16,7 +16,7 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert student data", "Delete student data",
-                "Edit student data", "Consult student data", "Professor Management", "Proposal Management",
+                "Edit student data", "Consult student data", "Professor Management", "Proposal Management", "Candidature Management",
                 "Close state");
 
         switch (input) {
@@ -26,7 +26,8 @@ public class CommandLineUI {
             case 4 -> consultData();
             case 5 -> professorManagement();
             case 6 -> proposalManagement();
-            case 7 -> closePhase();
+            case 7 -> candidatureManagement();
+            case 8 -> closePhase();
         }
 
         return true;
@@ -67,12 +68,13 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Consult student data", "Professor Management",
-                "Proposal Management");
+                "Proposal Management", "Candidature Management");
 
         switch (input) {
             case 1 -> consultData();
             case 2 -> professorManagement();
             case 3 -> proposalManagement();
+            case 4 -> candidatureManagement();
         }
 
         return true;
@@ -82,8 +84,7 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert professor data", "Delete professor data",
-                "Edit professor data", "Consult professor data", "Student Management", "Proposal Management",
-                "Close state");
+                "Edit professor data", "Consult professor data", "Student Management", "Proposal Management", "Candidature Management", "Close state");
 
         switch (input) {
             case 1 -> insertData();
@@ -92,7 +93,8 @@ public class CommandLineUI {
             case 4 -> consultData();
             case 5 -> studentManagement();
             case 6 -> proposalManagement();
-            case 7 -> closePhase();
+            case 7 -> candidatureManagement();
+            case 8 -> closePhase();
         }
 
         return true;
@@ -117,12 +119,13 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Consult professor data", "Student Management",
-                "Proposal Management");
+                "Proposal Management", "Candidature Management");
 
         switch (input) {
             case 1 -> consultData();
             case 2 -> studentManagement();
             case 3 -> proposalManagement();
+            case 4 -> candidatureManagement();
         }
 
         return true;
@@ -132,8 +135,7 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert project data", "Delete project data",
-                "Edit project data", "Consult project data", "Student Management", "Professor Management",
-                "Close state");
+                "Edit project data", "Consult project data", "Student Management", "Professor Management", "Candidature Management", "Close state");
 
         switch (input) {
             case 1 -> insertData();
@@ -142,7 +144,8 @@ public class CommandLineUI {
             case 4 -> consultData();
             case 5 -> studentManagement();
             case 6 -> professorManagement();
-            case 7 -> closePhase();
+            case 7 -> candidatureManagement();
+            case 8 -> closePhase();
         }
 
         return true;
@@ -162,15 +165,51 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Consult proposal data", "Student Management",
-                "Professor Management");
+                "Professor Management", "Candidature Management");
 
         switch (input) {
             case 1 -> consultData();
             case 2 -> studentManagement();
             case 3 -> professorManagement();
+            case 4 -> candidatureManagement();
         }
 
         return true;
+    }
+
+    public boolean candidaturePhase(){
+        System.out.println("Current state: " + context.getState());
+
+        int input = InputProtection.chooseOption(null, "Insert candidature data", "Delete candidature data",
+                "Edit candidature data", "Consult candidature data", "Close state", "Go to previous state");
+
+        switch (input) {
+            case 1 -> insertData();
+            case 2 -> deleteProposalData();
+            case 3 -> editProposalData();
+            case 4 -> consultData();
+            case 5 -> closePhase();
+            case 6 -> studentManagement();
+        }
+
+        return true;
+    }
+
+    public boolean candidaturePhaseLocked(){
+        System.out.println("Current state: " + context.getState());
+
+        int input = InputProtection.chooseOption(null, "Consult candidature data", "Go to previous state");
+
+        switch (input) {
+            case 1 -> consultData();
+            case 2 -> studentManagement();
+        }
+
+        return true;
+    }
+
+    public void candidatureManagement(){
+        context.candidatureManager();
     }
 
     public void start() {
@@ -181,17 +220,17 @@ public class CommandLineUI {
             case PROFESSOR_LOCKED -> professorPhaseLocked();
             case PROPOSAL -> proposalPhase();
             case PROPOSAL_LOCKED -> proposalPhaseLocked();
+            case CANDIDATURE -> candidaturePhase();
+            case CANDIDATURE_LOCKED -> candidaturePhaseLocked();
+
             /*
-             * case CANDIDATURE -> candidaturePhase();
-             * case CANDIDATURE_LOCKED -> candidaturePhaseLocked();
              * case PROPOSAL_ATTRIBUTION -> proposalAttributionPhase();
              * case PROPOSAL_ATTRIBUTION_LOCKED -> proposalAttributionPhaseLocked();
              * case PROFESSOR_ATTRIBUTION -> professorAttribution();
              * case SEARCH -> searchPhase();
              */
             default -> throw new IllegalArgumentException("Unexpected value: " + context.getState());
-        })
-            ;
+        });
     }
 
 }

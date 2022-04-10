@@ -38,6 +38,10 @@ abstract public class Proposal {
         return student.getId();
     }
 
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(idOfProposal);

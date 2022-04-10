@@ -64,4 +64,14 @@ public class ProposalPhase extends StateAdapter {
         return true;
     }
 
+
+    @Override
+    public boolean candidatureManager() {
+        if(isLocked(ApplicationState.CANDIDATURE)){
+            setState(ApplicationState.CANDIDATURE_LOCKED);
+            return true;
+        }
+        setState(ApplicationState.CANDIDATURE);
+        return true;
+    }
 }
