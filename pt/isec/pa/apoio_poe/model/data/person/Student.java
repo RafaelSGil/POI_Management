@@ -19,7 +19,7 @@ public class Student extends Person {
         this.internship = internship;
     }
 
-    public static Student createStudent(String name, String email, long id, String course, String courseBranch,
+    public static Person createStudent(String name, String email, long id, String course, String courseBranch,
             double classification, boolean internship) {
         return new Student(name, email, id, course, courseBranch, classification, internship);
     }

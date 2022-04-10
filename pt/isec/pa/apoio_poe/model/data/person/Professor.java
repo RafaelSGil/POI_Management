@@ -18,11 +18,11 @@ public class Professor extends Person {
         this.advisor = advisor;
     }
 
-    public static Professor createProfessor(String name, String email, boolean advisor) {
+    public static Person createProfessor(String name, String email, boolean advisor) {
         return new Professor(name, email, advisor);
     }
 
-    public static Professor createDummyProfessor(String email) {
+    public static Person createDummyProfessor(String email) {
         return new Professor(null, email, false);
     }
 
@@ -32,7 +32,7 @@ public class Professor extends Person {
             return false;
         }
 
-        return this.getEmail() == ((Professor) obj).getEmail();
+        return Objects.equals(this.getEmail(), ((Professor) obj).getEmail());
     }
 
     @Override

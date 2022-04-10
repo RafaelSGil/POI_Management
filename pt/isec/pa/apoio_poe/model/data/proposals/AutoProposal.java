@@ -8,11 +8,11 @@ public class AutoProposal extends Proposal {
         super(idOfProposal, title, student);
     }
 
-    public static AutoProposal createAutoProposal(String idOfProposal, String title, Student student) {
+    public static Proposal createAutoProposal(String idOfProposal, String title, Student student) {
         return new AutoProposal(idOfProposal, title, student);
     }
 
-    public static AutoProposal createDummyAutoProposal(String idOfProposal) {
+    public static Proposal createDummyAutoProposal(String idOfProposal) {
         return new AutoProposal(idOfProposal, null, null);
     }
 

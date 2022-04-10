@@ -13,7 +13,7 @@ public class Project extends MidProposal {
         this.professor = professor;
     }
 
-    public static Project createProject(String idOfProposal, String title, Student student, List<String> branch,
+    public static MidProposal createProject(String idOfProposal, String title, Student student, List<String> branch,
             Professor professor) {
         return new Project(idOfProposal, title, student, branch, professor);
     }
@@ -22,7 +22,7 @@ public class Project extends MidProposal {
         return professor.getName();
     }
 
-    public static Project createDummyProject(String idOfProposal) {
+    public static MidProposal createDummyProject(String idOfProposal) {
         return new Project(idOfProposal, null, null, null, null);
     }
 

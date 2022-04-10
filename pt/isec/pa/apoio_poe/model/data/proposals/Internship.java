@@ -13,7 +13,7 @@ public class Internship extends MidProposal {
         this.nameOfCompany = nameOfCompany;
     }
 
-    public static Internship createInternship(String idOfProposal, String title, Student student,
+    public static MidProposal createInternship(String idOfProposal, String title, Student student,
             List<String> branch,
             String nameOfCompany) {
         return new Internship(idOfProposal, title, student, branch, nameOfCompany);
@@ -27,7 +27,7 @@ public class Internship extends MidProposal {
         this.nameOfCompany = nameOfCompany;
     }
 
-    public static Internship createDummyInternship(String idOfProposal) {
+    public static MidProposal createDummyInternship(String idOfProposal) {
         return new Internship(idOfProposal, null, null, null, null);
     }
 

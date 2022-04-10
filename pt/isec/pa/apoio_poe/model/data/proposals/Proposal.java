@@ -5,13 +5,12 @@ import java.util.Objects;
 import pt.isec.pa.apoio_poe.model.data.person.Student;
 
 abstract public class Proposal {
-    private static int id = 0;
     private String idOfProposal;
     private String title;
     private Student student;
 
     public Proposal(String idOfProposal, String title, Student student) {
-        this.idOfProposal = idOfProposal + (++id);
+        this.idOfProposal = idOfProposal;
         this.title = title;
         this.student = student;
     }
@@ -33,6 +32,9 @@ abstract public class Proposal {
     }
 
     public long getStudent() {
+        if(student == null)
+            return -1;
+
         return student.getId();
     }
 

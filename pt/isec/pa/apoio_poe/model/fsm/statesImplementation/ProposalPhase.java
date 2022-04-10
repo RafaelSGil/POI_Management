@@ -27,7 +27,7 @@ public class ProposalPhase extends StateAdapter {
 
     @Override
     public boolean deleteData(String identifier) {
-        return false;
+        return data.removeProposals(identifier);
     }
 
     @Override
