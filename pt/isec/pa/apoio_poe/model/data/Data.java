@@ -14,6 +14,7 @@ public class Data {
     Set<Person> professors;
     Set<MidProposal> internships;
     Set<MidProposal> projects;
+    Map<Long, List<String>> candidatures;
 
     public Data() {
 
@@ -22,6 +23,7 @@ public class Data {
         this.autoproposals = new HashSet<>();
         this.internships = new HashSet<>();
         this.projects = new HashSet<>();
+        this.candidatures = new HashMap<>();
     }
 
     public void addStudentFile(List<List<String>> attributes) {
@@ -467,12 +469,13 @@ public class Data {
 
             while (eachListIterator.hasNext()) {
                 id = Long.parseLong((String) eachListIterator.next());
-                System.out.print("\n\n[DEBUG]: ID = " + id);
+
                 while (eachListIterator.hasNext()) {
                     proposals.add((String) eachListIterator.next());
                 }
-                System.out.print("\n\n[DEBUG]: PROPOSALS = " + proposals);
-                addCandidature(id, proposals);
+                candidatures.put(id, proposals);
+
+                addCandidature(id, candidatures.get(id));
             }
         }
 
