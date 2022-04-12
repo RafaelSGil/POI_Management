@@ -483,7 +483,7 @@ public class Data {
     public void addCandidatureFile(List<List<String>> attributes) {
         Iterator<List<String>> listOfListsIterator = attributes.iterator();
 
-        long id;
+        long id = 0;
         List<String> proposals = new ArrayList<String>();
 
         while (listOfListsIterator.hasNext()) {
@@ -499,15 +499,30 @@ public class Data {
                 while (eachListIterator.hasNext()) {
                     proposals.add((String) eachListIterator.next());
                 }
-                candidatures.put(id, proposals);
 
-                addCandidature(id, candidatures.get(id));
+                System.out.println(proposals);
+                candidatures.put(id, new ArrayList<>(proposals));
             }
         }
 
+
     }
 
-    public String getCandidatures() {
+    public String getCandidatures(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Long idStudent : candidatures.keySet()){
+            sb.append("Student with id = ").append(idStudent).append(" has filled a candidature for proposal ");
+            for(String idProposal : candidatures.get(idStudent)){
+                sb. append(idProposal).append("; ");
+            }
+            sb.append("\n");
+        }
+
+        return sb.toString();
+    }
+
+    public String getProposalAttributions() {
         StringBuilder sb = new StringBuilder();
 
         if (autoproposals.size() == 0 && internships.size() == 0 && projects.size() == 0) {
