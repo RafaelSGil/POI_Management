@@ -290,14 +290,15 @@ public class Data {
         if (removeInternshipsGivenItsID(idOfProposal))
             return true;
 
-        if (removeProjectsGiveItsID(idOfProposal))
+        if (removeProjectsGivenItsID(idOfProposal))
             return true;
 
-        return removeAutoProposalGiveItsID(idOfProposal);
+        return removeAutoProposalGivenItsID(idOfProposal);
     }
 
     public boolean removeInternshipsGivenItsID(String idOfProposal) {
         if (idOfProposal == null) {
+            System.out.println(("[DEBUG] IM HERE!"));
             return false;
         }
 
@@ -307,7 +308,7 @@ public class Data {
         return internships.remove(Internship.createDummyInternship(idOfProposal));
     }
 
-    public boolean removeAutoProposalGiveItsID(String idOfProposal) {
+    public boolean removeAutoProposalGivenItsID(String idOfProposal) {
         if (idOfProposal == null)
             return false;
 
@@ -317,7 +318,7 @@ public class Data {
         return autoproposals.remove(AutoProposal.createDummyAutoProposal(idOfProposal));
     }
 
-    public boolean removeProjectsGiveItsID(String idOfProposal) {
+    public boolean removeProjectsGivenItsID(String idOfProposal) {
         if (idOfProposal == null)
             return false;
 
@@ -505,16 +506,15 @@ public class Data {
             }
         }
 
-
     }
 
-    public String getCandidatures(){
+    public String getCandidatures() {
         StringBuilder sb = new StringBuilder();
 
-        for(Long idStudent : candidatures.keySet()){
+        for (Long idStudent : candidatures.keySet()) {
             sb.append("Student with id = ").append(idStudent).append(" has filled a candidature for proposal ");
-            for(String idProposal : candidatures.get(idStudent)){
-                sb. append(idProposal).append("; ");
+            for (String idProposal : candidatures.get(idStudent)) {
+                sb.append(idProposal).append("; ");
             }
             sb.append("\n");
         }

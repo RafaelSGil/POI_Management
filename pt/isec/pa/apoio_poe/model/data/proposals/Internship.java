@@ -36,7 +36,9 @@ public class Internship extends MidProposal {
         if (!(obj instanceof Internship))
             return false;
 
-        return this.getIdOfProposal() == ((MidProposal) obj).getIdOfProposal();
+        Internship aux = (Internship) obj;
+
+        return this.getIdOfProposal().equals(aux.getIdOfProposal());
     }
 
     @Override
