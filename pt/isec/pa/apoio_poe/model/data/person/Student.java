@@ -36,6 +36,7 @@ public class Student extends Person {
         return course;
     }
 
+    @Override
     public void setCourse(String course) {
         this.course = course;
     }
@@ -44,6 +45,7 @@ public class Student extends Person {
         return courseBranch;
     }
 
+    @Override
     public void setCourseBranch(String courseBranch) {
         this.courseBranch = courseBranch;
     }
@@ -52,6 +54,7 @@ public class Student extends Person {
         return classification;
     }
 
+    @Override
     public void setClassification(double classification) {
         this.classification = classification;
     }
@@ -60,6 +63,7 @@ public class Student extends Person {
         return internship;
     }
 
+    @Override
     public void setInternship(boolean internship) {
         this.internship = internship;
     }

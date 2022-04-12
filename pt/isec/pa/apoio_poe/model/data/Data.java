@@ -85,6 +85,50 @@ public class Data {
         }
     }
 
+    public boolean editStudent(String identifier, String change, String whatToChange) {
+        Student aux = (Student) Student.createDummyStudent((Long.parseLong(identifier)));
+
+        if (students.contains(aux)) {
+
+            if (change.equals("name")) {
+                for (Person student : students) {
+                    if (student.equals(aux)) {
+                        student.setName(whatToChange);
+                        return true;
+                    }
+                }
+            } else if (change.equals("course")) {
+                for (Person student : students) {
+                    if (student.equals(aux)) {
+                        student.setCourse(whatToChange);
+                        return true;
+                    }
+                }
+            } else if (change.equals("course branch")) {
+                for (Person student : students) {
+                    if (student.equals(aux)) {
+                        student.setCourse(whatToChange);
+                    }
+                }
+            } else if (change.equals("classification")) {
+                for (Person student : students) {
+                    if (student.equals(aux)) {
+                        student.setClassification(Double.parseDouble(whatToChange));
+                        return true;
+                    }
+                }
+            } else if (change.equals("internship")) {
+                for (Person student : students) {
+                    if (student.equals(aux)) {
+                        student.setInternship(Boolean.parseBoolean(whatToChange));
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
     public void addStudent(String name, String email, long id, String course, String courseBranch,
             double classification, boolean internship) {
 
@@ -118,6 +162,16 @@ public class Data {
                 addProfessor(name, email, advisor);
             }
         }
+    }
+
+    public boolean editProfessor(String email, boolean advisor) {
+        for (Person professor : professors) {
+            if (professor.equals(Professor.createDummyProfessor(email))) {
+                professor.setAdvisor(advisor);
+                return true;
+            }
+        }
+        return false;
     }
 
     public void addProfessor(String name, String email, boolean advisor) {
@@ -325,6 +379,31 @@ public class Data {
             return false;
 
         return projects.remove(Project.createDummyProject(idOfProposal));
+    }
+
+    public boolean editProposals(Map<String, Map<String, String>> attributes) {
+        for (String identifier : attributes.keySet()) {
+            if (internships.contains(Internship.createDummyInternship(identifier))) {
+                editInternships(attributes.get(identifier, attributes.get));
+            }
+        }
+
+        return true;
+    }
+
+    public boolean editInternships(String identifier, Map<String, String> attributes) {
+        for (String property : attributes.keySet()) {
+            if (property.equals("title")) {
+                for (MidProposal internship : internships) {
+                    if (internship.getIdOfProposal().equals(identifier)) {
+                        internship.setTitle(property);
+                        continue;
+                    }
+                }
+            }
+        }
+
+        return true;
     }
 
     public String getAllStudents() {

@@ -14,6 +14,7 @@ public class Professor extends Person {
         return advisor;
     }
 
+    @Override
     public void setAdvisor(boolean advisor) {
         this.advisor = advisor;
     }
