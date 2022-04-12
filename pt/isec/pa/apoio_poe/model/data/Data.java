@@ -384,26 +384,49 @@ public class Data {
     public boolean editProposals(Map<String, Map<String, String>> attributes) {
         for (String identifier : attributes.keySet()) {
             if (internships.contains(Internship.createDummyInternship(identifier))) {
-                editInternships(attributes.get(identifier, attributes.get));
+                editInternships(identifier, attributes.get(identifier));
             }
         }
 
         return true;
     }
 
-    public boolean editInternships(String identifier, Map<String, String> attributes) {
+    public void editInternships(String identifier, Map<String, String> attributes) {
         for (String property : attributes.keySet()) {
             if (property.equals("title")) {
                 for (MidProposal internship : internships) {
                     if (internship.getIdOfProposal().equals(identifier)) {
-                        internship.setTitle(property);
-                        continue;
+                        internship.setTitle(attributes.get(property));
+                        break;
+                    }
+                }
+            }
+            if(property.equals("branch")){
+                for(MidProposal internship : internships){
+                    if(internship.getIdOfProposal().equals(identifier)){
+                        internship.setBranch(List.of(attributes.get(identifier)));
+                        break;
+                    }
+                }
+            }
+            if(property.equals("company")){
+                for(MidProposal internship : internships){
+                    if(internship.getIdOfProposal().equals(identifier)){
+                        ((Internship) internship).setNameOfCompany(attributes.get(property));
+                        break;
+                    }
+                }
+            }
+            if(property.equals("student")){
+                for(MidProposal internship : internships){
+                    if(internship.getIdOfProposal().equals(identifier)){
+                        internship.setStudent((Student) Student.createDummyStudent(Long.parseLong(attributes.get(property))));
+                        break;
                     }
                 }
             }
         }
 
-        return true;
     }
 
     public String getAllStudents() {
