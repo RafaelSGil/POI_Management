@@ -6,6 +6,8 @@ import pt.isec.pa.apoio_poe.model.data.proposals.Internship;
 import pt.isec.pa.apoio_poe.model.data.proposals.MidProposal;
 import pt.isec.pa.apoio_poe.model.data.proposals.Project;
 import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
+
 import java.util.*;
 
 public class Data {
@@ -15,6 +17,7 @@ public class Data {
     Set<MidProposal> internships;
     Set<MidProposal> projects;
     Map<Long, List<String>> candidatures;
+    Map<ApplicationState, Boolean> lockedPhases;
 
     public Data() {
 
@@ -24,6 +27,29 @@ public class Data {
         this.internships = new HashSet<>();
         this.projects = new HashSet<>();
         this.candidatures = new HashMap<>();
+        this.lockedPhases = new HashMap<>();
+        startMap();
+    }
+
+    private void startMap() {
+        // initializes the map with all enum states and gives them the value false,
+        // which means the state has not yet been locked
+
+        for (ApplicationState state : ApplicationState.values()) {
+            lockedPhases.put(state, false);
+        }
+    }
+
+    public boolean isLocked(ApplicationState state) {
+        // checks if given state is already locked
+
+        return lockedPhases.get(state);
+    }
+
+    public void lockPhase(ApplicationState state) {
+        // locks the given state by attributing it a true value
+
+        lockedPhases.put(state, true);
     }
 
     public void addStudentFile(List<List<String>> attributes) {

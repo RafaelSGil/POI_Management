@@ -9,34 +9,10 @@ import java.util.Map;
 public class StateAdapter implements IApplicationState {
     protected ApplicationContext context;
     protected Data data;
-    protected Map<ApplicationState, Boolean> lockedPhases;
 
     protected StateAdapter(ApplicationContext context, Data data) {
         this.data = data;
         this.context = context;
-        this.lockedPhases = new HashMap<>();
-        startMap();
-    }
-
-    private void startMap() {
-        // initializes the map with all enum states and gives them the value false,
-        // which means the state has not yet been locked
-
-        for (ApplicationState state : ApplicationState.values()) {
-            lockedPhases.put(state, false);
-        }
-    }
-
-    protected boolean isLocked(ApplicationState state) {
-        // checks if given state is already locked
-
-        return lockedPhases.get(state);
-    }
-
-    protected void lockPhase(ApplicationState state) {
-        // locks the given state by attributing it a true value
-
-        lockedPhases.put(state, true);
     }
 
     protected void setState(ApplicationState state) {

@@ -35,7 +35,7 @@ public class ProposalPhaseLocked extends StateAdapter {
 
     @Override
     public boolean candidatureManager() {
-        if(isLocked(ApplicationState.CANDIDATURE)){
+        if(data.isLocked(ApplicationState.CANDIDATURE)){
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
         }

@@ -55,9 +55,9 @@ public class ProfessorPhase extends StateAdapter {
     public boolean closeState() {
         if (data.lockPhase1()) {
             setState(ApplicationState.PROFESSOR_LOCKED);
-            lockPhase(ApplicationState.STUDENT);
-            lockPhase(ApplicationState.PROFESSOR);
-            lockPhase(ApplicationState.PROPOSAL);
+            data.lockPhase(ApplicationState.STUDENT);
+            data.lockPhase(ApplicationState.PROFESSOR);
+            data.lockPhase(ApplicationState.PROPOSAL);
         }
 
         return true;
@@ -65,7 +65,7 @@ public class ProfessorPhase extends StateAdapter {
 
     @Override
     public boolean candidatureManager() {
-        if(isLocked(ApplicationState.CANDIDATURE)){
+        if(data.isLocked(ApplicationState.CANDIDATURE)){
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
         }
