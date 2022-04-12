@@ -49,7 +49,7 @@ public class Internship extends MidProposal {
     @Override
     public String toString() {
         return String.format(
-                "Internship (%s)  \"%s\" has student (%s) attributed to it. It's from branch \"%s\" and it takes place at %s",
-                super.getIdOfProposal(), super.getTitle(), super.getStudent(), super.getBranch(), nameOfCompany);
+                "(%s) - \"%s\". student (%s). branch \"%s\" and it takes place at %s",
+                super.getIdOfProposal(), super.getTitle(), super.getStudent(), super.getBranches(), nameOfCompany);
     }
 }

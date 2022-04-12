@@ -33,7 +33,7 @@ public class AutoProposal extends Proposal {
 
     @Override
     public String toString() {
-        return String.format("Self proposal (%s) \"%s\" has student (%d) attributed to it",
+        return String.format("(%s) - \"%s\" has student (%d) attributed to it",
                 super.getIdOfProposal(), super.getTitle(), super.getStudent());
     }
 }

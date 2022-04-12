@@ -44,7 +44,7 @@ public class Project extends MidProposal {
     @Override
     public String toString() {
         return String.format(
-                "Project %s with title \"%s\" has student (%s) attributed. It's from branch \"%s\" and has professor (%s) has its advisor",
-                super.getIdOfProposal(), super.getTitle(), super.getStudent(), super.getBranch(), professor);
+                "(%s) - \"%s\". student (%s). branch \"%s\". professor (%s)",
+                super.getIdOfProposal(), super.getTitle(), super.getStudent(), super.getBranches(), professor);
     }
 }

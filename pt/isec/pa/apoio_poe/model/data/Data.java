@@ -298,7 +298,6 @@ public class Data {
 
     public boolean removeInternshipsGivenItsID(String idOfProposal) {
         if (idOfProposal == null) {
-            System.out.println(("[DEBUG] IM HERE!"));
             return false;
         }
 
@@ -365,17 +364,17 @@ public class Data {
             return sb.toString();
         }
 
-        sb.append(("AutoProposals: \n\n"));
+        sb.append(("\nAutoProposals: \n"));
         for (Proposal auto : autoproposals) {
             sb.append(auto.toString()).append("\n");
         }
 
-        sb.append("Projects: \n\n");
+        sb.append("\nProjects: \n");
         for (MidProposal mid : projects) {
             sb.append(mid.toString()).append("\n");
         }
 
-        sb.append("InternShips: \n\n");
+        sb.append("\nInternShips: \n");
         for (MidProposal mid : internships) {
             sb.append(mid.toString()).append("\n");
         }
