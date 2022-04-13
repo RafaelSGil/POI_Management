@@ -26,6 +26,10 @@ public class Project extends MidProposal {
         return new Project(idOfProposal, null, null, null, null);
     }
 
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
+    }
+
     @Override
     public int hashCode() {
         return super.hashCode();

@@ -44,8 +44,13 @@ public class CommandLineUI {
     }
 
     public void editStudentData() {
-        String identifier = InputProtection.readString("Specify the id of the student you want to edit: ", false);
-        context.editData(identifier);
+        String identifier = InputProtection.readString("Specify the id of the student you want to edit: ", true);
+
+        String change = InputProtection.readString("Specify the field you want to change [name, course, course branch, classification, internships]: ", true);
+
+        String whatToChange = InputProtection.readString("Specify the new value you want to change to: ", false);
+
+        context.editDataStudent(identifier, change, whatToChange);
     }
 
     public void consultData() {
@@ -108,7 +113,17 @@ public class CommandLineUI {
 
     public void editProfessorData() {
         String identifier = InputProtection.readString("Specify the email of the professor you want to edit: ", false);
-        context.editData(identifier);
+        String advisor;
+
+        while(true){
+            advisor = InputProtection.readString("Specify the value you want to give to the field \"advisor\" [true/false]:", false);
+
+            if(advisor.equals("true") || advisor.equals("false")){
+                break;
+            }
+        }
+
+        context.editDataProfessor(identifier, Boolean.parseBoolean(advisor));
     }
 
     public void studentManagement() {
@@ -158,7 +173,7 @@ public class CommandLineUI {
 
     public void editProposalData() {
         String identifier = InputProtection.readString("Specify the id of the proposal you want to edit: ", true);
-        context.editData(identifier);
+
     }
 
     public boolean proposalPhaseLocked() {

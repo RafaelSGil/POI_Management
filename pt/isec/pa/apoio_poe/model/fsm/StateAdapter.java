@@ -30,6 +30,21 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
+    public boolean editDataProposal(Map<String, Map<String, String>> attributes) {
+        return false;
+    }
+
+    @Override
+    public boolean editDataProfessor(String email, boolean advisor) {
+        return false;
+    }
+
+    @Override
+    public boolean editDataStudent(String identifier, String change, String whatToChange) {
+        return false;
+    }
+
+    @Override
     public boolean deleteData(String identifier) {
         return false;
     }
@@ -179,8 +194,5 @@ public class StateAdapter implements IApplicationState {
         return false;
     }
 
-    @Override
-    public boolean editData(String identifier) {
-        return false;
-    }
+
 }

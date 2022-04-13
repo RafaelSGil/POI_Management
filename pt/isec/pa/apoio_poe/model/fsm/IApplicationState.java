@@ -1,11 +1,17 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
+import java.util.Map;
+
 public interface IApplicationState {
     boolean insertData(String file);
 
     String checkData();
 
-    boolean editData(String identifier);
+    boolean editDataProposal(Map<String, Map<String, String>> attributes);
+
+    boolean editDataProfessor(String email, boolean advisor);
+
+    boolean editDataStudent(String identifier, String change, String whatToChange);
 
     boolean deleteData(String identifier);
 

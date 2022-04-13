@@ -5,6 +5,8 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
 
+import java.util.Map;
+
 public class ApplicationContext {
     private Data data;
     private IApplicationState state;
@@ -34,8 +36,16 @@ public class ApplicationContext {
         return state.checkData();
     }
 
-    public boolean editData(String identifier) {
-        return state.editData(identifier);
+    public boolean editDataProposals(Map<String, Map<String, String>> attributes) {
+        return state.editDataProposal(attributes);
+    }
+
+    public boolean editDataProfessor(String email, boolean advisor){
+        return state.editDataProfessor(email, advisor);
+    }
+
+    public boolean editDataStudent(String identifier, String change, String whatToChange){
+        return state.editDataStudent(identifier, change, whatToChange);
     }
 
     public boolean deleteData(String identifier) {

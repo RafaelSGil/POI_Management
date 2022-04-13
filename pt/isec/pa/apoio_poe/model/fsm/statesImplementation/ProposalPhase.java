@@ -5,6 +5,8 @@ import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import java.util.List;
+import java.util.Map;
+
 import pt.isec.pa.apoio_poe.csv_files.Files;
 
 public class ProposalPhase extends StateAdapter {
@@ -73,5 +75,10 @@ public class ProposalPhase extends StateAdapter {
         }
         setState(ApplicationState.CANDIDATURE);
         return true;
+    }
+
+    @Override
+    public boolean editDataProposal(Map<String, Map<String, String>> attributes) {
+        return data.editProposals(attributes);
     }
 }
