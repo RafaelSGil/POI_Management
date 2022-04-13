@@ -46,6 +46,11 @@ public class ProfessorPhase extends StateAdapter {
     }
 
     @Override
+    public boolean editDataProfessor(String email, boolean advisor) {
+        return data.editProfessor(email, advisor);
+    }
+
+    @Override
     public boolean proposalManager() {
         setState(ApplicationState.PROPOSAL);
         return true;
@@ -65,7 +70,7 @@ public class ProfessorPhase extends StateAdapter {
 
     @Override
     public boolean candidatureManager() {
-        if(data.isLocked(ApplicationState.CANDIDATURE)){
+        if (data.isLocked(ApplicationState.CANDIDATURE)) {
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
         }

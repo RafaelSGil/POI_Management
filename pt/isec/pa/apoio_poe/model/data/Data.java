@@ -386,10 +386,10 @@ public class Data {
             if (internships.contains(Internship.createDummyInternship(identifier))) {
                 editInternships(identifier, attributes.get(identifier));
             }
-            if(projects.contains(Project.createDummyProject(identifier))){
+            if (projects.contains(Project.createDummyProject(identifier))) {
                 editProjects(identifier, attributes.get(identifier));
             }
-            if(autoproposals.contains(AutoProposal.createDummyAutoProposal(identifier))){
+            if (autoproposals.contains(AutoProposal.createDummyAutoProposal(identifier))) {
                 editAutoProposals(identifier, attributes.get(identifier));
             }
         }
@@ -397,8 +397,8 @@ public class Data {
         return true;
     }
 
-    public void editAutoProposals(String identifier, Map<String, String> attributes){
-        for(String property : attributes.keySet()){
+    public void editAutoProposals(String identifier, Map<String, String> attributes) {
+        for (String property : attributes.keySet()) {
             if (property.equals("title")) {
                 for (Proposal auto : autoproposals) {
                     if (auto.getIdOfProposal().equals(identifier)) {
@@ -407,9 +407,9 @@ public class Data {
                     }
                 }
             }
-            if(property.equals("student")){
-                for(Proposal auto : autoproposals){
-                    if(auto.getIdOfProposal().equals(identifier)){
+            if (property.equals("student")) {
+                for (Proposal auto : autoproposals) {
+                    if (auto.getIdOfProposal().equals(identifier)) {
                         auto.setStudent((Student) Student.createDummyStudent(Long.parseLong(attributes.get(property))));
                         break;
                     }
@@ -418,11 +418,11 @@ public class Data {
         }
     }
 
-    public void editProjects(String identifier, Map<String, String> attributes){
+    public void editProjects(String identifier, Map<String, String> attributes) {
         for (String property : attributes.keySet()) {
-            if(property.equals("branch")){
-                for(MidProposal project : projects){
-                    if(project.getIdOfProposal().equals(identifier)){
+            if (property.equals("branch")) {
+                for (MidProposal project : projects) {
+                    if (project.getIdOfProposal().equals(identifier)) {
                         project.setBranch(List.of(attributes.get(identifier)));
                         break;
                     }
@@ -436,18 +436,20 @@ public class Data {
                     }
                 }
             }
-            if(property.equals("professor")){
-                for(MidProposal project : internships){
-                    if(project.getIdOfProposal().equals(identifier)){
-                        ((Project) project).setProfessor((Professor) Professor.createDummyProfessor(attributes.get(property)));
+            if (property.equals("professor")) {
+                for (MidProposal project : internships) {
+                    if (project.getIdOfProposal().equals(identifier)) {
+                        ((Project) project)
+                                .setProfessor((Professor) Professor.createDummyProfessor(attributes.get(property)));
                         break;
                     }
                 }
             }
-            if(property.equals("student")){
-                for(MidProposal project : internships){
-                    if(project.getIdOfProposal().equals(identifier)){
-                        project.setStudent((Student) Student.createDummyStudent(Long.parseLong(attributes.get(property))));
+            if (property.equals("student")) {
+                for (MidProposal project : internships) {
+                    if (project.getIdOfProposal().equals(identifier)) {
+                        project.setStudent(
+                                (Student) Student.createDummyStudent(Long.parseLong(attributes.get(property))));
                         break;
                     }
                 }
@@ -465,26 +467,27 @@ public class Data {
                     }
                 }
             }
-            if(property.equals("branch")){
-                for(MidProposal internship : internships){
-                    if(internship.getIdOfProposal().equals(identifier)){
+            if (property.equals("branch")) {
+                for (MidProposal internship : internships) {
+                    if (internship.getIdOfProposal().equals(identifier)) {
                         internship.setBranch(List.of(attributes.get(identifier)));
                         break;
                     }
                 }
             }
-            if(property.equals("company")){
-                for(MidProposal internship : internships){
-                    if(internship.getIdOfProposal().equals(identifier)){
+            if (property.equals("company")) {
+                for (MidProposal internship : internships) {
+                    if (internship.getIdOfProposal().equals(identifier)) {
                         ((Internship) internship).setNameOfCompany(attributes.get(property));
                         break;
                     }
                 }
             }
-            if(property.equals("student")){
-                for(MidProposal internship : internships){
-                    if(internship.getIdOfProposal().equals(identifier)){
-                        internship.setStudent((Student) Student.createDummyStudent(Long.parseLong(attributes.get(property))));
+            if (property.equals("student")) {
+                for (MidProposal internship : internships) {
+                    if (internship.getIdOfProposal().equals(identifier)) {
+                        internship.setStudent(
+                                (Student) Student.createDummyStudent(Long.parseLong(attributes.get(property))));
                         break;
                     }
                 }

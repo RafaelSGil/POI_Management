@@ -16,7 +16,8 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert student data", "Delete student data",
-                "Edit student data", "Consult student data", "Professor Management", "Proposal Management", "Candidature Management",
+                "Edit student data", "Consult student data", "Professor Management", "Proposal Management",
+                "Candidature Management",
                 "Close state");
 
         switch (input) {
@@ -46,7 +47,9 @@ public class CommandLineUI {
     public void editStudentData() {
         String identifier = InputProtection.readString("Specify the id of the student you want to edit: ", true);
 
-        String change = InputProtection.readString("Specify the field you want to change [name, course, course branch, classification, internships]: ", true);
+        String change = InputProtection.readString(
+                "Specify the field you want to change [name, course, course branch, classification, internships]: ",
+                true);
 
         String whatToChange = InputProtection.readString("Specify the new value you want to change to: ", false);
 
@@ -89,7 +92,8 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert professor data", "Delete professor data",
-                "Edit professor data", "Consult professor data", "Student Management", "Proposal Management", "Candidature Management", "Close state");
+                "Edit professor data", "Consult professor data", "Student Management", "Proposal Management",
+                "Candidature Management", "Close state");
 
         switch (input) {
             case 1 -> insertData();
@@ -115,10 +119,11 @@ public class CommandLineUI {
         String identifier = InputProtection.readString("Specify the email of the professor you want to edit: ", false);
         String advisor;
 
-        while(true){
-            advisor = InputProtection.readString("Specify the value you want to give to the field \"advisor\" [true/false]:", false);
+        while (true) {
+            advisor = InputProtection
+                    .readString("Specify the value you want to give to the field \"advisor\" [true/false]:", false);
 
-            if(advisor.equals("true") || advisor.equals("false")){
+            if (advisor.equals("true") || advisor.equals("false")) {
                 break;
             }
         }
@@ -150,7 +155,8 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert project data", "Delete project data",
-                "Edit project data", "Consult project data", "Student Management", "Professor Management", "Candidature Management", "Close state");
+                "Edit project data", "Consult project data", "Student Management", "Professor Management",
+                "Candidature Management", "Close state");
 
         switch (input) {
             case 1 -> insertData();
@@ -192,7 +198,7 @@ public class CommandLineUI {
         return true;
     }
 
-    public boolean candidaturePhase(){
+    public boolean candidaturePhase() {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert candidature data", "Delete candidature data",
@@ -210,7 +216,7 @@ public class CommandLineUI {
         return true;
     }
 
-    public boolean candidaturePhaseLocked(){
+    public boolean candidaturePhaseLocked() {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Consult candidature data", "Go to previous state");
@@ -223,7 +229,7 @@ public class CommandLineUI {
         return true;
     }
 
-    public void candidatureManagement(){
+    public void candidatureManagement() {
         context.candidatureManager();
     }
 
@@ -245,7 +251,8 @@ public class CommandLineUI {
              * case SEARCH -> searchPhase();
              */
             default -> throw new IllegalArgumentException("Unexpected value: " + context.getState());
-        });
+        })
+            ;
     }
 
 }

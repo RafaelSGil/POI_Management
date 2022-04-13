@@ -54,6 +54,11 @@ public class StudentPhase extends StateAdapter {
     }
 
     @Override
+    public boolean editDataStudent(String identifier, String change, String whatToChange) {
+        return data.editStudent(identifier, change, whatToChange);
+    }
+
+    @Override
     public boolean closeState() {
         if (data.lockPhase1()) {
             setState(ApplicationState.STUDENT_LOCKED);
@@ -67,7 +72,7 @@ public class StudentPhase extends StateAdapter {
 
     @Override
     public boolean candidatureManager() {
-        if(data.isLocked(ApplicationState.CANDIDATURE)){
+        if (data.isLocked(ApplicationState.CANDIDATURE)) {
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
         }
