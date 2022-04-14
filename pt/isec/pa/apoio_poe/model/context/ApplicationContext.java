@@ -42,8 +42,7 @@ public class ApplicationContext {
     }
 
     public boolean editDataProposals(String identifier, String attribute, List<String> newValue) {
-        // return state.editDataProposal(attributes);
-        return true;
+        return state.editDataProposal(identifier, attribute, newValue);
     }
 
     public boolean editDataProfessor(String email, boolean advisor) {
@@ -78,8 +77,12 @@ public class ApplicationContext {
         return state.candidatureManager();
     }
 
-    public boolean removeCandidature(String id, String proposal) {
-        return state.removeCandidature(id, proposal);
+    public boolean removeProposalFromCandidature(String id, String proposal) {
+        return state.removeProposalFromCandidature(id, proposal);
+    }
+
+    public boolean removeCandidature(String id) {
+        return state.removeCandidature(id);
     }
 
     @Override

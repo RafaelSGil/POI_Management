@@ -10,6 +10,8 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 
 import java.util.*;
 
+import org.ietf.jgss.Oid;
+
 public class Data {
     Set<Proposal> autoproposals;
     Set<Person> students;
@@ -395,18 +397,7 @@ public class Data {
         return -1;
     }
 
-    public boolean editProposals(Map<String, Map<String, String>> attributes) {
-        for (String identifier : attributes.keySet()) {
-            if (internships.contains(Internship.createDummyInternship(identifier))) {
-                editInternships(identifier, attributes.get(identifier));
-            }
-            if (projects.contains(Project.createDummyProject(identifier))) {
-                editProjects(identifier, attributes.get(identifier));
-            }
-            if (autoproposals.contains(AutoProposal.createDummyAutoProposal(identifier))) {
-                editAutoProposals(identifier, attributes.get(identifier));
-            }
-        }
+    public boolean editProposals(String identifier, String attribute, List<String> newValue) {
 
         return true;
     }
@@ -682,8 +673,6 @@ public class Data {
                 while (eachListIterator.hasNext()) {
                     proposals.add((String) eachListIterator.next());
                 }
-
-                System.out.println(proposals);
                 candidatures.put(id, new ArrayList<>(proposals));
             }
         }
@@ -715,6 +704,15 @@ public class Data {
                     }
                 }
             }
+        }
+        return false;
+    }
+
+    public boolean removeCompleteCandidatureGivenItsID(String id) {
+        Long identifier = Long.parseLong(id);
+        if (candidatures.containsKey(identifier)) {
+            candidatures.remove(identifier);
+            return true;
         }
         return false;
     }

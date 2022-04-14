@@ -30,8 +30,13 @@ public class CandidaturePhase extends StateAdapter {
     }
 
     @Override
-    public boolean removeCandidature(String id, String proposal) {
+    public boolean removeProposalFromCandidature(String id, String proposal) {
         return data.removeCandidatureGivenStudentID(id, proposal);
+    }
+
+    @Override
+    public boolean removeCandidature(String id) {
+        return data.removeCompleteCandidatureGivenItsID(id);
     }
 
     @Override

@@ -181,76 +181,82 @@ public class CommandLineUI {
     }
 
     public void deleteCandidatureData() {
-        String id = InputProtection.readString("Specify the id of the student of the candidature: ", true);
-        String proposal = InputProtection.readString("Specify the proposal you want to remove: ", true);
-        context.removeCandidature(id, proposal);
+        switch (InputProtection.chooseOption(null, "Remove single proposal from candidature",
+                "Remove an entire candidature")) {
+            case 1 -> {
+                String id = InputProtection.readString("Specify the id of the student of the candidature: ", true);
+                String proposal = InputProtection.readString("Specify the proposal you want to remove: ", true);
+                context.removeProposalFromCandidature(id, proposal);
+            }
+            case 2 -> {
+                String id = InputProtection.readString("Specify the id of the student of the candidature: ", true);
+                context.removeCandidature(id);
+            }
+        }
     }
 
-    /*
-     * public void editProposalData() {
-     * String identifier = InputProtection.
-     * readString("Specify the id of the proposal you want to edit: ", true);
-     * 
-     * switch (context.checkTypeProposal(identifier)) {
-     * case 1 -> editInternshipData(identifier);
-     * case 2 -> editProjectData(identifier);
-     * case 3 -> editAutoProposalData(identifier);
-     * }
-     * }
-     * 
-     * public void editInternshipData(String identifier) {
-     * 
-     * switch (InputProtection.chooseOption("What atrribute do you want to alter?",
-     * "title", "branch", "company",
-     * "student")) {
-     * case 1 -> {
-     * String attribute = "title";
-     * String newValue = InputProtection.readString("New title: ", false);
-     * context.editDataProposals(identifier, attribute, List.of(newValue));
-     * }
-     * case 2 -> {
-     * String attribute = "branch";
-     * List<String> newValues = new ArrayList<>();
-     * 
-     * while (true) {
-     * String newValue =
-     * InputProtection.readString("New branch (write end to stop): ", true);
-     * if (newValue.equals("end")) {
-     * break;
-     * }
-     * if (!context.isBranchValid(newValue)) {
-     * System.out.println("That's not a valid branch!");
-     * continue;
-     * }
-     * 
-     * newValues.add(newValue);
-     * }
-     * 
-     * context.editDataProposals(identifier, attribute, newValues);
-     * }
-     * case 3 -> {
-     * String attribute = "company";
-     * String newValue =
-     * InputProtection.readString("Specify the new name for the company: ", false);
-     * context.editDataProposals(identifier, attribute, List.of(newValue));
-     * }
-     * case 4 -> {
-     * String attribute = "student";
-     * String newValue;
-     * 
-     * while (true) {
-     * newValue = InputProtection.readString("Specify the id of the new student: ",
-     * false);
-     * try{
-     * 
-     * }catch{
-     * 
-     * }
-     * }
-     * }
-     * }
-     * }
-     */
+    public void editProposalData() {
+        String identifier = InputProtection.readString("Specify the id of the proposal you want to edit: ", true);
+
+        switch (context.checkTypeProposal(identifier)) {
+            case 1 -> editInternshipData(identifier);
+            case 2 -> editProjectData(identifier);
+            case 3 -> editAutoProposalData(identifier);
+        }
+    }
+
+    public void editInternshipData(String identifier) {
+
+        switch (InputProtection.chooseOption("What atrribute do you want to alter?", "title", "branch", "company",
+                "student")) {
+            case 1 -> {
+                String attribute = "title";
+                String newValue = InputProtection.readString("New title: ", false);
+                context.editDataProposals(identifier, attribute, List.of(newValue));
+            }
+            case 2 -> {
+                String attribute = "branch";
+                List<String> newValues = new ArrayList<>();
+
+                while (true) {
+                    String newValue = InputProtection.readString("New branch (write end to stop): ", true);
+                    if (newValue.equals("end")) {
+                        break;
+                    }
+                    if (!context.isBranchValid(newValue)) {
+                        System.out.println("That's not a valid branch!");
+                        continue;
+                    }
+
+                    newValues.add(newValue);
+                }
+
+                context.editDataProposals(identifier, attribute, newValues);
+            }
+            case 3 -> {
+                String attribute = "company";
+                String newValue = InputProtection.readString("Specify the new name for the company: ", false);
+                context.editDataProposals(identifier, attribute, List.of(newValue));
+            }
+            case 4 -> {
+                String attribute = "student";
+                String newValue;
+
+                while (true) {
+                    newValue = InputProtection.readString("Specify the id of the new student: ",
+                            false);
+                    try {
+                        Long.parseLong(newValue);
+                        break;
+                    } catch (NumberFormatException e) {
+                        System.out.println(e);
+                    }
+                }
+
+                context.editDataProposals(identifier, attribute, List.of(newValue));
+            }
+        }
+    }
 
     public void editProjectData(String identifier) {
 
@@ -285,7 +291,7 @@ public class CommandLineUI {
         switch (input) {
             case 1 -> insertData();
             case 2 -> deleteCandidatureData();
-            // case 3 -> editProposalData();
+            case 3 -> editProposalData();
             case 4 -> consultData();
             case 5 -> closePhase();
             case 6 -> studentManagement();

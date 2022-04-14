@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
+import java.util.List;
 import java.util.Map;
 
 public interface IApplicationState {
@@ -7,7 +8,7 @@ public interface IApplicationState {
 
     String checkData();
 
-    boolean editDataProposal(Map<String, Map<String, String>> attributes);
+    boolean editDataProposal(String identifier, String attribute, List<String> newValue);
 
     boolean editDataProfessor(String email, boolean advisor);
 
@@ -73,5 +74,7 @@ public interface IApplicationState {
 
     ApplicationState getState();
 
-    boolean removeCandidature(String id, String proposal);
+    boolean removeProposalFromCandidature(String id, String proposal);
+
+    boolean removeCandidature(String id);
 }

@@ -66,10 +66,9 @@ public class ProposalPhase extends StateAdapter {
         return true;
     }
 
-
     @Override
     public boolean candidatureManager() {
-        if(data.isLocked(ApplicationState.CANDIDATURE)){
+        if (data.isLocked(ApplicationState.CANDIDATURE)) {
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
         }
@@ -78,7 +77,7 @@ public class ProposalPhase extends StateAdapter {
     }
 
     @Override
-    public boolean editDataProposal(Map<String, Map<String, String>> attributes) {
-        return data.editProposals(attributes);
+    public boolean editDataProposal(String identifier, String attribute, List<String> newValue) {
+        return data.editProposals(identifier, attribute, newValue);
     }
 }

@@ -3,8 +3,7 @@ package pt.isec.pa.apoio_poe.model.fsm;
 import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 public class StateAdapter implements IApplicationState {
     protected ApplicationContext context;
@@ -30,7 +29,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean editDataProposal(Map<String, Map<String, String>> attributes) {
+    public boolean editDataProposal(String identifier, String attribute, List<String> newValue) {
         return false;
     }
 
@@ -195,8 +194,12 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean removeCandidature(String id, String proposal) {
-        // TODO Auto-generated method stub
+    public boolean removeProposalFromCandidature(String id, String proposal) {
+        return false;
+    }
+
+    @Override
+    public boolean removeCandidature(String id) {
         return false;
     }
 
