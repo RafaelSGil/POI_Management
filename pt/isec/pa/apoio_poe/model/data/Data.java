@@ -381,6 +381,20 @@ public class Data {
         return projects.remove(Project.createDummyProject(idOfProposal));
     }
 
+    public int checkTypeProposal(String identifier) {
+        if (internships.contains(Internship.createDummyInternship(identifier))) {
+            return 0;
+        }
+        if (projects.contains(Project.createDummyProject(identifier))) {
+            return 1;
+        }
+        if (autoproposals.contains(AutoProposal.createDummyAutoProposal(identifier))) {
+            return 2;
+        }
+
+        return -1;
+    }
+
     public boolean editProposals(Map<String, Map<String, String>> attributes) {
         for (String identifier : attributes.keySet()) {
             if (internships.contains(Internship.createDummyInternship(identifier))) {
@@ -688,6 +702,21 @@ public class Data {
         }
 
         return sb.toString();
+    }
+
+    public boolean removeCandidatureGivenStudentID(String id, String proposal) {
+        for (Long ids : candidatures.keySet()) {
+            if (ids.equals(Long.parseLong(id))) {
+                Iterator<String> proposals = candidatures.get(ids).iterator();
+                while (proposals.hasNext()) {
+                    if (proposals.next().equals(proposal)) {
+                        proposals.remove();
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public String getProposalAttributions() {

@@ -1,5 +1,8 @@
 package pt.isec.pa.apoio_poe.ui.text;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
@@ -161,7 +164,7 @@ public class CommandLineUI {
         switch (input) {
             case 1 -> insertData();
             case 2 -> deleteProposalData();
-            case 3 -> editProposalData();
+            // case 3 -> editProposalData();
             case 4 -> consultData();
             case 5 -> studentManagement();
             case 6 -> professorManagement();
@@ -177,8 +180,83 @@ public class CommandLineUI {
         context.deleteData(identifier);
     }
 
-    public void editProposalData() {
-        String identifier = InputProtection.readString("Specify the id of the proposal you want to edit: ", true);
+    public void deleteCandidatureData() {
+        String id = InputProtection.readString("Specify the id of the student of the candidature: ", true);
+        String proposal = InputProtection.readString("Specify the proposal you want to remove: ", true);
+        context.removeCandidature(id, proposal);
+    }
+
+    /*
+     * public void editProposalData() {
+     * String identifier = InputProtection.
+     * readString("Specify the id of the proposal you want to edit: ", true);
+     * 
+     * switch (context.checkTypeProposal(identifier)) {
+     * case 1 -> editInternshipData(identifier);
+     * case 2 -> editProjectData(identifier);
+     * case 3 -> editAutoProposalData(identifier);
+     * }
+     * }
+     * 
+     * public void editInternshipData(String identifier) {
+     * 
+     * switch (InputProtection.chooseOption("What atrribute do you want to alter?",
+     * "title", "branch", "company",
+     * "student")) {
+     * case 1 -> {
+     * String attribute = "title";
+     * String newValue = InputProtection.readString("New title: ", false);
+     * context.editDataProposals(identifier, attribute, List.of(newValue));
+     * }
+     * case 2 -> {
+     * String attribute = "branch";
+     * List<String> newValues = new ArrayList<>();
+     * 
+     * while (true) {
+     * String newValue =
+     * InputProtection.readString("New branch (write end to stop): ", true);
+     * if (newValue.equals("end")) {
+     * break;
+     * }
+     * if (!context.isBranchValid(newValue)) {
+     * System.out.println("That's not a valid branch!");
+     * continue;
+     * }
+     * 
+     * newValues.add(newValue);
+     * }
+     * 
+     * context.editDataProposals(identifier, attribute, newValues);
+     * }
+     * case 3 -> {
+     * String attribute = "company";
+     * String newValue =
+     * InputProtection.readString("Specify the new name for the company: ", false);
+     * context.editDataProposals(identifier, attribute, List.of(newValue));
+     * }
+     * case 4 -> {
+     * String attribute = "student";
+     * String newValue;
+     * 
+     * while (true) {
+     * newValue = InputProtection.readString("Specify the id of the new student: ",
+     * false);
+     * try{
+     * 
+     * }catch{
+     * 
+     * }
+     * }
+     * }
+     * }
+     * }
+     */
+
+    public void editProjectData(String identifier) {
+
+    }
+
+    public void editAutoProposalData(String identifier) {
 
     }
 
@@ -206,8 +284,8 @@ public class CommandLineUI {
 
         switch (input) {
             case 1 -> insertData();
-            case 2 -> deleteProposalData();
-            case 3 -> editProposalData();
+            case 2 -> deleteCandidatureData();
+            // case 3 -> editProposalData();
             case 4 -> consultData();
             case 5 -> closePhase();
             case 6 -> studentManagement();

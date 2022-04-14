@@ -194,5 +194,10 @@ public class StateAdapter implements IApplicationState {
         return false;
     }
 
+    @Override
+    public boolean removeCandidature(String id, String proposal) {
+        // TODO Auto-generated method stub
+        return false;
+    }
 
 }

@@ -72,4 +72,6 @@ public interface IApplicationState {
     boolean listStudentsWihoutProposalsWithCandidature();
 
     ApplicationState getState();
+
+    boolean removeCandidature(String id, String proposal);
 }

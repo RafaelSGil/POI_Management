@@ -30,8 +30,13 @@ public class CandidaturePhase extends StateAdapter {
     }
 
     @Override
+    public boolean removeCandidature(String id, String proposal) {
+        return data.removeCandidatureGivenStudentID(id, proposal);
+    }
+
+    @Override
     public boolean studentManager() {
-        if(data.isLocked(ApplicationState.STUDENT)){
+        if (data.isLocked(ApplicationState.STUDENT)) {
             setState(ApplicationState.STUDENT_LOCKED);
             return true;
         }

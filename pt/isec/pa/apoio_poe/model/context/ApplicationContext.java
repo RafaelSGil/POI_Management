@@ -5,6 +5,7 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
 
+import java.util.List;
 import java.util.Map;
 
 public class ApplicationContext {
@@ -36,15 +37,20 @@ public class ApplicationContext {
         return state.checkData();
     }
 
-    public boolean editDataProposals(Map<String, Map<String, String>> attributes) {
-        return state.editDataProposal(attributes);
+    public int checkTypeProposal(String identifier) {
+        return data.checkTypeProposal(identifier);
     }
 
-    public boolean editDataProfessor(String email, boolean advisor){
+    public boolean editDataProposals(String identifier, String attribute, List<String> newValue) {
+        // return state.editDataProposal(attributes);
+        return true;
+    }
+
+    public boolean editDataProfessor(String email, boolean advisor) {
         return state.editDataProfessor(email, advisor);
     }
 
-    public boolean editDataStudent(String identifier, String change, String whatToChange){
+    public boolean editDataStudent(String identifier, String change, String whatToChange) {
         return state.editDataStudent(identifier, change, whatToChange);
     }
 
@@ -68,12 +74,24 @@ public class ApplicationContext {
         return state.studentManager();
     }
 
-    public boolean candidatureManager(){
+    public boolean candidatureManager() {
         return state.candidatureManager();
+    }
+
+    public boolean removeCandidature(String id, String proposal) {
+        return state.removeCandidature(id, proposal);
     }
 
     @Override
     public String toString() {
         return data + ", phase = " + state + "\n";
+    }
+
+    public boolean isBranchValid(String branch) {
+        if (branch.equals("DA") || branch.equals("RAS") || branch.equals("SI")) {
+            return true;
+        }
+
+        return false;
     }
 }
