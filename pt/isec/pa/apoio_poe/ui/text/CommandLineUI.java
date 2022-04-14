@@ -365,15 +365,17 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert candidature data", "Delete candidature data",
-                "Edit candidature data", "Consult candidature data", "Close state", "Go to previous state");
+                "Edit candidature data", "Consult candidature data", "List students", "List proposals","Close state", "Go to previous state");
 
         switch (input) {
             case 1 -> insertData();
             case 2 -> deleteCandidatureData();
             case 3 -> editCandidatureData();
             case 4 -> consultData();
-            case 5 -> closePhase();
-            case 6 -> studentManagement();
+            case 5 -> listStudents();
+            case 6 -> listProposals();
+            case 7 -> closePhase();
+            case 8 -> studentManagement();
         }
 
         return true;
@@ -394,6 +396,44 @@ public class CommandLineUI {
 
     public void candidatureManagement() {
         context.candidatureManager();
+    }
+
+    public void listStudents(){
+        switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures", "List students without candidatures", "List students with autoproposals")){
+            case 1 -> listStudentsWithCandidature();
+            case 2 -> listStudentsWithoutCandidature();
+            case 3 -> listStudentsWithAutoProposals();
+        }
+    }
+
+    public void listStudentsWithCandidature(){
+        System.out.println(context.listStudentsWithCandidatures());
+    }
+
+    public void listStudentsWithoutCandidature(){
+        System.out.println(context.listStudentsWithoutCandidatures());
+    }
+
+    public void listStudentsWithAutoProposals(){
+        System.out.println(context.listStudentsWithAutoProposals());
+    }
+
+    public void listProposals(){
+        List<Integer> filters = new ArrayList<>();
+
+        System.out.println("Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Proposals with candidatures \n\t4 - Proposals without candidatures");
+
+        while(true){
+            int filter = InputProtection.readInt("Specify the filters you want [type 5 to quit]: ");
+
+            if(filter == 5 || filters.size() >= 4){
+                break;
+            }
+
+            filters.add(filter);
+        }
+
+        System.out.println(context.listProposalsFilters(filters));
     }
 
     public void start() {

@@ -19,7 +19,7 @@ public class Project extends MidProposal {
     }
 
     public String getProfessor() {
-        return professor.getName();
+        return professor.getEmail();
     }
 
     public static MidProposal createDummyProject(String idOfProposal) {

@@ -7,6 +7,7 @@ import pt.isec.pa.apoio_poe.model.data.proposals.MidProposal;
 import pt.isec.pa.apoio_poe.model.data.proposals.Project;
 import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
+import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.CandidaturePhase;
 
 import java.util.*;
 
@@ -742,6 +743,111 @@ public class Data {
                 sb.append(mid.toString()).append("\n");
             }
         }
+        return sb.toString();
+    }
+
+    public String listStudentsWithCandidatures(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Person student : students){
+            if(candidatures.containsKey(((Student)student).getId())){
+                sb.append(student).append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public String listStudentsWithoutCandidatures(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Person student : students){
+            if(!candidatures.containsKey(((Student)student).getId())){
+                sb.append(student).append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public String listStudentsWithAutoProposals(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Proposal auto : autoproposals){
+            if(auto.getStudent() != -1){
+                for(Person student : students){
+                    if(auto.getStudent() == ((Student)student).getId()){
+                        sb.append(student).append("\n");
+                    }
+                }
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public String listProposalsFilters(List<Integer> filters){
+        StringBuilder sb = new StringBuilder();
+
+        for(int filter : filters){
+            if(filter == 1){
+                sb.append("AutoProposals from students:\n");
+                for(Proposal auto : autoproposals){
+                    if(auto.getStudent() != -1){
+                        sb.append(auto).append("\n");
+                    }
+                }
+            }
+            if(filter == 2){
+                sb.append("Proposals from professors:\n");
+                for(MidProposal project : projects){
+                    if(((Project)project).getProfessor() != null){
+                        for(Person professor : professors){
+                            if(professor.getEmail().equals(((Project)project).getProfessor())){
+                                sb.append(project).append("\n");
+                            }
+                        }
+                    }
+                }
+            }
+            if(filter == 3){
+                sb.append("Proposals with candidatures:\n");
+                for (Long ids : candidatures.keySet()) {
+                    Iterator<String> proposals = candidatures.get(ids).iterator();
+                    while(proposals.hasNext()){
+                        for(MidProposal project : projects){
+                            if(project.getIdOfProposal().equals(proposals.next())){
+                                sb.append(project).append("\n");
+                            }
+                        }
+                        for(MidProposal internship : internships){
+                            if(internship.getIdOfProposal().equals(proposals.next())){
+                                sb.append(internship).append("\n");
+                            }
+                        }
+                    }
+                }
+            }
+            if(filter == 4){
+                sb.append("Proposals without candidatures:\n");
+                for (Long ids : candidatures.keySet()) {
+                    Iterator<String> proposals = candidatures.get(ids).iterator();
+                    while(proposals.hasNext()){
+                        for(MidProposal project : projects){
+                            if(!project.getIdOfProposal().equals(proposals.next())){
+                                sb.append(project).append("\n");
+                            }
+                        }
+                        for(MidProposal internship : internships){
+                            if(!internship.getIdOfProposal().equals(proposals.next())){
+                                sb.append(internship).append("\n");
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
         return sb.toString();
     }
 }

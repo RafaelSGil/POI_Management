@@ -1,6 +1,7 @@
 package pt.isec.pa.apoio_poe.model.context;
 
 import pt.isec.pa.apoio_poe.model.data.Data;
+import pt.isec.pa.apoio_poe.model.data.proposals.Internship;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
@@ -87,6 +88,22 @@ public class ApplicationContext {
 
     public boolean editCandidatures(String id, String proposal) {
         return state.editCandidatures(id, proposal);
+    }
+
+    public String listStudentsWithCandidatures(){
+        return data.listStudentsWithCandidatures();
+    }
+
+    public String listStudentsWithoutCandidatures(){
+        return data.listStudentsWithoutCandidatures();
+    }
+
+    public String listStudentsWithAutoProposals(){
+        return data.listStudentsWithAutoProposals();
+    }
+
+    public String listProposalsFilters(List<Integer> filters){
+        return data.listProposalsFilters(filters);
     }
 
     @Override
