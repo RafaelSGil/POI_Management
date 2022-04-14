@@ -60,4 +60,9 @@ public class CandidaturePhase extends StateAdapter {
         setState(ApplicationState.CANDIDATURE_LOCKED);
         return true;
     }
+
+    @Override
+    public boolean editCandidatures(String id, String proposal) {
+        return data.editCandidatures(id, proposal);
+    }
 }

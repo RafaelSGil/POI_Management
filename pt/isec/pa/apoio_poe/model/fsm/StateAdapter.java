@@ -203,4 +203,9 @@ public class StateAdapter implements IApplicationState {
         return false;
     }
 
+    @Override
+    public boolean editCandidatures(String id, String proposal) {
+        return false;
+    }
+
 }

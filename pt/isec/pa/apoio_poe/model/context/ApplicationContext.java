@@ -85,6 +85,10 @@ public class ApplicationContext {
         return state.removeCandidature(id);
     }
 
+    public boolean editCandidatures(String id, String proposal) {
+        return state.editCandidatures(id, proposal);
+    }
+
     @Override
     public String toString() {
         return data + ", phase = " + state + "\n";

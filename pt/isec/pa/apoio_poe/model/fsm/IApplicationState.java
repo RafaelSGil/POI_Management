@@ -77,4 +77,6 @@ public interface IApplicationState {
     boolean removeProposalFromCandidature(String id, String proposal);
 
     boolean removeCandidature(String id);
+
+    boolean editCandidatures(String id, String proposal);
 }

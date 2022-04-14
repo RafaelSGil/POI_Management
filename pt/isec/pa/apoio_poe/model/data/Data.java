@@ -10,8 +10,6 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 
 import java.util.*;
 
-import org.ietf.jgss.Oid;
-
 public class Data {
     Set<Proposal> autoproposals;
     Set<Person> students;
@@ -398,107 +396,76 @@ public class Data {
     }
 
     public boolean editProposals(String identifier, String attribute, List<String> newValue) {
-
+        if (internships.contains(Internship.createDummyInternship(identifier))) {
+            editInternships(identifier, attribute, newValue);
+        }
+        if (projects.contains(Project.createDummyProject(identifier))) {
+            editProjects(identifier, attribute, newValue);
+        }
+        if (autoproposals.contains(AutoProposal.createDummyAutoProposal(identifier))) {
+            editAutoProposals(identifier, attribute, newValue);
+        }
         return true;
     }
 
-    public void editAutoProposals(String identifier, Map<String, String> attributes) {
-        for (String property : attributes.keySet()) {
-            if (property.equals("title")) {
-                for (Proposal auto : autoproposals) {
-                    if (auto.getIdOfProposal().equals(identifier)) {
-                        auto.setTitle(attributes.get(property));
-                        break;
-                    }
+    public void editAutoProposals(String identifier, String attribute, List<String> newValue) {
+        for (Proposal auto : autoproposals) {
+            if (auto.getIdOfProposal().equals(identifier)) {
+                if (attribute.equals("title")) {
+                    auto.setTitle(newValue.get(0));
                 }
-            }
-            if (property.equals("student")) {
-                for (Proposal auto : autoproposals) {
-                    if (auto.getIdOfProposal().equals(identifier)) {
-                        auto.setStudent((Student) Student.createDummyStudent(Long.parseLong(attributes.get(property))));
-                        break;
+                if (attribute.equals("student")) {
+                    if (students.contains(Student.createDummyStudent(Long.parseLong(newValue.get(0))))) {
+                        auto.setStudent((Student) Student.createDummyStudent(Long.parseLong(newValue.get(0))));
                     }
                 }
             }
         }
     }
 
-    public void editProjects(String identifier, Map<String, String> attributes) {
-        for (String property : attributes.keySet()) {
-            if (property.equals("branch")) {
-                for (MidProposal project : projects) {
-                    if (project.getIdOfProposal().equals(identifier)) {
-                        project.setBranch(List.of(attributes.get(identifier)));
-                        break;
+    public void editProjects(String identifier, String attribute, List<String> newValue) {
+        for (MidProposal mid : projects) {
+            if (mid.getIdOfProposal().equals(identifier)) {
+                if (attribute.equals("title")) {
+                    mid.setTitle(newValue.get(0));
+                }
+                if (attribute.equals("branch")) {
+                    mid.setBranch(newValue);
+                }
+                if (attribute.equals("professor")) {
+                    if (professors.contains(Professor.createDummyProfessor(newValue.get(0)))) {
+                        ((Project) mid).setProfessor((Professor) Professor.createDummyProfessor(newValue.get(0)));
                     }
                 }
-            }
-            if (property.equals("title")) {
-                for (MidProposal project : projects) {
-                    if (project.getIdOfProposal().equals(identifier)) {
-                        project.setTitle(attributes.get(property));
-                        break;
+                if (attribute.equals("student")) {
+                    if (students.contains(Student.createDummyStudent(Long.parseLong(newValue.get(0))))) {
+                        mid.setStudent((Student) Student.createDummyStudent(Long.parseLong(newValue.get(0))));
                     }
-                }
-            }
-            if (property.equals("professor")) {
-                for (MidProposal project : internships) {
-                    if (project.getIdOfProposal().equals(identifier)) {
-                        ((Project) project)
-                                .setProfessor((Professor) Professor.createDummyProfessor(attributes.get(property)));
-                        break;
-                    }
-                }
-            }
-            if (property.equals("student")) {
-                for (MidProposal project : internships) {
-                    if (project.getIdOfProposal().equals(identifier)) {
-                        project.setStudent(
-                                (Student) Student.createDummyStudent(Long.parseLong(attributes.get(property))));
-                        break;
-                    }
+
                 }
             }
         }
     }
 
-    public void editInternships(String identifier, Map<String, String> attributes) {
-        for (String property : attributes.keySet()) {
-            if (property.equals("title")) {
-                for (MidProposal internship : internships) {
-                    if (internship.getIdOfProposal().equals(identifier)) {
-                        internship.setTitle(attributes.get(property));
-                        break;
-                    }
+    public void editInternships(String identifier, String attribute, List<String> newValue) {
+        for (MidProposal mid : internships) {
+            if (mid.getIdOfProposal().equals(identifier)) {
+                if (attribute.equals("title")) {
+                    mid.setTitle(newValue.get(0));
                 }
-            }
-            if (property.equals("branch")) {
-                for (MidProposal internship : internships) {
-                    if (internship.getIdOfProposal().equals(identifier)) {
-                        internship.setBranch(List.of(attributes.get(identifier)));
-                        break;
-                    }
+                if (attribute.equals("branch")) {
+                    mid.setBranch(newValue);
                 }
-            }
-            if (property.equals("company")) {
-                for (MidProposal internship : internships) {
-                    if (internship.getIdOfProposal().equals(identifier)) {
-                        ((Internship) internship).setNameOfCompany(attributes.get(property));
-                        break;
-                    }
+                if (attribute.equals("company")) {
+                    ((Internship) mid).setNameOfCompany(newValue.get(0));
                 }
-            }
-            if (property.equals("student")) {
-                for (MidProposal internship : internships) {
-                    if (internship.getIdOfProposal().equals(identifier)) {
-                        internship.setStudent(
-                                (Student) Student.createDummyStudent(Long.parseLong(attributes.get(property))));
-                        break;
+                if (attribute.equals("student")) {
+                    if (students.contains(Student.createDummyStudent(Long.parseLong(newValue.get(0))))) {
+                        mid.setStudent((Student) Student.createDummyStudent(Long.parseLong(newValue.get(0))));
                     }
                 }
             }
         }
-
     }
 
     public String getAllStudents() {
@@ -694,6 +661,9 @@ public class Data {
     }
 
     public boolean removeCandidatureGivenStudentID(String id, String proposal) {
+        if (id == null || proposal == null)
+            return false;
+
         for (Long ids : candidatures.keySet()) {
             if (ids.equals(Long.parseLong(id))) {
                 Iterator<String> proposals = candidatures.get(ids).iterator();
@@ -702,6 +672,33 @@ public class Data {
                         proposals.remove();
                         return true;
                     }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean editCandidatures(String id, String proposal) {
+        if (id == null || proposal == null)
+            return false;
+
+        for (Long ids : candidatures.keySet()) {
+            if (ids.equals(Long.parseLong(id))) {
+                Iterator<String> proposals = candidatures.get(ids).iterator();
+                while (proposals.hasNext()) {
+                    if (proposals.next().equals(proposal)) {
+                        return false;
+                    }
+                }
+                if (autoproposals.contains(AutoProposal.createDummyAutoProposal(proposal))) {
+                    candidatures.get(Long.parseLong(id)).add(proposal);
+                    return true;
+                } else if (internships.contains(Internship.createDummyInternship(proposal))) {
+                    candidatures.get(Long.parseLong(id)).add(proposal);
+                    return true;
+                } else if (projects.contains(Project.createDummyProject(proposal))) {
+                    candidatures.get(Long.parseLong(id)).add(proposal);
+                    return true;
                 }
             }
         }
