@@ -7,7 +7,6 @@ import pt.isec.pa.apoio_poe.model.data.proposals.MidProposal;
 import pt.isec.pa.apoio_poe.model.data.proposals.Project;
 import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.CandidaturePhase;
 
 import java.util.*;
 
@@ -746,11 +745,11 @@ public class Data {
         return sb.toString();
     }
 
-    public String listStudentsWithCandidatures(){
+    public String listStudentsWithCandidatures() {
         StringBuilder sb = new StringBuilder();
 
-        for(Person student : students){
-            if(candidatures.containsKey(((Student)student).getId())){
+        for (Person student : students) {
+            if (candidatures.containsKey(((Student) student).getId())) {
                 sb.append(student).append("\n");
             }
         }
@@ -758,11 +757,11 @@ public class Data {
         return sb.toString();
     }
 
-    public String listStudentsWithoutCandidatures(){
+    public String listStudentsWithoutCandidatures() {
         StringBuilder sb = new StringBuilder();
 
-        for(Person student : students){
-            if(!candidatures.containsKey(((Student)student).getId())){
+        for (Person student : students) {
+            if (!candidatures.containsKey(((Student) student).getId())) {
                 sb.append(student).append("\n");
             }
         }
@@ -770,13 +769,13 @@ public class Data {
         return sb.toString();
     }
 
-    public String listStudentsWithAutoProposals(){
+    public String listStudentsWithAutoProposals() {
         StringBuilder sb = new StringBuilder();
 
-        for(Proposal auto : autoproposals){
-            if(auto.getStudent() != -1){
-                for(Person student : students){
-                    if(auto.getStudent() == ((Student)student).getId()){
+        for (Proposal auto : autoproposals) {
+            if (auto.getStudent() != -1) {
+                for (Person student : students) {
+                    if (auto.getStudent() == ((Student) student).getId()) {
                         sb.append(student).append("\n");
                     }
                 }
@@ -786,60 +785,62 @@ public class Data {
         return sb.toString();
     }
 
-    public String listProposalsFilters(List<Integer> filters){
+    public String listProposalsFilters(List<Integer> filters) {
         StringBuilder sb = new StringBuilder();
 
-        for(int filter : filters){
-            if(filter == 1){
+        for (int filter : filters) {
+            if (filter == 1) {
                 sb.append("AutoProposals from students:\n");
-                for(Proposal auto : autoproposals){
-                    if(auto.getStudent() != -1){
+                for (Proposal auto : autoproposals) {
+                    if (auto.getStudent() != -1) {
                         sb.append(auto).append("\n");
                     }
                 }
             }
-            if(filter == 2){
+            if (filter == 2) {
                 sb.append("Proposals from professors:\n");
-                for(MidProposal project : projects){
-                    if(((Project)project).getProfessor() != null){
-                        for(Person professor : professors){
-                            if(professor.getEmail().equals(((Project)project).getProfessor())){
+                for (MidProposal project : projects) {
+                    if (((Project) project).getProfessor() != null) {
+                        for (Person professor : professors) {
+                            if (professor.getEmail().equals(((Project) project).getProfessor())) {
                                 sb.append(project).append("\n");
                             }
                         }
                     }
                 }
             }
-            if(filter == 3){
+            if (filter == 3) {
                 sb.append("Proposals with candidatures:\n");
                 for (Long ids : candidatures.keySet()) {
                     Iterator<String> proposals = candidatures.get(ids).iterator();
-                    while(proposals.hasNext()){
-                        for(MidProposal project : projects){
-                            if(project.getIdOfProposal().equals(proposals.next())){
+                    while (proposals.hasNext()) {
+                        String aux = proposals.next();
+                        for (MidProposal project : projects) {
+                            if (project.getIdOfProposal().equals(aux)) {
                                 sb.append(project).append("\n");
                             }
                         }
-                        for(MidProposal internship : internships){
-                            if(internship.getIdOfProposal().equals(proposals.next())){
+                        for (MidProposal internship : internships) {
+                            if (internship.getIdOfProposal().equals(aux)) {
                                 sb.append(internship).append("\n");
                             }
                         }
                     }
                 }
             }
-            if(filter == 4){
+            if (filter == 4) {
                 sb.append("Proposals without candidatures:\n");
                 for (Long ids : candidatures.keySet()) {
                     Iterator<String> proposals = candidatures.get(ids).iterator();
-                    while(proposals.hasNext()){
-                        for(MidProposal project : projects){
-                            if(!project.getIdOfProposal().equals(proposals.next())){
+                    while (proposals.hasNext()) {
+                        String aux = proposals.next();
+                        for (MidProposal project : projects) {
+                            if (!project.getIdOfProposal().equals(aux)) {
                                 sb.append(project).append("\n");
                             }
                         }
-                        for(MidProposal internship : internships){
-                            if(!internship.getIdOfProposal().equals(proposals.next())){
+                        for (MidProposal internship : internships) {
+                            if (!internship.getIdOfProposal().equals(aux)) {
                                 sb.append(internship).append("\n");
                             }
                         }
