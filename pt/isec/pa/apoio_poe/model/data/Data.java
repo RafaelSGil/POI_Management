@@ -10,6 +10,8 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 
 import java.util.*;
 
+import javax.swing.text.Highlighter.Highlight;
+
 public class Data {
     Set<Proposal> autoproposals;
     Set<Person> students;
@@ -838,24 +840,27 @@ public class Data {
         return null;
     }
 
-    public boolean associatedAttribution(){
-        for (Proposal auto : autoproposals){
-            if(auto.getStudent() != -1){
-                if(!attributions.containsKey(auto.getIdOfProposal()) && !attributions.containsValue(auto.getStudent())){
+    public boolean associatedAttribution() {
+        for (Proposal auto : autoproposals) {
+            if (auto.getStudent() != -1) {
+                if (!attributions.containsKey(auto.getIdOfProposal())
+                        && !attributions.containsValue(auto.getStudent())) {
                     attributions.put(auto.getIdOfProposal(), auto.getStudent());
                 }
             }
         }
-        for(MidProposal project : projects){
-            if(project.getStudent() != -1){
-                if(!attributions.containsKey(project.getIdOfProposal()) && !attributions.containsValue(project.getStudent())){
+        for (MidProposal project : projects) {
+            if (project.getStudent() != -1) {
+                if (!attributions.containsKey(project.getIdOfProposal())
+                        && !attributions.containsValue(project.getStudent())) {
                     attributions.put(project.getIdOfProposal(), project.getStudent());
                 }
             }
         }
-        for(MidProposal internship : internships){
-            if(internship.getStudent() != -1){
-                if(!attributions.containsKey(internship.getIdOfProposal()) && !attributions.containsValue(internship.getStudent())){
+        for (MidProposal internship : internships) {
+            if (internship.getStudent() != -1) {
+                if (!attributions.containsKey(internship.getIdOfProposal())
+                        && !attributions.containsValue(internship.getStudent())) {
                     attributions.put(internship.getIdOfProposal(), internship.getStudent());
                 }
             }
@@ -863,21 +868,102 @@ public class Data {
         return true;
     }
 
-    public String listStudentWithProposalAttributed(){
+    public boolean nonAssociateAttribution() {
+        ArrayList<Person> highestGradeStudents = new ArrayList<>();
+
+        for (MidProposal internship : internships) {
+            if (internship.getStudent() == -1) {
+                String[] branches = internship.getBranches().split(" ");
+                highestGradeStudents = getStudentsWithTheHighestGradeForInternship(branches, true);
+                if (highestGradeStudents.size() == 1) {
+                    if (!attributions.containsKey(internship.getIdOfProposal())) {
+                        attributions.put(internship.getIdOfProposal(), highestGradeStudents.get(1).getId());
+                    }
+                } else {
+                    /*
+                     * implementar função para o utilizador decidir entre os que têm melhor nota
+                     * o que fica com o estágio
+                     */
+                }
+            }
+        }
+
+        for (MidProposal project : projects) {
+            if (project.getStudent() == -1) {
+                String[] branches = project.getBranches().split(" ");
+                highestGradeStudents = getStudentsWithTheHighestGradeForInternship(branches, false);
+                if (highestGradeStudents.size() == 1) {
+                    if (!attributions.containsKey(project.getIdOfProposal())) {
+                        attributions.put(project.getIdOfProposal(), highestGradeStudents.get(1).getId());
+                    }
+                } else {
+                    /*
+                     * implementar função para o utilizador decidir entre os que têm melhor nota
+                     * o que fica com o projeto
+                     */
+                }
+            }
+        }
+        return true;
+    }
+
+    public ArrayList<Person> getStudentsWithTheHighestGradeForInternship(String[] branches, boolean internship) {
+        ArrayList<Person> highest = new ArrayList<>();
+
+        for (String branch : branches) {
+            for (Person student : students) {
+                if (internship) {
+                    if (student.getInternship()) {
+                        if (student.getCourseBranch().equals(branch)) {
+                            if (!attributions.containsValue(student.getId())) {
+                                if (highest.size() == 0)
+                                    highest.add(student);
+                                for (Person highestGrade : highest) {
+                                    if (student.getClassification() > highestGrade.getClassification()) {
+                                        highest.add(student);
+                                        highest.remove(highestGrade);
+                                    } else if (student.getClassification() == highestGrade.getClassification())
+                                        highest.add(student);
+                                }
+                            }
+                        }
+                    }
+                } else {
+                    if (student.getCourseBranch().equals(branch)) {
+                        if (!attributions.containsValue(student.getId())) {
+                            if (highest.size() == 0)
+                                highest.add(student);
+                            for (Person highestGrade : highest) {
+                                if (student.getClassification() > highestGrade.getClassification()) {
+                                    highest.add(student);
+                                    highest.remove(highestGrade);
+                                } else if (student.getClassification() == highestGrade.getClassification())
+                                    highest.add(student);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return highest;
+    }
+
+    public String listStudentWithProposalAttributed() {
         StringBuilder sb = new StringBuilder();
 
-        for (String idProposal : attributions.keySet()){
-            sb.append("Proposal ").append(idProposal).append(" is attributed to student ").append(attributions.get(idProposal));
+        for (String idProposal : attributions.keySet()) {
+            sb.append("Proposal ").append(idProposal).append(" is attributed to student ")
+                    .append(attributions.get(idProposal));
         }
 
         return sb.toString();
     }
 
-    public String listStudentWithoutProposalAttributed(){
+    public String listStudentWithoutProposalAttributed() {
         StringBuilder sb = new StringBuilder();
 
-        for(Person student : students){
-            if(!attributions.containsValue(((Student)student).getId())){
+        for (Person student : students) {
+            if (!attributions.containsValue(((Student) student).getId())) {
                 sb.append(student).append("\n");
             }
         }

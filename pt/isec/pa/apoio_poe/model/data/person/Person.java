@@ -29,6 +29,14 @@ public abstract class Person {
         return;
     }
 
+    public String getCourseBranch() {
+        return null;
+    }
+
+    public double getClassification() {
+        return 0;
+    }
+
     public void setClassification(double classification) {
         return;
     }
@@ -39,6 +47,14 @@ public abstract class Person {
 
     public void setAdvisor(boolean advisor) {
         return;
+    }
+
+    public boolean getInternship() {
+        return false;
+    }
+
+    public long getId() {
+        return 0;
     }
 
     @Override

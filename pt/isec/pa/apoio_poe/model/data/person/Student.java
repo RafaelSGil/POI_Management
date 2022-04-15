@@ -28,6 +28,7 @@ public class Student extends Person {
         return new Student(null, null, id, null, null, 0, false);
     }
 
+    @Override
     public long getId() {
         return id;
     }
@@ -41,6 +42,7 @@ public class Student extends Person {
         this.course = course;
     }
 
+    @Override
     public String getCourseBranch() {
         return courseBranch;
     }
@@ -50,6 +52,7 @@ public class Student extends Person {
         this.courseBranch = courseBranch;
     }
 
+    @Override
     public double getClassification() {
         return classification;
     }
@@ -59,6 +62,7 @@ public class Student extends Person {
         this.classification = classification;
     }
 
+    @Override
     public boolean getInternship() {
         return internship;
     }
