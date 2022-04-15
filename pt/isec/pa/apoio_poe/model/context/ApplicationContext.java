@@ -118,4 +118,20 @@ public class ApplicationContext {
 
         return false;
     }
+
+    public boolean isLocked(ApplicationState s){
+        return data.isLocked(s);
+    }
+
+    public boolean associateAttribution(){
+        return state.associateAttribution();
+    }
+
+    public boolean nonAssociatedAttribution(){
+        return state.nonAssociateAttribution();
+    }
+
+    public boolean proposalAttributionManager(){
+        return state.proposalAttributionManager();
+    }
 }

@@ -5,8 +5,8 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 
-public class ProposalAttribuitionPhase extends StateAdapter {
-    public ProposalAttribuitionPhase(ApplicationContext context, Data data) {
+public class ProposalAttributionPhase extends StateAdapter {
+    public ProposalAttributionPhase(ApplicationContext context, Data data) {
         super(context, data);
     }
 
@@ -23,5 +23,25 @@ public class ProposalAttribuitionPhase extends StateAdapter {
         }
         setState(ApplicationState.CANDIDATURE);
         return true;
+    }
+
+    @Override
+    public boolean associateAttribution() {
+        return data.associatedAttribution();
+    }
+
+    @Override
+    public boolean nonAssociateAttribution() {
+        return super.nonAssociateAttribution();
+    }
+
+    @Override
+    public String listStudentsWithCandidature() {
+        return data.listStudentsWithCandidatures();
+    }
+
+    @Override
+    public String listStudentsWithAutoProposal() {
+        return data.listStudentsWithAutoProposals();
     }
 }

@@ -129,16 +129,6 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean listStudents() {
-        return false;
-    }
-
-    @Override
-    public boolean listProposals() {
-        return false;
-    }
-
-    @Override
     public boolean professorAttributionManager() {
         return false;
     }

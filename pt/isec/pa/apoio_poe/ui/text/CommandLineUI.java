@@ -363,7 +363,7 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert candidature data", "Delete candidature data",
-                "Edit candidature data", "Consult candidature data", "List students", "List proposals","Close state", "Go to previous state");
+                "Edit candidature data", "Consult candidature data", "List students", "List proposals","Close state", "Go to previous state", "Proposal Attribution Management");
 
         switch (input) {
             case 1 -> insertData();
@@ -374,19 +374,25 @@ public class CommandLineUI {
             case 6 -> listProposals();
             case 7 -> closePhase();
             case 8 -> studentManagement();
+            case 9 -> proposalAttributionManagement();
         }
 
         return true;
     }
 
+    public void proposalAttributionManagement(){
+        context.proposalAttributionManager();
+    }
+
     public boolean candidaturePhaseLocked() {
         System.out.println("Current state: " + context.getState());
 
-        int input = InputProtection.chooseOption(null, "Consult candidature data", "Go to previous state");
+        int input = InputProtection.chooseOption(null, "Consult candidature data", "Go to previous state", "Proposal Attribution Management");
 
         switch (input) {
             case 1 -> consultData();
             case 2 -> studentManagement();
+            case 3 -> proposalAttributionManagement();
         }
 
         return true;
@@ -397,10 +403,22 @@ public class CommandLineUI {
     }
 
     public void listStudents(){
-        switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures", "List students without candidatures", "List students with autoproposals")){
-            case 1 -> listStudentsWithCandidature();
-            case 2 -> listStudentsWithoutCandidature();
-            case 3 -> listStudentsWithAutoProposals();
+        if(context.getState() == ApplicationState.CANDIDATURE){
+            switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures", "List students without candidatures", "List students with autoproposals")){
+                case 1 -> listStudentsWithCandidature();
+                case 2 -> listStudentsWithoutCandidature();
+                case 3 -> listStudentsWithAutoProposals();
+            }
+
+            return;
+        }
+
+        if(context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
+            switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures", "List students with autoproposals", "List students with proposal attributed", "List students without attributions")){
+                case 1 -> listStudentsWithCandidature();
+                case 2 -> listStudentsWithAutoProposals();
+            }
+
         }
     }
 
@@ -422,7 +440,7 @@ public class CommandLineUI {
         System.out.println("Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Proposals with candidatures \n\t4 - Proposals without candidatures");
 
         while(true){
-            int filter = InputProtection.readInt("Specify the filters you want [type 5 to quit]: ");
+            int filter = InputProtection.readInt("Specify the filters you want [type 5 to stop]: ");
 
             if(filter == 5 || filters.size() >= 4){
                 break;
@@ -432,6 +450,53 @@ public class CommandLineUI {
         }
 
         System.out.println(context.listProposalsFilters(filters));
+    }
+
+    public boolean proposalAttributionPhase(){
+        System.out.println("Current state: " + context.getState());
+
+        if(!context.isLocked(ApplicationState.CANDIDATURE)){
+            switch (InputProtection.chooseOption(null, "Associated students attribution", "List students", "List proposals", "Go to previous state")){
+                case 1 -> associateAttribution();
+                case 2 -> listStudents();
+                case 3 -> listProposals();
+                case 4 -> candidatureManagement();
+            }
+        }else{
+            switch (InputProtection.chooseOption(null, "Associated students attribution", "Non associated students attribution", "Manual attribution", "Manual removal", "List students", "List proposals", "Go to previous state", "Close state")){
+                case 1 -> associateAttribution();
+                case 2 -> nonAssociatedAttribution();
+                case 3 -> manualAttribution();
+                case 4 -> manualRemoval();
+                case 5 -> listStudents();
+                case 6 -> listProposals();
+                case 7 -> candidatureManagement();
+                case 8 -> closePhase();
+            }
+        }
+
+        return true;
+    }
+
+    public boolean proposalAttributionPhaseLocked(){
+
+        return true;
+    }
+
+    public void associateAttribution(){
+        context.associateAttribution();
+    }
+
+    public void nonAssociatedAttribution(){
+        context.nonAssociatedAttribution();
+    }
+
+    public void manualAttribution(){
+
+    }
+
+    public void manualRemoval(){
+
     }
 
     public void start() {
@@ -444,11 +509,9 @@ public class CommandLineUI {
             case PROPOSAL_LOCKED -> proposalPhaseLocked();
             case CANDIDATURE -> candidaturePhase();
             case CANDIDATURE_LOCKED -> candidaturePhaseLocked();
-
-            /*
-             * case PROPOSAL_ATTRIBUTION -> proposalAttributionPhase();
-             * case PROPOSAL_ATTRIBUTION_LOCKED -> proposalAttributionPhaseLocked();
-             * case PROFESSOR_ATTRIBUTION -> professorAttribution();
+            case PROPOSAL_ATTRIBUTION -> proposalAttributionPhase();
+            case PROPOSAL_ATTRIBUTION_LOCKED -> proposalAttributionPhaseLocked();
+             /* case PROFESSOR_ATTRIBUTION -> professorAttribution();
              * case SEARCH -> searchPhase();
              */
             default -> throw new IllegalArgumentException("Unexpected value: " + context.getState());

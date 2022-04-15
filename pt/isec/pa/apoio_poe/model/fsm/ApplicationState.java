@@ -6,7 +6,7 @@ import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.CandidaturePhaseLocke
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorAttribuitionPhase;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorPhase;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorPhaseLocked;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalAttribuitionPhase;
+import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalAttributionPhase;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalAttributionPhaseLocked;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalPhase;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalPhaseLocked;
@@ -34,7 +34,7 @@ public enum ApplicationState {
             case PROPOSAL_LOCKED -> new ProposalPhaseLocked(context, data);
             case CANDIDATURE -> new CandidaturePhase(context, data);
             case CANDIDATURE_LOCKED -> new CandidaturePhaseLocked(context, data);
-            case PROPOSAL_ATTRIBUTION -> new ProposalAttribuitionPhase(context, data);
+            case PROPOSAL_ATTRIBUTION -> new ProposalAttributionPhase(context, data);
             case PROPOSAL_ATTRIBUTION_LOCKED -> new ProposalAttributionPhaseLocked(context, data);
             case PROFESSOR_ATTRIBUTION -> new ProfessorAttribuitionPhase(context, data);
             case SEARCH -> new SearchPhase(context, data);

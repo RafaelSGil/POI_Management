@@ -18,6 +18,7 @@ public class Data {
     Set<MidProposal> projects;
     Map<Long, List<String>> candidatures;
     Map<ApplicationState, Boolean> lockedPhases;
+    Map<String, Long> attributions;
 
     public Data() {
 
@@ -28,6 +29,7 @@ public class Data {
         this.projects = new HashSet<>();
         this.candidatures = new HashMap<>();
         this.lockedPhases = new HashMap<>();
+        this.attributions = new HashMap<>();
         startMap();
     }
 
@@ -564,63 +566,6 @@ public class Data {
                 && (counterSiStudents <= counterSiProposals);
     }
 
-    public Proposal checkAssociationProposals(String identifier) {
-        // checks if a given proposal is already associated with a student
-
-        if (internships.contains(Internship.createDummyInternship(identifier))) {
-            for (MidProposal internship : internships) {
-                if (internship.getIdOfProposal().equals(identifier)) {
-                    if (internship.getStudent() == -1) {
-                        return internship;
-                    }
-                }
-            }
-        }
-        if (projects.contains(Project.createDummyProject(identifier))) {
-            for (MidProposal project : projects) {
-                if (project.getIdOfProposal().equals(identifier)) {
-                    if (project.getStudent() == -1) {
-                        return project;
-                    }
-                }
-            }
-        }
-        if (autoproposals.contains(AutoProposal.createDummyAutoProposal(identifier))) {
-            for (Proposal autoproposal : autoproposals) {
-                if (autoproposal.getIdOfProposal().equals(identifier)) {
-                    if (autoproposal.getStudent() == -1) {
-                        return autoproposal;
-                    }
-                }
-            }
-        }
-
-        return null;
-    }
-
-    public void addCandidature(long idStudent, List<String> proposals) {
-        if (students.contains(Student.createDummyStudent(idStudent)))
-            return;
-
-        String proposalID;
-        Proposal proposal;
-
-        Iterator list = proposals.iterator();
-
-        while (list.hasNext()) {
-            proposalID = (String) list.next();
-
-            if ((proposal = checkAssociationProposals(proposalID)) != null) {
-                for (Person student : students) {
-                    if (((Student) student).getId() == idStudent) {
-                        proposal.setStudent((Student) student);
-                    }
-                }
-            }
-        }
-
-    }
-
     public boolean addCandidatureFile(List<List<String>> attributes) {
         Iterator<List<String>> listOfListsIterator = attributes.iterator();
 
@@ -857,5 +802,64 @@ public class Data {
         }
 
         return sb.toString();
+    }
+
+    public Proposal checkAssociationProposals(String identifier) {
+        // checks if a given proposal is already associated with a student
+
+        if (internships.contains(Internship.createDummyInternship(identifier))) {
+            for (MidProposal internship : internships) {
+                if (internship.getIdOfProposal().equals(identifier)) {
+                    if (internship.getStudent() == -1) {
+                        return internship;
+                    }
+                }
+            }
+        }
+        if (projects.contains(Project.createDummyProject(identifier))) {
+            for (MidProposal project : projects) {
+                if (project.getIdOfProposal().equals(identifier)) {
+                    if (project.getStudent() == -1) {
+                        return project;
+                    }
+                }
+            }
+        }
+        if (autoproposals.contains(AutoProposal.createDummyAutoProposal(identifier))) {
+            for (Proposal autoproposal : autoproposals) {
+                if (autoproposal.getIdOfProposal().equals(identifier)) {
+                    if (autoproposal.getStudent() == -1) {
+                        return autoproposal;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
+
+    public boolean associatedAttribution(){
+        for (Proposal auto : autoproposals){
+            if(auto.getStudent() != -1){
+                if(!attributions.containsKey(auto.getIdOfProposal()) && !attributions.containsValue(auto.getStudent())){
+                    attributions.put(auto.getIdOfProposal(), auto.getStudent());
+                }
+            }
+        }
+        for(MidProposal project : projects){
+            if(project.getStudent() != -1){
+                if(!attributions.containsKey(project.getIdOfProposal()) && !attributions.containsValue(project.getStudent())){
+                    attributions.put(project.getIdOfProposal(), project.getStudent());
+                }
+            }
+        }
+        for(MidProposal internship : internships){
+            if(internship.getStudent() != -1){
+                if(!attributions.containsKey(internship.getIdOfProposal()) && !attributions.containsValue(internship.getStudent())){
+                    attributions.put(internship.getIdOfProposal(), internship.getStudent());
+                }
+            }
+        }
+        return true;
     }
 }

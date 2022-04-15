@@ -46,10 +46,6 @@ public interface IApplicationState {
 
     boolean manualAttribution();
 
-    boolean listStudents();
-
-    boolean listProposals();
-
     boolean professorAttributionManager();
 
     boolean listStudentsWithProposalWithoutProfessor();
