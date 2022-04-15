@@ -621,7 +621,7 @@ public class Data {
 
     }
 
-    public void addCandidatureFile(List<List<String>> attributes) {
+    public boolean addCandidatureFile(List<List<String>> attributes) {
         Iterator<List<String>> listOfListsIterator = attributes.iterator();
 
         long id = 0;
@@ -638,12 +638,19 @@ public class Data {
                 id = Long.parseLong((String) eachListIterator.next());
 
                 while (eachListIterator.hasNext()) {
-                    proposals.add((String) eachListIterator.next());
+                    String aux = (String) eachListIterator.next();
+                    if (autoproposals.contains(AutoProposal.createDummyAutoProposal(aux)))
+                        proposals.add(aux);
+                    else if (internships.contains(Internship.createDummyInternship(aux)))
+                        proposals.add(aux);
+                    else if (projects.contains(Project.createDummyProject(aux)))
+                        proposals.add(aux);
                 }
-                candidatures.put(id, new ArrayList<>(proposals));
+                if (proposals.size() > 0)
+                    candidatures.put(id, new ArrayList<>(proposals));
             }
         }
-
+        return true;
     }
 
     public String getCandidatures() {
