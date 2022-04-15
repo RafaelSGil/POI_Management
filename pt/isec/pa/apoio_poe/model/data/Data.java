@@ -862,4 +862,26 @@ public class Data {
         }
         return true;
     }
+
+    public String listStudentWithProposalAttributed(){
+        StringBuilder sb = new StringBuilder();
+
+        for (String idProposal : attributions.keySet()){
+            sb.append("Proposal ").append(idProposal).append(" is attributed to student ").append(attributions.get(idProposal));
+        }
+
+        return sb.toString();
+    }
+
+    public String listStudentWithoutProposalAttributed(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Person student : students){
+            if(!attributions.containsValue(((Student)student).getId())){
+                sb.append(student).append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
 }

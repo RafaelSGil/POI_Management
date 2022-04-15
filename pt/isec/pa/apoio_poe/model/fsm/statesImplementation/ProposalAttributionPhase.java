@@ -44,4 +44,14 @@ public class ProposalAttributionPhase extends StateAdapter {
     public String listStudentsWithAutoProposal() {
         return data.listStudentsWithAutoProposals();
     }
+
+    @Override
+    public String listStudentWithProposalAttributed() {
+        return data.listStudentWithProposalAttributed();
+    }
+
+    @Override
+    public String listStudentWithoutProposalAttributed() {
+        return data.listStudentWithoutProposalAttributed();
+    }
 }

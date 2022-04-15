@@ -134,4 +134,12 @@ public class ApplicationContext {
     public boolean proposalAttributionManager(){
         return state.proposalAttributionManager();
     }
+
+    public String listStudentWithProposalAttributed(){
+        return state.listStudentWithProposalAttributed();
+    }
+
+    public String listStudentWithoutProposalAttributed(){
+        return state.listStudentWithoutProposalAttributed();
+    }
 }

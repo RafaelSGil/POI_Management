@@ -417,9 +417,19 @@ public class CommandLineUI {
             switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures", "List students with autoproposals", "List students with proposal attributed", "List students without attributions")){
                 case 1 -> listStudentsWithCandidature();
                 case 2 -> listStudentsWithAutoProposals();
+                case 3 -> listStudentWithProposalAttributed();
+                case 4 -> listStudentWithoutProposalAttributed();
             }
 
         }
+    }
+
+    public void listStudentWithoutProposalAttributed(){
+        System.out.println(context.listStudentWithoutProposalAttributed());
+    }
+
+    public void listStudentWithProposalAttributed(){
+        System.out.println(context.listStudentWithProposalAttributed());
     }
 
     public void listStudentsWithCandidature(){

@@ -204,4 +204,14 @@ public class StateAdapter implements IApplicationState {
         return "Can't list";
     }
 
+    @Override
+    public String listStudentWithProposalAttributed() {
+        return null;
+    }
+
+    @Override
+    public String listStudentWithoutProposalAttributed() {
+        return null;
+    }
+
 }
