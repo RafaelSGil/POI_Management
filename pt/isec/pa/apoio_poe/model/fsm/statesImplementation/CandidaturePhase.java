@@ -65,4 +65,25 @@ public class CandidaturePhase extends StateAdapter {
     public boolean editCandidatures(String id, String proposal) {
         return data.editCandidatures(id, proposal);
     }
+
+    @Override
+    public boolean proposalAttributionManager() {
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return true;
+    }
+
+    @Override
+    public String listStudentsWithCandidature() {
+        return data.listStudentsWithCandidatures();
+    }
+
+    @Override
+    public String listStudentsWithoutCandidature() {
+        return data.listStudentsWithoutCandidatures();
+    }
+
+    @Override
+    public String listProposalsFilters(List<Integer> filters) {
+        return data.listProposalsFilters(filters);
+    }
 }

@@ -84,28 +84,28 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean listStudenstWithAutoProposal() {
-        return false;
+    public String listStudentsWithAutoProposal() {
+        return "Can't list";
     }
 
     @Override
-    public boolean listStudentsWithCandidature() {
-        return false;
+    public String listStudentsWithCandidature() {
+        return "Can't list";
     }
 
     @Override
-    public boolean listStudentsWithoutCandidature() {
-        return false;
+    public String listStudentsWithoutCandidature() {
+        return "Can't list";
     }
 
     @Override
-    public boolean listAutoProposalWithouCandidatures() {
-        return false;
+    public String listAutoProposalWithoutCandidatures() {
+        return "Can't list";
     }
 
     @Override
-    public boolean listAutoProposalWithCandidatures() {
-        return false;
+    public String listAutoProposalWithCandidatures() {
+        return "Can't list";
     }
 
     @Override
@@ -144,7 +144,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean listStudentsWithProposalWihoutProfessor() {
+    public boolean listStudentsWithProposalWithoutProfessor() {
         return false;
     }
 
@@ -154,32 +154,32 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean averageProfessorAtribuitions() {
+    public boolean averageProfessorAttributions() {
         return false;
     }
 
     @Override
-    public boolean minimumProfessorAtribuitions() {
+    public boolean minimumProfessorAttributions() {
         return false;
     }
 
     @Override
-    public boolean maximumProfessorAtribuitions() {
+    public boolean maximumProfessorAttributions() {
         return false;
     }
 
     @Override
-    public boolean specificProfessorAtribuitions() {
+    public boolean specificProfessorAttributions() {
         return false;
     }
 
     @Override
-    public boolean listProposalsWithAtribuitions() {
+    public boolean listProposalsWithAttributions() {
         return false;
     }
 
     @Override
-    public boolean listProposalsWihoutAtribuitions() {
+    public boolean listProposalsWithoutAttributions() {
         return false;
     }
 
@@ -189,9 +189,10 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean listStudentsWihoutProposalsWithCandidature() {
+    public boolean listStudentsWithoutProposalsWithCandidature() {
         return false;
     }
+
 
     @Override
     public boolean removeProposalFromCandidature(String id, String proposal) {
@@ -206,6 +207,11 @@ public class StateAdapter implements IApplicationState {
     @Override
     public boolean editCandidatures(String id, String proposal) {
         return false;
+    }
+
+    @Override
+    public String listProposalsFilters(List<Integer> filters) {
+        return "Can't list";
     }
 
 }

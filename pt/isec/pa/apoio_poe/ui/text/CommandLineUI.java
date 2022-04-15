@@ -200,9 +200,7 @@ public class CommandLineUI {
         int input = context.checkTypeProposal(identifier);
 
         switch (input) {
-            case 0 -> {
-                editInternshipData(identifier);
-            }
+            case 0 -> editInternshipData(identifier);
             case 1 -> editProjectData(identifier);
             case 2 -> editAutoProposalData(identifier);
         }

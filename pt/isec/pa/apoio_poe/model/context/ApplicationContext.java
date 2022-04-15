@@ -91,19 +91,19 @@ public class ApplicationContext {
     }
 
     public String listStudentsWithCandidatures(){
-        return data.listStudentsWithCandidatures();
+        return state.listStudentsWithCandidature();
     }
 
     public String listStudentsWithoutCandidatures(){
-        return data.listStudentsWithoutCandidatures();
+        return state.listStudentsWithoutCandidature();
     }
 
     public String listStudentsWithAutoProposals(){
-        return data.listStudentsWithAutoProposals();
+        return state.listStudentsWithAutoProposal();
     }
 
     public String listProposalsFilters(List<Integer> filters){
-        return data.listProposalsFilters(filters);
+        return state.listProposalsFilters(filters);
     }
 
     @Override

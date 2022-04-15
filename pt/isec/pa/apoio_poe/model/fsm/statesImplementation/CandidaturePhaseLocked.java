@@ -30,4 +30,10 @@ public class CandidaturePhaseLocked extends StateAdapter {
     public String checkData() {
         return data.getCandidatures();
     }
+
+    @Override
+    public boolean proposalAttributionManager() {
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return true;
+    }
 }

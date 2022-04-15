@@ -28,15 +28,15 @@ public interface IApplicationState {
 
     boolean candidatureManager();
 
-    boolean listStudenstWithAutoProposal();
+    String listStudentsWithAutoProposal();
 
-    boolean listStudentsWithCandidature();
+    String listStudentsWithCandidature();
 
-    boolean listStudentsWithoutCandidature();
+    String listStudentsWithoutCandidature();
 
-    boolean listAutoProposalWithouCandidatures();
+    String listAutoProposalWithoutCandidatures();
 
-    boolean listAutoProposalWithCandidatures();
+    String listAutoProposalWithCandidatures();
 
     boolean proposalAttributionManager();
 
@@ -52,25 +52,25 @@ public interface IApplicationState {
 
     boolean professorAttributionManager();
 
-    boolean listStudentsWithProposalWihoutProfessor();
+    boolean listStudentsWithProposalWithoutProfessor();
 
     boolean listStudentsWithProposalAndProfessor();
 
-    boolean averageProfessorAtribuitions();
+    boolean averageProfessorAttributions();
 
-    boolean minimumProfessorAtribuitions();
+    boolean minimumProfessorAttributions();
 
-    boolean maximumProfessorAtribuitions();
+    boolean maximumProfessorAttributions();
 
-    boolean specificProfessorAtribuitions();
+    boolean specificProfessorAttributions();
 
-    boolean listProposalsWithAtribuitions();
+    boolean listProposalsWithAttributions();
 
-    boolean listProposalsWihoutAtribuitions();
+    boolean listProposalsWithoutAttributions();
 
     boolean listStudentsWithProposals();
 
-    boolean listStudentsWihoutProposalsWithCandidature();
+    boolean listStudentsWithoutProposalsWithCandidature();
 
     ApplicationState getState();
 
@@ -79,4 +79,6 @@ public interface IApplicationState {
     boolean removeCandidature(String id);
 
     boolean editCandidatures(String id, String proposal);
+
+    String listProposalsFilters(List<Integer> filters);
 }
