@@ -1,9 +1,14 @@
 package pt.isec.pa.apoio_poe.model.fsm.statesImplementation;
 
+import pt.isec.pa.apoio_poe.model.data.person.Person;
+import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
+
+import java.util.ArrayList;
+import java.util.Map;
 
 public class ProposalAttributionPhase extends StateAdapter {
     public ProposalAttributionPhase(ApplicationContext context, Data data) {
@@ -31,8 +36,8 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public boolean nonAssociateAttribution() {
-        return super.nonAssociateAttribution();
+    public Map<String, ArrayList<Person>> nonAssociateAttribution() {
+        return data.nonAssociateAttribution();
     }
 
     @Override
@@ -53,5 +58,10 @@ public class ProposalAttributionPhase extends StateAdapter {
     @Override
     public String listStudentWithoutProposalAttributed() {
         return data.listStudentWithoutProposalAttributed();
+    }
+
+    @Override
+    public boolean chooseStudentToAssociate(Person student, String proposal) {
+        return data.chooseStudentToAssociate(student, proposal);
     }
 }

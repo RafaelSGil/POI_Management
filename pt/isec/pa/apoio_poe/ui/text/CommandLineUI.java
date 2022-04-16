@@ -1,9 +1,14 @@
 package pt.isec.pa.apoio_poe.ui.text;
 
+import java.awt.*;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
+import pt.isec.pa.apoio_poe.model.data.person.Person;
+import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import pt.isec.pa.apoio_poe.util.InputProtection;
@@ -497,8 +502,26 @@ public class CommandLineUI {
         context.associateAttribution();
     }
 
+    public void chooseStudentToAssociate(Person student, String proposal){
+        context.chooseStudentToAssociate(student, proposal);
+    }
+
     public void nonAssociatedAttribution(){
-        context.nonAssociatedAttribution();
+        Map<String, ArrayList<Person>> choose;
+        int i;
+
+        if((choose = context.nonAssociatedAttribution()) != null){
+            for(String idProposal : choose.keySet()){
+                for(i = 0; i < choose.get(idProposal).size(); ++i){
+                    System.out.println(i+1 + " - " + choose.get(idProposal).get(i));
+                }
+                int input;
+                do {
+                    input = InputProtection.readInt("Choose one of the students to associate: ");
+                } while (input < 1 || input > i + 1);
+                chooseStudentToAssociate(choose.get(idProposal).get(input-1), idProposal);
+            }
+        }
     }
 
     public void manualAttribution(){

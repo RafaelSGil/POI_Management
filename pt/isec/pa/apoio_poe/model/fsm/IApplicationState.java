@@ -1,5 +1,9 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
+import pt.isec.pa.apoio_poe.model.data.person.Person;
+import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
+
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -42,7 +46,9 @@ public interface IApplicationState {
 
     boolean associateAttribution();
 
-    boolean nonAssociateAttribution();
+    Map<String, ArrayList<Person>> nonAssociateAttribution();
+
+    boolean chooseStudentToAssociate(Person student, String proposal);
 
     boolean manualAttribution();
 

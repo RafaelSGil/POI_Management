@@ -868,8 +868,9 @@ public class Data {
         return true;
     }
 
-    public boolean nonAssociateAttribution() {
+    public Map<String, ArrayList<Person>> nonAssociateAttribution() {
         ArrayList<Person> highestGradeStudents = new ArrayList<>();
+        Map<String, ArrayList<Person>> studentsToChoose = new HashMap<>();
 
         for (MidProposal internship : internships) {
             if (internship.getStudent() == -1) {
@@ -880,10 +881,8 @@ public class Data {
                         attributions.put(internship.getIdOfProposal(), highestGradeStudents.get(1).getId());
                     }
                 } else {
-                    /*
-                     * implementar função para o utilizador decidir entre os que têm melhor nota
-                     * o que fica com o estágio
-                     */
+                    studentsToChoose.put(internship.getIdOfProposal(), highestGradeStudents);
+                    return studentsToChoose;
                 }
             }
         }
@@ -897,13 +896,16 @@ public class Data {
                         attributions.put(project.getIdOfProposal(), highestGradeStudents.get(1).getId());
                     }
                 } else {
-                    /*
-                     * implementar função para o utilizador decidir entre os que têm melhor nota
-                     * o que fica com o projeto
-                     */
+                    studentsToChoose.put(project.getIdOfProposal(), highestGradeStudents);
+                    return studentsToChoose;
                 }
             }
         }
+        return null;
+    }
+
+    public boolean chooseStudentToAssociate(Person student, String proposal){
+        attributions.put(proposal, student.getId());
         return true;
     }
 
