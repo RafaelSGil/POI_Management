@@ -114,11 +114,7 @@ public class ApplicationContext {
     }
 
     public boolean isBranchValid(String branch) {
-        if (branch.equals("DA") || branch.equals("RAS") || branch.equals("SI")) {
-            return true;
-        }
-
-        return false;
+        return branch.equals("DA") || branch.equals("RAS") || branch.equals("SI");
     }
 
     public boolean isLocked(ApplicationState s) {
@@ -147,5 +143,13 @@ public class ApplicationContext {
 
     public String listStudentWithoutProposalAttributed() {
         return state.listStudentWithoutProposalAttributed();
+    }
+
+    public boolean manualAttribution(String idOfProposal, long idOfStudent){
+        return state.manualAttribution(idOfProposal, idOfStudent);
+    }
+
+    public boolean manualRemoval(String idOfProposal){
+        return state.manualRemoval(idOfProposal);
     }
 }

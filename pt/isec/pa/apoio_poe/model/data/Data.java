@@ -1048,6 +1048,32 @@ public class Data {
         return sb.toString();
     }
 
+    public boolean manualAttribution(String idOdProposal, long idOdStudent){
+        if(attributions.containsKey(idOdProposal) && attributions.containsValue(idOdStudent)){
+            return false;
+        }
+
+        if(!students.contains(Student.createDummyStudent(idOdStudent))){
+            return false;
+        }
+
+        if(projects.contains(Project.createDummyProject(idOdProposal)) || internships.contains(Internship.createDummyInternship(idOdProposal)) || autoproposals.contains(AutoProposal.createDummyAutoProposal(idOdProposal))){
+            attributions.put(idOdProposal, idOdStudent);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean manualRemoval(String idOdProposal){
+        if(attributions.containsKey(idOdProposal)){
+            attributions.remove(idOdProposal);
+            return true;
+        }
+
+        return false;
+    }
+
     public boolean isEveryStudentAttributed(){
         for(Long idStudent : candidatures.keySet()){
             if(!attributions.containsValue(idStudent)){

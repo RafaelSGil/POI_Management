@@ -41,6 +41,16 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
+    public boolean manualAttribution(String idOfProposal, long idOfStudent) {
+        return data.manualAttribution(idOfProposal, idOfStudent);
+    }
+
+    @Override
+    public boolean manualRemoval(String idOfProposal) {
+        return data.manualRemoval(idOfProposal);
+    }
+
+    @Override
     public boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
         return data.chooseStudentToAssociate(studentsProposals, index);
     }

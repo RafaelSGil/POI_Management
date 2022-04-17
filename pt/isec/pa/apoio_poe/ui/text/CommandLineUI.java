@@ -569,11 +569,32 @@ public class CommandLineUI {
     }
 
     public void manualAttribution() {
+        String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
+        String idOfStudent;
 
+        while(true){
+            idOfStudent = InputProtection.readString("Specify the id of the student: ", true);
+
+            try{
+                Long.parseLong(idOfStudent);
+                break;
+            }catch (NumberFormatException e){
+                System.out.println(e);
+            }
+
+        }
+
+        if(!context.manualAttribution(idOfProposal, Long.parseLong(idOfStudent))){
+            System.out.println("Could not attribute manually");
+        }
     }
 
     public void manualRemoval() {
+        String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
 
+        if(!context.manualRemoval(idOfProposal)){
+            System.out.println("Could not remove manually");
+        }
     }
 
     public void professorAttributionManagement(){

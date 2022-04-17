@@ -50,7 +50,9 @@ public interface IApplicationState {
 
     boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index);
 
-    boolean manualAttribution();
+    boolean manualAttribution(String idOfProposal, long idOfStudent);
+
+    boolean manualRemoval(String idOfProposal);
 
     boolean professorAttributionManager();
 
