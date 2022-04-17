@@ -22,7 +22,7 @@ public class ProposalAttributionPhase extends StateAdapter {
 
     @Override
     public boolean candidatureManager() {
-        if(data.isLocked(ApplicationState.CANDIDATURE)){
+        if (data.isLocked(ApplicationState.CANDIDATURE)) {
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
         }
@@ -36,7 +36,7 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public Map<String, ArrayList<Person>> nonAssociateAttribution() {
+    public boolean nonAssociateAttribution() {
         return data.nonAssociateAttribution();
     }
 

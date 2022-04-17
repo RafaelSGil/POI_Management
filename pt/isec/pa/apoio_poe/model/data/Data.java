@@ -10,8 +10,6 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 
 import java.util.*;
 
-import javax.swing.text.Highlighter.Highlight;
-
 public class Data {
     Set<Proposal> autoproposals;
     Set<Person> students;
@@ -594,7 +592,8 @@ public class Data {
                         proposals.add(aux);
                 }
                 if (proposals.size() > 0)
-                    candidatures.put(id, new ArrayList<>(proposals));
+                    if (students.contains(Student.createDummyStudent(id)))
+                        candidatures.put(id, new ArrayList<>(proposals));
             }
         }
         return true;
@@ -868,86 +867,78 @@ public class Data {
         return true;
     }
 
-    public Map<String, ArrayList<Person>> nonAssociateAttribution() {
-        ArrayList<Person> highestGradeStudents = new ArrayList<>();
-        Map<String, ArrayList<Person>> studentsToChoose = new HashMap<>();
+    public boolean nonAssociateAttribution() {
+        ArrayList<Person> studentsProposals = new ArrayList<>();
+        double highestGrade = 0;
+        int i = 0;
 
-        for (MidProposal internship : internships) {
-            if (internship.getStudent() == -1) {
-                String[] branches = internship.getBranches().split(" ");
-                highestGradeStudents = getStudentsWithTheHighestGradeForInternship(branches, true);
-                if (highestGradeStudents.size() == 1) {
-                    if (!attributions.containsKey(internship.getIdOfProposal())) {
-                        attributions.put(internship.getIdOfProposal(), highestGradeStudents.get(1).getId());
+        while (i != candidatures.size()) {
+            for (Long id : candidatures.keySet()) {
+                for (Person student : students) {
+                    if (student.equals(Student.createDummyStudent(id))) {
+                        if (studentsProposals.size() == 0 && !attributions.containsValue(student.getId())) {
+                            studentsProposals.add(student);
+                            highestGrade = student.getClassification();
+                        } else if (student.getClassification() > highestGrade
+                                && !attributions.containsValue(student.getId())) {
+                            studentsProposals.clear();
+                            studentsProposals.add(student);
+                            highestGrade = student.getClassification();
+                        } else if (student.getClassification() == highestGrade && !attributions
+                                .containsValue(student.getId())) {
+                            studentsProposals.add(student);
+                        }
+
                     }
-                } else {
-                    studentsToChoose.put(internship.getIdOfProposal(), highestGradeStudents);
-                    return studentsToChoose;
                 }
             }
-        }
 
-        for (MidProposal project : projects) {
-            if (project.getStudent() == -1) {
-                String[] branches = project.getBranches().split(" ");
-                highestGradeStudents = getStudentsWithTheHighestGradeForInternship(branches, false);
-                if (highestGradeStudents.size() == 1) {
-                    if (!attributions.containsKey(project.getIdOfProposal())) {
-                        attributions.put(project.getIdOfProposal(), highestGradeStudents.get(1).getId());
+            if (studentsProposals.size() == 1) {
+                for (Map.Entry<Long, List<String>> entry : candidatures.entrySet()) {
+                    if (entry.getKey() == studentsProposals.get(0).getId()) {
+                        Iterator<String> itr = entry.getValue().iterator();
+                        while (itr.hasNext()) {
+                            String proposal = itr.next();
+                            for (MidProposal internship : internships) {
+                                String branches[] = internship.getBranches().split(" ");
+                                for (String branch : branches)
+                                    for (Person student : students) {
+                                        if (student.equals(Student.createDummyStudent(entry.getKey()))) {
+                                            if (student.getInternship())
+                                                if (branch.equals(student.getCourseBranch()))
+                                                    if (!attributions.containsKey(proposal)
+                                                            && !attributions.containsValue(entry.getKey())) {
+                                                        attributions.put(proposal, entry.getKey());
+                                                    }
+                                        }
+                                    }
+                            }
+                            for (MidProposal project : projects) {
+                                String branches[] = project.getBranches().split(" ");
+                                for (String branch : branches)
+                                    for (Person student : students) {
+                                        if (student.equals(Student.createDummyStudent(entry.getKey()))) {
+                                            if (branch.equals(student.getCourseBranch()))
+                                                if (!attributions.containsKey(proposal)
+                                                        && !attributions.containsValue(entry.getKey())) {
+                                                    attributions.put(proposal, entry.getKey());
+                                                }
+                                        }
+                                    }
+                            }
+                        }
                     }
-                } else {
-                    studentsToChoose.put(project.getIdOfProposal(), highestGradeStudents);
-                    return studentsToChoose;
                 }
             }
+            studentsProposals.clear();
+            i++;
         }
-        return null;
-    }
-
-    public boolean chooseStudentToAssociate(Person student, String proposal){
-        attributions.put(proposal, student.getId());
         return true;
     }
 
-    public ArrayList<Person> getStudentsWithTheHighestGradeForInternship(String[] branches, boolean internship) {
-        ArrayList<Person> highest = new ArrayList<>();
-
-        for (String branch : branches) {
-            for (Person student : students) {
-                if (internship) {
-                    if (student.getInternship()) {
-                        if (student.getCourseBranch().equals(branch)) {
-                            if (!attributions.containsValue(student.getId())) {
-                                if (highest.size() == 0)
-                                    highest.add(student);
-                                for (Person highestGrade : highest) {
-                                    if (student.getClassification() > highestGrade.getClassification()) {
-                                        highest.add(student);
-                                        highest.remove(highestGrade);
-                                    } else if (student.getClassification() == highestGrade.getClassification())
-                                        highest.add(student);
-                                }
-                            }
-                        }
-                    }
-                } else {
-                    if (student.getCourseBranch().equals(branch)) {
-                        if (!attributions.containsValue(student.getId())) {
-                            if (highest.size() == 0)
-                                highest.add(student);
-                            for (Person highestGrade : highest) {
-                                if (student.getClassification() > highestGrade.getClassification()) {
-                                    highest.add(student);
-                                    highest.remove(highestGrade);
-                                } else if (student.getClassification() == highestGrade.getClassification())
-                                    highest.add(student);
-                            }
-                        }
-                    }
-                }
-            }
-        }
-        return highest;
+    public boolean chooseStudentToAssociate(Person student, String proposal) {
+        attributions.put(proposal, student.getId());
+        return true;
     }
 
     public String listStudentWithProposalAttributed() {
@@ -956,6 +947,7 @@ public class Data {
         for (String idProposal : attributions.keySet()) {
             sb.append("Proposal ").append(idProposal).append(" is attributed to student ")
                     .append(attributions.get(idProposal));
+            sb.append("\n");
         }
 
         return sb.toString();

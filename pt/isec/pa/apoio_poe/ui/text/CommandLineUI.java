@@ -368,7 +368,8 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Insert candidature data", "Delete candidature data",
-                "Edit candidature data", "Consult candidature data", "List students", "List proposals","Close state", "Go to previous state", "Proposal Attribution Management");
+                "Edit candidature data", "Consult candidature data", "List students", "List proposals", "Close state",
+                "Go to previous state", "Proposal Attribution Management");
 
         switch (input) {
             case 1 -> insertData();
@@ -385,14 +386,15 @@ public class CommandLineUI {
         return true;
     }
 
-    public void proposalAttributionManagement(){
+    public void proposalAttributionManagement() {
         context.proposalAttributionManager();
     }
 
     public boolean candidaturePhaseLocked() {
         System.out.println("Current state: " + context.getState());
 
-        int input = InputProtection.chooseOption(null, "Consult candidature data", "Go to previous state", "Proposal Attribution Management");
+        int input = InputProtection.chooseOption(null, "Consult candidature data", "Go to previous state",
+                "Proposal Attribution Management");
 
         switch (input) {
             case 1 -> consultData();
@@ -407,9 +409,10 @@ public class CommandLineUI {
         context.candidatureManager();
     }
 
-    public void listStudents(){
-        if(context.getState() == ApplicationState.CANDIDATURE){
-            switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures", "List students without candidatures", "List students with autoproposals")){
+    public void listStudents() {
+        if (context.getState() == ApplicationState.CANDIDATURE) {
+            switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures",
+                    "List students without candidatures", "List students with autoproposals")) {
                 case 1 -> listStudentsWithCandidature();
                 case 2 -> listStudentsWithoutCandidature();
                 case 3 -> listStudentsWithAutoProposals();
@@ -418,8 +421,10 @@ public class CommandLineUI {
             return;
         }
 
-        if(context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
-            switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures", "List students with autoproposals", "List students with proposal attributed", "List students without attributions")){
+        if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
+            switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures",
+                    "List students with autoproposals", "List students with proposal attributed",
+                    "List students without attributions")) {
                 case 1 -> listStudentsWithCandidature();
                 case 2 -> listStudentsWithAutoProposals();
                 case 3 -> listStudentWithProposalAttributed();
@@ -429,35 +434,36 @@ public class CommandLineUI {
         }
     }
 
-    public void listStudentWithoutProposalAttributed(){
+    public void listStudentWithoutProposalAttributed() {
         System.out.println(context.listStudentWithoutProposalAttributed());
     }
 
-    public void listStudentWithProposalAttributed(){
+    public void listStudentWithProposalAttributed() {
         System.out.println(context.listStudentWithProposalAttributed());
     }
 
-    public void listStudentsWithCandidature(){
+    public void listStudentsWithCandidature() {
         System.out.println(context.listStudentsWithCandidatures());
     }
 
-    public void listStudentsWithoutCandidature(){
+    public void listStudentsWithoutCandidature() {
         System.out.println(context.listStudentsWithoutCandidatures());
     }
 
-    public void listStudentsWithAutoProposals(){
+    public void listStudentsWithAutoProposals() {
         System.out.println(context.listStudentsWithAutoProposals());
     }
 
-    public void listProposals(){
+    public void listProposals() {
         List<Integer> filters = new ArrayList<>();
 
-        System.out.println("Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Proposals with candidatures \n\t4 - Proposals without candidatures");
+        System.out.println(
+                "Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Proposals with candidatures \n\t4 - Proposals without candidatures");
 
-        while(true){
+        while (true) {
             int filter = InputProtection.readInt("Specify the filters you want [type 5 to stop]: ");
 
-            if(filter == 5 || filters.size() >= 4){
+            if (filter == 5 || filters.size() >= 4) {
                 break;
             }
 
@@ -467,18 +473,21 @@ public class CommandLineUI {
         System.out.println(context.listProposalsFilters(filters));
     }
 
-    public boolean proposalAttributionPhase(){
+    public boolean proposalAttributionPhase() {
         System.out.println("Current state: " + context.getState());
 
-        if(!context.isLocked(ApplicationState.CANDIDATURE)){
-            switch (InputProtection.chooseOption(null, "Associated students attribution", "List students", "List proposals", "Go to previous state")){
+        if (!context.isLocked(ApplicationState.CANDIDATURE)) {
+            switch (InputProtection.chooseOption(null, "Associated students attribution", "List students",
+                    "List proposals", "Go to previous state")) {
                 case 1 -> associateAttribution();
                 case 2 -> listStudents();
                 case 3 -> listProposals();
                 case 4 -> candidatureManagement();
             }
-        }else{
-            switch (InputProtection.chooseOption(null, "Associated students attribution", "Non associated students attribution", "Manual attribution", "Manual removal", "List students", "List proposals", "Go to previous state", "Close state")){
+        } else {
+            switch (InputProtection.chooseOption(null, "Associated students attribution",
+                    "Non associated students attribution", "Manual attribution", "Manual removal", "List students",
+                    "List proposals", "Go to previous state", "Close state")) {
                 case 1 -> associateAttribution();
                 case 2 -> nonAssociatedAttribution();
                 case 3 -> manualAttribution();
@@ -493,42 +502,28 @@ public class CommandLineUI {
         return true;
     }
 
-    public boolean proposalAttributionPhaseLocked(){
+    public boolean proposalAttributionPhaseLocked() {
 
         return true;
     }
 
-    public void associateAttribution(){
+    public void associateAttribution() {
         context.associateAttribution();
     }
 
-    public void chooseStudentToAssociate(Person student, String proposal){
+    public void chooseStudentToAssociate(Person student, String proposal) {
         context.chooseStudentToAssociate(student, proposal);
     }
 
-    public void nonAssociatedAttribution(){
-        Map<String, ArrayList<Person>> choose;
-        int i;
-
-        if((choose = context.nonAssociatedAttribution()) != null){
-            for(String idProposal : choose.keySet()){
-                for(i = 0; i < choose.get(idProposal).size(); ++i){
-                    System.out.println(i+1 + " - " + choose.get(idProposal).get(i));
-                }
-                int input;
-                do {
-                    input = InputProtection.readInt("Choose one of the students to associate: ");
-                } while (input < 1 || input > i + 1);
-                chooseStudentToAssociate(choose.get(idProposal).get(input-1), idProposal);
-            }
-        }
+    public void nonAssociatedAttribution() {
+        context.nonAssociatedAttribution();
     }
 
-    public void manualAttribution(){
+    public void manualAttribution() {
 
     }
 
-    public void manualRemoval(){
+    public void manualRemoval() {
 
     }
 
@@ -544,7 +539,8 @@ public class CommandLineUI {
             case CANDIDATURE_LOCKED -> candidaturePhaseLocked();
             case PROPOSAL_ATTRIBUTION -> proposalAttributionPhase();
             case PROPOSAL_ATTRIBUTION_LOCKED -> proposalAttributionPhaseLocked();
-             /* case PROFESSOR_ATTRIBUTION -> professorAttribution();
+            /*
+             * case PROFESSOR_ATTRIBUTION -> professorAttribution();
              * case SEARCH -> searchPhase();
              */
             default -> throw new IllegalArgumentException("Unexpected value: " + context.getState());

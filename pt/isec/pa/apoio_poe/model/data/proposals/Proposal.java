@@ -32,7 +32,7 @@ abstract public class Proposal {
     }
 
     public long getStudent() {
-        if(student == null)
+        if (student == null)
             return -1;
 
         return student.getId();
@@ -40,6 +40,16 @@ abstract public class Proposal {
 
     public void setStudent(Student student) {
         this.student = student;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Proposal))
+            return false;
+
+        Proposal aux = (Proposal) obj;
+
+        return this.idOfProposal.equals(aux.getIdOfProposal());
     }
 
     @Override

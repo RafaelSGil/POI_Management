@@ -92,19 +92,19 @@ public class ApplicationContext {
         return state.editCandidatures(id, proposal);
     }
 
-    public String listStudentsWithCandidatures(){
+    public String listStudentsWithCandidatures() {
         return state.listStudentsWithCandidature();
     }
 
-    public String listStudentsWithoutCandidatures(){
+    public String listStudentsWithoutCandidatures() {
         return state.listStudentsWithoutCandidature();
     }
 
-    public String listStudentsWithAutoProposals(){
+    public String listStudentsWithAutoProposals() {
         return state.listStudentsWithAutoProposal();
     }
 
-    public String listProposalsFilters(List<Integer> filters){
+    public String listProposalsFilters(List<Integer> filters) {
         return state.listProposalsFilters(filters);
     }
 
@@ -121,31 +121,31 @@ public class ApplicationContext {
         return false;
     }
 
-    public boolean isLocked(ApplicationState s){
+    public boolean isLocked(ApplicationState s) {
         return data.isLocked(s);
     }
 
-    public boolean associateAttribution(){
+    public boolean associateAttribution() {
         return state.associateAttribution();
     }
 
-    public Map<String, ArrayList<Person>> nonAssociatedAttribution(){
+    public boolean nonAssociatedAttribution() {
         return state.nonAssociateAttribution();
     }
 
-    public void chooseStudentToAssociate(Person student, String proposal){
+    public void chooseStudentToAssociate(Person student, String proposal) {
         state.chooseStudentToAssociate(student, proposal);
     }
 
-    public boolean proposalAttributionManager(){
+    public boolean proposalAttributionManager() {
         return state.proposalAttributionManager();
     }
 
-    public String listStudentWithProposalAttributed(){
+    public String listStudentWithProposalAttributed() {
         return state.listStudentWithProposalAttributed();
     }
 
-    public String listStudentWithoutProposalAttributed(){
+    public String listStudentWithoutProposalAttributed() {
         return state.listStudentWithoutProposalAttributed();
     }
 }

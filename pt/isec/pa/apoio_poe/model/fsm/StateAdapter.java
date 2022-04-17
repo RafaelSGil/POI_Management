@@ -123,8 +123,8 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public Map<String, ArrayList<Person>> nonAssociateAttribution() {
-        return null;
+    public boolean nonAssociateAttribution() {
+        return false;
     }
 
     @Override
@@ -191,7 +191,6 @@ public class StateAdapter implements IApplicationState {
     public boolean listStudentsWithoutProposalsWithCandidature() {
         return false;
     }
-
 
     @Override
     public boolean removeProposalFromCandidature(String id, String proposal) {

@@ -46,7 +46,7 @@ public interface IApplicationState {
 
     boolean associateAttribution();
 
-    Map<String, ArrayList<Person>> nonAssociateAttribution();
+    boolean nonAssociateAttribution();
 
     boolean chooseStudentToAssociate(Person student, String proposal);
 
