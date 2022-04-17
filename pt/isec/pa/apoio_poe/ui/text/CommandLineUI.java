@@ -162,8 +162,8 @@ public class CommandLineUI {
     public boolean proposalPhase() {
         System.out.println("Current state: " + context.getState());
 
-        int input = InputProtection.chooseOption(null, "Insert project data", "Delete project data",
-                "Edit project data", "Consult project data", "Student Management", "Professor Management",
+        int input = InputProtection.chooseOption(null, "Insert proposal data", "Delete proposal data",
+                "Edit proposal data", "Consult proposal data", "Student Management", "Professor Management",
                 "Candidature Management", "Close state");
 
         switch (input) {
@@ -410,7 +410,8 @@ public class CommandLineUI {
     }
 
     public void listStudents() {
-        if (context.getState() == ApplicationState.CANDIDATURE || context.getState() == ApplicationState.CANDIDATURE_LOCKED) {
+        if (context.getState() == ApplicationState.CANDIDATURE
+                || context.getState() == ApplicationState.CANDIDATURE_LOCKED) {
             switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures",
                     "List students without candidatures", "List students with autoproposals")) {
                 case 1 -> listStudentsWithCandidature();
@@ -421,7 +422,8 @@ public class CommandLineUI {
             return;
         }
 
-        if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION || context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED) {
+        if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION
+                || context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED) {
             switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures",
                     "List students with autoproposals", "List students with proposal attributed",
                     "List students without attributions")) {
@@ -457,35 +459,37 @@ public class CommandLineUI {
     public void listProposals() {
         List<Integer> filters = new ArrayList<>();
 
-       if(context.getState() == ApplicationState.CANDIDATURE || context.getState() == ApplicationState.CANDIDATURE_LOCKED){
-           System.out.println(
-                   "Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Proposals with candidatures \n\t4 - Proposals without candidatures");
+        if (context.getState() == ApplicationState.CANDIDATURE
+                || context.getState() == ApplicationState.CANDIDATURE_LOCKED) {
+            System.out.println(
+                    "Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Proposals with candidatures \n\t4 - Proposals without candidatures");
 
-           while (true) {
-               int filter = InputProtection.readInt("Specify the filters you want [type 5 to stop]: ");
+            while (true) {
+                int filter = InputProtection.readInt("Specify the filters you want [type 5 to stop]: ");
 
-               if (filter == 5 || filters.size() >= 4) {
-                   break;
-               }
+                if (filter == 5 || filters.size() >= 4) {
+                    break;
+                }
 
-               filters.add(filter);
-           }
-       }
+                filters.add(filter);
+            }
+        }
 
-       if(context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION || context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED){
-           System.out.println(
-                   "Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Available proposals \n\t4 - Proposals attributed");
+        if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION
+                || context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED) {
+            System.out.println(
+                    "Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Available proposals \n\t4 - Proposals attributed");
 
-           while (true) {
-               int filter = InputProtection.readInt("Specify the filters you want [type 5 to stop]: ");
+            while (true) {
+                int filter = InputProtection.readInt("Specify the filters you want [type 5 to stop]: ");
 
-               if (filter == 5 || filters.size() >= 4) {
-                   break;
-               }
+                if (filter == 5 || filters.size() >= 4) {
+                    break;
+                }
 
-               filters.add(filter);
-           }
-       }
+                filters.add(filter);
+            }
+        }
 
         System.out.println(context.listProposalsFilters(filters));
     }
@@ -524,7 +528,7 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         switch (InputProtection.chooseOption(null, "List students",
-                "List proposals", "Go to previous state", "Professor attribution phase")){
+                "List proposals", "Go to previous state", "Professor attribution phase")) {
             case 1 -> listStudents();
             case 2 -> listProposals();
             case 3 -> candidatureManagement();
@@ -572,19 +576,19 @@ public class CommandLineUI {
         String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
         String idOfStudent;
 
-        while(true){
+        while (true) {
             idOfStudent = InputProtection.readString("Specify the id of the student: ", true);
 
-            try{
+            try {
                 Long.parseLong(idOfStudent);
                 break;
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 System.out.println(e);
             }
 
         }
 
-        if(!context.manualAttribution(idOfProposal, Long.parseLong(idOfStudent))){
+        if (!context.manualAttribution(idOfProposal, Long.parseLong(idOfStudent))) {
             System.out.println("Could not attribute manually");
         }
     }
@@ -592,12 +596,12 @@ public class CommandLineUI {
     public void manualRemoval() {
         String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
 
-        if(!context.manualRemoval(idOfProposal)){
+        if (!context.manualRemoval(idOfProposal)) {
             System.out.println("Could not remove manually");
         }
     }
 
-    public void professorAttributionManagement(){
+    public void professorAttributionManagement() {
 
     }
 
