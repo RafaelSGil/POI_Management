@@ -8,7 +8,6 @@ import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 
 import java.util.ArrayList;
-import java.util.Map;
 
 public class ProposalAttributionPhase extends StateAdapter {
     public ProposalAttributionPhase(ApplicationContext context, Data data) {
@@ -36,7 +35,7 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public boolean nonAssociateAttribution() {
+    public ArrayList<Person> nonAssociateAttribution() {
         return data.nonAssociateAttribution();
     }
 
@@ -61,7 +60,7 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public boolean chooseStudentToAssociate(Person student, String proposal) {
-        return data.chooseStudentToAssociate(student, proposal);
+    public boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        return data.chooseStudentToAssociate(studentsProposals, index);
     }
 }

@@ -129,12 +129,12 @@ public class ApplicationContext {
         return state.associateAttribution();
     }
 
-    public boolean nonAssociatedAttribution() {
+    public ArrayList<Person> nonAssociatedAttribution() {
         return state.nonAssociateAttribution();
     }
 
-    public void chooseStudentToAssociate(Person student, String proposal) {
-        state.chooseStudentToAssociate(student, proposal);
+    public void chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        state.chooseStudentToAssociate(studentsProposals, index);
     }
 
     public boolean proposalAttributionManager() {

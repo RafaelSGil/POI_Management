@@ -867,7 +867,7 @@ public class Data {
         return true;
     }
 
-    public boolean nonAssociateAttribution() {
+    public ArrayList<Person> nonAssociateAttribution() {
         ArrayList<Person> studentsProposals = new ArrayList<>();
         double highestGrade = 0;
         int i = 0;
@@ -929,15 +929,54 @@ public class Data {
                         }
                     }
                 }
+            } else {
+                return studentsProposals;
             }
             studentsProposals.clear();
             i++;
         }
-        return true;
+        return null;
     }
 
-    public boolean chooseStudentToAssociate(Person student, String proposal) {
-        attributions.put(proposal, student.getId());
+    public boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        if (studentsProposals != null) {
+            for (Map.Entry<Long, List<String>> entry : candidatures.entrySet()) {
+                if (entry.getKey() == studentsProposals.get(index).getId()) {
+                    Iterator<String> itr = entry.getValue().iterator();
+                    while (itr.hasNext()) {
+                        String proposal = itr.next();
+                        for (MidProposal internship : internships) {
+                            String branches[] = internship.getBranches().split(" ");
+                            for (String branch : branches)
+                                for (Person student : students) {
+                                    if (student.equals(Student.createDummyStudent(entry.getKey()))) {
+                                        if (student.getInternship())
+                                            if (branch.equals(student.getCourseBranch()))
+                                                if (!attributions.containsKey(proposal)
+                                                        && !attributions.containsValue(entry.getKey())) {
+                                                    attributions.put(proposal, entry.getKey());
+                                                }
+                                    }
+                                }
+                        }
+                        for (MidProposal project : projects) {
+                            String branches[] = project.getBranches().split(" ");
+                            for (String branch : branches)
+                                for (Person student : students) {
+                                    if (student.equals(Student.createDummyStudent(entry.getKey()))) {
+                                        if (branch.equals(student.getCourseBranch()))
+                                            if (!attributions.containsKey(proposal)
+                                                    && !attributions.containsValue(entry.getKey())) {
+                                                attributions.put(proposal, entry.getKey());
+                                            }
+                                    }
+                                }
+                        }
+                    }
+                }
+            }
+        }
+        nonAssociateAttribution();
         return true;
     }
 

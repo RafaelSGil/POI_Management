@@ -511,12 +511,34 @@ public class CommandLineUI {
         context.associateAttribution();
     }
 
-    public void chooseStudentToAssociate(Person student, String proposal) {
-        context.chooseStudentToAssociate(student, proposal);
+    public void chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        context.chooseStudentToAssociate(studentsProposals, index);
     }
 
     public void nonAssociatedAttribution() {
-        context.nonAssociatedAttribution();
+        ArrayList<Person> studentsProposals = new ArrayList<>();
+        studentsProposals = context.nonAssociatedAttribution();
+        int option = -1;
+        String opt;
+        int i = 0;
+
+        if (studentsProposals != null) {
+            System.out.println("\nYou have to choose between this students to get the priority: \n");
+            for (Person student : studentsProposals) {
+                System.out.println(
+                        "\nIndex " + i + " - Name: " + student.getName() + " ID: " + student.getId() + " E-mail: "
+                                + student.getEmail()
+                                + " Course Branch: " + student.getCourseBranch());
+                i++;
+            }
+            while (option < 0 || option > studentsProposals.size()) {
+                opt = InputProtection.readString("\nPlease introduce de the index of the student you want to remove: ",
+                        true);
+                option = Integer.parseInt(opt);
+            }
+            chooseStudentToAssociate(studentsProposals, option);
+        }
+
     }
 
     public void manualAttribution() {
