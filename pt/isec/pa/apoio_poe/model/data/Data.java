@@ -738,7 +738,7 @@ public class Data {
         return sb.toString();
     }
 
-    public String listProposalsFilters(List<Integer> filters) {
+    public String listProposalsFilters(List<Integer> filters, ApplicationState state) {
         StringBuilder sb = new StringBuilder();
 
         for (int filter : filters) {
@@ -762,40 +762,82 @@ public class Data {
                     }
                 }
             }
-            if (filter == 3) {
-                sb.append("Proposals with candidatures:\n");
-                for (Long ids : candidatures.keySet()) {
-                    Iterator<String> proposals = candidatures.get(ids).iterator();
-                    while (proposals.hasNext()) {
-                        String aux = proposals.next();
-                        for (MidProposal project : projects) {
-                            if (project.getIdOfProposal().equals(aux)) {
-                                sb.append(project).append("\n");
+
+            if(state == ApplicationState.CANDIDATURE){
+                if (filter == 3) {
+                    sb.append("Proposals with candidatures:\n");
+                    for (Long ids : candidatures.keySet()) {
+                        Iterator<String> proposals = candidatures.get(ids).iterator();
+                        while (proposals.hasNext()) {
+                            String aux = proposals.next();
+                            for (MidProposal project : projects) {
+                                if (project.getIdOfProposal().equals(aux)) {
+                                    sb.append(project).append("\n");
+                                }
+                            }
+                            for (MidProposal internship : internships) {
+                                if (internship.getIdOfProposal().equals(aux)) {
+                                    sb.append(internship).append("\n");
+                                }
                             }
                         }
-                        for (MidProposal internship : internships) {
-                            if (internship.getIdOfProposal().equals(aux)) {
-                                sb.append(internship).append("\n");
+                    }
+                }
+                if (filter == 4) {
+                    sb.append("Proposals without candidatures:\n");
+                    for (Long ids : candidatures.keySet()) {
+                        Iterator<String> proposals = candidatures.get(ids).iterator();
+                        while (proposals.hasNext()) {
+                            String aux = proposals.next();
+                            for (MidProposal project : projects) {
+                                if (!project.getIdOfProposal().equals(aux)) {
+                                    sb.append(project).append("\n");
+                                }
+                            }
+                            for (MidProposal internship : internships) {
+                                if (!internship.getIdOfProposal().equals(aux)) {
+                                    sb.append(internship).append("\n");
+                                }
                             }
                         }
                     }
                 }
             }
-            if (filter == 4) {
-                sb.append("Proposals without candidatures:\n");
-                for (Long ids : candidatures.keySet()) {
-                    Iterator<String> proposals = candidatures.get(ids).iterator();
-                    while (proposals.hasNext()) {
-                        String aux = proposals.next();
-                        for (MidProposal project : projects) {
-                            if (!project.getIdOfProposal().equals(aux)) {
-                                sb.append(project).append("\n");
-                            }
+
+            if(state == ApplicationState.PROPOSAL_ATTRIBUTION){
+                if(filter == 3){
+                    sb.append("Available proposals:\n");
+                    for(Proposal internship : internships){
+                        if(!attributions.containsKey(internship.getIdOfProposal())){
+                            sb.append(internship).append("\n");
                         }
-                        for (MidProposal internship : internships) {
-                            if (!internship.getIdOfProposal().equals(aux)) {
-                                sb.append(internship).append("\n");
-                            }
+                    }
+                    for(Proposal project : projects){
+                        if(!attributions.containsKey(project.getIdOfProposal())){
+                            sb.append(project).append("\n");
+                        }
+                    }
+                    for(Proposal auto : autoproposals){
+                        if(!attributions.containsKey(auto.getIdOfProposal())){
+                            sb.append(auto).append("\n");
+                        }
+                    }
+                }
+                if(filter == 4){
+                    sb.append("Proposals attributed:\n");
+                    for(Proposal internship : internships){
+                        if(attributions.containsKey(internship.getIdOfProposal())){
+                            sb.append(internship).append("\n");
+                        }
+                    }
+                    for(Proposal project : projects){
+                        if(attributions.containsKey(project.getIdOfProposal())){
+                            sb.append(project).append("\n");
+                        }
+                    }
+                    for(Proposal auto : autoproposals){
+                        if(attributions.containsKey(auto.getIdOfProposal())){
+                            sb.append(auto).append("\n");
                         }
                     }
                 }
@@ -930,7 +972,9 @@ public class Data {
                     }
                 }
             } else {
-                return studentsProposals;
+               if(studentsProposals.size() != 0){
+                   return studentsProposals;
+               }
             }
             studentsProposals.clear();
             i++;
@@ -1002,5 +1046,15 @@ public class Data {
         }
 
         return sb.toString();
+    }
+
+    public boolean isEveryStudentAttributed(){
+        for(Long idStudent : candidatures.keySet()){
+            if(!attributions.containsValue(idStudent)){
+                return false;
+            }
+        }
+
+        return true;
     }
 }

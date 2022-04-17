@@ -85,6 +85,6 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public String listProposalsFilters(List<Integer> filters) {
-        return data.listProposalsFilters(filters);
+        return data.listProposalsFilters(filters, ApplicationState.CANDIDATURE);
     }
 }

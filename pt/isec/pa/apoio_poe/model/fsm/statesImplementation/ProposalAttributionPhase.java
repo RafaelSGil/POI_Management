@@ -8,6 +8,7 @@ import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProposalAttributionPhase extends StateAdapter {
     public ProposalAttributionPhase(ApplicationContext context, Data data) {
@@ -40,6 +41,11 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
+    public boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        return data.chooseStudentToAssociate(studentsProposals, index);
+    }
+
+    @Override
     public String listStudentsWithCandidature() {
         return data.listStudentsWithCandidatures();
     }
@@ -60,7 +66,22 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
-        return data.chooseStudentToAssociate(studentsProposals, index);
+    public String listProposalsFilters(List<Integer> filters) {
+        return data.listProposalsFilters(filters, ApplicationState.PROPOSAL_ATTRIBUTION);
+    }
+
+    @Override
+    public boolean closeState() {
+        if(!data.isEveryStudentAttributed()){
+            return false;
+        }
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
+        return true;
+    }
+
+    @Override
+    public boolean professorAttributionManager() {
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return true;
     }
 }
