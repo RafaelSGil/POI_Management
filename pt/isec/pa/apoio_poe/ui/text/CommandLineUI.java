@@ -532,7 +532,8 @@ public class CommandLineUI {
                 i++;
             }
             while (option < 0 || option > studentsProposals.size()) {
-                opt = InputProtection.readString("\nPlease introduce de the index of the student you want to remove: ",
+                opt = InputProtection.readString(
+                        "\nPlease introduce de the index of the student you want to have priority: ",
                         true);
                 option = Integer.parseInt(opt);
             }
