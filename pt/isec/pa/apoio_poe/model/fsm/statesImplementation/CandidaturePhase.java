@@ -69,6 +69,11 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public boolean proposalAttributionManager() {
+        if(data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)){
+            setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
+            return true;
+        }
+
         setState(ApplicationState.PROPOSAL_ATTRIBUTION);
         return true;
     }

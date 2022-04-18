@@ -149,4 +149,24 @@ public class ApplicationContext {
     public boolean manualRemoval(String idOfProposal) {
         return state.manualRemoval(idOfProposal);
     }
+
+    public String getProfessorByEmail(String email){
+        return state.getProfessorByEmail(email);
+    }
+
+    public String listProfessorAttributions(){
+        return state.listProfessorAttributions();
+    }
+
+    public boolean professorAttributionManager(){
+        return state.professorAttributionManager();
+    }
+
+    public boolean manualProfessorAttribution(String idOfProposal, String email){
+        return state.manualProfessorAttribution(idOfProposal, email);
+    }
+
+    public boolean manualProfessorRemoval(String email){
+        return state.manualProfessorRemoval(email);
+    }
 }

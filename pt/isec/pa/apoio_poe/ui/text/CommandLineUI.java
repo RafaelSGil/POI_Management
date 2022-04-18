@@ -428,6 +428,10 @@ public class CommandLineUI {
             }
 
         }
+
+        if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
+
+        }
     }
 
     public void listStudentWithoutProposalAttributed() {
@@ -526,7 +530,7 @@ public class CommandLineUI {
             case 1 -> listStudents();
             case 2 -> listProposals();
             case 3 -> candidatureManagement();
-            case 4 -> proposalAttributionManagement();
+            case 4 -> professorAttributionManagement();
         }
         return true;
     }
@@ -567,36 +571,84 @@ public class CommandLineUI {
     }
 
     public void manualAttribution() {
-        String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
-        String idOfStudent;
+        if(context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
+            String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
+            String idOfStudent;
 
-        while (true) {
-            idOfStudent = InputProtection.readString("Specify the id of the student: ", true);
+            while (true) {
+                idOfStudent = InputProtection.readString("Specify the id of the student: ", true);
 
-            try {
-                Long.parseLong(idOfStudent);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println(e);
+                try {
+                    Long.parseLong(idOfStudent);
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println(e);
+                }
+
             }
 
+            if (!context.manualAttribution(idOfProposal, Long.parseLong(idOfStudent))) {
+                System.out.println("Could not attribute manually");
+            }
         }
 
-        if (!context.manualAttribution(idOfProposal, Long.parseLong(idOfStudent))) {
-            System.out.println("Could not attribute manually");
+        if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
+            String email = InputProtection.readString("Specify the email of the professor: ", true);
+            String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
+
+            if(!context.manualProfessorAttribution(idOfProposal, email)){
+                System.out.println("Could not attribute");
+            }
         }
     }
 
     public void manualRemoval() {
-        String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
+        if(context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
+            String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
 
-        if (!context.manualRemoval(idOfProposal)) {
-            System.out.println("Could not remove manually");
+            if (!context.manualRemoval(idOfProposal)) {
+                System.out.println("Could not remove manually");
+            }
+        }
+
+        if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
+            String email = InputProtection.readString("Specify the email of the professor: ", true);
+
+            if(!context.manualProfessorRemoval(email)){
+                System.out.println("Could not remove");
+            }
         }
     }
 
     public void professorAttributionManagement() {
+        context.professorAttributionManager();
+    }
 
+    public boolean professorAttributionPhase(){
+        System.out.println("Current state: " + context.getState());
+
+        switch (InputProtection.chooseOption(null, "Automatic attribution", "Manual attribution", "Manual removal", "Edit professor data", "Consult professor data", "List attributions", "List students", "Close state", "Go to previous state")){
+            case 1 -> associateAttribution();
+            case 2 -> manualAttribution();
+            case 3 -> manualRemoval();
+            case 4 -> editProfessorData();
+            case 5 -> consultProfessorData();
+            case 6 -> listProfessorAttributions();
+            case 7 -> listStudents();
+            case 8 -> closePhase();
+            case 9 -> proposalAttributionManagement();
+        }
+
+        return true;
+    }
+
+    public void listProfessorAttributions(){
+        System.out.println(context.listProfessorAttributions());
+    }
+
+    public void consultProfessorData(){
+        String email = InputProtection.readString("Specify the email of the professor you want to consult: ", true);
+        System.out.println(context.getProfessorByEmail(email));
     }
 
     public void start() {
@@ -611,8 +663,8 @@ public class CommandLineUI {
             case CANDIDATURE_LOCKED -> candidaturePhaseLocked();
             case PROPOSAL_ATTRIBUTION -> proposalAttributionPhase();
             case PROPOSAL_ATTRIBUTION_LOCKED -> proposalAttributionPhaseLocked();
+            case PROFESSOR_ATTRIBUTION -> professorAttributionPhase();
             /*
-             * case PROFESSOR_ATTRIBUTION -> professorAttribution();
              * case SEARCH -> searchPhase();
              */
             default -> throw new IllegalArgumentException("Unexpected value: " + context.getState());

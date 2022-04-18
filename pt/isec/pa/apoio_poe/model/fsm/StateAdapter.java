@@ -224,4 +224,24 @@ public class StateAdapter implements IApplicationState {
         return null;
     }
 
+    @Override
+    public boolean manualProfessorAttribution(String idOfProposal, String emailProfessor) {
+        return false;
+    }
+
+    @Override
+    public boolean manualProfessorRemoval(String email) {
+        return false;
+    }
+
+    @Override
+    public String getProfessorByEmail(String email) {
+        return null;
+    }
+
+    @Override
+    public String listProfessorAttributions() {
+        return null;
+    }
+
 }

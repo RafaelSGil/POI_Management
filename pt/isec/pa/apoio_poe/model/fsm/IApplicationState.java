@@ -86,4 +86,12 @@ public interface IApplicationState {
     String listStudentWithProposalAttributed();
 
     String listStudentWithoutProposalAttributed();
+
+    boolean manualProfessorAttribution(String idOfProposal, String emailProfessor);
+
+    boolean manualProfessorRemoval(String email);
+
+    String getProfessorByEmail(String email);
+
+    String listProfessorAttributions();
 }

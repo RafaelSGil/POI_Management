@@ -90,7 +90,7 @@ public class ProposalAttributionPhase extends StateAdapter {
 
     @Override
     public boolean professorAttributionManager() {
-        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
         return true;
     }
 }

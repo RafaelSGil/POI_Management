@@ -19,7 +19,7 @@ public class Data {
     Map<Long, List<String>> candidatures;
     Map<ApplicationState, Boolean> lockedPhases;
     Map<String, Long> proposalAttributions;
-    Map<String, String> advisorAttribuitions;
+    Map<String, String> advisorAttribution;
 
     public Data() {
 
@@ -31,7 +31,7 @@ public class Data {
         this.candidatures = new HashMap<>();
         this.lockedPhases = new HashMap<>();
         this.proposalAttributions = new HashMap<>();
-        this.advisorAttribuitions = new HashMap<>();
+        this.advisorAttribution = new HashMap<>();
         startMap();
     }
 
@@ -910,15 +910,6 @@ public class Data {
         return true;
     }
 
-    public void associatedAdvisor() {
-        for (MidProposal project : projects) {
-            if (!advisorAttribuitions.containsKey(project.getIdOfProposal())
-                    && !advisorAttribuitions.containsValue(project.getProfessor())) {
-                advisorAttribuitions.put(project.getIdOfProposal(), project.getProfessor());
-            }
-        }
-    }
-
     public ArrayList<Person> nonAssociateAttribution() {
         ArrayList<Person> studentsProposals = new ArrayList<>();
         double highestGrade = 0;
@@ -1059,7 +1050,7 @@ public class Data {
     }
 
     public boolean manualAttribution(String idOdProposal, long idOdStudent) {
-        if (proposalAttributions.containsKey(idOdProposal) && proposalAttributions.containsValue(idOdStudent)) {
+        if (proposalAttributions.containsKey(idOdProposal) || proposalAttributions.containsValue(idOdStudent)) {
             return false;
         }
 
@@ -1094,5 +1085,56 @@ public class Data {
         }
 
         return true;
+    }
+
+    public void associatedAdvisor() {
+        for (MidProposal project : projects) {
+            if (!advisorAttribution.containsKey(project.getProfessor())
+                    && !advisorAttribution.containsValue(project.getIdOfProposal())) {
+                advisorAttribution.put(project.getProfessor(), project.getIdOfProposal());
+            }
+        }
+    }
+
+    public boolean manualProfessorAttribution(String idOfProposal, String emailProfessor){
+        if(advisorAttribution.containsKey(emailProfessor) || advisorAttribution.containsValue(idOfProposal)){
+            return false;
+        }
+
+        if(!professors.contains(Professor.createDummyProfessor(emailProfessor))){
+            return false;
+        }
+        if (projects.contains(Project.createDummyProject(idOfProposal))
+                || internships.contains(Internship.createDummyInternship(idOfProposal))
+                || autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))) {
+            advisorAttribution.put(emailProfessor, idOfProposal);
+            return true;
+        }
+
+        return false;
+    }
+
+    public boolean manualProfessorRemoval(String emailProfessor){
+        return advisorAttribution.remove(emailProfessor) != null;
+    }
+
+    public String listProfessorAttributions(){
+        StringBuilder sb = new StringBuilder();
+
+        for(String email : advisorAttribution.keySet()){
+            sb.append("Professor (").append(email).append(") is the advisor for proposal ").append(advisorAttribution.get(email));
+            if(proposalAttributions.containsKey(advisorAttribution.get(email))){
+                for(String idOfProposal : proposalAttributions.keySet()){
+                    if(idOfProposal.equals(advisorAttribution.get(email))){
+                        sb.append(" which is attributed to student ").append(proposalAttributions.get(idOfProposal)).append("\n");
+                        break;
+                    }
+                }
+            }else{
+                sb.append("\n");
+            }
+        }
+
+        return sb.toString();
     }
 }
