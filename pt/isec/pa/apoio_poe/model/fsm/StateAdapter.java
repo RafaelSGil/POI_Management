@@ -3,11 +3,8 @@ package pt.isec.pa.apoio_poe.model.fsm;
 import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.data.person.Person;
-import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
-
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.List;;
 
 public class StateAdapter implements IApplicationState {
     protected ApplicationContext context;

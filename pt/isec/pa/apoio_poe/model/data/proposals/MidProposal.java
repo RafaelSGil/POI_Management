@@ -26,6 +26,10 @@ abstract public class MidProposal extends Proposal {
         return branch.size();
     }
 
+    public String getProfessor() {
+        return null;
+    }
+
     public String getBranches() {
         StringBuilder sb = new StringBuilder();
 

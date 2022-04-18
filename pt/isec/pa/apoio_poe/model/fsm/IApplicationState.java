@@ -1,11 +1,8 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.data.person.Person;
-import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public interface IApplicationState {
     boolean insertData(String file);

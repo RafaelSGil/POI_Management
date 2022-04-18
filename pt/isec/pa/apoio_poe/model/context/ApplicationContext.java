@@ -2,14 +2,11 @@ package pt.isec.pa.apoio_poe.model.context;
 
 import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.data.person.Person;
-import pt.isec.pa.apoio_poe.model.data.proposals.Internship;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 public class ApplicationContext {
     private Data data;
@@ -145,11 +142,11 @@ public class ApplicationContext {
         return state.listStudentWithoutProposalAttributed();
     }
 
-    public boolean manualAttribution(String idOfProposal, long idOfStudent){
+    public boolean manualAttribution(String idOfProposal, long idOfStudent) {
         return state.manualAttribution(idOfProposal, idOfStudent);
     }
 
-    public boolean manualRemoval(String idOfProposal){
+    public boolean manualRemoval(String idOfProposal) {
         return state.manualRemoval(idOfProposal);
     }
 }

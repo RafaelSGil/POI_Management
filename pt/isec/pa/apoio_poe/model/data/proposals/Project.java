@@ -18,6 +18,7 @@ public class Project extends MidProposal {
         return new Project(idOfProposal, title, student, branch, professor);
     }
 
+    @Override
     public String getProfessor() {
         return professor.getEmail();
     }

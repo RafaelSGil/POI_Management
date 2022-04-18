@@ -1,7 +1,6 @@
 package pt.isec.pa.apoio_poe.model.fsm.statesImplementation;
 
 import pt.isec.pa.apoio_poe.model.data.person.Person;
-import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
@@ -82,7 +81,7 @@ public class ProposalAttributionPhase extends StateAdapter {
 
     @Override
     public boolean closeState() {
-        if(!data.isEveryStudentAttributed()){
+        if (!data.isEveryStudentAttributed()) {
             return false;
         }
         setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
