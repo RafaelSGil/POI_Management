@@ -169,4 +169,12 @@ public class ApplicationContext {
     public boolean manualProfessorRemoval(String email){
         return state.manualProfessorRemoval(email);
     }
+
+    public String listStudentsWithProposalAndProfessorAttributed(){
+        return state.listStudentsWithProposalAndProfessor();
+    }
+
+    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
+        return state.listStudentsWithProposalWithoutProfessor();
+    }
 }

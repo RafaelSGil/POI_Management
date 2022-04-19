@@ -1137,4 +1137,38 @@ public class Data {
 
         return sb.toString();
     }
+
+    public String listStudentsWithProposalAndProfessorAttributed(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Person student : students){
+            if(proposalAttributions.containsValue(student.getId())){
+                for(String idProposal : proposalAttributions.keySet()){
+                    if(proposalAttributions.get(idProposal).equals(student.getId()) && advisorAttribution.containsValue(idProposal)){
+                        for(String email : advisorAttribution.keySet()){
+                            sb.append("Student ").append(student.getId()).append(" is attributed to proposal").append(idProposal).append(" with ").append(email).append(" has its advisor\n");
+                        }
+                    }
+                }
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Person student : students){
+            if(proposalAttributions.containsValue(student.getId())){
+                for(String idProposal : proposalAttributions.keySet()){
+                    if(proposalAttributions.get(idProposal).equals(student.getId()) && !advisorAttribution.containsValue(idProposal)){
+                        sb.append("Student ").append(student.getId()).append(" is attributed to proposal").append(idProposal).append(" without an advisor\n");
+                    }
+                }
+            }
+        }
+
+        return sb.toString();
+    }
 }

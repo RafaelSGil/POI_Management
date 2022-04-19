@@ -430,7 +430,10 @@ public class CommandLineUI {
         }
 
         if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
-
+            switch (InputProtection.chooseOption(null, "List students with proposal and professor attributed", "List students with proposal attributed and without professor attributed")){
+                case 1 -> listStudentsWithProposalAndProfessorAttributed();
+                case 2 -> listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
+            }
         }
     }
 
@@ -649,6 +652,14 @@ public class CommandLineUI {
     public void consultProfessorData(){
         String email = InputProtection.readString("Specify the email of the professor you want to consult: ", true);
         System.out.println(context.getProfessorByEmail(email));
+    }
+
+    public void listStudentsWithProposalAndProfessorAttributed(){
+        System.out.println(context.listStudentsWithProposalAndProfessorAttributed());
+    }
+
+    public void listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
+        System.out.println(context.listStudentsWithProposalAttributedAndWithoutProfessorAttributed());
     }
 
     public void start() {

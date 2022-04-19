@@ -53,9 +53,9 @@ public interface IApplicationState {
 
     boolean professorAttributionManager();
 
-    boolean listStudentsWithProposalWithoutProfessor();
+    String listStudentsWithProposalWithoutProfessor();
 
-    boolean listStudentsWithProposalAndProfessor();
+    String listStudentsWithProposalAndProfessor();
 
     boolean averageProfessorAttributions();
 

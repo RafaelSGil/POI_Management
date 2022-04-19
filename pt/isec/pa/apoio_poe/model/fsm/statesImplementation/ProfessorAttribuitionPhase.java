@@ -63,4 +63,14 @@ public class ProfessorAttribuitionPhase extends StateAdapter {
         setState(ApplicationState.PROPOSAL_ATTRIBUTION);
         return true;
     }
+
+    @Override
+    public String listStudentsWithProposalAndProfessor() {
+        return data.listStudentsWithProposalAndProfessorAttributed();
+    }
+
+    @Override
+    public String listStudentsWithProposalWithoutProfessor() {
+        return data.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
+    }
 }

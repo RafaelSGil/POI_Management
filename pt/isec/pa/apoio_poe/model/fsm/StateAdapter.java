@@ -145,13 +145,13 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean listStudentsWithProposalWithoutProfessor() {
-        return false;
+    public String listStudentsWithProposalWithoutProfessor() {
+        return null;
     }
 
     @Override
-    public boolean listStudentsWithProposalAndProfessor() {
-        return false;
+    public String listStudentsWithProposalAndProfessor() {
+        return null;
     }
 
     @Override
