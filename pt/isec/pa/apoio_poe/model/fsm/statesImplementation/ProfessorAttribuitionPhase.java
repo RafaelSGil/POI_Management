@@ -73,4 +73,24 @@ public class ProfessorAttribuitionPhase extends StateAdapter {
     public String listStudentsWithProposalWithoutProfessor() {
         return data.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
     }
+
+    @Override
+    public String minimumProfessorAttributions() {
+        return data.getMinProfessorsAttributions();
+    }
+
+    @Override
+    public String maximumProfessorAttributions() {
+        return data.getMaxProfessorsAttributions();
+    }
+
+    @Override
+    public String averageProfessorAttributions() {
+        return data.getAverageNumberOfAttributionsForProfessors();
+    }
+
+    @Override
+    public String specificProfessorAttributions(String email) {
+        return data.getSpecificProfessorAttributions(email);
+    }
 }

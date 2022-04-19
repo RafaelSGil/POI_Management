@@ -155,23 +155,23 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean averageProfessorAttributions() {
-        return false;
+    public String averageProfessorAttributions() {
+        return null;
     }
 
     @Override
-    public boolean minimumProfessorAttributions() {
-        return false;
+    public String minimumProfessorAttributions() {
+        return null;
     }
 
     @Override
-    public boolean maximumProfessorAttributions() {
-        return false;
+    public String maximumProfessorAttributions() {
+        return null;
     }
 
     @Override
-    public boolean specificProfessorAttributions() {
-        return false;
+    public String specificProfessorAttributions(String email) {
+        return null;
     }
 
     @Override

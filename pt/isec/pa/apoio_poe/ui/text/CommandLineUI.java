@@ -630,7 +630,7 @@ public class CommandLineUI {
     public boolean professorAttributionPhase(){
         System.out.println("Current state: " + context.getState());
 
-        switch (InputProtection.chooseOption(null, "Automatic attribution", "Manual attribution", "Manual removal", "Edit professor data", "Consult professor data", "List attributions", "List students", "Close state", "Go to previous state")){
+        switch (InputProtection.chooseOption(null, "Automatic attribution", "Manual attribution", "Manual removal", "Edit professor data", "Consult professor data", "List attributions", "List students", "List professor data", "Close state", "Go to previous state")){
             case 1 -> associateAttribution();
             case 2 -> manualAttribution();
             case 3 -> manualRemoval();
@@ -638,8 +638,9 @@ public class CommandLineUI {
             case 5 -> consultProfessorData();
             case 6 -> listProfessorAttributions();
             case 7 -> listStudents();
-            case 8 -> closePhase();
-            case 9 -> proposalAttributionManagement();
+            case 8 -> listProfessorData();
+            case 9 -> closePhase();
+            case 10 -> proposalAttributionManagement();
         }
 
         return true;
@@ -660,6 +661,32 @@ public class CommandLineUI {
 
     public void listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
         System.out.println(context.listStudentsWithProposalAttributedAndWithoutProfessorAttributed());
+    }
+
+    public void listProfessorData(){
+        switch (InputProtection.chooseOption(null, "List average attributions", "List minimum attributions", "List maximum attributions", "List specific professor attributions")){
+            case 1 -> listAverageAttributions();
+            case 2 -> listMinimumAttributions();
+            case 3 -> listMaximumAttribution();
+            case 4 -> listSpecificProfessorAttribution();
+        }
+    }
+
+    public void listAverageAttributions(){
+        System.out.println(context.listAverageAttributions());
+    }
+
+    public void listMinimumAttributions(){
+        System.out.println(context.listMinimumAttributions());
+    }
+
+    public void listMaximumAttribution(){
+        System.out.println(context.listMaximumAttribution());
+    }
+
+    public void listSpecificProfessorAttribution(){
+        String email = InputProtection.readString("Specify the email of the professor: ", true);
+        System.out.println(context.listSpecificProfessorAttribution(email));
     }
 
     public void start() {

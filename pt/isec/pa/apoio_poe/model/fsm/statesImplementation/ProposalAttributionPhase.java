@@ -84,6 +84,8 @@ public class ProposalAttributionPhase extends StateAdapter {
         if (!data.isEveryStudentAttributed()) {
             return false;
         }
+
+        data.lockPhase(ApplicationState.PROPOSAL_ATTRIBUTION);
         setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
         return true;
     }

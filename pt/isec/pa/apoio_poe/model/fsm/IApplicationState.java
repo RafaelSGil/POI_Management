@@ -57,13 +57,13 @@ public interface IApplicationState {
 
     String listStudentsWithProposalAndProfessor();
 
-    boolean averageProfessorAttributions();
+    String averageProfessorAttributions();
 
-    boolean minimumProfessorAttributions();
+    String minimumProfessorAttributions();
 
-    boolean maximumProfessorAttributions();
+    String maximumProfessorAttributions();
 
-    boolean specificProfessorAttributions();
+    String specificProfessorAttributions(String email);
 
     boolean listProposalsWithAttributions();
 

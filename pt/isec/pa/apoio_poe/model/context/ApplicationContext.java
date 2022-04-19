@@ -177,4 +177,20 @@ public class ApplicationContext {
     public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
         return state.listStudentsWithProposalWithoutProfessor();
     }
+
+    public String listAverageAttributions(){
+        return state.averageProfessorAttributions();
+    }
+
+    public String listMinimumAttributions(){
+        return state.minimumProfessorAttributions();
+    }
+
+    public String listMaximumAttribution(){
+        return state.maximumProfessorAttributions();
+    }
+
+    public String listSpecificProfessorAttribution(String email){
+        return state.specificProfessorAttributions(email);
+    }
 }

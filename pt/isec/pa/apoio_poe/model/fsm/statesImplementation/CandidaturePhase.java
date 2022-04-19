@@ -57,8 +57,10 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public boolean closeState() {
-        data.lockPhase(ApplicationState.CANDIDATURE);
-        setState(ApplicationState.CANDIDATURE_LOCKED);
+        if(data.isLocked(ApplicationState.STUDENT)){
+            data.lockPhase(ApplicationState.CANDIDATURE);
+            setState(ApplicationState.CANDIDATURE_LOCKED);
+        }
         return true;
     }
 
