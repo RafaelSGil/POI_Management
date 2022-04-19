@@ -1171,4 +1171,43 @@ public class Data {
 
         return sb.toString();
     }
+
+    public String getNumberOfAttributionsPerProfessor(){
+        StringBuilder sb = new StringBuilder();
+
+        int count = 0;
+
+        for(Person prof : professors){
+            for(String emailOfProf : advisorAttribution.keySet()){
+                if(emailOfProf.equals(prof.getEmail())){
+                    ++count;
+                }
+            }
+
+            sb.append("Professor ").append(prof.getEmail()).append(" has ").append(count).append(" attributions\n");
+            count = 0;
+        }
+
+        return sb.toString();
+    }
+
+    public String getMediumNumberOfAttributionsForProfessors(){
+        StringBuilder sb = new StringBuilder();
+
+        int count = 0;
+
+        for(Person prof : professors){
+            for(String emailOfProf : advisorAttribution.keySet()){
+                if(emailOfProf.equals(prof.getEmail())){
+                    ++count;
+                }
+            }
+        }
+
+        int mediumValue = count/advisorAttribution.size();
+
+        sb.append("Medium professor attribution ").append(mediumValue);
+
+        return sb.toString();
+    }
 }
