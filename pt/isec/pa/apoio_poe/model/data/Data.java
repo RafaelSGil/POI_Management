@@ -974,7 +974,7 @@ public class Data {
                 }
             } else {
                 if (studentsProposals.size() != 0) {
-                    return studentsProposals;
+                    return new ArrayList<>(studentsProposals);
                 }
             }
             studentsProposals.clear();
