@@ -237,11 +237,8 @@ public class Data {
 
             else if (list.get(0).equals("T3")) { // Auto proposal
                 idOfProposal = (String) eachListIterator.next();
-                System.out.println(idOfProposal);
                 title = (String) eachListIterator.next();
-                System.out.println(title);
                 student = (Student) Student.createDummyStudent(Long.parseLong((String) eachListIterator.next()));
-                System.out.println(student.getEmail());
                 addAutoProposal(idOfProposal, title, student);
             }
         }
@@ -766,18 +763,23 @@ public class Data {
 
             if (state == ApplicationState.CANDIDATURE) {
                 if (filter == 3) {
+                    ArrayList<String> alreadyThere = new ArrayList<>();
                     sb.append("Proposals with candidatures:\n");
                     for (Long ids : candidatures.keySet()) {
                         Iterator<String> proposals = candidatures.get(ids).iterator();
                         while (proposals.hasNext()) {
                             String aux = proposals.next();
                             for (MidProposal project : projects) {
-                                if (project.getIdOfProposal().equals(aux)) {
+                                if (project.getIdOfProposal().equals(aux)
+                                        && !alreadyThere.contains(project.getIdOfProposal())) {
+                                    alreadyThere.add(project.getIdOfProposal());
                                     sb.append(project).append("\n");
                                 }
                             }
                             for (MidProposal internship : internships) {
-                                if (internship.getIdOfProposal().equals(aux)) {
+                                if (internship.getIdOfProposal().equals(aux)
+                                        && !alreadyThere.contains(internship.getIdOfProposal())) {
+                                    alreadyThere.add(internship.getIdOfProposal());
                                     sb.append(internship).append("\n");
                                 }
                             }
@@ -785,18 +787,23 @@ public class Data {
                     }
                 }
                 if (filter == 4) {
+                    ArrayList<String> alreadyThere = new ArrayList<>();
                     sb.append("Proposals without candidatures:\n");
                     for (Long ids : candidatures.keySet()) {
                         Iterator<String> proposals = candidatures.get(ids).iterator();
                         while (proposals.hasNext()) {
                             String aux = proposals.next();
                             for (MidProposal project : projects) {
-                                if (!project.getIdOfProposal().equals(aux)) {
+                                if (!project.getIdOfProposal().equals(aux)
+                                        && !alreadyThere.contains(project.getIdOfProposal())) {
+                                    alreadyThere.add(project.getIdOfProposal());
                                     sb.append(project).append("\n");
                                 }
                             }
                             for (MidProposal internship : internships) {
-                                if (!internship.getIdOfProposal().equals(aux)) {
+                                if (!internship.getIdOfProposal().equals(aux)
+                                        && !alreadyThere.contains(internship.getIdOfProposal())) {
+                                    alreadyThere.add(internship.getIdOfProposal());
                                     sb.append(internship).append("\n");
                                 }
                             }
@@ -952,6 +959,9 @@ public class Data {
                                                     if (!proposalAttributions.containsKey(proposal)
                                                             && !proposalAttributions.containsValue(entry.getKey())) {
                                                         proposalAttributions.put(proposal, entry.getKey());
+                                                        internship
+                                                                .setStudent((Student) Student
+                                                                        .createDummyStudent(entry.getKey()));
                                                     }
                                         }
                                     }
@@ -965,8 +975,13 @@ public class Data {
                                                 if (!proposalAttributions.containsKey(proposal)
                                                         && !proposalAttributions.containsValue(entry.getKey())) {
                                                     proposalAttributions.put(proposal, entry.getKey());
+                                                    project
+                                                            .setStudent((Student) Student
+                                                                    .createDummyStudent(entry.getKey()));
                                                 }
+
                                         }
+
                                     }
                             }
                         }
@@ -974,16 +989,48 @@ public class Data {
                 }
             } else {
                 if (studentsProposals.size() != 0) {
+                    fixAttribuitions();
                     return new ArrayList<>(studentsProposals);
                 }
             }
             studentsProposals.clear();
             i++;
         }
+
+        fixAttribuitions();
         return null;
     }
 
-    public boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+    public boolean fixAttribuitions() {
+
+        for (String idProposal : proposalAttributions.keySet()) {
+            if (internships.contains(Internship.createDummyInternship(idProposal))) {
+                for (Proposal internship : internships) {
+                    if (internship.getIdOfProposal().equals(idProposal)) {
+                        internship
+                                .setStudent((Student) Student.createDummyStudent(proposalAttributions.get(idProposal)));
+                    }
+                }
+            }
+            if (projects.contains(Project.createDummyProject(idProposal))) {
+                for (Proposal project : projects) {
+                    if (project.getIdOfProposal().equals(idProposal)) {
+                        project.setStudent((Student) Student.createDummyStudent(proposalAttributions.get(idProposal)));
+                    }
+                }
+            }
+            if (autoproposals.contains(AutoProposal.createDummyAutoProposal(idProposal))) {
+                for (Proposal auto : autoproposals) {
+                    if (auto.getIdOfProposal().equals(idProposal)) {
+                        auto.setStudent((Student) Student.createDummyStudent(proposalAttributions.get(idProposal)));
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
         if (studentsProposals != null) {
             for (Map.Entry<Long, List<String>> entry : candidatures.entrySet()) {
                 if (entry.getKey() == studentsProposals.get(index).getId()) {
@@ -1000,6 +1047,9 @@ public class Data {
                                                 if (!proposalAttributions.containsKey(proposal)
                                                         && !proposalAttributions.containsValue(entry.getKey())) {
                                                     proposalAttributions.put(proposal, entry.getKey());
+                                                    internship
+                                                            .setStudent((Student) Student
+                                                                    .createDummyStudent(entry.getKey()));
                                                 }
                                     }
                                 }
@@ -1013,6 +1063,9 @@ public class Data {
                                             if (!proposalAttributions.containsKey(proposal)
                                                     && !proposalAttributions.containsValue(entry.getKey())) {
                                                 proposalAttributions.put(proposal, entry.getKey());
+                                                project
+                                                        .setStudent((Student) Student
+                                                                .createDummyStudent(entry.getKey()));
                                             }
                                     }
                                 }
@@ -1021,8 +1074,15 @@ public class Data {
                 }
             }
         }
-        nonAssociateAttribution();
-        return true;
+
+        ArrayList<Person> aux = new ArrayList<>();
+        if ((aux = nonAssociateAttribution()) != null) {
+            fixAttribuitions();
+            return aux;
+        }
+
+        fixAttribuitions();
+        return null;
     }
 
     public String listStudentWithProposalAttributed() {
@@ -1070,6 +1130,22 @@ public class Data {
 
     public boolean manualRemoval(String idOdProposal) {
         if (proposalAttributions.containsKey(idOdProposal)) {
+            for (Proposal internship : internships) {
+                if (internship.getIdOfProposal().equals(idOdProposal)) {
+                    internship.setStudent(null);
+                }
+            }
+            for (Proposal project : projects) {
+                if (project.getIdOfProposal().equals(idOdProposal)) {
+                    project.setStudent(null);
+                }
+            }
+            for (Proposal midproposal : autoproposals) {
+                if (midproposal.getIdOfProposal().equals(idOdProposal)) {
+                    midproposal.setStudent(null);
+                }
+            }
+
             proposalAttributions.remove(idOdProposal);
             return true;
         }
@@ -1090,29 +1166,29 @@ public class Data {
     public void associatedAdvisor() {
         for (MidProposal project : projects) {
             if (!advisorAttribution.containsValue(List.of(project.getIdOfProposal()))) {
-                if(advisorAttribution.containsKey(project.getProfessor())){
+                if (advisorAttribution.containsKey(project.getProfessor())) {
                     advisorAttribution.get(project.getProfessor()).add(project.getIdOfProposal());
-                }else{
-                    advisorAttribution.put(project.getProfessor(), List.of(project.getIdOfProposal()));
+                } else {
+                    advisorAttribution.put(project.getProfessor(), new ArrayList<>(List.of(project.getIdOfProposal())));
                 }
             }
         }
     }
 
-    public boolean manualProfessorAttribution(String idOfProposal, String emailProfessor){
-        if(advisorAttribution.containsKey(emailProfessor) || advisorAttribution.containsValue(List.of(idOfProposal))){
+    public boolean manualProfessorAttribution(String idOfProposal, String emailProfessor) {
+        if (advisorAttribution.containsKey(emailProfessor) || advisorAttribution.containsValue(List.of(idOfProposal))) {
             return false;
         }
 
-        if(!professors.contains(Professor.createDummyProfessor(emailProfessor))){
+        if (!professors.contains(Professor.createDummyProfessor(emailProfessor))) {
             return false;
         }
         if (projects.contains(Project.createDummyProject(idOfProposal))
                 || internships.contains(Internship.createDummyInternship(idOfProposal))
                 || autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))) {
-            if(advisorAttribution.containsKey(emailProfessor)){
+            if (advisorAttribution.containsKey(emailProfessor)) {
                 advisorAttribution.get(emailProfessor).add(idOfProposal);
-            }else{
+            } else {
                 advisorAttribution.put(emailProfessor, List.of(idOfProposal));
             }
             return true;
@@ -1121,24 +1197,26 @@ public class Data {
         return false;
     }
 
-    public boolean manualProfessorRemoval(String emailProfessor){
+    public boolean manualProfessorRemoval(String emailProfessor) {
         return advisorAttribution.remove(emailProfessor) != null;
     }
 
-    public String listProfessorAttributions(){
+    public String listProfessorAttributions() {
         StringBuilder sb = new StringBuilder();
 
-        for(String email : advisorAttribution.keySet()){
-            sb.append("Professor (").append(email).append(") is the advisor for proposal ").append(advisorAttribution.get(email));
-            for(String id : advisorAttribution.get(email)){
-                if(proposalAttributions.containsKey(id)){
-                    for(String idOfProposal : proposalAttributions.keySet()){
-                        if(idOfProposal.equals(id)){
-                            sb.append(" which is attributed to student ").append(proposalAttributions.get(idOfProposal)).append("\n");
+        for (String email : advisorAttribution.keySet()) {
+            sb.append("Professor (").append(email).append(") is the advisor for proposal ")
+                    .append(advisorAttribution.get(email));
+            for (String id : advisorAttribution.get(email)) {
+                if (proposalAttributions.containsKey(id)) {
+                    for (String idOfProposal : proposalAttributions.keySet()) {
+                        if (idOfProposal.equals(id)) {
+                            sb.append(" which is attributed to student ").append(proposalAttributions.get(idOfProposal))
+                                    .append("\n");
                             break;
                         }
                     }
-                }else{
+                } else {
                     sb.append("\n");
                 }
             }
@@ -1147,15 +1225,17 @@ public class Data {
         return sb.toString();
     }
 
-    public String listStudentsWithProposalAndProfessorAttributed(){
+    public String listStudentsWithProposalAndProfessorAttributed() {
         StringBuilder sb = new StringBuilder();
 
-        for(Person student : students){
-            if(proposalAttributions.containsValue(student.getId())){
-                for(String idProposal : proposalAttributions.keySet()){
-                    if(proposalAttributions.get(idProposal).equals(student.getId()) && advisorAttribution.containsValue(List.of(idProposal))){
-                        for(String email : advisorAttribution.keySet()){
-                            sb.append("Student ").append(student.getId()).append(" is attributed to proposal").append(idProposal).append(" with ").append(email).append(" has its advisor\n");
+        for (Person student : students) {
+            if (proposalAttributions.containsValue(student.getId())) {
+                for (String idProposal : proposalAttributions.keySet()) {
+                    if (proposalAttributions.get(idProposal).equals(student.getId())
+                            && advisorAttribution.containsValue(List.of(idProposal))) {
+                        for (String email : advisorAttribution.keySet()) {
+                            sb.append("Student ").append(student.getId()).append(" is attributed to proposal")
+                                    .append(idProposal).append(" with ").append(email).append(" has its advisor\n");
                         }
                     }
                 }
@@ -1165,14 +1245,16 @@ public class Data {
         return sb.toString();
     }
 
-    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
+    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
         StringBuilder sb = new StringBuilder();
 
-        for(Person student : students){
-            if(proposalAttributions.containsValue(student.getId())){
-                for(String idProposal : proposalAttributions.keySet()){
-                    if(proposalAttributions.get(idProposal).equals(student.getId()) && !advisorAttribution.containsValue(List.of(idProposal))){
-                        sb.append("Student ").append(student.getId()).append(" is attributed to proposal").append(idProposal).append(" without an advisor\n");
+        for (Person student : students) {
+            if (proposalAttributions.containsValue(student.getId())) {
+                for (String idProposal : proposalAttributions.keySet()) {
+                    if (proposalAttributions.get(idProposal).equals(student.getId())
+                            && !advisorAttribution.containsValue(List.of(idProposal))) {
+                        sb.append("Student ").append(student.getId()).append(" is attributed to proposal")
+                                .append(idProposal).append(" without an advisor\n");
                     }
                 }
             }
@@ -1181,14 +1263,14 @@ public class Data {
         return sb.toString();
     }
 
-    public String getNumberOfAttributionsPerProfessor(){
+    public String getNumberOfAttributionsPerProfessor() {
         StringBuilder sb = new StringBuilder();
 
         int count = 0;
 
-        for(Person prof : professors){
-            for(String emailOfProf : advisorAttribution.keySet()){
-                if(emailOfProf.equals(prof.getEmail())){
+        for (Person prof : professors) {
+            for (String emailOfProf : advisorAttribution.keySet()) {
+                if (emailOfProf.equals(prof.getEmail())) {
                     ++count;
                 }
             }
@@ -1200,76 +1282,77 @@ public class Data {
         return sb.toString();
     }
 
-    public String getAverageNumberOfAttributionsForProfessors(){
+    public String getAverageNumberOfAttributionsForProfessors() {
         StringBuilder sb = new StringBuilder();
 
         int count = 0;
 
-        for(Person prof : professors){
-            for(String emailOfProf : advisorAttribution.keySet()){
-                if(emailOfProf.equals(prof.getEmail())){
+        for (Person prof : professors) {
+            for (String emailOfProf : advisorAttribution.keySet()) {
+                if (emailOfProf.equals(prof.getEmail())) {
                     ++count;
                 }
             }
         }
 
-        int averageValue = count/advisorAttribution.size();
+        int averageValue = count / advisorAttribution.size();
 
         sb.append("Average professor attribution ").append(averageValue);
 
         return sb.toString();
     }
 
-    public String getMinProfessorsAttributions(){
+    public String getMinProfessorsAttributions() {
         StringBuilder sb = new StringBuilder();
 
         String minEmail = null;
         int min = Integer.MAX_VALUE;
 
-        for(String email : advisorAttribution.keySet()){
-            if(advisorAttribution.get(email).size() < min){
+        for (String email : advisorAttribution.keySet()) {
+            if (advisorAttribution.get(email).size() < min) {
                 min = advisorAttribution.get(email).size();
                 minEmail = email;
             }
         }
 
-        if(minEmail != null){
+        if (minEmail != null) {
             sb.append("Professor ").append(minEmail).append(" has the lowest attribution = ").append(min);
-        }else{
+        } else {
             sb.append("No minimum attributions");
         }
 
         return sb.toString();
     }
 
-    public String getMaxProfessorsAttributions(){
+    public String getMaxProfessorsAttributions() {
         StringBuilder sb = new StringBuilder();
 
         String maxEmail = null;
         int max = Integer.MIN_VALUE;
 
-        for(String email : advisorAttribution.keySet()){
-            if(advisorAttribution.get(email).size() > max){
+        for (String email : advisorAttribution.keySet()) {
+            if (advisorAttribution.get(email).size() > max) {
                 max = advisorAttribution.get(email).size();
                 maxEmail = email;
             }
         }
 
-        if(maxEmail != null){
+        if (maxEmail != null) {
             sb.append("Professor ").append(maxEmail).append(" has the highest attribution = ").append(max);
-        }else{
+        } else {
             sb.append("No minimum attributions");
         }
 
         return sb.toString();
     }
 
-    public String getSpecificProfessorAttributions(String email){
+    public String getSpecificProfessorAttributions(String email) {
         StringBuilder sb = new StringBuilder();
 
-        for(String emailOfProf : advisorAttribution.keySet()){
-            if(emailOfProf.equals(email)){
-                sb.append("Professor ").append(emailOfProf).append(" has ").append(advisorAttribution.get(emailOfProf).size()).append(" attributions");
+        for (String emailOfProf : advisorAttribution.keySet()) {
+            if (emailOfProf.equals(email)) {
+                sb.append("Professor ").append(emailOfProf).append(" has ")
+                        .append(advisorAttribution.get(emailOfProf).size()).append(" attributions");
                 break;
             }
         }

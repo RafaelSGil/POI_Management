@@ -49,7 +49,7 @@ public class Project extends MidProposal {
     @Override
     public String toString() {
         return String.format(
-                "(%s) - \"%s\". student (%s). branch \"%s\". professor (%s)",
+                "(%s) - \"%s\". student (%d). branch \"%s\". professor (%s)",
                 super.getIdOfProposal(), super.getTitle(), super.getStudent(), super.getBranches(), professor);
     }
 }

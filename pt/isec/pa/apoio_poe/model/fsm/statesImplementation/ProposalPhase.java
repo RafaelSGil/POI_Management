@@ -4,31 +4,11 @@ import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
-import java.util.List;
-
-import pt.isec.pa.apoio_poe.csv_files.Files;
 
 public class ProposalPhase extends StateAdapter {
 
     public ProposalPhase(ApplicationContext context, Data data) {
         super(context, data);
-    }
-
-    @Override
-    public boolean insertData(String file) {
-        if (file == null)
-            return false;
-
-        List<List<String>> attributes = Files.openFile(file);
-
-        data.addProposalFile(attributes);
-
-        return true;
-    }
-
-    @Override
-    public boolean deleteData(String identifier) {
-        return data.removeProposals(identifier);
     }
 
     @Override
@@ -46,11 +26,6 @@ public class ProposalPhase extends StateAdapter {
     public boolean studentManager() {
         setState(ApplicationState.STUDENT);
         return true;
-    }
-
-    @Override
-    public String checkData() {
-        return data.getAllProjects();
     }
 
     @Override
@@ -73,10 +48,5 @@ public class ProposalPhase extends StateAdapter {
         }
         setState(ApplicationState.CANDIDATURE);
         return true;
-    }
-
-    @Override
-    public boolean editDataProposal(String identifier, String attribute, List<String> newValue) {
-        return data.editProposals(identifier, attribute, newValue);
     }
 }

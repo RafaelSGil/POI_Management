@@ -7,6 +7,7 @@ import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
 import java.util.ArrayList;
 import java.util.List;
+import pt.isec.pa.apoio_poe.csv_files.Files;
 
 public class ApplicationContext {
     private Data data;
@@ -29,12 +30,63 @@ public class ApplicationContext {
         return state.chooseType(type);
     }
 
-    public boolean insertData(String file) {
-        return state.insertData(file);
+    public boolean insertStudentData(String file) {
+        if (file == null)
+            return false;
+
+        List<List<String>> attributes = Files.openFile(file);
+
+        data.addStudentFile(attributes);
+
+        return true;
     }
 
-    public String checkData() {
-        return state.checkData();
+    public boolean insertProfessorData(String file) {
+
+        if (file == null)
+            return false;
+
+        List<List<String>> attributes = Files.openFile(file);
+        data.addProfessorFile(attributes);
+
+        return true;
+    }
+
+    public boolean insertProposalsData(String file) {
+        if (file == null)
+            return false;
+
+        List<List<String>> attributes = Files.openFile(file);
+        data.addProposalFile(attributes);
+
+        return true;
+
+    }
+
+    public boolean insertCandidatureData(String file) {
+        if (file == null)
+            return false;
+
+        List<List<String>> attributes = Files.openFile(file);
+        data.addCandidatureFile(attributes);
+
+        return true;
+    }
+
+    public String checkStudentData() {
+        return data.getAllStudents();
+    }
+
+    public String checkProfessorData() {
+        return data.getAllProfessors();
+    }
+
+    public String checkProposalsData() {
+        return data.getAllProjects();
+    }
+
+    public String checkCandidaturesData() {
+        return data.getCandidatures();
     }
 
     public int checkTypeProposal(String identifier) {
@@ -42,19 +94,27 @@ public class ApplicationContext {
     }
 
     public boolean editDataProposals(String identifier, String attribute, List<String> newValue) {
-        return state.editDataProposal(identifier, attribute, newValue);
+        return data.editProposals(identifier, attribute, newValue);
     }
 
     public boolean editDataProfessor(String email, boolean advisor) {
-        return state.editDataProfessor(email, advisor);
+        return data.editProfessor(email, advisor);
     }
 
     public boolean editDataStudent(String identifier, String change, String whatToChange) {
-        return state.editDataStudent(identifier, change, whatToChange);
+        return data.editStudent(identifier, change, whatToChange);
     }
 
-    public boolean deleteData(String identifier) {
-        return state.deleteData(identifier);
+    public boolean removeStudentData(long idOfStudent) {
+        return data.removeStudentGivenItsId(idOfStudent);
+    }
+
+    public boolean removeProfessorData(String email) {
+        return data.removeProfessorGivenItsEmail(email);
+    }
+
+    public boolean removeProposals(String idOfProposal) {
+        return data.removeProposals(idOfProposal);
     }
 
     public boolean closeState() {
@@ -78,31 +138,35 @@ public class ApplicationContext {
     }
 
     public boolean removeProposalFromCandidature(String id, String proposal) {
-        return state.removeProposalFromCandidature(id, proposal);
+        return data.removeCandidatureGivenStudentID(id, proposal);
     }
 
     public boolean removeCandidature(String id) {
-        return state.removeCandidature(id);
+        return data.removeCompleteCandidatureGivenItsID(id);
     }
 
     public boolean editCandidatures(String id, String proposal) {
-        return state.editCandidatures(id, proposal);
+        return data.editCandidatures(id, proposal);
     }
 
     public String listStudentsWithCandidatures() {
-        return state.listStudentsWithCandidature();
+        return data.listStudentsWithCandidatures();
     }
 
     public String listStudentsWithoutCandidatures() {
-        return state.listStudentsWithoutCandidature();
+        return data.listStudentsWithoutCandidatures();
     }
 
     public String listStudentsWithAutoProposals() {
-        return state.listStudentsWithAutoProposal();
+        return data.listStudentsWithAutoProposals();
     }
 
-    public String listProposalsFilters(List<Integer> filters) {
-        return state.listProposalsFilters(filters);
+    public String listProposalsFiltersCandidature(List<Integer> filters) {
+        return data.listProposalsFilters(filters, ApplicationState.CANDIDATURE);
+    }
+
+    public String listProposalFiltersProposalAttribuition(List<Integer> filters) {
+        return data.listProposalsFilters(filters, ApplicationState.PROPOSAL_ATTRIBUTION);
     }
 
     @Override
@@ -118,16 +182,21 @@ public class ApplicationContext {
         return data.isLocked(s);
     }
 
-    public boolean associateAttribution() {
-        return state.associateAttribution();
+    public boolean associateAttributionProposal() {
+        return data.associatedAttribution();
+    }
+
+    public boolean associateProfessorAttribution() {
+        data.associatedAdvisor();
+        return true;
     }
 
     public ArrayList<Person> nonAssociatedAttribution() {
-        return state.nonAssociateAttribution();
+        return data.nonAssociateAttribution();
     }
 
-    public void chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
-        state.chooseStudentToAssociate(studentsProposals, index);
+    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        return data.chooseStudentToAssociate(studentsProposals, index);
     }
 
     public boolean proposalAttributionManager() {
@@ -135,62 +204,62 @@ public class ApplicationContext {
     }
 
     public String listStudentWithProposalAttributed() {
-        return state.listStudentWithProposalAttributed();
+        return data.listStudentWithProposalAttributed();
     }
 
     public String listStudentWithoutProposalAttributed() {
-        return state.listStudentWithoutProposalAttributed();
+        return data.listStudentWithoutProposalAttributed();
     }
 
     public boolean manualAttribution(String idOfProposal, long idOfStudent) {
-        return state.manualAttribution(idOfProposal, idOfStudent);
+        return data.manualAttribution(idOfProposal, idOfStudent);
     }
 
     public boolean manualRemoval(String idOfProposal) {
-        return state.manualRemoval(idOfProposal);
+        return data.manualRemoval(idOfProposal);
     }
 
-    public String getProfessorByEmail(String email){
-        return state.getProfessorByEmail(email);
+    public String getProfessorByEmail(String email) {
+        return data.getProfessorGivenItsEmail(email);
     }
 
-    public String listProfessorAttributions(){
-        return state.listProfessorAttributions();
+    public String listProfessorAttributions() {
+        return data.listProfessorAttributions();
     }
 
-    public boolean professorAttributionManager(){
+    public boolean professorAttributionManager() {
         return state.professorAttributionManager();
     }
 
-    public boolean manualProfessorAttribution(String idOfProposal, String email){
-        return state.manualProfessorAttribution(idOfProposal, email);
+    public boolean manualProfessorAttribution(String idOfProposal, String email) {
+        return data.manualProfessorAttribution(idOfProposal, email);
     }
 
-    public boolean manualProfessorRemoval(String email){
-        return state.manualProfessorRemoval(email);
+    public boolean manualProfessorRemoval(String email) {
+        return data.manualProfessorRemoval(email);
     }
 
-    public String listStudentsWithProposalAndProfessorAttributed(){
-        return state.listStudentsWithProposalAndProfessor();
+    public String listStudentsWithProposalAndProfessorAttributed() {
+        return data.listStudentsWithProposalAndProfessorAttributed();
     }
 
-    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
-        return state.listStudentsWithProposalWithoutProfessor();
+    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
+        return data.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
     }
 
-    public String listAverageAttributions(){
-        return state.averageProfessorAttributions();
+    public String listAverageAttributions() {
+        return data.getAverageNumberOfAttributionsForProfessors();
     }
 
-    public String listMinimumAttributions(){
-        return state.minimumProfessorAttributions();
+    public String listMinimumAttributions() {
+        return data.getMinProfessorsAttributions();
     }
 
-    public String listMaximumAttribution(){
-        return state.maximumProfessorAttributions();
+    public String listMaximumAttribution() {
+        return data.getMaxProfessorsAttributions();
     }
 
-    public String listSpecificProfessorAttribution(String email){
-        return state.specificProfessorAttributions(email);
+    public String listSpecificProfessorAttribution(String email) {
+        return data.getSpecificProfessorAttributions(email);
     }
 }

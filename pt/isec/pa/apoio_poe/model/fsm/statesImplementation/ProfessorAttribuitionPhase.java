@@ -23,39 +23,8 @@ public class ProfessorAttribuitionPhase extends StateAdapter {
     }
 
     @Override
-    public boolean associateAttribution() {
-        data.associatedAdvisor();
-        return true;
-    }
-
-    @Override
-    public boolean manualProfessorAttribution(String idOfProposal, String emailProfessor) {
-        return data.manualProfessorAttribution(idOfProposal, emailProfessor);
-    }
-
-    @Override
-    public boolean manualProfessorRemoval(String email) {
-        return data.manualProfessorRemoval(email);
-    }
-
-    @Override
-    public String checkData() {
-        return data.getAllProfessors();
-    }
-
-    @Override
-    public String getProfessorByEmail(String email) {
-        return data.getProfessorGivenItsEmail(email);
-    }
-
-    @Override
-    public String listProfessorAttributions() {
-        return data.listProfessorAttributions();
-    }
-
-    @Override
     public boolean proposalAttributionManager() {
-        if(data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)){
+        if (data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)) {
             setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
             return true;
         }
@@ -64,33 +33,4 @@ public class ProfessorAttribuitionPhase extends StateAdapter {
         return true;
     }
 
-    @Override
-    public String listStudentsWithProposalAndProfessor() {
-        return data.listStudentsWithProposalAndProfessorAttributed();
-    }
-
-    @Override
-    public String listStudentsWithProposalWithoutProfessor() {
-        return data.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
-    }
-
-    @Override
-    public String minimumProfessorAttributions() {
-        return data.getMinProfessorsAttributions();
-    }
-
-    @Override
-    public String maximumProfessorAttributions() {
-        return data.getMaxProfessorsAttributions();
-    }
-
-    @Override
-    public String averageProfessorAttributions() {
-        return data.getAverageNumberOfAttributionsForProfessors();
-    }
-
-    @Override
-    public String specificProfessorAttributions(String email) {
-        return data.getSpecificProfessorAttributions(email);
-    }
 }
