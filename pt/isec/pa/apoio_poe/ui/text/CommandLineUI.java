@@ -542,8 +542,8 @@ public class CommandLineUI {
         context.associateAttribution();
     }
 
-    public void chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
-        context.chooseStudentToAssociate(studentsProposals, index);
+    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        return context.chooseStudentToAssociate(studentsProposals, index);
     }
 
     public void nonAssociatedAttribution() {
@@ -553,7 +553,7 @@ public class CommandLineUI {
         String opt;
         int i = 0;
 
-        if (studentsProposals != null) {
+        while(studentsProposals != null) {
             System.out.println("\nYou have to choose between this students to get the priority: \n");
             for (Person student : studentsProposals) {
                 System.out.println(
@@ -568,7 +568,10 @@ public class CommandLineUI {
                         true);
                 option = Integer.parseInt(opt);
             }
-            chooseStudentToAssociate(studentsProposals, option);
+
+            studentsProposals = chooseStudentToAssociate(studentsProposals, option);
+            i=0;
+            option=-1;
         }
 
     }

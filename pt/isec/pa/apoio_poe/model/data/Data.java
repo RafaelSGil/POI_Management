@@ -980,10 +980,41 @@ public class Data {
             studentsProposals.clear();
             i++;
         }
+
+        fixAttributions();
         return null;
     }
 
-    public boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+    public void fixAttributions() {
+        for (String idProposal : proposalAttributions.keySet()) {
+            if (internships.contains(Internship.createDummyInternship(idProposal))) {
+                for (Proposal internship : internships) {
+                    if (internship.getIdOfProposal().equals(idProposal)) {
+                        internship
+                                .setStudent((Student) Student.createDummyStudent(proposalAttributions.get(idProposal)));
+                    }
+                }
+            }
+            if (projects.contains(Project.createDummyProject(idProposal))) {
+                for (Proposal project : projects) {
+                    if (project.getIdOfProposal().equals(idProposal)) {
+                        project.setStudent((Student) Student.createDummyStudent(proposalAttributions.get(idProposal)));
+                    }
+                }
+            }
+            if (autoproposals.contains(AutoProposal.createDummyAutoProposal(idProposal))) {
+                for (Proposal auto : autoproposals) {
+                    if (auto.getIdOfProposal().equals(idProposal)) {
+                        auto.setStudent((Student) Student.createDummyStudent(proposalAttributions.get(idProposal)));
+                    }
+                }
+            }
+        }
+    }
+
+    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        ArrayList<Person> aux = new ArrayList<>();
+
         if (studentsProposals != null) {
             for (Map.Entry<Long, List<String>> entry : candidatures.entrySet()) {
                 if (entry.getKey() == studentsProposals.get(index).getId()) {
@@ -1021,8 +1052,13 @@ public class Data {
                 }
             }
         }
-        nonAssociateAttribution();
-        return true;
+        if ((aux = nonAssociateAttribution()) != null) {
+            fixAttributions();
+            return aux;
+        }
+
+        fixAttributions();
+        return null;
     }
 
     public String listStudentWithProposalAttributed() {

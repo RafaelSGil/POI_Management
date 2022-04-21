@@ -50,7 +50,7 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
         return data.chooseStudentToAssociate(studentsProposals, index);
     }
 

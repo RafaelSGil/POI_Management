@@ -176,8 +176,8 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
-        return false;
+    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        return null;
     }
 
     @Override
