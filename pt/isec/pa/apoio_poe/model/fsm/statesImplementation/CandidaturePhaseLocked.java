@@ -17,7 +17,7 @@ public class CandidaturePhaseLocked extends StateAdapter {
 
     @Override
     public boolean studentManager() {
-        if (data.isLocked(ApplicationState.STUDENT)) {
+        if(data.isLocked(ApplicationState.STUDENT)){
             setState(ApplicationState.STUDENT_LOCKED);
             return true;
         }
@@ -27,8 +27,13 @@ public class CandidaturePhaseLocked extends StateAdapter {
     }
 
     @Override
+    public String checkData() {
+        return data.getCandidatures();
+    }
+
+    @Override
     public boolean proposalAttributionManager() {
-        if (data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)) {
+        if(data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)){
             setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
             return true;
         }

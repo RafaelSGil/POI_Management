@@ -12,6 +12,11 @@ public class StudentPhaseLocked extends StateAdapter {
     }
 
     @Override
+    public String checkData() {
+        return data.getAllStudents();
+    }
+
+    @Override
     public ApplicationState getState() {
         return ApplicationState.STUDENT_LOCKED;
     }
@@ -27,10 +32,9 @@ public class StudentPhaseLocked extends StateAdapter {
         setState(ApplicationState.PROPOSAL_LOCKED);
         return true;
     }
-
     @Override
     public boolean candidatureManager() {
-        if (data.isLocked(ApplicationState.CANDIDATURE)) {
+        if(data.isLocked(ApplicationState.CANDIDATURE)){
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
         }

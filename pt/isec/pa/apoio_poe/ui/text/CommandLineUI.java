@@ -38,33 +38,12 @@ public class CommandLineUI {
 
     public void insertData() {
         String file = InputProtection.readString("Specify the complete path to the csv file pls: ", false);
-        if (context.getState() == ApplicationState.STUDENT) {
-            context.insertStudentData(file);
-        }
-        if (context.getState() == ApplicationState.PROFESSOR) {
-            context.insertProfessorData(file);
-        }
-        if (context.getState() == ApplicationState.PROPOSAL) {
-            context.insertProposalsData(file);
-        }
-        if (context.getState() == ApplicationState.CANDIDATURE) {
-            context.insertCandidatureData(file);
-        }
+        context.insertData(file);
     }
 
     public void deleteStudentData() {
-        long id;
-        while (true) {
-            String identifier = InputProtection.readString("Specify the id of the student you want to delete: ", false);
-            try {
-                id = Long.parseLong(identifier);
-                break;
-            } catch (NumberFormatException e) {
-                e.printStackTrace();
-            }
-        }
-
-        context.removeStudentData(id);
+        String identifier = InputProtection.readString("Specify the id of the student you want to delete: ", false);
+        context.deleteData(identifier);
     }
 
     public void editStudentData() {
@@ -80,20 +59,7 @@ public class CommandLineUI {
     }
 
     public void consultData() {
-        if (context.getState() == ApplicationState.STUDENT || context.getState() == ApplicationState.STUDENT_LOCKED) {
-            System.out.println(context.checkStudentData());
-        }
-        if (context.getState() == ApplicationState.PROFESSOR
-                || context.getState() == ApplicationState.PROFESSOR_LOCKED) {
-            System.out.println(context.checkProfessorData());
-        }
-        if (context.getState() == ApplicationState.PROPOSAL || context.getState() == ApplicationState.PROPOSAL_LOCKED) {
-            System.out.println(context.checkProposalsData());
-        }
-        if (context.getState() == ApplicationState.CANDIDATURE
-                || context.getState() == ApplicationState.CANDIDATURE_LOCKED) {
-            System.out.println(context.checkCandidaturesData());
-        }
+        System.out.println(context.checkData());
     }
 
     public void professorManagement() {
@@ -148,7 +114,7 @@ public class CommandLineUI {
     public void deleteProfessorData() {
         String identifier = InputProtection.readString("Specify the email of the professor you want to delete: ",
                 false);
-        context.removeProfessorData(identifier);
+        context.deleteData(identifier);
     }
 
     public void editProfessorData() {
@@ -210,7 +176,7 @@ public class CommandLineUI {
 
     public void deleteProposalData() {
         String identifier = InputProtection.readString("Specify the id of the proposal you want to delete: ", true);
-        context.removeProposals(identifier);
+        context.deleteData(identifier);
     }
 
     public void deleteCandidatureData() {
@@ -463,9 +429,8 @@ public class CommandLineUI {
 
         }
 
-        if (context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION) {
-            switch (InputProtection.chooseOption(null, "List students with proposal and professor attributed",
-                    "List students with proposal attributed and without professor attributed")) {
+        if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
+            switch (InputProtection.chooseOption(null, "List students with proposal and professor attributed", "List students with proposal attributed and without professor attributed")){
                 case 1 -> listStudentsWithProposalAndProfessorAttributed();
                 case 2 -> listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
             }
@@ -509,8 +474,6 @@ public class CommandLineUI {
 
                 filters.add(filter);
             }
-
-            System.out.println(context.listProposalsFiltersCandidature(filters));
         }
 
         if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION
@@ -527,9 +490,9 @@ public class CommandLineUI {
 
                 filters.add(filter);
             }
-
-            System.out.println(context.listProposalFiltersProposalAttribuition(filters));
         }
+
+        System.out.println(context.listProposalsFilters(filters));
     }
 
     public boolean proposalAttributionPhase() {
@@ -576,11 +539,11 @@ public class CommandLineUI {
     }
 
     public void associateAttribution() {
-        context.associateAttributionProposal();
+        context.associateAttribution();
     }
 
-    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
-        return context.chooseStudentToAssociate(studentsProposals, index);
+    public void chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+        context.chooseStudentToAssociate(studentsProposals, index);
     }
 
     public void nonAssociatedAttribution() {
@@ -590,7 +553,7 @@ public class CommandLineUI {
         String opt;
         int i = 0;
 
-        while (studentsProposals != null) {
+        if (studentsProposals != null) {
             System.out.println("\nYou have to choose between this students to get the priority: \n");
             for (Person student : studentsProposals) {
                 System.out.println(
@@ -605,15 +568,13 @@ public class CommandLineUI {
                         true);
                 option = Integer.parseInt(opt);
             }
-            studentsProposals = chooseStudentToAssociate(studentsProposals, option);
-            i = 0;
-            option = -1;
+            chooseStudentToAssociate(studentsProposals, option);
         }
 
     }
 
     public void manualAttribution() {
-        if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
+        if(context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
             String idOfStudent;
 
@@ -634,18 +595,18 @@ public class CommandLineUI {
             }
         }
 
-        if (context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION) {
+        if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
             String email = InputProtection.readString("Specify the email of the professor: ", true);
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
 
-            if (!context.manualProfessorAttribution(idOfProposal, email)) {
+            if(!context.manualProfessorAttribution(idOfProposal, email)){
                 System.out.println("Could not attribute");
             }
         }
     }
 
     public void manualRemoval() {
-        if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
+        if(context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
 
             if (!context.manualRemoval(idOfProposal)) {
@@ -653,10 +614,10 @@ public class CommandLineUI {
             }
         }
 
-        if (context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION) {
+        if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
             String email = InputProtection.readString("Specify the email of the professor: ", true);
 
-            if (!context.manualProfessorRemoval(email)) {
+            if(!context.manualProfessorRemoval(email)){
                 System.out.println("Could not remove");
             }
         }
@@ -666,12 +627,10 @@ public class CommandLineUI {
         context.professorAttributionManager();
     }
 
-    public boolean professorAttributionPhase() {
+    public boolean professorAttributionPhase(){
         System.out.println("Current state: " + context.getState());
 
-        switch (InputProtection.chooseOption(null, "Automatic attribution", "Manual attribution", "Manual removal",
-                "Edit professor data", "Consult professor data", "List attributions", "List students",
-                "List professor data", "Close state", "Go to previous state")) {
+        switch (InputProtection.chooseOption(null, "Automatic attribution", "Manual attribution", "Manual removal", "Edit professor data", "Consult professor data", "List attributions", "List students", "List professor data", "Close state", "Go to previous state")){
             case 1 -> associateAttribution();
             case 2 -> manualAttribution();
             case 3 -> manualRemoval();
@@ -687,26 +646,25 @@ public class CommandLineUI {
         return true;
     }
 
-    public void listProfessorAttributions() {
+    public void listProfessorAttributions(){
         System.out.println(context.listProfessorAttributions());
     }
 
-    public void consultProfessorData() {
+    public void consultProfessorData(){
         String email = InputProtection.readString("Specify the email of the professor you want to consult: ", true);
         System.out.println(context.getProfessorByEmail(email));
     }
 
-    public void listStudentsWithProposalAndProfessorAttributed() {
+    public void listStudentsWithProposalAndProfessorAttributed(){
         System.out.println(context.listStudentsWithProposalAndProfessorAttributed());
     }
 
-    public void listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
+    public void listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
         System.out.println(context.listStudentsWithProposalAttributedAndWithoutProfessorAttributed());
     }
 
-    public void listProfessorData() {
-        switch (InputProtection.chooseOption(null, "List average attributions", "List minimum attributions",
-                "List maximum attributions", "List specific professor attributions")) {
+    public void listProfessorData(){
+        switch (InputProtection.chooseOption(null, "List average attributions", "List minimum attributions", "List maximum attributions", "List specific professor attributions")){
             case 1 -> listAverageAttributions();
             case 2 -> listMinimumAttributions();
             case 3 -> listMaximumAttribution();
@@ -714,19 +672,19 @@ public class CommandLineUI {
         }
     }
 
-    public void listAverageAttributions() {
+    public void listAverageAttributions(){
         System.out.println(context.listAverageAttributions());
     }
 
-    public void listMinimumAttributions() {
+    public void listMinimumAttributions(){
         System.out.println(context.listMinimumAttributions());
     }
 
-    public void listMaximumAttribution() {
+    public void listMaximumAttribution(){
         System.out.println(context.listMaximumAttribution());
     }
 
-    public void listSpecificProfessorAttribution() {
+    public void listSpecificProfessorAttribution(){
         String email = InputProtection.readString("Specify the email of the professor: ", true);
         System.out.println(context.listSpecificProfessorAttribution(email));
     }
