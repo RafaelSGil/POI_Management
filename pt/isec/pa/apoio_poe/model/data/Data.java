@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.model.data;
 
+import com.sun.jdi.event.StepEvent;
 import pt.isec.pa.apoio_poe.model.data.person.*;
 import pt.isec.pa.apoio_poe.model.data.proposals.AutoProposal;
 import pt.isec.pa.apoio_poe.model.data.proposals.Internship;
@@ -807,40 +808,10 @@ public class Data {
 
             if (state == ApplicationState.PROPOSAL_ATTRIBUTION) {
                 if (filter == 3) {
-                    sb.append("Available proposals:\n");
-                    for (Proposal internship : internships) {
-                        if (!proposalAttributions.containsKey(internship.getIdOfProposal())) {
-                            sb.append(internship).append("\n");
-                        }
-                    }
-                    for (Proposal project : projects) {
-                        if (!proposalAttributions.containsKey(project.getIdOfProposal())) {
-                            sb.append(project).append("\n");
-                        }
-                    }
-                    for (Proposal auto : autoproposals) {
-                        if (!proposalAttributions.containsKey(auto.getIdOfProposal())) {
-                            sb.append(auto).append("\n");
-                        }
-                    }
+                    sb.append(listAvailableProposals());
                 }
                 if (filter == 4) {
-                    sb.append("Proposals attributed:\n");
-                    for (Proposal internship : internships) {
-                        if (proposalAttributions.containsKey(internship.getIdOfProposal())) {
-                            sb.append(internship).append("\n");
-                        }
-                    }
-                    for (Proposal project : projects) {
-                        if (proposalAttributions.containsKey(project.getIdOfProposal())) {
-                            sb.append(project).append("\n");
-                        }
-                    }
-                    for (Proposal auto : autoproposals) {
-                        if (proposalAttributions.containsKey(auto.getIdOfProposal())) {
-                            sb.append(auto).append("\n");
-                        }
-                    }
+                    sb.append(listAttributedProposals());
                 }
             }
         }
@@ -1129,7 +1100,7 @@ public class Data {
                 if(advisorAttribution.containsKey(project.getProfessor())){
                     advisorAttribution.get(project.getProfessor()).add(project.getIdOfProposal());
                 }else{
-                    advisorAttribution.put(project.getProfessor(), List.of(project.getIdOfProposal()));
+                    advisorAttribution.put(project.getProfessor(), new ArrayList<>(List.of(project.getIdOfProposal())));
                 }
             }
         }
@@ -1307,6 +1278,64 @@ public class Data {
             if(emailOfProf.equals(email)){
                 sb.append("Professor ").append(emailOfProf).append(" has ").append(advisorAttribution.get(emailOfProf).size()).append(" attributions");
                 break;
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public String listStudentWithoutProposalAttributedAndWithCandidature(){
+        StringBuilder sb = new StringBuilder();
+
+        for(Person student : students){
+            if(!proposalAttributions.containsValue(student.getId()) && candidatures.containsKey(student.getId())){
+                sb.append(student).append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public String listAvailableProposals(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Available proposals:\n");
+        for (Proposal internship : internships) {
+            if (!proposalAttributions.containsKey(internship.getIdOfProposal())) {
+                sb.append(internship).append("\n");
+            }
+        }
+        for (Proposal project : projects) {
+            if (!proposalAttributions.containsKey(project.getIdOfProposal())) {
+                sb.append(project).append("\n");
+            }
+        }
+        for (Proposal auto : autoproposals) {
+            if (!proposalAttributions.containsKey(auto.getIdOfProposal())) {
+                sb.append(auto).append("\n");
+            }
+        }
+
+        return sb.toString();
+    }
+
+    public String listAttributedProposals(){
+        StringBuilder sb = new StringBuilder();
+
+        sb.append("Proposals attributed:\n");
+        for (Proposal internship : internships) {
+            if (proposalAttributions.containsKey(internship.getIdOfProposal())) {
+                sb.append(internship).append("\n");
+            }
+        }
+        for (Proposal project : projects) {
+            if (proposalAttributions.containsKey(project.getIdOfProposal())) {
+                sb.append(project).append("\n");
+            }
+        }
+        for (Proposal auto : autoproposals) {
+            if (proposalAttributions.containsKey(auto.getIdOfProposal())) {
+                sb.append(auto).append("\n");
             }
         }
 

@@ -3,7 +3,7 @@ package pt.isec.pa.apoio_poe.model.fsm;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.CandidaturePhase;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.CandidaturePhaseLocked;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorAttribuitionPhase;
+import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorAttributionPhase;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorPhase;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorPhaseLocked;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalAttributionPhase;
@@ -36,7 +36,7 @@ public enum ApplicationState {
             case CANDIDATURE_LOCKED -> new CandidaturePhaseLocked(context, data);
             case PROPOSAL_ATTRIBUTION -> new ProposalAttributionPhase(context, data);
             case PROPOSAL_ATTRIBUTION_LOCKED -> new ProposalAttributionPhaseLocked(context, data);
-            case PROFESSOR_ATTRIBUTION -> new ProfessorAttribuitionPhase(context, data);
+            case PROFESSOR_ATTRIBUTION -> new ProfessorAttributionPhase(context, data);
             case SEARCH -> new SearchPhase(context, data);
             default -> null;
         };

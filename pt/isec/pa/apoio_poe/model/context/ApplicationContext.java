@@ -193,4 +193,16 @@ public class ApplicationContext {
     public String listSpecificProfessorAttribution(String email){
         return state.specificProfessorAttributions(email);
     }
+
+    public String listStudentWithoutProposalAttributedAndWithCandidature(){
+        return data.listStudentWithoutProposalAttributedAndWithCandidature();
+    }
+
+    public String listAvailableProposals(){
+        return data.listAvailableProposals();
+    }
+
+    public String listAttributedProposals(){
+        return data.listAttributedProposals();
+    }
 }

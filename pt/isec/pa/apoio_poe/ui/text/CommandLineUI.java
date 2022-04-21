@@ -692,6 +692,32 @@ public class CommandLineUI {
         System.out.println(context.listSpecificProfessorAttribution(email));
     }
 
+    public boolean searchPhase(){
+        System.out.println("Current state: " + context.getState());
+
+        switch (InputProtection.chooseOption(null, "List students with attributed proposals", "List students without proposals attributed and with candidatures", "Available proposals", "Attributed proposals", "List professor data")){
+            case 1 -> listStudentWithProposalAttributed();
+            case 2 -> listStudentWithoutProposalAttributedAndWithCandidature();
+            case 3 -> listAvailableProposals();
+            case 4 -> listAttributedProposals();
+            case 5 -> listProfessorData();
+        }
+
+        return true;
+    }
+
+    public void listStudentWithoutProposalAttributedAndWithCandidature(){
+        System.out.println(context.listStudentWithoutProposalAttributedAndWithCandidature());
+    }
+
+    public void listAvailableProposals(){
+        System.out.println(context.listAvailableProposals());
+    }
+
+    public void listAttributedProposals(){
+        System.out.println(context.listAttributedProposals());
+    }
+
     public void start() {
         while (switch (context.getState()) {
             case STUDENT -> studentPhase();
@@ -705,9 +731,7 @@ public class CommandLineUI {
             case PROPOSAL_ATTRIBUTION -> proposalAttributionPhase();
             case PROPOSAL_ATTRIBUTION_LOCKED -> proposalAttributionPhaseLocked();
             case PROFESSOR_ATTRIBUTION -> professorAttributionPhase();
-            /*
-             * case SEARCH -> searchPhase();
-             */
+            case SEARCH -> searchPhase();
             default -> throw new IllegalArgumentException("Unexpected value: " + context.getState());
         })
             ;
