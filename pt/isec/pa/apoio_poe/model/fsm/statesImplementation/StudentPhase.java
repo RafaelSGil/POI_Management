@@ -78,5 +78,8 @@ public class StudentPhase extends StateAdapter {
         }
         setState(ApplicationState.CANDIDATURE);
         return true;
+
+        // o inserir está dentro de um estado
+
     }
 }

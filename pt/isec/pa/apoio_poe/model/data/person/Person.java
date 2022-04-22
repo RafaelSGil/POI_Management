@@ -25,6 +25,14 @@ public abstract class Person {
         return;
     }
 
+    public boolean getAttributted() {
+        return false;
+    }
+
+    public void setAttributted(boolean bol) {
+        return;
+    }
+
     public void setCourseBranch(String course) {
         return;
     }

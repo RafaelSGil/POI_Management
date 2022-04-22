@@ -8,6 +8,7 @@ public class Student extends Person {
     private String courseBranch;
     private double classification;
     private boolean internship;
+    private boolean attributted;
 
     public Student(String name, String email, long id, String course, String courseBranch, double classification,
             boolean internship) {
@@ -17,6 +18,7 @@ public class Student extends Person {
         this.courseBranch = courseBranch;
         this.classification = classification;
         this.internship = internship;
+        this.attributted = false;
     }
 
     public static Person createStudent(String name, String email, long id, String course, String courseBranch,
@@ -35,6 +37,16 @@ public class Student extends Person {
 
     public String getCourse() {
         return course;
+    }
+
+    @Override
+    public boolean getAttributted() {
+        return attributted;
+    }
+
+    @Override
+    public void setAttributted(boolean bol) {
+        this.attributted = bol;
     }
 
     @Override
