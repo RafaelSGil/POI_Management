@@ -93,8 +93,9 @@ public class Data {
                 if (!students.contains(Student.createDummyStudent(id)))
                     if (courses.contains(course))
                         if (coursesBranches.contains(courseBranch))
-                            if (internship == true || internship == false)
-                                addStudent(name, email, id, course, courseBranch, classification, internship);
+                            if (classification % 1 != 0)
+                                if (internship == true || internship == false)
+                                    addStudent(name, email, id, course, courseBranch, classification, internship);
 
             }
         }
