@@ -175,7 +175,8 @@ public class Data {
                 email = (String) eachListIterator.next();
                 advisor = Boolean.parseBoolean((String) eachListIterator.next());
 
-                addProfessor(name, email, advisor);
+                if (!professors.contains(Professor.createDummyProfessor(email)))
+                    addProfessor(name, email, advisor);
             }
         }
     }
