@@ -614,6 +614,7 @@ public class Data {
 
         long id = 0;
         List<String> proposals = new ArrayList<String>();
+        Set<Student> studentsAdded = new HashSet<>();
 
         while (listOfListsIterator.hasNext()) {
             List<String> list = new ArrayList<String>();
@@ -623,20 +624,47 @@ public class Data {
             Iterator<String> eachListIterator = list.iterator();
 
             while (eachListIterator.hasNext()) {
+                int flag = 0;
                 id = Long.parseLong((String) eachListIterator.next());
-
-                while (eachListIterator.hasNext()) {
-                    String aux = (String) eachListIterator.next();
-                    if (autoproposals.contains(AutoProposal.createDummyAutoProposal(aux)))
-                        proposals.add(aux);
-                    else if (internships.contains(Internship.createDummyInternship(aux)))
-                        proposals.add(aux);
-                    else if (projects.contains(Project.createDummyProject(aux)))
-                        proposals.add(aux);
+                for (Proposal auto : autoproposals) {
+                    if (auto.getStudent() == id)
+                        flag = 1;
                 }
-                if (proposals.size() > 0)
-                    if (students.contains(Student.createDummyStudent(id)))
-                        candidatures.put(id, new ArrayList<>(proposals));
+                if (flag == 1) {
+                    break;
+                }
+                System.out.println(id);
+                if (!studentsAdded.contains((Student) Student.createDummyStudent(id))) {
+                    studentsAdded.add((Student) Student.createDummyStudent(id));
+                    while (eachListIterator.hasNext()) {
+                        String aux = (String) eachListIterator.next();
+                        if (!autoproposals.contains(AutoProposal.createDummyAutoProposal(aux))) {
+                            if (internships.contains(Internship.createDummyInternship(aux))) {
+                                for (Proposal internship : internships) {
+                                    if (internship.getIdOfProposal().equals(aux)) {
+                                        if (internship.getStudent() == -1) {
+                                            proposals.add(aux);
+                                        }
+                                    }
+                                }
+                            } else if (projects.contains(Project.createDummyProject(aux))) {
+                                for (Proposal project : projects) {
+                                    if (project.getIdOfProposal().equals(aux)) {
+                                        if (project.getStudent() == -1) {
+                                            proposals.add(aux);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    if (proposals.size() > 0)
+                        if (students.contains(Student.createDummyStudent(id)))
+                            candidatures.put(id, new ArrayList<>(proposals));
+                } else {
+                    if (eachListIterator.hasNext())
+                        eachListIterator.next();
+                }
             }
         }
         return true;
