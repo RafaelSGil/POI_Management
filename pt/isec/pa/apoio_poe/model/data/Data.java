@@ -1134,21 +1134,44 @@ public class Data {
     public String listProfessorAttributions() {
         StringBuilder sb = new StringBuilder();
 
+        /*
+         * for (String email : advisorAttribution.keySet()) {
+         * sb.append("Professor (").append(email).
+         * append(") is the advisor for proposal ")
+         * .append(advisorAttribution.get(email));
+         * for (String id : advisorAttribution.get(email)) {
+         * if (proposalAttributions.containsKey(id)) {
+         * for (String idOfProposal : proposalAttributions.keySet()) {
+         * if (idOfProposal.equals(id)) {
+         * sb.append(" which is attributed to student ").append(proposalAttributions.get
+         * (idOfProposal))
+         * .append("\n");
+         * break;
+         * }
+         * }
+         * } else {
+         * sb.append("\n");
+         * }
+         * }
+         * }
+         */
+
         for (String email : advisorAttribution.keySet()) {
-            sb.append("Professor (").append(email).append(") is the advisor for proposal ")
-                    .append(advisorAttribution.get(email));
+            sb.append("\nProfessor(").append(email).append(") is the advisor for proposal: \n");
             for (String id : advisorAttribution.get(email)) {
                 if (proposalAttributions.containsKey(id)) {
                     for (String idOfProposal : proposalAttributions.keySet()) {
                         if (idOfProposal.equals(id)) {
-                            sb.append(" which is attributed to student ").append(proposalAttributions.get(idOfProposal))
-                                    .append("\n");
-                            break;
+                            if (proposalAttributions.get(idOfProposal) != null) {
+                                sb.append(idOfProposal).append(" which is attributted to student ")
+                                        .append(proposalAttributions.get(idOfProposal)).append("\n");
+                            }
                         }
                     }
                 } else {
-                    sb.append("\n");
+                    sb.append(id).append(" with no student attributed").append("\n");
                 }
+
             }
         }
 
