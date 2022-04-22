@@ -67,6 +67,13 @@ public class Data {
         long id;
         double classification;
         boolean internship;
+        Set<String> courses = new HashSet<>();
+        Set<String> coursesBranches = new HashSet<>();
+        courses.add("LEI");
+        courses.add("LEI-PL");
+        coursesBranches.add("DA");
+        coursesBranches.add("SI");
+        coursesBranches.add("RAS");
 
         while (listsOfListsIterator.hasNext()) {
             List<String> list = new ArrayList<String>();
@@ -80,10 +87,14 @@ public class Data {
                 email = (String) eachListIterator.next();
                 course = (String) eachListIterator.next();
                 courseBranch = (String) eachListIterator.next();
-                classification = Double.parseDouble((String) eachListIterator.next());
-                internship = Boolean.parseBoolean((String) eachListIterator.next());
+                classification = Double.parseDouble(eachListIterator.next());
+                internship = Boolean.parseBoolean(eachListIterator.next());
 
-                addStudent(name, email, id, course, courseBranch, classification, internship);
+                if (!students.contains(Student.createDummyStudent(id)))
+                    if (courses.contains(course))
+                        if (coursesBranches.contains(courseBranch))
+                            if (internship == true || internship == false)
+                                addStudent(name, email, id, course, courseBranch, classification, internship);
 
             }
         }
@@ -1133,28 +1144,6 @@ public class Data {
 
     public String listProfessorAttributions() {
         StringBuilder sb = new StringBuilder();
-
-        /*
-         * for (String email : advisorAttribution.keySet()) {
-         * sb.append("Professor (").append(email).
-         * append(") is the advisor for proposal ")
-         * .append(advisorAttribution.get(email));
-         * for (String id : advisorAttribution.get(email)) {
-         * if (proposalAttributions.containsKey(id)) {
-         * for (String idOfProposal : proposalAttributions.keySet()) {
-         * if (idOfProposal.equals(id)) {
-         * sb.append(" which is attributed to student ").append(proposalAttributions.get
-         * (idOfProposal))
-         * .append("\n");
-         * break;
-         * }
-         * }
-         * } else {
-         * sb.append("\n");
-         * }
-         * }
-         * }
-         */
 
         for (String email : advisorAttribution.keySet()) {
             sb.append("\nProfessor(").append(email).append(") is the advisor for proposal: \n");
