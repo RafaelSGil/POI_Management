@@ -1,6 +1,6 @@
 package pt.isec.pa.apoio_poe.model.fsm.statesImplementation;
 
-import pt.isec.pa.apoio_poe.csv_files.Files;
+import pt.isec.pa.apoio_poe.files.csv_files.Files;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
@@ -57,7 +57,7 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public boolean closeState() {
-        if(data.isLocked(ApplicationState.STUDENT)){
+        if (data.isLocked(ApplicationState.STUDENT)) {
             data.lockPhase(ApplicationState.CANDIDATURE);
             setState(ApplicationState.CANDIDATURE_LOCKED);
         }
@@ -71,7 +71,7 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public boolean proposalAttributionTransitioning() {
-        if(data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)){
+        if (data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)) {
             setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
             return true;
         }

@@ -6,7 +6,7 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import java.util.List;
 
-import pt.isec.pa.apoio_poe.csv_files.Files;
+import pt.isec.pa.apoio_poe.files.csv_files.Files;
 
 public class StudentPhase extends StateAdapter {
 

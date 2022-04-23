@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.csv_files;
+package pt.isec.pa.apoio_poe.files.csv_files;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

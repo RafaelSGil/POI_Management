@@ -15,9 +15,7 @@ import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhaseLocked;
 import pt.isec.pa.apoio_poe.model.data.Data;
 
-import java.io.Serializable;
-
-public enum ApplicationState{
+public enum ApplicationState {
     STUDENT, STUDENT_LOCKED, PROFESSOR, PROFESSOR_LOCKED, PROPOSAL, PROPOSAL_LOCKED, // PHASE1
     CANDIDATURE, CANDIDATURE_LOCKED, // PHASE2
     PROPOSAL_ATTRIBUTION, PROPOSAL_ATTRIBUTION_LOCKED, // PHASE3

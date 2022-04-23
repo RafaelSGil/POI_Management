@@ -7,11 +7,10 @@ import pt.isec.pa.apoio_poe.model.data.person.Person;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StateAdapter implements IApplicationState{
+public class StateAdapter implements IApplicationState {
     protected ApplicationContext context;
     protected Data data;
 
@@ -81,16 +80,16 @@ public class StateAdapter implements IApplicationState{
     }
 
     @Override
-    public boolean loadSave() {
-        try{
-            FileInputStream fileIn = new FileInputStream("/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/csv_files/data.ser");
+    public boolean loadSave(String path) {
+        try {
+            FileInputStream fileIn = new FileInputStream(path);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             this.data = (Data) in.readObject();
             in.close();
             fileIn.close();
             setState(data.getCurrentState());
             return true;
-        }catch (IOException | ClassNotFoundException e){
+        } catch (IOException | ClassNotFoundException e) {
             return false;
         }
     }

@@ -10,7 +10,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApplicationContext{
+public class ApplicationContext {
     private Data data;
     private IApplicationState state;
 
@@ -152,86 +152,86 @@ public class ApplicationContext{
         return state.manualRemoval(idOfProposal);
     }
 
-    public String getProfessorByEmail(String email){
+    public String getProfessorByEmail(String email) {
         return state.getProfessorByEmail(email);
     }
 
-    public String listProfessorAttributions(){
+    public String listProfessorAttributions() {
         return state.listProfessorAttributions();
     }
 
-    public boolean professorAttributionManager(){
+    public boolean professorAttributionManager() {
         return state.professorAttributionTransitioning();
     }
 
-    public boolean manualProfessorAttribution(String idOfProposal, String email){
+    public boolean manualProfessorAttribution(String idOfProposal, String email) {
         return state.manualProfessorAttribution(idOfProposal, email);
     }
 
-    public boolean manualProfessorRemoval(String email){
+    public boolean manualProfessorRemoval(String email) {
         return state.manualProfessorRemoval(email);
     }
 
-    public String listStudentsWithProposalAndProfessorAttributed(){
+    public String listStudentsWithProposalAndProfessorAttributed() {
         return state.listStudentsWithProposalAndProfessor();
     }
 
-    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
+    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
         return state.listStudentsWithProposalWithoutProfessor();
     }
 
-    public String listAverageAttributions(){
+    public String listAverageAttributions() {
         return state.averageProfessorAttributions();
     }
 
-    public String listMinimumAttributions(){
+    public String listMinimumAttributions() {
         return state.minimumProfessorAttributions();
     }
 
-    public String listMaximumAttribution(){
+    public String listMaximumAttribution() {
         return state.maximumProfessorAttributions();
     }
 
-    public String listSpecificProfessorAttribution(String email){
+    public String listSpecificProfessorAttribution(String email) {
         return state.specificProfessorAttributions(email);
     }
 
-    public String listStudentWithoutProposalAttributedAndWithCandidature(){
+    public String listStudentWithoutProposalAttributedAndWithCandidature() {
         return data.listStudentWithoutProposalAttributedAndWithCandidature();
     }
 
-    public String listAvailableProposals(){
+    public String listAvailableProposals() {
         return data.listAvailableProposals();
     }
 
-    public String listAttributedProposals(){
+    public String listAttributedProposals() {
         return data.listAttributedProposals();
     }
 
-    public boolean serializationOfProgram(){
-        try{
-            FileOutputStream fileOut = new FileOutputStream("/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/csv_files/data.ser");
+    public boolean serializationOfProgram(String path) {
+        try {
+            FileOutputStream fileOut = new FileOutputStream(path + "/data.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(data);
             out.close();
             fileOut.close();
-        }catch (IOException e){
+        } catch (IOException e) {
             return false;
         }
 
         return true;
     }
 
-    public boolean loadSave() throws ClassNotFoundException {
-        try{
-            FileInputStream fileIn = new FileInputStream("/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/csv_files/data.ser");
+    public boolean loadSave(String path) throws ClassNotFoundException {
+        try {
+            FileInputStream fileIn = new FileInputStream(path);
             ObjectInputStream in = new ObjectInputStream(fileIn);
             this.data = (Data) in.readObject();
             in.close();
             fileIn.close();
-            state.loadSave();
+            state.loadSave(path);
             return true;
-        }catch (IOException e){
+        } catch (IOException e) {
             return false;
         }
     }

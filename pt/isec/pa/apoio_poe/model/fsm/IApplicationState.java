@@ -95,5 +95,5 @@ public interface IApplicationState {
 
     String listProfessorAttributions();
 
-    boolean loadSave();
+    boolean loadSave(String path);
 }

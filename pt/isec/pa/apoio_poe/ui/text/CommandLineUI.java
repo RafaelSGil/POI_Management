@@ -32,12 +32,9 @@ public class CommandLineUI {
             case 7 -> candidatureManagement();
             case 8 -> closePhase();
             case 9 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
             case 10 -> loadSave();
         }
@@ -45,14 +42,28 @@ public class CommandLineUI {
         return true;
     }
 
-    public void loadSave(){
-        try{
-            if(context.loadSave()){
+    public boolean save() {
+        String path = InputProtection.readString("Specify the path to the folder you want to save: ", true);
+
+        if (context.serializationOfProgram(path)) {
+            System.out.println("Successful serialization");
+            return false;
+        }
+
+        System.out.println("Error occurred");
+        return true;
+    }
+
+    public void loadSave() {
+        String path = InputProtection.readString("Specify the path to the file you want to load: ",
+                true);
+        try {
+            if (context.loadSave(path)) {
                 System.out.println("Successful load");
-            }else{
-                System.out.println("Could not load the save file");
+            } else {
+                System.out.println("Could not load the file");
             }
-        }catch (ClassNotFoundException e){
+        } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
     }
@@ -107,12 +118,9 @@ public class CommandLineUI {
             case 3 -> proposalManagement();
             case 4 -> candidatureManagement();
             case 5 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
 
@@ -136,12 +144,9 @@ public class CommandLineUI {
             case 7 -> candidatureManagement();
             case 8 -> closePhase();
             case 9 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
 
@@ -186,12 +191,9 @@ public class CommandLineUI {
             case 3 -> proposalManagement();
             case 4 -> candidatureManagement();
             case 5 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
 
@@ -215,12 +217,9 @@ public class CommandLineUI {
             case 7 -> candidatureManagement();
             case 8 -> closePhase();
             case 9 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
 
@@ -401,12 +400,9 @@ public class CommandLineUI {
             case 3 -> professorManagement();
             case 4 -> candidatureManagement();
             case 5 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
 
@@ -437,12 +433,9 @@ public class CommandLineUI {
             case 8 -> studentManagement();
             case 9 -> proposalAttributionManagement();
             case 10 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
 
@@ -464,12 +457,9 @@ public class CommandLineUI {
             case 2 -> studentManagement();
             case 3 -> proposalAttributionManagement();
             case 4 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
 
@@ -506,8 +496,9 @@ public class CommandLineUI {
 
         }
 
-        if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
-            switch (InputProtection.chooseOption(null, "List students with proposal and professor attributed", "List students with proposal attributed and without professor attributed")){
+        if (context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION) {
+            switch (InputProtection.chooseOption(null, "List students with proposal and professor attributed",
+                    "List students with proposal attributed and without professor attributed")) {
                 case 1 -> listStudentsWithProposalAndProfessorAttributed();
                 case 2 -> listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
             }
@@ -583,18 +574,16 @@ public class CommandLineUI {
                 case 3 -> listProposals();
                 case 4 -> candidatureManagement();
                 case 5 -> {
-                    if(context.serializationOfProgram()){
-                        System.out.println("Successful serialization");
+                    if (!save()) {
                         return false;
                     }
-
-                    System.out.println("Error occurred");
                 }
             }
         } else {
             switch (InputProtection.chooseOption(null, "Associated students attribution",
                     "Non associated students attribution", "Manual attribution", "Manual removal", "List students",
-                    "List proposals", "Go to previous state", "Close state", "Professor attribution phase", "Save & quit")) {
+                    "List proposals", "Go to previous state", "Close state", "Professor attribution phase",
+                    "Save & quit")) {
                 case 1 -> associateAttribution();
                 case 2 -> nonAssociatedAttribution();
                 case 3 -> manualAttribution();
@@ -605,12 +594,9 @@ public class CommandLineUI {
                 case 8 -> closePhase();
                 case 9 -> professorAttributionManagement();
                 case 10 -> {
-                    if(context.serializationOfProgram()){
-                        System.out.println("Successful serialization");
+                    if (!save()) {
                         return false;
                     }
-
-                    System.out.println("Error occurred");
                 }
             }
         }
@@ -628,12 +614,9 @@ public class CommandLineUI {
             case 3 -> candidatureManagement();
             case 4 -> professorAttributionManagement();
             case 5 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
         return true;
@@ -654,7 +637,7 @@ public class CommandLineUI {
         String opt;
         int i = 0;
 
-        while(studentsProposals != null) {
+        while (studentsProposals != null) {
             System.out.println("\nYou have to choose between this students to get the priority: \n");
             for (Person student : studentsProposals) {
                 System.out.println(
@@ -671,14 +654,14 @@ public class CommandLineUI {
             }
 
             studentsProposals = chooseStudentToAssociate(studentsProposals, option);
-            i=0;
-            option=-1;
+            i = 0;
+            option = -1;
         }
 
     }
 
     public void manualAttribution() {
-        if(context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
+        if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
             String idOfStudent;
 
@@ -699,18 +682,18 @@ public class CommandLineUI {
             }
         }
 
-        if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
+        if (context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION) {
             String email = InputProtection.readString("Specify the email of the professor: ", true);
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
 
-            if(!context.manualProfessorAttribution(idOfProposal, email)){
+            if (!context.manualProfessorAttribution(idOfProposal, email)) {
                 System.out.println("Could not attribute");
             }
         }
     }
 
     public void manualRemoval() {
-        if(context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
+        if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
 
             if (!context.manualRemoval(idOfProposal)) {
@@ -718,10 +701,10 @@ public class CommandLineUI {
             }
         }
 
-        if(context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION){
+        if (context.getState() == ApplicationState.PROFESSOR_ATTRIBUTION) {
             String email = InputProtection.readString("Specify the email of the professor: ", true);
 
-            if(!context.manualProfessorRemoval(email)){
+            if (!context.manualProfessorRemoval(email)) {
                 System.out.println("Could not remove");
             }
         }
@@ -731,12 +714,12 @@ public class CommandLineUI {
         context.professorAttributionManager();
     }
 
-    public boolean professorAttributionPhase(){
+    public boolean professorAttributionPhase() {
         System.out.println("Current state: " + context.getState());
 
         switch (InputProtection.chooseOption(null, "Automatic attribution", "Manual attribution",
-                    "Manual removal", "Edit professor data", "Consult professor data", "List attributions", "List students",
-                    "List professor data", "Close state", "Go to previous state", "Save & quit")){
+                "Manual removal", "Edit professor data", "Consult professor data", "List attributions", "List students",
+                "List professor data", "Close state", "Go to previous state", "Save & quit")) {
             case 1 -> associateAttribution();
             case 2 -> manualAttribution();
             case 3 -> manualRemoval();
@@ -748,38 +731,35 @@ public class CommandLineUI {
             case 9 -> closePhase();
             case 10 -> proposalAttributionManagement();
             case 11 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
 
         return true;
     }
 
-    public void listProfessorAttributions(){
+    public void listProfessorAttributions() {
         System.out.println(context.listProfessorAttributions());
     }
 
-    public void consultProfessorData(){
+    public void consultProfessorData() {
         String email = InputProtection.readString("Specify the email of the professor you want to consult: ", true);
         System.out.println(context.getProfessorByEmail(email));
     }
 
-    public void listStudentsWithProposalAndProfessorAttributed(){
+    public void listStudentsWithProposalAndProfessorAttributed() {
         System.out.println(context.listStudentsWithProposalAndProfessorAttributed());
     }
 
-    public void listStudentsWithProposalAttributedAndWithoutProfessorAttributed(){
+    public void listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
         System.out.println(context.listStudentsWithProposalAttributedAndWithoutProfessorAttributed());
     }
 
-    public void listProfessorData(){
+    public void listProfessorData() {
         switch (InputProtection.chooseOption(null, "List average attributions", "List minimum attributions",
-                                        "List maximum attributions", "List specific professor attributions")){
+                "List maximum attributions", "List specific professor attributions")) {
             case 1 -> listAverageAttributions();
             case 2 -> listMinimumAttributions();
             case 3 -> listMaximumAttribution();
@@ -787,56 +767,53 @@ public class CommandLineUI {
         }
     }
 
-    public void listAverageAttributions(){
+    public void listAverageAttributions() {
         System.out.println(context.listAverageAttributions());
     }
 
-    public void listMinimumAttributions(){
+    public void listMinimumAttributions() {
         System.out.println(context.listMinimumAttributions());
     }
 
-    public void listMaximumAttribution(){
+    public void listMaximumAttribution() {
         System.out.println(context.listMaximumAttribution());
     }
 
-    public void listSpecificProfessorAttribution(){
+    public void listSpecificProfessorAttribution() {
         String email = InputProtection.readString("Specify the email of the professor: ", true);
         System.out.println(context.listSpecificProfessorAttribution(email));
     }
 
-    public boolean searchPhase(){
+    public boolean searchPhase() {
         System.out.println("Current state: " + context.getState());
 
         switch (InputProtection.chooseOption(null, "List students with attributed proposals",
-                                    "List students without proposals attributed and with candidatures",
-                                    "Available proposals", "Attributed proposals", "List professor data", "Save & quit")){
+                "List students without proposals attributed and with candidatures",
+                "Available proposals", "Attributed proposals", "List professor data", "Save & quit")) {
             case 1 -> listStudentWithProposalAttributed();
             case 2 -> listStudentWithoutProposalAttributedAndWithCandidature();
             case 3 -> listAvailableProposals();
             case 4 -> listAttributedProposals();
             case 5 -> listProfessorData();
             case 6 -> {
-                if(context.serializationOfProgram()){
-                    System.out.println("Successful serialization");
+                if (!save()) {
                     return false;
                 }
-
-                System.out.println("Error occurred");
             }
         }
 
         return true;
     }
 
-    public void listStudentWithoutProposalAttributedAndWithCandidature(){
+    public void listStudentWithoutProposalAttributedAndWithCandidature() {
         System.out.println(context.listStudentWithoutProposalAttributedAndWithCandidature());
     }
 
-    public void listAvailableProposals(){
+    public void listAvailableProposals() {
         System.out.println(context.listAvailableProposals());
     }
 
-    public void listAttributedProposals(){
+    public void listAttributedProposals() {
         System.out.println(context.listAttributedProposals());
     }
 

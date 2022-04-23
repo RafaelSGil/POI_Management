@@ -4,7 +4,8 @@ import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
-import pt.isec.pa.apoio_poe.csv_files.Files;
+import pt.isec.pa.apoio_poe.files.csv_files.Files;
+
 import java.util.List;
 
 public class ProfessorPhase extends StateAdapter {
