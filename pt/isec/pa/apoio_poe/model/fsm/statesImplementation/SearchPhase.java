@@ -17,26 +17,36 @@ public class SearchPhase extends StateAdapter {
 
     @Override
     public String listStudentWithProposalAttributed() {
-        return data.listStudentWithProposalAttributed();
+        String str = data.listStudentWithProposalAttributed();
+        setState(ApplicationState.SEARCH);
+        return str;
     }
 
     @Override
     public String minimumProfessorAttributions() {
-        return data.getMinProfessorsAttributions();
+        String str = data.getMinProfessorsAttributions();
+        setState(ApplicationState.SEARCH);
+        return str;
     }
 
     @Override
     public String maximumProfessorAttributions() {
-        return data.getMaxProfessorsAttributions();
+        String str = data.getMaxProfessorsAttributions();
+        setState(ApplicationState.SEARCH);
+        return str;
     }
 
     @Override
     public String averageProfessorAttributions() {
-        return data.getAverageNumberOfAttributionsForProfessors();
+        String str = data.getAverageNumberOfAttributionsForProfessors();
+        setState(ApplicationState.SEARCH);
+        return str;
     }
 
     @Override
     public String specificProfessorAttributions(String email) {
-        return data.getSpecificProfessorAttributions(email);
+        String str = data.getSpecificProfessorAttributions(email);
+        setState(ApplicationState.SEARCH);
+        return str;
     }
 }

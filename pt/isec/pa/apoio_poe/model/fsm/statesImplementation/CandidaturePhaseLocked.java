@@ -28,7 +28,9 @@ public class CandidaturePhaseLocked extends StateAdapter {
 
     @Override
     public String checkData() {
-        return data.getCandidatures();
+        String str = data.getCandidatures();
+        setState(ApplicationState.CANDIDATURE_LOCKED);
+        return str;
     }
 
     @Override

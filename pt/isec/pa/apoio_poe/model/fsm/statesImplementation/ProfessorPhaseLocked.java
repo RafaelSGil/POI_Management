@@ -29,7 +29,9 @@ public class ProfessorPhaseLocked extends StateAdapter {
 
     @Override
     public String checkData() {
-        return data.getAllProfessors();
+        String str = data.getAllProfessors();
+        setState(ApplicationState.PROFESSOR_LOCKED);
+        return str;
     }
 
     @Override

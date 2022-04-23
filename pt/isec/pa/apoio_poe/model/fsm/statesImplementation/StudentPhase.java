@@ -22,18 +22,24 @@ public class StudentPhase extends StateAdapter {
         List<List<String>> attributes = Files.openFile(file);
         data.addStudentFile(attributes);
 
+        setState(ApplicationState.STUDENT);
+
         return true;
     }
 
     @Override
     public String checkData() {
-        return data.getAllStudents();
+        String str = data.getAllStudents();
+        setState(ApplicationState.STUDENT);
+        return str;
     }
 
     @Override
     public boolean deleteData(String identifier) {
         long id = Long.parseLong(identifier);
-        return data.removeStudentGivenItsId(id);
+        boolean bool = data.removeStudentGivenItsId(id);
+        setState(ApplicationState.STUDENT);
+        return bool;
     }
 
     @Override
@@ -55,7 +61,9 @@ public class StudentPhase extends StateAdapter {
 
     @Override
     public boolean editDataStudent(String identifier, String change, String whatToChange) {
-        return data.editStudent(identifier, change, whatToChange);
+        boolean bool = data.editStudent(identifier, change, whatToChange);
+        setState(ApplicationState.STUDENT);
+        return bool;
     }
 
     @Override
@@ -78,8 +86,5 @@ public class StudentPhase extends StateAdapter {
         }
         setState(ApplicationState.CANDIDATURE);
         return true;
-
-        // o inserir está dentro de um estado
-
     }
 }

@@ -29,27 +29,37 @@ public class ProposalAttributionPhaseLocked extends StateAdapter {
 
     @Override
     public String listStudentsWithCandidature() {
-        return data.listStudentsWithCandidatures();
+        String str = data.listStudentsWithCandidatures();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
+        return str;
     }
 
     @Override
     public String listStudentsWithAutoProposal() {
-        return data.listStudentsWithAutoProposals();
+        String str = data.listStudentsWithAutoProposals();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
+        return str;
     }
 
     @Override
     public String listStudentWithProposalAttributed() {
-        return data.listStudentWithProposalAttributed();
+        String str = data.listStudentWithProposalAttributed();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
+        return str;
     }
 
     @Override
     public String listStudentWithoutProposalAttributed() {
-        return data.listStudentWithoutProposalAttributed();
+        String str = data.listStudentWithoutProposalAttributed();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
+        return str;
     }
 
     @Override
     public String listProposalsFilters(List<Integer> filters) {
-        return data.listProposalsFilters(filters, ApplicationState.PROPOSAL_ATTRIBUTION);
+        String str = data.listProposalsFilters(filters, ApplicationState.PROPOSAL_ATTRIBUTION);
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
+        return str;
     }
 
     @Override

@@ -23,12 +23,16 @@ public class ProposalPhase extends StateAdapter {
 
         data.addProposalFile(attributes);
 
+        setState(ApplicationState.PROPOSAL);
+
         return true;
     }
 
     @Override
     public boolean deleteData(String identifier) {
-        return data.removeProposals(identifier);
+        boolean bool = data.removeProposals(identifier);
+        setState(ApplicationState.PROPOSAL);
+        return bool;
     }
 
     @Override
@@ -50,7 +54,9 @@ public class ProposalPhase extends StateAdapter {
 
     @Override
     public String checkData() {
-        return data.getAllProjects();
+        String str = data.getAllProjects();
+        setState(ApplicationState.PROPOSAL);
+        return str;
     }
 
     @Override
@@ -77,6 +83,8 @@ public class ProposalPhase extends StateAdapter {
 
     @Override
     public boolean editDataProposal(String identifier, String attribute, List<String> newValue) {
-        return data.editProposals(identifier, attribute, newValue);
+        boolean bool = data.editProposals(identifier, attribute, newValue);
+        setState(ApplicationState.PROPOSAL);
+        return bool;
     }
 }

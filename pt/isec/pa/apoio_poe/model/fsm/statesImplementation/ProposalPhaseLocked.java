@@ -29,7 +29,9 @@ public class ProposalPhaseLocked extends StateAdapter {
 
     @Override
     public String checkData() {
-        return data.getAllProjects();
+        String str = data.getAllProjects();
+        setState(ApplicationState.PROPOSAL_LOCKED);
+        return str;
     }
 
 

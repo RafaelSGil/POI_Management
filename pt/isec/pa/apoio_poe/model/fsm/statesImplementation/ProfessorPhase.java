@@ -27,17 +27,23 @@ public class ProfessorPhase extends StateAdapter {
         List<List<String>> attributes = Files.openFile(file);
         data.addProfessorFile(attributes);
 
+        setState(ApplicationState.PROFESSOR);
+
         return true;
     }
 
     @Override
     public String checkData() {
-        return data.getAllProfessors();
+        String str = data.getAllProfessors();
+        setState(ApplicationState.PROFESSOR);
+        return str;
     }
 
     @Override
     public boolean deleteData(String identifier) {
-        return data.removeProfessorGivenItsEmail(identifier);
+        boolean bool = data.removeProfessorGivenItsEmail(identifier);
+        setState(ApplicationState.PROFESSOR);
+        return bool;
     }
 
     @Override
@@ -48,7 +54,9 @@ public class ProfessorPhase extends StateAdapter {
 
     @Override
     public boolean editDataProfessor(String email, boolean advisor) {
-        return data.editProfessor(email, advisor);
+        boolean bool = data.editProfessor(email, advisor);
+        setState(ApplicationState.PROFESSOR);
+        return bool;
     }
 
     @Override

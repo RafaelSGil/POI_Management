@@ -26,17 +26,25 @@ public class CandidaturePhase extends StateAdapter {
         List<List<String>> attributes = Files.openFile(file);
         data.addCandidatureFile(attributes);
 
+        setState(ApplicationState.CANDIDATURE);
+
         return true;
     }
 
     @Override
     public boolean removeProposalFromCandidature(String id, String proposal) {
-        return data.removeCandidatureGivenStudentID(id, proposal);
+        boolean bool = data.removeCandidatureGivenStudentID(id, proposal);
+
+        setState(ApplicationState.CANDIDATURE);
+
+        return bool;
     }
 
     @Override
     public boolean removeCandidature(String id) {
-        return data.removeCompleteCandidatureGivenItsID(id);
+        boolean bool = data.removeCompleteCandidatureGivenItsID(id);
+        setState(ApplicationState.CANDIDATURE);
+        return bool;
     }
 
     @Override
@@ -52,7 +60,11 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public String checkData() {
-        return data.getCandidatures();
+        String str = data.getCandidatures();
+
+        setState(ApplicationState.CANDIDATURE);
+
+        return str;
     }
 
     @Override
@@ -66,7 +78,9 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public boolean editCandidatures(String id, String proposal) {
-        return data.editCandidatures(id, proposal);
+        boolean bool = data.editCandidatures(id, proposal);
+        setState(ApplicationState.CANDIDATURE);
+        return bool;
     }
 
     @Override
@@ -82,16 +96,22 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public String listStudentsWithCandidature() {
-        return data.listStudentsWithCandidatures();
+        String str = data.listStudentsWithCandidatures();
+        setState(ApplicationState.CANDIDATURE);
+        return str;
     }
 
     @Override
     public String listStudentsWithoutCandidature() {
-        return data.listStudentsWithoutCandidatures();
+        String str = data.listStudentsWithoutCandidatures();
+        setState(ApplicationState.CANDIDATURE);
+        return str;
     }
 
     @Override
     public String listProposalsFilters(List<Integer> filters) {
-        return data.listProposalsFilters(filters, ApplicationState.CANDIDATURE);
+        String str = data.listProposalsFilters(filters, ApplicationState.CANDIDATURE);
+        setState(ApplicationState.CANDIDATURE);
+        return str;
     }
 }

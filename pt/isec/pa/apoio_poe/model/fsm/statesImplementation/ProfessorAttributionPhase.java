@@ -25,32 +25,43 @@ public class ProfessorAttributionPhase extends StateAdapter {
     @Override
     public boolean associateAttribution() {
         data.associatedAdvisor();
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
         return true;
     }
 
     @Override
     public boolean manualProfessorAttribution(String idOfProposal, String emailProfessor) {
-        return data.manualProfessorAttribution(idOfProposal, emailProfessor);
+        boolean bool = data.manualProfessorAttribution(idOfProposal, emailProfessor);
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return bool;
     }
 
     @Override
     public boolean manualProfessorRemoval(String email) {
-        return data.manualProfessorRemoval(email);
+        boolean bool = data.manualProfessorRemoval(email);
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return bool;
     }
 
     @Override
     public String checkData() {
-        return data.getAllProfessors();
+        String str = data.getAllProfessors();
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String getProfessorByEmail(String email) {
-        return data.getProfessorGivenItsEmail(email);
+        String str = data.getProfessorGivenItsEmail(email);
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String listProfessorAttributions() {
-        return data.listProfessorAttributions();
+        String str = data.listProfessorAttributions();
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return str;
     }
 
     @Override
@@ -66,31 +77,43 @@ public class ProfessorAttributionPhase extends StateAdapter {
 
     @Override
     public String listStudentsWithProposalAndProfessor() {
-        return data.listStudentsWithProposalAndProfessorAttributed();
+        String str = data.listStudentsWithProposalAndProfessorAttributed();
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String listStudentsWithProposalWithoutProfessor() {
-        return data.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
+        String str = data.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String minimumProfessorAttributions() {
-        return data.getMinProfessorsAttributions();
+        String str = data.getMinProfessorsAttributions();
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String maximumProfessorAttributions() {
-        return data.getMaxProfessorsAttributions();
+        String str = data.getMaxProfessorsAttributions();
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String averageProfessorAttributions() {
-        return data.getAverageNumberOfAttributionsForProfessors();
+        String str = data.getAverageNumberOfAttributionsForProfessors();
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String specificProfessorAttributions(String email) {
-        return data.getSpecificProfessorAttributions(email);
+        String str = data.getSpecificProfessorAttributions(email);
+        setState(ApplicationState.PROFESSOR_ATTRIBUTION);
+        return str;
     }
 }

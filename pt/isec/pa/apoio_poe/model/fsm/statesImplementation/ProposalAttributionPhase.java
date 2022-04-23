@@ -31,52 +31,72 @@ public class ProposalAttributionPhase extends StateAdapter {
 
     @Override
     public boolean associateAttribution() {
-        return data.associatedAttribution();
+        boolean bool = data.associatedAttribution();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return bool;
     }
 
     @Override
     public ArrayList<Person> nonAssociateAttribution() {
-        return data.nonAssociateAttribution();
+        ArrayList<Person> arr = data.nonAssociateAttribution();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return arr;
     }
 
     @Override
     public boolean manualAttribution(String idOfProposal, long idOfStudent) {
-        return data.manualAttribution(idOfProposal, idOfStudent);
+        boolean bool = data.manualAttribution(idOfProposal, idOfStudent);
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return bool;
     }
 
     @Override
     public boolean manualRemoval(String idOfProposal) {
-        return data.manualRemoval(idOfProposal);
+        boolean bool = data.manualRemoval(idOfProposal);
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return bool;
     }
 
     @Override
     public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
-        return data.chooseStudentToAssociate(studentsProposals, index);
+        ArrayList<Person> arr = data.chooseStudentToAssociate(studentsProposals, index);
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return arr;
     }
 
     @Override
     public String listStudentsWithCandidature() {
-        return data.listStudentsWithCandidatures();
+        String str = data.listStudentsWithCandidatures();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String listStudentsWithAutoProposal() {
-        return data.listStudentsWithAutoProposals();
+        String str = data.listStudentsWithAutoProposals();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String listStudentWithProposalAttributed() {
-        return data.listStudentWithProposalAttributed();
+        String str = data.listStudentWithProposalAttributed();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String listStudentWithoutProposalAttributed() {
-        return data.listStudentWithoutProposalAttributed();
+        String str = data.listStudentWithoutProposalAttributed();
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return str;
     }
 
     @Override
     public String listProposalsFilters(List<Integer> filters) {
-        return data.listProposalsFilters(filters, ApplicationState.PROPOSAL_ATTRIBUTION);
+        String str = data.listProposalsFilters(filters, ApplicationState.PROPOSAL_ATTRIBUTION);
+        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        return str;
     }
 
     @Override

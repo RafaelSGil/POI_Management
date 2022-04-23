@@ -13,7 +13,9 @@ public class StudentPhaseLocked extends StateAdapter {
 
     @Override
     public String checkData() {
-        return data.getAllStudents();
+        String str = data.getAllStudents();
+        setState(ApplicationState.STUDENT_LOCKED);
+        return str;
     }
 
     @Override
