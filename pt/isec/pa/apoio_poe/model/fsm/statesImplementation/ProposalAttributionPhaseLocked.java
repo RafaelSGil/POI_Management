@@ -18,7 +18,7 @@ public class ProposalAttributionPhaseLocked extends StateAdapter {
     }
 
     @Override
-    public boolean candidatureManager() {
+    public boolean candidatureTransitioning() {
         if (data.isLocked(ApplicationState.CANDIDATURE)) {
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
@@ -53,7 +53,7 @@ public class ProposalAttributionPhaseLocked extends StateAdapter {
     }
 
     @Override
-    public boolean professorAttributionManager() {
+    public boolean professorAttributionTransitioning() {
         setState(ApplicationState.PROFESSOR_ATTRIBUTION);
         return true;
     }

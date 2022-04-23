@@ -5,10 +5,12 @@ import pt.isec.pa.apoio_poe.model.data.person.Person;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
+
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApplicationContext {
+public class ApplicationContext implements Serializable {
     private Data data;
     private IApplicationState state;
 
@@ -62,19 +64,19 @@ public class ApplicationContext {
     }
 
     public boolean professorManager() {
-        return state.professorManager();
+        return state.professorTransitioning();
     }
 
     public boolean proposalManager() {
-        return state.proposalManager();
+        return state.proposalTransitioning();
     }
 
     public boolean studentManager() {
-        return state.studentManager();
+        return state.studentTransitioning();
     }
 
     public boolean candidatureManager() {
-        return state.candidatureManager();
+        return state.candidatureTransitioning();
     }
 
     public boolean removeProposalFromCandidature(String id, String proposal) {
@@ -131,7 +133,7 @@ public class ApplicationContext {
     }
 
     public boolean proposalAttributionManager() {
-        return state.proposalAttributionManager();
+        return state.proposalAttributionTransitioning();
     }
 
     public String listStudentWithProposalAttributed() {
@@ -159,7 +161,7 @@ public class ApplicationContext {
     }
 
     public boolean professorAttributionManager(){
-        return state.professorAttributionManager();
+        return state.professorAttributionTransitioning();
     }
 
     public boolean manualProfessorAttribution(String idOfProposal, String email){

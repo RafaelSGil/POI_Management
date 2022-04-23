@@ -40,7 +40,7 @@ public class CandidaturePhase extends StateAdapter {
     }
 
     @Override
-    public boolean studentManager() {
+    public boolean studentTransitioning() {
         if (data.isLocked(ApplicationState.STUDENT)) {
             setState(ApplicationState.STUDENT_LOCKED);
             return true;
@@ -70,7 +70,7 @@ public class CandidaturePhase extends StateAdapter {
     }
 
     @Override
-    public boolean proposalAttributionManager() {
+    public boolean proposalAttributionTransitioning() {
         if(data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)){
             setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
             return true;

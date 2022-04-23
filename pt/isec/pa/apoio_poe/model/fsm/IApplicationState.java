@@ -21,13 +21,13 @@ public interface IApplicationState {
 
     boolean closeState();
 
-    boolean studentManager();
+    boolean studentTransitioning();
 
-    boolean professorManager();
+    boolean professorTransitioning();
 
-    boolean proposalManager();
+    boolean proposalTransitioning();
 
-    boolean candidatureManager();
+    boolean candidatureTransitioning();
 
     String listStudentsWithAutoProposal();
 
@@ -39,7 +39,7 @@ public interface IApplicationState {
 
     String listAutoProposalWithCandidatures();
 
-    boolean proposalAttributionManager();
+    boolean proposalAttributionTransitioning();
 
     boolean associateAttribution();
 
@@ -51,7 +51,7 @@ public interface IApplicationState {
 
     boolean manualRemoval(String idOfProposal);
 
-    boolean professorAttributionManager();
+    boolean professorAttributionTransitioning();
 
     String listStudentsWithProposalWithoutProfessor();
 

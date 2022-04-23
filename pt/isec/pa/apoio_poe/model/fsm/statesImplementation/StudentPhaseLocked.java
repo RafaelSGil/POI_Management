@@ -22,18 +22,18 @@ public class StudentPhaseLocked extends StateAdapter {
     }
 
     @Override
-    public boolean professorManager() {
+    public boolean professorTransitioning() {
         setState(ApplicationState.PROFESSOR_LOCKED);
         return true;
     }
 
     @Override
-    public boolean proposalManager() {
+    public boolean proposalTransitioning() {
         setState(ApplicationState.PROPOSAL_LOCKED);
         return true;
     }
     @Override
-    public boolean candidatureManager() {
+    public boolean candidatureTransitioning() {
         if(data.isLocked(ApplicationState.CANDIDATURE)){
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;

@@ -1,10 +1,11 @@
 package pt.isec.pa.apoio_poe.model.data.proposals;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 import pt.isec.pa.apoio_poe.model.data.person.Student;
 
-abstract public class Proposal {
+abstract public class Proposal implements Serializable {
     private String idOfProposal;
     private String title;
     private Student student;

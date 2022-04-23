@@ -1,6 +1,8 @@
 package pt.isec.pa.apoio_poe.model.data.person;
 
-public abstract class Person {
+import java.io.Serializable;
+
+public abstract class Person implements Serializable {
     private String name;
     private final String email;
 

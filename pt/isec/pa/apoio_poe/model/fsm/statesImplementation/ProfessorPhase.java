@@ -40,7 +40,7 @@ public class ProfessorPhase extends StateAdapter {
     }
 
     @Override
-    public boolean studentManager() {
+    public boolean studentTransitioning() {
         setState(ApplicationState.STUDENT);
         return true;
     }
@@ -51,7 +51,7 @@ public class ProfessorPhase extends StateAdapter {
     }
 
     @Override
-    public boolean proposalManager() {
+    public boolean proposalTransitioning() {
         setState(ApplicationState.PROPOSAL);
         return true;
     }
@@ -69,7 +69,7 @@ public class ProfessorPhase extends StateAdapter {
     }
 
     @Override
-    public boolean candidatureManager() {
+    public boolean candidatureTransitioning() {
         if (data.isLocked(ApplicationState.CANDIDATURE)) {
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;

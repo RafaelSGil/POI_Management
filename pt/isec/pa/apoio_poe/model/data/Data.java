@@ -8,9 +8,10 @@ import pt.isec.pa.apoio_poe.model.data.proposals.Project;
 import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 
+import java.io.Serializable;
 import java.util.*;
 
-public class Data {
+public class Data implements Serializable {
     Set<Proposal> autoproposals;
     Set<Person> students;
     Set<Person> professors;

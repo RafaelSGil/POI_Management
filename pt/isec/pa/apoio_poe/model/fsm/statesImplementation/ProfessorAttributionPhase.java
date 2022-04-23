@@ -54,7 +54,7 @@ public class ProfessorAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public boolean proposalAttributionManager() {
+    public boolean proposalAttributionTransitioning() {
         if(data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)){
             setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
             return true;

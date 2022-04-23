@@ -4,10 +4,11 @@ import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.data.person.Person;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StateAdapter implements IApplicationState {
+public class StateAdapter implements IApplicationState, Serializable {
     protected ApplicationContext context;
     protected Data data;
 
@@ -116,22 +117,22 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean studentManager() {
+    public boolean studentTransitioning() {
         return false;
     }
 
     @Override
-    public boolean professorManager() {
+    public boolean professorTransitioning() {
         return false;
     }
 
     @Override
-    public boolean proposalManager() {
+    public boolean proposalTransitioning() {
         return false;
     }
 
     @Override
-    public boolean candidatureManager() {
+    public boolean candidatureTransitioning() {
         return false;
     }
 
@@ -161,7 +162,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean proposalAttributionManager() {
+    public boolean proposalAttributionTransitioning() {
         return false;
     }
 
@@ -191,7 +192,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean professorAttributionManager() {
+    public boolean professorAttributionTransitioning() {
         return false;
     }
 
