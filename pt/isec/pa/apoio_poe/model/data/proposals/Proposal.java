@@ -5,7 +5,7 @@ import java.util.Objects;
 
 import pt.isec.pa.apoio_poe.model.data.person.Student;
 
-abstract public class Proposal implements Serializable {
+abstract public class Proposal implements Serializable , Cloneable{
     private String idOfProposal;
     private String title;
     private Student student;
@@ -14,6 +14,16 @@ abstract public class Proposal implements Serializable {
         this.idOfProposal = idOfProposal;
         this.title = title;
         this.student = student;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try{
+            Proposal newProposal = (Proposal) super.clone();
+            return newProposal;
+        }catch (CloneNotSupportedException e){
+            return null;
+        }
     }
 
     public String getIdOfProposal() {

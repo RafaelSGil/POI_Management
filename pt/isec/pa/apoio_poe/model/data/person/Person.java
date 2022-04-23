@@ -2,7 +2,7 @@ package pt.isec.pa.apoio_poe.model.data.person;
 
 import java.io.Serializable;
 
-public abstract class Person implements Serializable {
+public abstract class Person implements Serializable, Cloneable {
     private String name;
     private final String email;
 
@@ -17,6 +17,17 @@ public abstract class Person implements Serializable {
     public Person(String name, String email) {
         this.name = name;
         this.email = email;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try {
+            Person newPerson = (Person) super.clone();
+            return newPerson;
+        }catch (CloneNotSupportedException e){
+            return null;
+
+        }
     }
 
     public void setName(String name) {

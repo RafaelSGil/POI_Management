@@ -8,19 +8,24 @@ import pt.isec.pa.apoio_poe.model.data.proposals.Project;
 import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
 public class Data implements Serializable {
-    Set<Proposal> autoproposals;
-    Set<Person> students;
-    Set<Person> professors;
-    Set<MidProposal> internships;
-    Set<MidProposal> projects;
-    Map<Long, List<String>> candidatures;
-    Map<ApplicationState, Boolean> lockedPhases;
-    Map<String, Long> proposalAttributions;
-    Map<String, List<String>> advisorAttribution;
+    @Serial
+    private static final long serialVersionUID = 1L;
+
+    private Set<Proposal> autoproposals;
+    private Set<Person> students;
+    private Set<Person> professors;
+    private Set<MidProposal> internships;
+    private Set<MidProposal> projects;
+    private Map<Long, List<String>> candidatures;
+    private Map<ApplicationState, Boolean> lockedPhases;
+    private Map<String, Long> proposalAttributions;
+    private Map<String, List<String>> advisorAttribution;
+    private ApplicationState currentState;
 
     public Data() {
 
@@ -33,6 +38,7 @@ public class Data implements Serializable {
         this.lockedPhases = new HashMap<>();
         this.proposalAttributions = new HashMap<>();
         this.advisorAttribution = new HashMap<>();
+        currentState = ApplicationState.STUDENT;
         startMap();
     }
 
@@ -55,6 +61,14 @@ public class Data implements Serializable {
         // locks the given state by attributing it a true value
 
         lockedPhases.put(state, true);
+    }
+
+    public void setCurrentState(ApplicationState newState){
+        this.currentState = newState;
+    }
+
+    public ApplicationState getCurrentState() {
+        return currentState;
     }
 
     public void addStudentFile(List<List<String>> attributes) {

@@ -94,4 +94,6 @@ public interface IApplicationState {
     String getProfessorByEmail(String email);
 
     String listProfessorAttributions();
+
+    boolean loadSave();
 }

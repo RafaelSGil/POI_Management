@@ -4,7 +4,7 @@ import java.util.List;
 
 import pt.isec.pa.apoio_poe.model.data.person.Student;
 
-abstract public class MidProposal extends Proposal {
+abstract public class MidProposal extends Proposal{
     // abstract class that will be extended into internships and projects
 
     private List<String> branch;
@@ -12,6 +12,17 @@ abstract public class MidProposal extends Proposal {
     public MidProposal(String idOfProposal, String title, Student student, List<String> branch) {
         super(idOfProposal, title, student);
         this.branch = branch;
+    }
+
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        try{
+            Proposal newProposal = (Proposal) super.clone();
+            ((MidProposal) newProposal).branch = List.copyOf(this.branch);
+            return newProposal;
+        }catch (CloneNotSupportedException e){
+            return null;
+        }
     }
 
     public void setBranch(List<String> branch) {

@@ -6,11 +6,11 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
 
-import java.io.Serializable;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ApplicationContext implements Serializable {
+public class ApplicationContext{
     private Data data;
     private IApplicationState state;
 
@@ -206,5 +206,33 @@ public class ApplicationContext implements Serializable {
 
     public String listAttributedProposals(){
         return data.listAttributedProposals();
+    }
+
+    public boolean serializationOfProgram(){
+        try{
+            FileOutputStream fileOut = new FileOutputStream("/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/csv_files/data.ser");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(data);
+            out.close();
+            fileOut.close();
+        }catch (IOException e){
+            return false;
+        }
+
+        return true;
+    }
+
+    public boolean loadSave() throws ClassNotFoundException {
+        try{
+            FileInputStream fileIn = new FileInputStream("/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/csv_files/data.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            this.data = (Data) in.readObject();
+            in.close();
+            fileIn.close();
+            state.loadSave();
+            return true;
+        }catch (IOException e){
+            return false;
+        }
     }
 }

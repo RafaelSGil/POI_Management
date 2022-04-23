@@ -4,11 +4,14 @@ import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.data.person.Person;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class StateAdapter implements IApplicationState, Serializable {
+public class StateAdapter implements IApplicationState{
     protected ApplicationContext context;
     protected Data data;
 
@@ -18,6 +21,7 @@ public class StateAdapter implements IApplicationState, Serializable {
     }
 
     protected void setState(ApplicationState state) {
+        data.setCurrentState(state);
         context.setState(state.createState(context, data));
     }
 
@@ -74,6 +78,21 @@ public class StateAdapter implements IApplicationState, Serializable {
     @Override
     public String listProfessorAttributions() {
         return null;
+    }
+
+    @Override
+    public boolean loadSave() {
+        try{
+            FileInputStream fileIn = new FileInputStream("/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/csv_files/data.ser");
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            this.data = (Data) in.readObject();
+            in.close();
+            fileIn.close();
+            setState(data.getCurrentState());
+            return true;
+        }catch (IOException | ClassNotFoundException e){
+            return false;
+        }
     }
 
     @Override

@@ -20,7 +20,7 @@ public class CommandLineUI {
         int input = InputProtection.chooseOption(null, "Insert student data", "Delete student data",
                 "Edit student data", "Consult student data", "Professor Management", "Proposal Management",
                 "Candidature Management",
-                "Close state");
+                "Close state", "Save & quit", "Load save");
 
         switch (input) {
             case 1 -> insertData();
@@ -31,9 +31,30 @@ public class CommandLineUI {
             case 6 -> proposalManagement();
             case 7 -> candidatureManagement();
             case 8 -> closePhase();
+            case 9 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
+            case 10 -> loadSave();
         }
 
         return true;
+    }
+
+    public void loadSave(){
+        try{
+            if(context.loadSave()){
+                System.out.println("Successful load");
+            }else{
+                System.out.println("Could not load the save file");
+            }
+        }catch (ClassNotFoundException e){
+            e.printStackTrace();
+        }
     }
 
     public void insertData() {
@@ -78,13 +99,21 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Consult student data", "Professor Management",
-                "Proposal Management", "Candidature Management");
+                "Proposal Management", "Candidature Management", "Save & quit");
 
         switch (input) {
             case 1 -> consultData();
             case 2 -> professorManagement();
             case 3 -> proposalManagement();
             case 4 -> candidatureManagement();
+            case 5 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
 
         return true;
@@ -95,7 +124,7 @@ public class CommandLineUI {
 
         int input = InputProtection.chooseOption(null, "Insert professor data", "Delete professor data",
                 "Edit professor data", "Consult professor data", "Student Management", "Proposal Management",
-                "Candidature Management", "Close state");
+                "Candidature Management", "Close state", "Save & quit");
 
         switch (input) {
             case 1 -> insertData();
@@ -106,6 +135,14 @@ public class CommandLineUI {
             case 6 -> proposalManagement();
             case 7 -> candidatureManagement();
             case 8 -> closePhase();
+            case 9 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
 
         return true;
@@ -141,13 +178,21 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Consult professor data", "Student Management",
-                "Proposal Management", "Candidature Management");
+                "Proposal Management", "Candidature Management", "Save & quit");
 
         switch (input) {
             case 1 -> consultData();
             case 2 -> studentManagement();
             case 3 -> proposalManagement();
             case 4 -> candidatureManagement();
+            case 5 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
 
         return true;
@@ -158,7 +203,7 @@ public class CommandLineUI {
 
         int input = InputProtection.chooseOption(null, "Insert proposal data", "Delete proposal data",
                 "Edit proposal data", "Consult proposal data", "Student Management", "Professor Management",
-                "Candidature Management", "Close state");
+                "Candidature Management", "Close state", "Save & quit");
 
         switch (input) {
             case 1 -> insertData();
@@ -169,6 +214,14 @@ public class CommandLineUI {
             case 6 -> professorManagement();
             case 7 -> candidatureManagement();
             case 8 -> closePhase();
+            case 9 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
 
         return true;
@@ -340,13 +393,21 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Consult proposal data", "Student Management",
-                "Professor Management", "Candidature Management");
+                "Professor Management", "Candidature Management", "Save & quit");
 
         switch (input) {
             case 1 -> consultData();
             case 2 -> studentManagement();
             case 3 -> professorManagement();
             case 4 -> candidatureManagement();
+            case 5 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
 
         return true;
@@ -363,7 +424,7 @@ public class CommandLineUI {
 
         int input = InputProtection.chooseOption(null, "Insert candidature data", "Delete candidature data",
                 "Edit candidature data", "Consult candidature data", "List students", "List proposals", "Close state",
-                "Go to previous state", "Proposal Attribution Management");
+                "Go to previous state", "Proposal Attribution Management", "Save & quit");
 
         switch (input) {
             case 1 -> insertData();
@@ -375,6 +436,14 @@ public class CommandLineUI {
             case 7 -> closePhase();
             case 8 -> studentManagement();
             case 9 -> proposalAttributionManagement();
+            case 10 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
 
         return true;
@@ -388,12 +457,20 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         int input = InputProtection.chooseOption(null, "Consult candidature data", "Go to previous state",
-                "Proposal Attribution Management");
+                "Proposal Attribution Management", "Save & quit");
 
         switch (input) {
             case 1 -> consultData();
             case 2 -> studentManagement();
             case 3 -> proposalAttributionManagement();
+            case 4 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
 
         return true;
@@ -500,16 +577,24 @@ public class CommandLineUI {
 
         if (!context.isLocked(ApplicationState.CANDIDATURE)) {
             switch (InputProtection.chooseOption(null, "Associated students attribution", "List students",
-                    "List proposals", "Go to previous state")) {
+                    "List proposals", "Go to previous state", "Save & quit")) {
                 case 1 -> associateAttribution();
                 case 2 -> listStudents();
                 case 3 -> listProposals();
                 case 4 -> candidatureManagement();
+                case 5 -> {
+                    if(context.serializationOfProgram()){
+                        System.out.println("Successful serialization");
+                        return false;
+                    }
+
+                    System.out.println("Error occurred");
+                }
             }
         } else {
             switch (InputProtection.chooseOption(null, "Associated students attribution",
                     "Non associated students attribution", "Manual attribution", "Manual removal", "List students",
-                    "List proposals", "Go to previous state", "Close state", "Professor attribution phase")) {
+                    "List proposals", "Go to previous state", "Close state", "Professor attribution phase", "Save & quit")) {
                 case 1 -> associateAttribution();
                 case 2 -> nonAssociatedAttribution();
                 case 3 -> manualAttribution();
@@ -519,6 +604,14 @@ public class CommandLineUI {
                 case 7 -> candidatureManagement();
                 case 8 -> closePhase();
                 case 9 -> professorAttributionManagement();
+                case 10 -> {
+                    if(context.serializationOfProgram()){
+                        System.out.println("Successful serialization");
+                        return false;
+                    }
+
+                    System.out.println("Error occurred");
+                }
             }
         }
 
@@ -529,11 +622,19 @@ public class CommandLineUI {
         System.out.println("Current state: " + context.getState());
 
         switch (InputProtection.chooseOption(null, "List students",
-                "List proposals", "Go to previous state", "Professor attribution phase")) {
+                "List proposals", "Go to previous state", "Professor attribution phase", "Save & quit")) {
             case 1 -> listStudents();
             case 2 -> listProposals();
             case 3 -> candidatureManagement();
             case 4 -> professorAttributionManagement();
+            case 5 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
         return true;
     }
@@ -633,7 +734,9 @@ public class CommandLineUI {
     public boolean professorAttributionPhase(){
         System.out.println("Current state: " + context.getState());
 
-        switch (InputProtection.chooseOption(null, "Automatic attribution", "Manual attribution", "Manual removal", "Edit professor data", "Consult professor data", "List attributions", "List students", "List professor data", "Close state", "Go to previous state")){
+        switch (InputProtection.chooseOption(null, "Automatic attribution", "Manual attribution",
+                    "Manual removal", "Edit professor data", "Consult professor data", "List attributions", "List students",
+                    "List professor data", "Close state", "Go to previous state", "Save & quit")){
             case 1 -> associateAttribution();
             case 2 -> manualAttribution();
             case 3 -> manualRemoval();
@@ -644,6 +747,14 @@ public class CommandLineUI {
             case 8 -> listProfessorData();
             case 9 -> closePhase();
             case 10 -> proposalAttributionManagement();
+            case 11 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
 
         return true;
@@ -667,7 +778,8 @@ public class CommandLineUI {
     }
 
     public void listProfessorData(){
-        switch (InputProtection.chooseOption(null, "List average attributions", "List minimum attributions", "List maximum attributions", "List specific professor attributions")){
+        switch (InputProtection.chooseOption(null, "List average attributions", "List minimum attributions",
+                                        "List maximum attributions", "List specific professor attributions")){
             case 1 -> listAverageAttributions();
             case 2 -> listMinimumAttributions();
             case 3 -> listMaximumAttribution();
@@ -695,12 +807,22 @@ public class CommandLineUI {
     public boolean searchPhase(){
         System.out.println("Current state: " + context.getState());
 
-        switch (InputProtection.chooseOption(null, "List students with attributed proposals", "List students without proposals attributed and with candidatures", "Available proposals", "Attributed proposals", "List professor data")){
+        switch (InputProtection.chooseOption(null, "List students with attributed proposals",
+                                    "List students without proposals attributed and with candidatures",
+                                    "Available proposals", "Attributed proposals", "List professor data", "Save & quit")){
             case 1 -> listStudentWithProposalAttributed();
             case 2 -> listStudentWithoutProposalAttributedAndWithCandidature();
             case 3 -> listAvailableProposals();
             case 4 -> listAttributedProposals();
             case 5 -> listProfessorData();
+            case 6 -> {
+                if(context.serializationOfProgram()){
+                    System.out.println("Successful serialization");
+                    return false;
+                }
+
+                System.out.println("Error occurred");
+            }
         }
 
         return true;
