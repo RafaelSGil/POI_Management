@@ -8,9 +8,15 @@ import pt.isec.pa.apoio_poe.model.data.proposals.Project;
 import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
+import java.util.Map.Entry;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Data implements Serializable {
     @Serial
@@ -63,7 +69,7 @@ public class Data implements Serializable {
         lockedPhases.put(state, true);
     }
 
-    public void setCurrentState(ApplicationState newState){
+    public void setCurrentState(ApplicationState newState) {
         this.currentState = newState;
     }
 
@@ -158,6 +164,45 @@ public class Data implements Serializable {
             }
         }
         return false;
+    }
+
+    public boolean exportData() throws FileNotFoundException {
+        StringBuilder sb = new StringBuilder();
+        File csvOutputFile = new File("PHASE3_Exports");
+        int counter = 0;
+        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
+            for (Entry<Long, List<String>> student : candidatures.entrySet()) {
+                sb.append(student.getKey()).append(student.getValue());
+                for (Entry<String, Long> proposal : proposalAttributions.entrySet()) {
+                    if (proposal.getValue() == student.getKey()) {
+                        sb.append(proposal.getKey());
+                        sb.append(counter);
+                    } else {
+                        counter++;
+                    }
+                }
+                counter = 0;
+            }
+            String[] data = sb.toString().split("");
+            String export = convertToCSV(data);
+            System.out.println(export);
+        }
+        return true;
+    }
+
+    public String convertToCSV(String[] data) {
+        return Stream.of(data)
+                .map(this::escapeSpecialCharacters)
+                .collect(Collectors.joining(","));
+    }
+
+    public String escapeSpecialCharacters(String data) {
+        String escapedData = data.replaceAll("\\R", " ");
+        if (data.contains(",") || data.contains("\"") || data.contains("'")) {
+            data = data.replace("\"", "\"\"");
+            escapedData = "\"" + data + "\"";
+        }
+        return escapedData;
     }
 
     public void addStudent(String name, String email, long id, String course, String courseBranch,
@@ -1037,6 +1082,11 @@ public class Data implements Serializable {
         }
 
         fixAttributions();
+        try {
+            exportData();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
