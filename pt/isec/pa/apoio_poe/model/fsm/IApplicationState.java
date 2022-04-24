@@ -96,4 +96,6 @@ public interface IApplicationState {
     String listProfessorAttributions();
 
     boolean loadSave(String path);
+
+    void exportData();
 }

@@ -6,6 +6,7 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,6 +108,11 @@ public class ProposalAttributionPhase extends StateAdapter {
 
         data.lockPhase(ApplicationState.PROPOSAL_ATTRIBUTION);
         setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
+        try {
+            data.exportData(false);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 

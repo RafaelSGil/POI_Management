@@ -105,6 +105,11 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
+    public void exportData() {
+        return;
+    }
+
+    @Override
     public boolean editDataProposal(String identifier, String attribute, List<String> newValue) {
         return false;
     }

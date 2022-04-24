@@ -7,16 +7,11 @@ import pt.isec.pa.apoio_poe.model.data.proposals.MidProposal;
 import pt.isec.pa.apoio_poe.model.data.proposals.Project;
 import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
-
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.PrintWriter;
+import java.io.FileWriter;
 import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
-import java.util.Map.Entry;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class Data implements Serializable {
     @Serial
@@ -166,43 +161,231 @@ public class Data implements Serializable {
         return false;
     }
 
-    public boolean exportData() throws FileNotFoundException {
-        StringBuilder sb = new StringBuilder();
-        File csvOutputFile = new File("PHASE3_Exports");
-        int counter = 0;
-        try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
-            for (Entry<Long, List<String>> student : candidatures.entrySet()) {
-                sb.append(student.getKey()).append(student.getValue());
-                for (Entry<String, Long> proposal : proposalAttributions.entrySet()) {
-                    if (proposal.getValue() == student.getKey()) {
-                        sb.append(proposal.getKey());
-                        sb.append(counter);
-                    } else {
-                        counter++;
+    public boolean exportData(boolean professor) throws FileNotFoundException {
+        String delimiter = ",";
+        String separator = "\n";
+        String header = "Student,Candidatures,Proposal,Order";
+        String headerProfessor = "Student,Candidatures,Proposal,Order,Professor";
+        FileWriter file = null;
+        int order = 0;
+        String proposalAttributed = "";
+        if (professor == false) {
+            try {
+                file = new FileWriter(
+                        "//home//hugo//Desktop//POI_Management//pt/isec//pa//apoio_poe//files//exports//ProposalsAttributted.csv");
+                file.append(header);
+                file.append(separator);
+
+                Iterator<Map.Entry<Long, List<String>>> itr = candidatures.entrySet().iterator();
+                Iterator<Map.Entry<Long, List<String>>> auxItr = candidatures.entrySet().iterator();
+                Iterator<Map.Entry<String, Long>> itrAttribuition = proposalAttributions.entrySet().iterator();
+                while (itr.hasNext()) {
+                    order = 1;
+                    Map.Entry<Long, List<String>> entry = itr.next();
+                    file.append(Long.toString(entry.getKey()));
+                    file.append(delimiter);
+                    Iterator<String> proposals = entry.getValue().iterator();
+                    while (proposals.hasNext()) {
+                        file.append(proposals.next());
+                        file.append(delimiter);
+                    }
+                    while (itrAttribuition.hasNext()) {
+                        Map.Entry<String, Long> entryAttribuition = itrAttribuition.next();
+                        if (entry.getKey() == entryAttribuition.getValue()) {
+                            file.append(entryAttribuition.getKey());
+                            file.append(delimiter);
+                            proposalAttributed = entryAttribuition.getKey();
+                            break;
+                        }
+                    }
+
+                    while (auxItr.hasNext()) {
+                        Map.Entry<Long, List<String>> entryAux = auxItr.next();
+                        proposals = entryAux.getValue().iterator();
+                        while (proposals.hasNext()) {
+                            if (proposals.next().equals(proposalAttributed)) {
+                                file.append(Integer.toString(order));
+                                break;
+                            } else {
+                                order++;
+                            }
+                        }
+                        break;
+                    }
+                    file.append(separator);
+                }
+
+                for (Proposal auto : autoproposals) {
+                    if (auto.getStudent() != -1 && !candidatures.containsKey(auto.getStudent())) {
+                        file.append(Long.toString(auto.getStudent()));
+                        file.append(delimiter);
+                        file.append(auto.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(auto.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(Integer.toString(1));
+                        file.append(separator);
                     }
                 }
-                counter = 0;
+
+                for (MidProposal project : projects) {
+                    if (project.getStudent() != -1 && !candidatures.containsKey(project.getStudent())) {
+                        file.append(Long.toString(project.getStudent()));
+                        file.append(delimiter);
+                        file.append(project.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(project.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(Integer.toString(1));
+                        file.append(separator);
+                    }
+                }
+
+                for (MidProposal internship : internships) {
+                    if (internship.getStudent() != -1 && !candidatures.containsKey(internship.getStudent())) {
+                        file.append(Long.toString(internship.getStudent()));
+                        file.append(delimiter);
+                        file.append(internship.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(internship.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(Integer.toString(1));
+                        file.append(separator);
+                    }
+                }
+                file.close();
+
+            } catch (Exception e) {
+                e.printStackTrace();
             }
-            String[] data = sb.toString().split("");
-            String export = convertToCSV(data);
-            System.out.println(export);
+        } else {
+            try {
+                file = new FileWriter(
+                        "//home//hugo//Desktop//POI_Management//pt/isec//pa//apoio_poe//files//exports//ProposalsAttributtedProfessor.csv");
+                file.append(headerProfessor);
+                file.append(separator);
+
+                Iterator<Map.Entry<Long, List<String>>> itr = candidatures.entrySet().iterator();
+                Iterator<Map.Entry<Long, List<String>>> auxItr = candidatures.entrySet().iterator();
+                Iterator<Map.Entry<String, Long>> itrAttribuition = proposalAttributions.entrySet().iterator();
+                Iterator<Map.Entry<String, List<String>>> advisorItr = advisorAttribution.entrySet().iterator();
+                while (itr.hasNext()) {
+                    order = 1;
+                    Map.Entry<Long, List<String>> entry = itr.next();
+                    file.append(Long.toString(entry.getKey()));
+                    file.append(delimiter);
+                    Iterator<String> proposals = entry.getValue().iterator();
+                    while (proposals.hasNext()) {
+                        file.append(proposals.next());
+                        file.append(delimiter);
+                    }
+                    while (itrAttribuition.hasNext()) {
+                        Map.Entry<String, Long> entryAttribuition = itrAttribuition.next();
+                        if (entry.getKey() == entryAttribuition.getValue()) {
+                            file.append(entryAttribuition.getKey());
+                            file.append(delimiter);
+                            proposalAttributed = entryAttribuition.getKey();
+                            break;
+                        }
+                    }
+
+                    while (auxItr.hasNext()) {
+                        Map.Entry<Long, List<String>> entryAux = auxItr.next();
+                        proposals = entryAux.getValue().iterator();
+                        while (proposals.hasNext()) {
+                            if (proposals.next().equals(proposalAttributed)) {
+                                file.append(Integer.toString(order));
+                                break;
+                            } else {
+                                order++;
+                            }
+                        }
+                        break;
+                    }
+
+                    while (advisorItr.hasNext()) {
+                        Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
+                        if (entryAdvisor.getValue().contains(proposalAttributed)) {
+                            file.append(delimiter);
+                            file.append(entryAdvisor.getKey());
+                            break;
+                        }
+                    }
+                    file.append(separator);
+                }
+                advisorItr = advisorAttribution.entrySet().iterator();
+
+                for (Proposal auto : autoproposals) {
+                    if (auto.getStudent() != -1 && !candidatures.containsKey(auto.getStudent())) {
+                        file.append(Long.toString(auto.getStudent()));
+                        file.append(delimiter);
+                        file.append(auto.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(auto.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(Integer.toString(1));
+
+                        while (advisorItr.hasNext()) {
+                            Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
+                            if (entryAdvisor.getValue().contains(auto.getIdOfProposal())) {
+                                file.append(delimiter);
+                                file.append(entryAdvisor.getKey());
+                                break;
+                            }
+                        }
+                        file.append(separator);
+                    }
+                }
+
+                for (MidProposal project : projects) {
+                    if (project.getStudent() != -1 && !candidatures.containsKey(project.getStudent())) {
+                        file.append(Long.toString(project.getStudent()));
+                        file.append(delimiter);
+                        file.append(project.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(project.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(Integer.toString(1));
+
+                        while (advisorItr.hasNext()) {
+                            Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
+                            if (entryAdvisor.getValue().contains(project.getIdOfProposal())) {
+                                file.append(delimiter);
+                                file.append(entryAdvisor.getKey());
+                                break;
+                            }
+                        }
+                        file.append(separator);
+                    }
+                }
+
+                for (MidProposal internship : internships) {
+                    if (internship.getStudent() != -1 && !candidatures.containsKey(internship.getStudent())) {
+                        file.append(Long.toString(internship.getStudent()));
+                        file.append(delimiter);
+                        file.append(internship.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(internship.getIdOfProposal());
+                        file.append(delimiter);
+                        file.append(Integer.toString(1));
+
+                        while (advisorItr.hasNext()) {
+                            Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
+                            if (entryAdvisor.getValue().contains(internship.getIdOfProposal())) {
+                                file.append(delimiter);
+                                file.append(entryAdvisor.getKey());
+                                break;
+                            }
+                        }
+                        file.append(separator);
+                    }
+                }
+                file.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
         return true;
-    }
-
-    public String convertToCSV(String[] data) {
-        return Stream.of(data)
-                .map(this::escapeSpecialCharacters)
-                .collect(Collectors.joining(","));
-    }
-
-    public String escapeSpecialCharacters(String data) {
-        String escapedData = data.replaceAll("\\R", " ");
-        if (data.contains(",") || data.contains("\"") || data.contains("'")) {
-            data = data.replace("\"", "\"\"");
-            escapedData = "\"" + data + "\"";
-        }
-        return escapedData;
     }
 
     public void addStudent(String name, String email, long id, String course, String courseBranch,
@@ -693,7 +876,6 @@ public class Data implements Serializable {
                 if (flag == 1) {
                     break;
                 }
-                System.out.println(id);
                 if (!studentsAdded.contains((Student) Student.createDummyStudent(id))) {
                     studentsAdded.add((Student) Student.createDummyStudent(id));
                     while (eachListIterator.hasNext()) {
@@ -1080,13 +1262,7 @@ public class Data implements Serializable {
             studentsProposals.clear();
             i++;
         }
-
         fixAttributions();
-        try {
-            exportData();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
         return null;
     }
 
