@@ -1659,4 +1659,16 @@ public class Data implements Serializable {
 
         return sb.toString();
     }
+
+    public ArrayList<String> getBranches(){
+        ArrayList<String> branches = new ArrayList<>();
+
+        for(Person student : students){
+            if(!branches.contains(((Student)student).getCourseBranch())){
+                branches.add(((Student)student).getCourseBranch());
+            }
+        }
+
+        return new ArrayList<>(branches);
+    }
 }

@@ -268,13 +268,15 @@ public class CommandLineUI {
             case 2 -> {
                 String attribute = "branch";
                 List<String> newValues = new ArrayList<>();
+                ArrayList<String> branchesAvailable = context.getBranches();
 
                 while (true) {
-                    String newValue = InputProtection.readString("New branch (write end to stop): ", true);
+                    String newValue = InputProtection.readString("New branch " + branchesAvailable + " (write end to stop): ", true);
                     if (newValue.equals("end")) {
                         break;
                     }
-                    if (!context.isBranchValid(newValue)) {
+
+                    if (!branchesAvailable.contains(newValue)) {
                         System.out.println("That's not a valid branch!");
                         continue;
                     }
@@ -320,13 +322,15 @@ public class CommandLineUI {
             case 2 -> {
                 String attribute = "branch";
                 List<String> newValues = new ArrayList<>();
+                ArrayList<String> branchesAvailable = context.getBranches();
 
                 while (true) {
-                    String newValue = InputProtection.readString("New branch (write end to stop): ", true);
+                    String newValue = InputProtection.readString("New branch " + branchesAvailable + " (write end to stop): ", true);
                     if (newValue.equals("end")) {
                         break;
                     }
-                    if (!context.isBranchValid(newValue)) {
+
+                    if (!branchesAvailable.contains(newValue)) {
                         System.out.println("That's not a valid branch!");
                         continue;
                     }

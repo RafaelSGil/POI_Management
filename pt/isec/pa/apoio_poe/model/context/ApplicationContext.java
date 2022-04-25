@@ -112,8 +112,8 @@ public class ApplicationContext {
         return data + ", phase = " + state + "\n";
     }
 
-    public boolean isBranchValid(String branch) {
-        return branch.equals("DA") || branch.equals("RAS") || branch.equals("SI");
+    public ArrayList<String> getBranches() {
+        return data.getBranches();
     }
 
     public boolean isLocked(ApplicationState s) {
