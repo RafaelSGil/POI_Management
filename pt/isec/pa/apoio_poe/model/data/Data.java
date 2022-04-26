@@ -621,6 +621,12 @@ public class Data implements Serializable {
     }
 
     public boolean removeStudentGivenItsId(long idOfStudent) {
+        for(Proposal auto : autoproposals){
+            if(auto.getStudent() == idOdStudent){
+                removeAutoProposalGivenItsID(idOdStudent);
+            }
+        }
+        
         return students.remove(Student.createDummyStudent(idOfStudent));
     }
 
