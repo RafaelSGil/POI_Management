@@ -116,7 +116,7 @@ public class ApplicationContext {
         return data.getBranches();
     }
 
-    public boolean isLocked(ApplicationState s) {
+    public boolean isLocked(ApplicationPhases s) {
         return data.isLocked(s);
     }
 

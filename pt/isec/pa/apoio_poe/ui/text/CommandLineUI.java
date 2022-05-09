@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.data.person.Person;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.util.InputProtection;
 
@@ -570,7 +571,7 @@ public class CommandLineUI {
     public boolean proposalAttributionPhase() {
         System.out.println("Current state: " + context.getState());
 
-        if (!context.isLocked(ApplicationState.CANDIDATURE)) {
+        if (!context.isLocked(ApplicationPhases.PHASE2)) {
             switch (InputProtection.chooseOption(null, "Associated students attribution", "List students",
                     "List proposals", "Go to previous state", "Save & quit")) {
                 case 1 -> associateAttribution();
