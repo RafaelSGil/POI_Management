@@ -1,10 +1,11 @@
 package pt.isec.pa.apoio_poe.model.fsm.statesImplementation;
 
 import pt.isec.pa.apoio_poe.files.csv_files.Files;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
-import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
 import java.util.List;
 
@@ -49,7 +50,7 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public boolean studentTransitioning() {
-        if (data.isLocked(ApplicationState.STUDENT)) {
+        if (data.isLocked(ApplicationPhases.PHASE1)) {
             setState(ApplicationState.STUDENT_LOCKED);
             return true;
         }
@@ -69,8 +70,8 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public boolean closeState() {
-        if (data.isLocked(ApplicationState.STUDENT)) {
-            data.lockPhase(ApplicationState.CANDIDATURE);
+        if (data.isLocked(ApplicationPhases.PHASE1)) {
+            data.lockPhase(ApplicationPhases.PHASE2);
             setState(ApplicationState.CANDIDATURE_LOCKED);
         }
         return true;
@@ -85,7 +86,7 @@ public class CandidaturePhase extends StateAdapter {
 
     @Override
     public boolean proposalAttributionTransitioning() {
-        if (data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)) {
+        if (data.isLocked(ApplicationPhases.PHASE3)) {
             setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
             return true;
         }

@@ -1,7 +1,8 @@
 package pt.isec.pa.apoio_poe.model.fsm.statesImplementation;
 
 import pt.isec.pa.apoio_poe.model.data.Data;
-import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 
@@ -36,7 +37,7 @@ public class StudentPhaseLocked extends StateAdapter {
     }
     @Override
     public boolean candidatureTransitioning() {
-        if(data.isLocked(ApplicationState.CANDIDATURE)){
+        if(data.isLocked(ApplicationPhases.PHASE2)){
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
         }

@@ -2,7 +2,7 @@ package pt.isec.pa.apoio_poe.ui.text;
 
 import java.util.ArrayList;
 import java.util.List;
-import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.data.person.Person;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.util.InputProtection;

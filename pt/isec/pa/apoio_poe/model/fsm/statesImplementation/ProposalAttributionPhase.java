@@ -1,10 +1,11 @@
 package pt.isec.pa.apoio_poe.model.fsm.statesImplementation;
 
 import pt.isec.pa.apoio_poe.model.data.person.Person;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
-import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
@@ -22,7 +23,7 @@ public class ProposalAttributionPhase extends StateAdapter {
 
     @Override
     public boolean candidatureTransitioning() {
-        if (data.isLocked(ApplicationState.CANDIDATURE)) {
+        if (data.isLocked(ApplicationPhases.PHASE2)) {
             setState(ApplicationState.CANDIDATURE_LOCKED);
             return true;
         }
@@ -106,7 +107,7 @@ public class ProposalAttributionPhase extends StateAdapter {
             return false;
         }
 
-        data.lockPhase(ApplicationState.PROPOSAL_ATTRIBUTION);
+        data.lockPhase(ApplicationPhases.PHASE3);
         setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
         try {
             data.exportData(false);

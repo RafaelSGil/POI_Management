@@ -1,6 +1,6 @@
 package pt.isec.pa.apoio_poe.model.main;
 
-import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 import pt.isec.pa.apoio_poe.ui.text.CommandLineUI;
 
 public class Main {

@@ -6,6 +6,7 @@ import pt.isec.pa.apoio_poe.model.data.proposals.Internship;
 import pt.isec.pa.apoio_poe.model.data.proposals.MidProposal;
 import pt.isec.pa.apoio_poe.model.data.proposals.Project;
 import pt.isec.pa.apoio_poe.model.data.proposals.Proposal;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
@@ -23,7 +24,7 @@ public class Data implements Serializable {
     private Set<MidProposal> internships;
     private Set<MidProposal> projects;
     private Map<Long, List<String>> candidatures;
-    private Map<ApplicationState, Boolean> lockedPhases;
+    private Map<ApplicationPhases, Boolean> lockedPhases;
     private Map<String, Long> proposalAttributions;
     private Map<String, List<String>> advisorAttribution;
     private ApplicationState currentState;
@@ -47,21 +48,21 @@ public class Data implements Serializable {
         // initializes the map with all enum states and gives them the value false,
         // which means the state has not yet been locked
 
-        for (ApplicationState state : ApplicationState.values()) {
-            lockedPhases.put(state, false);
+        for (ApplicationPhases phase : ApplicationPhases.values()) {
+            lockedPhases.put(phase, false);
         }
     }
 
-    public boolean isLocked(ApplicationState state) {
+    public boolean isLocked(ApplicationPhases phase) {
         // checks if given state is already locked
 
-        return lockedPhases.get(state);
+        return lockedPhases.get(phase);
     }
 
-    public void lockPhase(ApplicationState state) {
+    public void lockPhase(ApplicationPhases phase) {
         // locks the given state by attributing it a true value
 
-        lockedPhases.put(state, true);
+        lockedPhases.put(phase, true);
     }
 
     public void setCurrentState(ApplicationState newState) {

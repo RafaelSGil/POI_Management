@@ -1,12 +1,13 @@
 package pt.isec.pa.apoio_poe.model.fsm.statesImplementation;
 
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
 
 import java.io.FileNotFoundException;
 
-import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
+import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
 public class ProfessorAttributionPhase extends StateAdapter {
     public ProfessorAttributionPhase(ApplicationContext context, Data data) {
@@ -20,7 +21,6 @@ public class ProfessorAttributionPhase extends StateAdapter {
 
     @Override
     public boolean closeState() {
-        data.lockPhase(ApplicationState.PROFESSOR_ATTRIBUTION);
         try {
             data.exportData(true);
         } catch (FileNotFoundException e) {
@@ -74,7 +74,7 @@ public class ProfessorAttributionPhase extends StateAdapter {
 
     @Override
     public boolean proposalAttributionTransitioning() {
-        if (data.isLocked(ApplicationState.PROPOSAL_ATTRIBUTION)) {
+        if (data.isLocked(ApplicationPhases.PHASE3)) {
             setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
             return true;
         }

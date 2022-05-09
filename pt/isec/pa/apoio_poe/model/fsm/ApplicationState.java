@@ -1,6 +1,5 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
-import pt.isec.pa.apoio_poe.model.context.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.CandidaturePhase;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.CandidaturePhaseLocked;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorAttributionPhase;
