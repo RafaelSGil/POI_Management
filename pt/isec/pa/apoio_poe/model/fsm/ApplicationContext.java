@@ -229,7 +229,9 @@ public class ApplicationContext {
             this.data = (Data) in.readObject();
             in.close();
             fileIn.close();
-            state.loadSave(path);
+            setState(data.isLocked(ApplicationPhases.PHASE1) ?
+                    ApplicationState.STUDENT_LOCKED.createState(this, data) :
+                    ApplicationState.STUDENT.createState(this, data));
             return true;
         } catch (IOException e) {
             return false;
