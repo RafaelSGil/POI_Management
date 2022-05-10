@@ -5,6 +5,8 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import pt.isec.pa.apoio_poe.files.csv_files.Files;
@@ -16,16 +18,16 @@ public class StudentPhase extends StateAdapter {
     }
 
     @Override
-    public boolean insertData(String file) {
+    public ArrayList<String> insertData(String file) {
         if (file == null)
-            return false;
+            return null;
 
         List<List<String>> attributes = Files.openFile(file);
-        data.addStudentFile(attributes);
+        ArrayList<String> arr = data.addStudentFile(attributes);
 
         setState(ApplicationState.STUDENT);
 
-        return true;
+        return arr;
     }
 
     @Override

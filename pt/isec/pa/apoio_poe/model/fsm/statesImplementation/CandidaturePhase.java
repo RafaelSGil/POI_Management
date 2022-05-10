@@ -7,6 +7,7 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class CandidaturePhase extends StateAdapter {
@@ -20,16 +21,16 @@ public class CandidaturePhase extends StateAdapter {
     }
 
     @Override
-    public boolean insertData(String file) {
+    public ArrayList<String> insertData(String file) {
         if (file == null)
-            return false;
+            return null;
 
         List<List<String>> attributes = Files.openFile(file);
-        data.addCandidatureFile(attributes);
+        ArrayList<String> arr = data.addCandidatureFile(attributes);
 
         setState(ApplicationState.CANDIDATURE);
 
-        return true;
+        return arr;
     }
 
     @Override

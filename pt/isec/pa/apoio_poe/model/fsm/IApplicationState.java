@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public interface IApplicationState {
-    boolean insertData(String file);
+    ArrayList<String> insertData(String file);
 
     String checkData();
 
