@@ -164,14 +164,11 @@ public class CommandLineUI {
         String identifier = InputProtection.readString("Specify the email of the professor you want to edit: ", false);
         String advisor;
 
-        while (true) {
+        do {
             advisor = InputProtection
                     .readString("Specify the value you want to give to the field \"advisor\" [true/false]:", false);
 
-            if (advisor.equals("true") || advisor.equals("false")) {
-                break;
-            }
-        }
+        } while (!advisor.equals("true") && !advisor.equals("false"));
 
         context.editDataProfessor(identifier, Boolean.parseBoolean(advisor));
     }
@@ -259,7 +256,7 @@ public class CommandLineUI {
     }
 
     public void editInternshipData(String identifier) {
-        switch (InputProtection.chooseOption("What atrribute do you want to alter?", "title", "branch", "company",
+        switch (InputProtection.chooseOption("What attribute do you want to alter?", "title", "branch", "company",
                 "student")) {
             case 1 -> {
                 String attribute = "title";
@@ -303,7 +300,7 @@ public class CommandLineUI {
                         Long.parseLong(newValue);
                         break;
                     } catch (NumberFormatException e) {
-                        System.out.println(e);
+                        System.out.println("That's not a numeric value");
                     }
                 }
 
@@ -313,7 +310,7 @@ public class CommandLineUI {
     }
 
     public void editProjectData(String identifier) {
-        switch (InputProtection.chooseOption("What atrribute do you want to alter?", "title", "branch", "company",
+        switch (InputProtection.chooseOption("What attribute do you want to alter?", "title", "branch", "company",
                 "student")) {
             case 1 -> {
                 String attribute = "title";
@@ -357,7 +354,7 @@ public class CommandLineUI {
                         Long.parseLong(newValue);
                         break;
                     } catch (NumberFormatException e) {
-                        System.out.println(e);
+                        System.out.println("That's not a number");
                     }
                 }
 
@@ -384,7 +381,7 @@ public class CommandLineUI {
                         Long.parseLong(newValue);
                         break;
                     } catch (NumberFormatException e) {
-                        System.out.println(e);
+                        System.out.println("That's not a number");
                     }
                 }
 
@@ -479,7 +476,7 @@ public class CommandLineUI {
         if (context.getState() == ApplicationState.CANDIDATURE
                 || context.getState() == ApplicationState.CANDIDATURE_LOCKED) {
             switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures",
-                    "List students without candidatures", "List students with autoproposals")) {
+                    "List students without candidatures", "List students with self proposals")) {
                 case 1 -> listStudentsWithCandidature();
                 case 2 -> listStudentsWithoutCandidature();
                 case 3 -> listStudentsWithAutoProposals();
@@ -491,7 +488,7 @@ public class CommandLineUI {
         if (context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION
                 || context.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED) {
             switch (InputProtection.chooseOption("Pick a listing option: ", "List students with candidatures",
-                    "List students with autoproposals", "List students with proposal attributed",
+                    "List students with self proposals", "List students with proposal attributed",
                     "List students without attributions")) {
                 case 1 -> listStudentsWithCandidature();
                 case 2 -> listStudentsWithAutoProposals();
@@ -631,8 +628,8 @@ public class CommandLineUI {
         context.associateAttribution();
     }
 
-    public boolean chooseStudentToAssociate(int index) {
-        return context.chooseStudentToAssociate(index);
+    public void chooseStudentToAssociate(int index) {
+        context.chooseStudentToAssociate(index);
     }
 
     public void nonAssociatedAttribution() {
@@ -651,7 +648,7 @@ public class CommandLineUI {
                     Long.parseLong(idOfStudent);
                     break;
                 } catch (NumberFormatException e) {
-                    System.out.println(e);
+                    System.out.println("That's not a number");
                 }
 
             }
@@ -821,8 +818,6 @@ public class CommandLineUI {
         }
 
         chooseStudentToAssociate(option);
-        i = 0;
-        option = -1;
 
         return true;
     }
@@ -842,7 +837,6 @@ public class CommandLineUI {
             case TIE -> tiePhase();
             case PROFESSOR_ATTRIBUTION -> professorAttributionPhase();
             case SEARCH -> searchPhase();
-            default -> throw new IllegalArgumentException("Unexpected value: " + context.getState());
         })
             ;
     }
