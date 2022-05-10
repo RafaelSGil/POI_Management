@@ -19,7 +19,6 @@ public class StateAdapter implements IApplicationState {
     }
 
     protected void setState(ApplicationState state) {
-        data.setCurrentState(state);
         context.setState(state.createState(context, data));
     }
 
@@ -76,21 +75,6 @@ public class StateAdapter implements IApplicationState {
     @Override
     public String listProfessorAttributions() {
         return null;
-    }
-
-    @Override
-    public boolean loadSave(String path) {
-        try {
-            FileInputStream fileIn = new FileInputStream(path);
-            ObjectInputStream in = new ObjectInputStream(fileIn);
-            this.data = (Data) in.readObject();
-            in.close();
-            fileIn.close();
-            setState(data.getCurrentState());
-            return true;
-        } catch (IOException | ClassNotFoundException e) {
-            return false;
-        }
     }
 
     @Override

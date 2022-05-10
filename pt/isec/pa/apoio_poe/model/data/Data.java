@@ -27,7 +27,7 @@ public class Data implements Serializable {
     private Map<ApplicationPhases, Boolean> lockedPhases;
     private Map<String, Long> proposalAttributions;
     private Map<String, List<String>> advisorAttribution;
-    private ApplicationState currentState;
+
 
     public Data() {
 
@@ -40,7 +40,6 @@ public class Data implements Serializable {
         this.lockedPhases = new HashMap<>();
         this.proposalAttributions = new HashMap<>();
         this.advisorAttribution = new HashMap<>();
-        currentState = ApplicationState.STUDENT;
         startMap();
     }
 
@@ -63,14 +62,6 @@ public class Data implements Serializable {
         // locks the given state by attributing it a true value
 
         lockedPhases.put(phase, true);
-    }
-
-    public void setCurrentState(ApplicationState newState) {
-        this.currentState = newState;
-    }
-
-    public ApplicationState getCurrentState() {
-        return currentState;
     }
 
     public void addStudentFile(List<List<String>> attributes) {
