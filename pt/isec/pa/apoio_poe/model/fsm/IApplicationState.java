@@ -43,9 +43,11 @@ public interface IApplicationState {
 
     boolean associateAttribution();
 
-    ArrayList<Person> nonAssociateAttribution();
+    boolean nonAssociateAttribution();
 
-    ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index);
+    boolean chooseStudentToAssociate(int index);
+
+    ArrayList<Person> getTies();
 
     boolean manualAttribution(String idOfProposal, long idOfStudent);
 

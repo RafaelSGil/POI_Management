@@ -28,6 +28,7 @@ public class Data implements Serializable {
     private Map<String, Long> proposalAttributions;
     private Map<String, List<String>> advisorAttribution;
     private ArrayList<String> log;
+    private ArrayList<Person> ties;
 
 
     public Data() {
@@ -42,6 +43,7 @@ public class Data implements Serializable {
         this.proposalAttributions = new HashMap<>();
         this.advisorAttribution = new HashMap<>();
         this.log = new ArrayList<>();
+        this.ties = new ArrayList<>();
         startMap();
     }
 
@@ -1283,7 +1285,7 @@ public class Data implements Serializable {
         return true;
     }
 
-    public ArrayList<Person> nonAssociateAttribution() {
+    public boolean nonAssociateAttribution() {
         ArrayList<Person> studentsProposals = new ArrayList<>();
         double highestGrade = 0;
         int i = 0;
@@ -1347,14 +1349,15 @@ public class Data implements Serializable {
                 }
             } else {
                 if (studentsProposals.size() != 0) {
-                    return new ArrayList<>(studentsProposals);
+                    ties.addAll(studentsProposals);
+                    return false;
                 }
             }
             studentsProposals.clear();
             i++;
         }
         fixAttributions();
-        return null;
+        return true;
     }
 
     public void fixAttributions() {
@@ -1384,12 +1387,10 @@ public class Data implements Serializable {
         }
     }
 
-    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
-        ArrayList<Person> aux = new ArrayList<>();
-
-        if (studentsProposals != null) {
+    public boolean chooseStudentToAssociate(int index) {
+        if (ties != null) {
             for (Map.Entry<Long, List<String>> entry : candidatures.entrySet()) {
-                if (entry.getKey() == studentsProposals.get(index).getId()) {
+                if (entry.getKey() == ties.get(index).getId()) {
                     Iterator<String> itr = entry.getValue().iterator();
                     while (itr.hasNext()) {
                         String proposal = itr.next();
@@ -1424,13 +1425,15 @@ public class Data implements Serializable {
                 }
             }
         }
-        if ((aux = nonAssociateAttribution()) != null) {
-            fixAttributions();
-            return aux;
-        }
 
+        assert ties != null;
+        ties.clear();
         fixAttributions();
-        return null;
+        return true;
+    }
+
+    public ArrayList<Person> getTies(){
+        return new ArrayList<>(ties);
     }
 
     public String listStudentWithProposalAttributed() {

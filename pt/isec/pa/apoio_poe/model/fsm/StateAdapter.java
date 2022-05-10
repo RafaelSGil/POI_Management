@@ -178,12 +178,17 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public ArrayList<Person> nonAssociateAttribution() {
-        return null;
+    public boolean nonAssociateAttribution() {
+        return false;
     }
 
     @Override
-    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
+    public boolean chooseStudentToAssociate(int index) {
+        return false;
+    }
+
+    @Override
+    public ArrayList<Person> getTies() {
         return null;
     }
 

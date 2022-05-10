@@ -39,10 +39,15 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public ArrayList<Person> nonAssociateAttribution() {
-        ArrayList<Person> arr = data.nonAssociateAttribution();
-        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
-        return arr;
+    public boolean nonAssociateAttribution() {
+        boolean bool = data.nonAssociateAttribution();
+        if(!bool){
+            setState(ApplicationState.TIE);
+        }else{
+            setState(ApplicationState.PROPOSAL_ATTRIBUTION);
+        }
+
+        return bool;
     }
 
     @Override
@@ -57,13 +62,6 @@ public class ProposalAttributionPhase extends StateAdapter {
         boolean bool = data.manualRemoval(idOfProposal);
         setState(ApplicationState.PROPOSAL_ATTRIBUTION);
         return bool;
-    }
-
-    @Override
-    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
-        ArrayList<Person> arr = data.chooseStudentToAssociate(studentsProposals, index);
-        setState(ApplicationState.PROPOSAL_ATTRIBUTION);
-        return arr;
     }
 
     @Override

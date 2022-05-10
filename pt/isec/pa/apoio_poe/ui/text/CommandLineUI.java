@@ -631,38 +631,12 @@ public class CommandLineUI {
         context.associateAttribution();
     }
 
-    public ArrayList<Person> chooseStudentToAssociate(ArrayList<Person> studentsProposals, int index) {
-        return context.chooseStudentToAssociate(studentsProposals, index);
+    public boolean chooseStudentToAssociate(int index) {
+        return context.chooseStudentToAssociate(index);
     }
 
     public void nonAssociatedAttribution() {
-        ArrayList<Person> studentsProposals = new ArrayList<>();
-        studentsProposals = context.nonAssociatedAttribution();
-        int option = -1;
-        String opt;
-        int i = 0;
-
-        while (studentsProposals != null) {
-            System.out.println("\nYou have to choose between this students to get the priority: \n");
-            for (Person student : studentsProposals) {
-                System.out.println(
-                        "\nIndex " + i + " - Name: " + student.getName() + " ID: " + student.getId() + " E-mail: "
-                                + student.getEmail()
-                                + " Course Branch: " + student.getCourseBranch());
-                i++;
-            }
-            while (option < 0 || option > studentsProposals.size()) {
-                opt = InputProtection.readString(
-                        "\nPlease introduce de the index of the student you want to have priority: ",
-                        true);
-                option = Integer.parseInt(opt);
-            }
-
-            studentsProposals = chooseStudentToAssociate(studentsProposals, option);
-            i = 0;
-            option = -1;
-        }
-
+        context.nonAssociatedAttribution();
     }
 
     public void manualAttribution() {
@@ -822,6 +796,37 @@ public class CommandLineUI {
         System.out.println(context.listAttributedProposals());
     }
 
+
+    private boolean tiePhase() {
+        System.out.println("Current State: " + context.getState());
+
+        ArrayList<Person> studentsProposals = context.getTies();
+        int option = -1;
+        String opt;
+        int i = 0;
+
+        System.out.println("\nYou have to choose between this students to get the priority: \n");
+        for (Person student : studentsProposals) {
+            System.out.println(
+                    "\nIndex " + i + " - Name: " + student.getName() + " ID: " + student.getId() + " E-mail: "
+                            + student.getEmail()
+                            + " Course Branch: " + student.getCourseBranch());
+            i++;
+        }
+        while (option < 0 || option > studentsProposals.size()) {
+            opt = InputProtection.readString(
+                    "\nPlease introduce the index of the student you want to have priority: ",
+                    true);
+            option = Integer.parseInt(opt);
+        }
+
+        chooseStudentToAssociate(option);
+        i = 0;
+        option = -1;
+
+        return true;
+    }
+
     public void start() {
         while (switch (context.getState()) {
             case STUDENT -> studentPhase();
@@ -834,11 +839,11 @@ public class CommandLineUI {
             case CANDIDATURE_LOCKED -> candidaturePhaseLocked();
             case PROPOSAL_ATTRIBUTION -> proposalAttributionPhase();
             case PROPOSAL_ATTRIBUTION_LOCKED -> proposalAttributionPhaseLocked();
+            case TIE -> tiePhase();
             case PROFESSOR_ATTRIBUTION -> professorAttributionPhase();
             case SEARCH -> searchPhase();
             default -> throw new IllegalArgumentException("Unexpected value: " + context.getState());
         })
             ;
     }
-
 }

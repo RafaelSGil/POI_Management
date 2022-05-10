@@ -1,23 +1,12 @@
 package pt.isec.pa.apoio_poe.model.fsm;
 
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.CandidaturePhase;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.CandidaturePhaseLocked;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorAttributionPhase;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorPhase;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProfessorPhaseLocked;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalAttributionPhase;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalAttributionPhaseLocked;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalPhase;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.ProposalPhaseLocked;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.SearchPhase;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
-import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhaseLocked;
+import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.*;
 import pt.isec.pa.apoio_poe.model.data.Data;
 
 public enum ApplicationState {
     STUDENT, STUDENT_LOCKED, PROFESSOR, PROFESSOR_LOCKED, PROPOSAL, PROPOSAL_LOCKED, // PHASE1
     CANDIDATURE, CANDIDATURE_LOCKED, // PHASE2
-    PROPOSAL_ATTRIBUTION, PROPOSAL_ATTRIBUTION_LOCKED, // PHASE3
+    PROPOSAL_ATTRIBUTION, PROPOSAL_ATTRIBUTION_LOCKED, TIE, // PHASE3
     PROFESSOR_ATTRIBUTION, // PHASE4
     SEARCH; // PHASE5
 
@@ -35,6 +24,7 @@ public enum ApplicationState {
             case CANDIDATURE_LOCKED -> new CandidaturePhaseLocked(context, data);
             case PROPOSAL_ATTRIBUTION -> new ProposalAttributionPhase(context, data);
             case PROPOSAL_ATTRIBUTION_LOCKED -> new ProposalAttributionPhaseLocked(context, data);
+            case TIE -> new Tie(context, data);
             case PROFESSOR_ATTRIBUTION -> new ProfessorAttributionPhase(context, data);
             case SEARCH -> new SearchPhase(context, data);
             default -> null;
