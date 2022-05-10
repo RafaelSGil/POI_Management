@@ -27,6 +27,7 @@ public class Data implements Serializable {
     private Map<ApplicationPhases, Boolean> lockedPhases;
     private Map<String, Long> proposalAttributions;
     private Map<String, List<String>> advisorAttribution;
+    private ArrayList<String> log;
 
 
     public Data() {
@@ -40,6 +41,7 @@ public class Data implements Serializable {
         this.lockedPhases = new HashMap<>();
         this.proposalAttributions = new HashMap<>();
         this.advisorAttribution = new HashMap<>();
+        this.log = new ArrayList<>();
         startMap();
     }
 
@@ -64,7 +66,21 @@ public class Data implements Serializable {
         lockedPhases.put(phase, true);
     }
 
-    public void addStudentFile(List<List<String>> attributes) {
+    public ArrayList<String> getLog() {
+        ArrayList<String> arr = new ArrayList<>(log);
+        if(arr.size() == 0){
+            arr.add("No errors");
+        }
+        log.clear();
+        return arr;
+    }
+
+    public ArrayList<String> addStudentFile(List<List<String>> attributes) {
+
+        if(attributes == null){
+            log.add("Path incorrect!");
+            return getLog();
+        }
 
         Iterator<List<String>> listsOfListsIterator = attributes.iterator();
 
@@ -83,6 +99,8 @@ public class Data implements Serializable {
         coursesBranches.add("SI");
         coursesBranches.add("RAS");
 
+        int lineCSV = 1;
+
         while (listsOfListsIterator.hasNext()) {
             List<String> list = new ArrayList<String>();
             list = (List<String>) listsOfListsIterator.next();
@@ -98,15 +116,32 @@ public class Data implements Serializable {
                 classification = Double.parseDouble(eachListIterator.next());
                 internship = Boolean.parseBoolean(eachListIterator.next());
 
-                if (!students.contains(Student.createDummyStudent(id)))
-                    if (courses.contains(course))
-                        if (coursesBranches.contains(courseBranch))
-                            if (classification % 1 != 0)
-                                if (internship == true || internship == false)
+                if (!students.contains(Student.createDummyStudent(id))){
+                    if (courses.contains(course)){
+                        if (coursesBranches.contains(courseBranch)){
+                            if (classification % 1 != 0){
+                                if (internship == true || !internship){
                                     addStudent(name, email, id, course, courseBranch, classification, internship);
+                                }else{
+                                    log.add("Internship eligibility has to be a boolean [line " + lineCSV+ "]");
+                                }
+                            }else{
+                                log.add("Classification value is wrong [line " + lineCSV+ "]");
+                            }
+                        }else{
+                            log.add("Branch does not exist [line " + lineCSV+ "]");
+                        }
+                    }else{
+                        log.add("Course does not exist [line " + lineCSV+ "]");
+                    }
+                }else{
+                    log.add("Student already exists [line " + lineCSV+ "]");
+                }
 
             }
+            ++lineCSV;
         }
+        return getLog();
     }
 
     public boolean editStudent(String identifier, String change, String whatToChange) {
@@ -392,12 +427,18 @@ public class Data implements Serializable {
         students.add((Student.createStudent(name, email, id, course, courseBranch, classification, internship)));
     }
 
-    public void addProfessorFile(List<List<String>> attributes) {
+    public ArrayList<String> addProfessorFile(List<List<String>> attributes) {
+        if(attributes == null){
+            log.add("Path incorrect!");
+            return getLog();
+        }
+
         Iterator<List<String>> listsOfListsIterator = attributes.iterator();
 
         String name;
         String email;
         boolean advisor;
+        int lineCSV = 1;
 
         while (listsOfListsIterator.hasNext()) {
             List<String> list = new ArrayList<String>();
@@ -410,10 +451,16 @@ public class Data implements Serializable {
                 email = (String) eachListIterator.next();
                 advisor = Boolean.parseBoolean((String) eachListIterator.next());
 
-                if (!professors.contains(Professor.createDummyProfessor(email)))
+                if (!professors.contains(Professor.createDummyProfessor(email))){
                     addProfessor(name, email, advisor);
+                }else{
+                    log.add("Professor already exists [line " + lineCSV + "]");
+                }
             }
+            ++lineCSV;
         }
+
+        return getLog();
     }
 
     public boolean editProfessor(String email, boolean advisor) {
@@ -437,7 +484,12 @@ public class Data implements Serializable {
         professors.add(Professor.createProfessor(name, email, advisor));
     }
 
-    public void addProposalFile(List<List<String>> attributes) {
+    public ArrayList<String> addProposalFile(List<List<String>> attributes) {
+        if(attributes == null){
+            log.add("Path incorrect!");
+            return getLog();
+        }
+
         Iterator<List<String>> listOfListsIterator = attributes.iterator();
 
         String idOfProposal;
@@ -451,6 +503,7 @@ public class Data implements Serializable {
         coursesBranches.add("SI");
         coursesBranches.add("RAS");
         Set<Student> studentsAdded = new HashSet<>();
+        int lineCSV = 1;
 
         while (listOfListsIterator.hasNext()) {
             List<String> list = new ArrayList<String>();
@@ -475,11 +528,17 @@ public class Data implements Serializable {
                             if (!studentsAdded.contains(student)) {
                                 addInternship(idOfProposal, title, student, branch, nameOfCompany);
                                 studentsAdded.add(student);
+                            }else{
+                                log.add("Student doesn't exist [line " + lineCSV + "]");
                             }
                         } else {
                             addInternshipWithoutStudent(idOfProposal, title, branch, nameOfCompany);
                         }
+                    }else{
+                        log.add("Course branch does not exist [line " + lineCSV + "]");
                     }
+                }else{
+                    log.add("Proposal already exists [line " + lineCSV + "]");
                 }
             }
 
@@ -500,12 +559,20 @@ public class Data implements Serializable {
                                 if (!studentsAdded.contains(student)) {
                                     addProject(idOfProposal, title, student, branch, (Professor) professor);
                                     studentsAdded.add(student);
+                                }else{
+                                    log.add("Student does not exist [line " + lineCSV + "]");
                                 }
                             } else {
                                 addProjectWithoutStudent(idOfProposal, title, branch, (Professor) professor);
                             }
+                        }else{
+                            log.add("Professor does not exist [line " + lineCSV + "]");
                         }
+                    }else{
+                        log.add("Course branch does not exist [line " + lineCSV + "]");
                     }
+                }else{
+                    log.add("Proposal already exists [line " + lineCSV + "]");
                 }
             }
 
@@ -515,13 +582,21 @@ public class Data implements Serializable {
                 student = (Student) Student.createDummyStudent(Long.parseLong((String) eachListIterator.next()));
                 if (!projects.contains(Project.createDummyProject(idOfProposal))
                         && !internships.contains(Internship.createDummyInternship(idOfProposal))
-                        && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal)))
+                        && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))){
                     if (!studentsAdded.contains(student)) {
                         addAutoProposal(idOfProposal, title, student);
                         studentsAdded.add(student);
+                    }else{
+                        log.add("Student does not exist [line " + lineCSV + "]");
                     }
+                }else{
+                    log.add("Proposal already exists [line " + lineCSV + "]");
+                }
             }
+            ++lineCSV;
         }
+
+        return getLog();
     }
 
     public void addInternship(String idOfProposal, String title, Student student, List<String> branch,
@@ -850,12 +925,19 @@ public class Data implements Serializable {
                 && (counterSiStudents <= counterSiProposals);
     }
 
-    public boolean addCandidatureFile(List<List<String>> attributes) {
+    public ArrayList<String> addCandidatureFile(List<List<String>> attributes) {
+        if(attributes == null){
+            log.add("Path incorrect!");
+            return getLog();
+        }
+
         Iterator<List<String>> listOfListsIterator = attributes.iterator();
 
         long id = 0;
         List<String> proposals = new ArrayList<String>();
         Set<Student> studentsAdded = new HashSet<>();
+
+        int lineCSV = 1;
 
         while (listOfListsIterator.hasNext()) {
             List<String> list = new ArrayList<String>();
@@ -884,7 +966,11 @@ public class Data implements Serializable {
                                     if (internship.getIdOfProposal().equals(aux)) {
                                         if (internship.getStudent() == -1) {
                                             proposals.add(aux);
+                                        }else{
+                                            log.add("Internship " + aux + " already has a student attributed [line " + lineCSV + "]");
                                         }
+                                    }else{
+                                        log.add("Internship " + aux + " does not exist [line " + lineCSV + "]");
                                     }
                                 }
                             } else if (projects.contains(Project.createDummyProject(aux))) {
@@ -892,22 +978,31 @@ public class Data implements Serializable {
                                     if (project.getIdOfProposal().equals(aux)) {
                                         if (project.getStudent() == -1) {
                                             proposals.add(aux);
+                                        }else{
+                                            log.add("Project " + aux + " already has a student attributed [line " + lineCSV + "]");
                                         }
+                                    }else{
+                                        log.add("Project " + aux + " does not exist [line " + lineCSV + "]");
                                     }
                                 }
                             }
+                        }else{
+                            log.add("Student can't fill a candidature for a autoproposal [line " + lineCSV + "]");
                         }
                     }
                     if (proposals.size() > 0)
                         if (students.contains(Student.createDummyStudent(id)))
                             candidatures.put(id, new ArrayList<>(proposals));
                 } else {
+                    log.add("Student is doubled [line " + lineCSV + "]");
                     if (eachListIterator.hasNext())
                         eachListIterator.next();
                 }
             }
+
+            ++lineCSV;
         }
-        return true;
+        return getLog();
     }
 
     public String getCandidatures() {

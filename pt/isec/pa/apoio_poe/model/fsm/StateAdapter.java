@@ -78,8 +78,8 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean insertData(String file) {
-        return false;
+    public ArrayList<String> insertData(String file) {
+        return null;
     }
 
     @Override

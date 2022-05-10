@@ -31,7 +31,7 @@ public class ApplicationContext {
         return state.chooseType(type);
     }
 
-    public boolean insertData(String file) {
+    public ArrayList<String> insertData(String file) {
         return state.insertData(file);
     }
 
