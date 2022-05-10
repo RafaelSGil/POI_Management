@@ -437,7 +437,6 @@ public class Data implements Serializable {
 
         String name;
         String email;
-        boolean advisor;
         int lineCSV = 1;
 
         while (listsOfListsIterator.hasNext()) {
@@ -449,10 +448,9 @@ public class Data implements Serializable {
             while (eachListIterator.hasNext()) {
                 name = (String) eachListIterator.next();
                 email = (String) eachListIterator.next();
-                advisor = Boolean.parseBoolean((String) eachListIterator.next());
 
                 if (!professors.contains(Professor.createDummyProfessor(email))){
-                    addProfessor(name, email, advisor);
+                    addProfessor(name, email);
                 }else{
                     log.add("Professor already exists [line " + lineCSV + "]");
                 }
@@ -473,7 +471,7 @@ public class Data implements Serializable {
         return false;
     }
 
-    public void addProfessor(String name, String email, boolean advisor) {
+    public void addProfessor(String name, String email) {
 
         if (name == null || email == null)
             return;
@@ -481,7 +479,7 @@ public class Data implements Serializable {
         if (professors.contains(Professor.createDummyProfessor(email)))
             return;
 
-        professors.add(Professor.createProfessor(name, email, advisor));
+        professors.add(Professor.createProfessor(name, email));
     }
 
     public ArrayList<String> addProposalFile(List<List<String>> attributes) {

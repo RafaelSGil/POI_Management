@@ -3,28 +3,16 @@ package pt.isec.pa.apoio_poe.model.data.person;
 import java.util.Objects;
 
 public class Professor extends Person {
-    boolean advisor;
-
-    public Professor(String name, String email, boolean advisor) {
+    public Professor(String name, String email) {
         super(name, email);
-        this.advisor = advisor;
     }
 
-    public boolean getAdvisor() {
-        return advisor;
-    }
-
-    @Override
-    public void setAdvisor(boolean advisor) {
-        this.advisor = advisor;
-    }
-
-    public static Person createProfessor(String name, String email, boolean advisor) {
-        return new Professor(name, email, advisor);
+    public static Person createProfessor(String name, String email) {
+        return new Professor(name, email);
     }
 
     public static Person createDummyProfessor(String email) {
-        return new Professor(null, email, false);
+        return new Professor(null, email);
     }
 
     @Override
@@ -43,7 +31,7 @@ public class Professor extends Person {
 
     @Override
     public String toString() {
-        return String.format("Prof. %s with email = %s has advisor hability = %b",
-                super.getName(), super.getEmail(), advisor);
+        return String.format("Prof. %s with email = %s",
+                super.getName(), super.getEmail());
     }
 }

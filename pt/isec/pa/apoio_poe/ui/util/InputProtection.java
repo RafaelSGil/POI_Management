@@ -1,4 +1,4 @@
-package pt.isec.pa.apoio_poe.util;
+package pt.isec.pa.apoio_poe.ui.util;
 
 import java.util.Scanner;
 
