@@ -11,4 +11,9 @@ public class RemovePropAtrib extends CommandAdapter{
         super(context);
         this.idOfProposal = idOfProposal;
     }
+
+    @Override
+    public boolean execute() {
+        return context.manualRemoval(idOfProposal);
+    }
 }

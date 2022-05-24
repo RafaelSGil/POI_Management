@@ -18,4 +18,9 @@ public class AddProfAtrib extends CommandAdapter{
     public boolean execute() {
         return context.manualProfessorAttribution(idOfProposal, email);
     }
+
+    @Override
+    public boolean undo() {
+        return context.manualProfessorRemoval(email);
+    }
 }

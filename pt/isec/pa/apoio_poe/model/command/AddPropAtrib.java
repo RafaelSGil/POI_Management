@@ -18,4 +18,9 @@ public class AddPropAtrib extends CommandAdapter{
     public boolean execute() {
         return context.manualAttribution(idOfProposal, idOfStudent);
     }
+
+    @Override
+    public boolean undo() {
+        return context.manualRemoval(idOfProposal);
+    }
 }
