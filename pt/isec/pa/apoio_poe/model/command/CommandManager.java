@@ -4,38 +4,72 @@ import java.util.ArrayDeque;
 import java.util.Deque;
 
 public class CommandManager {
-    private Deque<ICommand> undo;
-    private Deque<ICommand> redo;
+    private Deque<ICommand> undoProp;
+    private Deque<ICommand> redoProp;
+    private Deque<ICommand> undoProf;
+    private Deque<ICommand> redoProf;
 
     public CommandManager(){
-        this.undo = new ArrayDeque<>();
-        this.redo = new ArrayDeque<>();
+        this.undoProp = new ArrayDeque<>();
+        this.redoProp = new ArrayDeque<>();
+        this.undoProf = new ArrayDeque<>();
+        this.redoProf = new ArrayDeque<>();
     }
 
-    public boolean invoke(ICommand cmd){
-        redo.clear();
+    public boolean invokeProp(ICommand cmd){
+        redoProp.clear();
         if(cmd.execute()){
-            undo.push(cmd);
+            undoProp.push(cmd);
             return true;
         }
-        undo.clear();
+        undoProp.clear();
         return false;
     }
 
-    public boolean undo() {
-        if (undo.isEmpty())
+    public boolean undoProp() {
+        if (undoProp.isEmpty())
             return false;
-        ICommand cmd = undo.pop();
+        ICommand cmd = undoProp.pop();
         cmd.undo();
-        redo.push(cmd);
+        redoProp.push(cmd);
         return true;
     }
-    public boolean redo() {
-        if (redo.isEmpty())
+    public boolean redoProp() {
+        if (redoProp.isEmpty())
             return false;
-        ICommand cmd = redo.pop();
+        ICommand cmd = redoProp.pop();
         cmd.execute();
-        undo.push(cmd);
+        undoProp.push(cmd);
+        return true;
+    }
+
+    public boolean invokeProf(ICommand cmd){
+        redoProf.clear();
+        if(cmd.execute()){
+            undoProf.push(cmd);
+            return true;
+        }
+        undoProf.clear();
+        return false;
+    }
+
+    public boolean undoProf(){
+        if(undoProf.isEmpty()){
+            return false;
+        }
+        ICommand cmd = undoProf.pop();
+        cmd.undo();
+        redoProp.push(cmd);
+        return true;
+    }
+
+    public boolean redoProf(){
+        if(redoProf.isEmpty()){
+            return false;
+        }
+        ICommand cmd = redoProf.pop();
+        cmd.execute();
+        undoProf.push(cmd);
         return true;
     }
 }

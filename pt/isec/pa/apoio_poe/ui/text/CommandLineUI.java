@@ -7,7 +7,7 @@ import pt.isec.pa.apoio_poe.model.data.person.Person;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.ui.util.InputProtection;
-import pt.isec.pa.apoio_poe.model.FSManager;
+import pt.isec.pa.apoio_poe.model.fsm.FSManager;
 
 public class CommandLineUI {
     private FSManager manager;
@@ -689,15 +689,29 @@ public class CommandLineUI {
         if (manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
 
-            if (!manager.manualRemoval(idOfProposal)) {
+            String idOfStudent;
+            while (true) {
+                idOfStudent = InputProtection.readString("Specify the id of the student: ", true);
+
+                try {
+                    Long.parseLong(idOfStudent);
+                    break;
+                } catch (NumberFormatException e) {
+                    System.out.println("That's not a number");
+                }
+
+            }
+
+            if (!manager.manualRemoval(idOfProposal, Long.parseLong(idOfStudent))) {
                 System.out.println("Could not remove manually");
             }
         }
 
         if (manager.getState() == ApplicationState.PROFESSOR_ATTRIBUTION) {
             String email = InputProtection.readString("Specify the email of the professor: ", true);
+            String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
 
-            if (!manager.manualProfessorRemoval(email)) {
+            if (!manager.manualProfessorRemoval(email, idOfProposal)) {
                 System.out.println("Could not remove");
             }
         }

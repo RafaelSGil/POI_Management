@@ -1,14 +1,8 @@
-package pt.isec.pa.apoio_poe.model;
+package pt.isec.pa.apoio_poe.model.fsm;
 
 import pt.isec.pa.apoio_poe.model.command.*;
-import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.data.person.Person;
-import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
-import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
-import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
-import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 
-import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -146,11 +140,11 @@ public class FSManager {
     }
 
     public boolean manualAttribution(String idOfProposal, long idOfStudent) {
-        return cmd.invoke(new AddPropAtrib(context, idOfProposal, idOfStudent));
+        return cmd.invokeProp(new AddPropAtrib(context, idOfProposal, idOfStudent));
     }
 
-    public boolean manualRemoval(String idOfProposal) {
-        return cmd.invoke(new RemovePropAtrib(context, idOfProposal));
+    public boolean manualRemoval(String idOfProposal, long idOfStudent) {
+        return cmd.invokeProp(new RemovePropAtrib(context, idOfProposal, idOfStudent));
     }
 
     public String getProfessorByEmail(String email) {
@@ -166,11 +160,11 @@ public class FSManager {
     }
 
     public boolean manualProfessorAttribution(String idOfProposal, String email) {
-        return cmd.invoke(new AddProfAtrib(context, email, idOfProposal));
+        return cmd.invokeProf(new AddProfAtrib(context, email, idOfProposal));
     }
 
-    public boolean manualProfessorRemoval(String email) {
-        return cmd.invoke(new RemoveProfAtrib(context, email));
+    public boolean manualProfessorRemoval(String email, String idOfProposal) {
+        return cmd.invokeProf(new RemoveProfAtrib(context, email, idOfProposal));
     }
 
     public String listStudentsWithProposalAndProfessorAttributed() {
@@ -217,11 +211,21 @@ public class FSManager {
         return context.loadSave(path);
     }
 
-    public boolean undo(){
-        return cmd.undo();
+    public void undo(){
+        if(getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
+            cmd.undoProp();
+            return;
+        }
+
+        cmd.undoProf();
     }
 
-    public boolean redo(){
-        return cmd.redo();
+    public void redo(){
+        if(getState() == ApplicationState.PROPOSAL_ATTRIBUTION){
+            cmd.redoProp();
+            return;
+        }
+
+        cmd.redoProf();
     }
 }

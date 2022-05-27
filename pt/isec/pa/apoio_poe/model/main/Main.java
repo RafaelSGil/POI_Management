@@ -1,8 +1,7 @@
 package pt.isec.pa.apoio_poe.model.main;
 
 import javafx.application.Application;
-import pt.isec.pa.apoio_poe.model.FSManager;
-import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
+import pt.isec.pa.apoio_poe.model.fsm.FSManager;
 import pt.isec.pa.apoio_poe.ui.gui.JFXMain;
 import pt.isec.pa.apoio_poe.ui.text.CommandLineUI;
 
