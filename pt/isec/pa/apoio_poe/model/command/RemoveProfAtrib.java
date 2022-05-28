@@ -10,6 +10,7 @@ public class RemoveProfAtrib extends CommandAdapter{
     public RemoveProfAtrib(ApplicationContext context, String email, String idOfProposal){
         super(context);
         this.email = email;
+        this.idOfProposal = idOfProposal;
     }
 
     @Override

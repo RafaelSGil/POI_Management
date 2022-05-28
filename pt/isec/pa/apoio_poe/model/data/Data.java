@@ -1511,10 +1511,6 @@ public class Data implements Serializable {
     }
 
     public boolean manualProfessorAttribution(String idOfProposal, String emailProfessor) {
-        if (advisorAttribution.containsKey(emailProfessor) || advisorAttribution.containsValue(List.of(idOfProposal))) {
-            return false;
-        }
-
         if (!professors.contains(Professor.createDummyProfessor(emailProfessor))) {
             return false;
         }
