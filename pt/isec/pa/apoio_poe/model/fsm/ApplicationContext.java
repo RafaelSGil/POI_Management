@@ -170,8 +170,8 @@ public class ApplicationContext {
         return state.manualProfessorAttribution(idOfProposal, email);
     }
 
-    public boolean manualProfessorRemoval(String email) {
-        return state.manualProfessorRemoval(email);
+    public boolean manualProfessorRemoval(String email, String idOfProposal) {
+        return state.manualProfessorRemoval(email, idOfProposal);
     }
 
     public String listStudentsWithProposalAndProfessorAttributed() {

@@ -45,8 +45,8 @@ public class ProfessorAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public boolean manualProfessorRemoval(String email) {
-        boolean bool = data.manualProfessorRemoval(email);
+    public boolean manualProfessorRemoval(String email, String idOfProposal) {
+        boolean bool = data.manualProfessorRemoval(email, idOfProposal);
         setState(ApplicationState.PROFESSOR_ATTRIBUTION);
         return bool;
     }

@@ -20,6 +20,6 @@ public class RemoveProfAtrib extends CommandAdapter{
 
     @Override
     public boolean execute() {
-        return context.manualProfessorRemoval(email);
+        return context.manualProfessorRemoval(email, idOfProposal);
     }
 }

@@ -1528,8 +1528,19 @@ public class Data implements Serializable {
         return false;
     }
 
-    public boolean manualProfessorRemoval(String emailProfessor) {
-        return advisorAttribution.remove(emailProfessor) != null;
+    public boolean manualProfessorRemoval(String emailProfessor, String idOfProposal) {
+        if(advisorAttribution.containsKey(emailProfessor)){
+            if(advisorAttribution.get(emailProfessor).size() > 1){
+                for(Map.Entry<String, List<String>> attributions : advisorAttribution.entrySet()){
+                    attributions.getValue().removeIf(a -> a.equals(idOfProposal));
+                }
+                return true;
+            }
+
+            return advisorAttribution.remove(emailProfessor) != null;
+        }
+
+        return false;
     }
 
     public String listProfessorAttributions() {

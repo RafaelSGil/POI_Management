@@ -91,7 +91,7 @@ public interface IApplicationState {
 
     boolean manualProfessorAttribution(String idOfProposal, String emailProfessor);
 
-    boolean manualProfessorRemoval(String email);
+    boolean manualProfessorRemoval(String email, String idOfProposal);
 
     String getProfessorByEmail(String email);
 

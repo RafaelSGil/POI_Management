@@ -63,7 +63,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean manualProfessorRemoval(String email) {
+    public boolean manualProfessorRemoval(String email, String idOfProposal) {
         return false;
     }
 
