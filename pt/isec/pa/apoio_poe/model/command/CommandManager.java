@@ -59,7 +59,7 @@ public class CommandManager {
         }
         ICommand cmd = undoProf.pop();
         cmd.undo();
-        redoProp.push(cmd);
+        redoProf.push(cmd);
         return true;
     }
 
