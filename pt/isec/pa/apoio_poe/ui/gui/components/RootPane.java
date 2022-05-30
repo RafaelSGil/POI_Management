@@ -20,7 +20,8 @@ public class RootPane extends BorderPane {
                 new ProposalUI(manager), new ProposalLockedUI(manager),
                 new CandidatureUI(manager), new CandidatureLockedUI(manager),
                 new ProposalsAttributionUI(manager), new ProposalsAttributionLockedUI(manager),
-                new ProfessorAttributionUI(manager), new SearchUI(manager));
+                new ProfessorAttributionUI(manager), new SearchUI(manager),
+                new TieUI(manager));
 
         this.setCenter(stackPane);
     }

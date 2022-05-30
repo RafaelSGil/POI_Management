@@ -60,7 +60,7 @@ public class ApplicationContext {
     }
 
     public boolean closeState() {
-        return state.STUDENTcloseState();
+        return state.closeState();
     }
 
     public boolean professorManager() {

@@ -201,7 +201,7 @@ public class Data implements Serializable {
         if (professor == false) {
             try {
                 file = new FileWriter(
-                        "//home//hugo//Desktop//POI_Management//pt/isec//pa//apoio_poe//files//exports//ProposalsAttributted.csv");
+                        "/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/files/proposals.csv");
                 file.append(header);
                 file.append(separator);
 
@@ -290,7 +290,7 @@ public class Data implements Serializable {
         } else {
             try {
                 file = new FileWriter(
-                        "//home//hugo//Desktop//POI_Management//pt/isec//pa//apoio_poe//files//exports//ProposalsAttributtedProfessor.csv");
+                        "/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/files/proposals.csv");
                 file.append(headerProfessor);
                 file.append(separator);
 
