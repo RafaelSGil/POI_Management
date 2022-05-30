@@ -2,7 +2,7 @@ package pt.isec.pa.apoio_poe.ui.gui.components;
 
 import javafx.scene.layout.BorderPane;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
-import pt.isec.pa.apoio_poe.model.fsm.FSManager;
+import pt.isec.pa.apoio_poe.model.FSManager;
 
 public class ProfessorLockedUI extends BorderPane {
     private FSManager manager;

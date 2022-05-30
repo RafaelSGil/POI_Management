@@ -4,7 +4,7 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import pt.isec.pa.apoio_poe.model.fsm.FSManager;
+import pt.isec.pa.apoio_poe.model.FSManager;
 import pt.isec.pa.apoio_poe.ui.gui.components.RootPane;
 
 public class JFXMain extends Application {

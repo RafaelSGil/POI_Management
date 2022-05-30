@@ -6,6 +6,7 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 public class Tie extends StateAdapter {
@@ -20,7 +21,9 @@ public class Tie extends StateAdapter {
 
     @Override
     public ArrayList<Person> getTies() {
-        return data.getTies();
+        ArrayList<Person> arr = data.getTies();
+        setState(ApplicationState.TIE);
+        return arr;
     }
 
     @Override

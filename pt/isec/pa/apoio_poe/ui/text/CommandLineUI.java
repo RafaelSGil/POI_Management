@@ -7,7 +7,7 @@ import pt.isec.pa.apoio_poe.model.data.person.Person;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.ui.util.InputProtection;
-import pt.isec.pa.apoio_poe.model.fsm.FSManager;
+import pt.isec.pa.apoio_poe.model.FSManager;
 
 public class CommandLineUI {
     private FSManager manager;

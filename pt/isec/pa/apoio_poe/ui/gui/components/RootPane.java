@@ -1,16 +1,7 @@
 package pt.isec.pa.apoio_poe.ui.gui.components;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
-import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import pt.isec.pa.apoio_poe.model.fsm.FSManager;
+import pt.isec.pa.apoio_poe.model.FSManager;
 
 public class RootPane extends BorderPane {
     private FSManager manager;
