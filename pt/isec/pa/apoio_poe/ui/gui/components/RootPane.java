@@ -10,27 +10,28 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import pt.isec.pa.apoio_poe.model.fsm.FSManager;
 
 public class RootPane extends BorderPane {
-    private Color backgroundColor = Color.WHITE;
-    private Label welcomeMessage;
+    private FSManager manager;
 
-    public RootPane() {
+    public RootPane(FSManager manager) {
+        this.manager = manager;
+
         createViews();
         registerEvents();
         update();
     }
-    private void createViews() {
-        setBackground(
-                new Background(
-                        new BackgroundFill(backgroundColor, CornerRadii.EMPTY, Insets.EMPTY)
-                )
-        );
 
-        welcomeMessage = new Label();
-        welcomeMessage.setText("Welcome to POI Management");
-        welcomeMessage.setFont(new Font("Verdana", 20));
-        setCenter(welcomeMessage);
+    private void createViews() {
+        StackPane stackPane = new StackPane(new StudentUI(manager), new StudentLockedUI(manager),
+                new ProfessorUI(manager), new ProfessorLockedUI(manager),
+                new ProposalUI(manager), new ProposalLockedUI(manager),
+                new CandidatureUI(manager), new CandidatureLockedUI(manager),
+                new ProposalsAttributionUI(manager), new ProposalsAttributionLockedUI(manager),
+                new ProfessorAttributionUI(manager), new SearchUI(manager));
+
+        this.setCenter(stackPane);
     }
     private void registerEvents() {
 
