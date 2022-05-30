@@ -36,7 +36,7 @@ public class StudentUI extends BorderPane {
         HBox hBox = new HBox(btnProp, btnProf, btnCandid, btnClose);
         hBox.setSpacing(10);
         hBox.setAlignment(Pos.CENTER);
-        this.setCenter(hBox);
+        this.setBottom(hBox);
     }
 
     private void registerHandlers() {
@@ -63,5 +63,6 @@ public class StudentUI extends BorderPane {
 
     private void update() {
         this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT);
+        this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

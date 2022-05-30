@@ -33,7 +33,7 @@ public class ProfessorUI extends BorderPane {
         HBox hBox = new HBox(btnProp, btnStud, btnCandid, btnClose);
         hBox.setSpacing(10);
         hBox.setAlignment(Pos.CENTER);
-        this.setCenter(hBox);
+        this.setBottom(hBox);
     }
 
     private void registerHandlers() {
@@ -60,5 +60,6 @@ public class ProfessorUI extends BorderPane {
 
     private void update() {
         this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR);
+        this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }
