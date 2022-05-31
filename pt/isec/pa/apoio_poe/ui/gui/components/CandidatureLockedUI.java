@@ -21,6 +21,7 @@ public class CandidatureLockedUI extends BorderPane {
 
     private void createViews() {
         this.setStyle("-fx-background-color: #3d05c9;");
+        this.setVisible(manager != null && manager.getState() == ApplicationState.CANDIDATURE_LOCKED);
 
         this.lbCurrentState = new javafx.scene.control.Label("Current State: " + manager.getState());
         this.setTop(lbCurrentState);
@@ -35,6 +36,7 @@ public class CandidatureLockedUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
+            this.setVisible(manager != null && manager.getState() == ApplicationState.CANDIDATURE_LOCKED);
             update();
         });
 
@@ -48,7 +50,6 @@ public class CandidatureLockedUI extends BorderPane {
     }
 
     private void update() {
-        this.setVisible(manager != null && manager.getState() == ApplicationState.CANDIDATURE_LOCKED);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

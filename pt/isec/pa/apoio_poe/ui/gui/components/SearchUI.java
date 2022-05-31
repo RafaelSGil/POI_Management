@@ -18,6 +18,7 @@ public class SearchUI extends BorderPane {
 
     private void createViews() {
         this.setStyle("-fx-background-color: #b53717;");
+        this.setVisible(manager.getState() == ApplicationState.SEARCH);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.setTop(lbCurrentState);
@@ -25,12 +26,12 @@ public class SearchUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
+            this.setVisible(manager.getState() == ApplicationState.SEARCH);
             update();
         });
     }
 
     private void update() {
-        this.setVisible(manager.getState() == ApplicationState.SEARCH);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

@@ -21,6 +21,7 @@ public class ProposalUI extends BorderPane {
 
     private void createViews() {
         this.setStyle("-fx-background-color: #c15fb0;");
+        this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.setTop(lbCurrentState);
@@ -37,6 +38,7 @@ public class ProposalUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
+            this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL);
             update();
         });
 
@@ -58,7 +60,6 @@ public class ProposalUI extends BorderPane {
     }
 
     private void update() {
-        this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

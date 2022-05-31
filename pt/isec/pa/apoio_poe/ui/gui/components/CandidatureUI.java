@@ -22,6 +22,7 @@ public class CandidatureUI extends BorderPane {
 
     private void createViews() {
         this.setStyle("-fx-background-color: #25f398;");
+        this.setVisible(manager != null && manager.getState() == ApplicationState.CANDIDATURE);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.setTop(lbCurrentState);
@@ -37,6 +38,7 @@ public class CandidatureUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
+            this.setVisible(manager != null && manager.getState() == ApplicationState.CANDIDATURE);
             update();
         });
 
@@ -54,7 +56,6 @@ public class CandidatureUI extends BorderPane {
     }
 
     private void update() {
-        this.setVisible(manager != null && manager.getState() == ApplicationState.CANDIDATURE);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

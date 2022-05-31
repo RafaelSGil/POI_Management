@@ -22,6 +22,7 @@ public class StudentLockedUI extends BorderPane {
 
     private void createViews() {
         this.setStyle("-fx-background-color: #bf01bd;");
+        this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT_LOCKED);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.setTop(lbCurrentState);
@@ -37,6 +38,7 @@ public class StudentLockedUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
+            this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT_LOCKED);
             update();
         });
 
@@ -55,7 +57,6 @@ public class StudentLockedUI extends BorderPane {
 
 
     private void update() {
-        this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT_LOCKED);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

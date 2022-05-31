@@ -22,6 +22,7 @@ public class ProposalsAttributionLockedUI extends BorderPane {
 
     private void createViews() {
         this.setStyle("-fx-background-color: #10d4cd;");
+        this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.setTop(lbCurrentState);
@@ -36,6 +37,7 @@ public class ProposalsAttributionLockedUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
+            this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
             update();
         });
 
@@ -49,7 +51,6 @@ public class ProposalsAttributionLockedUI extends BorderPane {
     }
 
     private void update() {
-        this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

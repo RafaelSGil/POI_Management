@@ -22,6 +22,7 @@ public class ProfessorAttributionUI extends BorderPane {
 
     private void createViews() {
         this.setStyle("-fx-background-color: #7cd60d;");
+        this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR_ATTRIBUTION);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.setTop(lbCurrentState);
@@ -36,6 +37,7 @@ public class ProfessorAttributionUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
+            this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR_ATTRIBUTION);
             update();
         });
 
@@ -49,7 +51,6 @@ public class ProfessorAttributionUI extends BorderPane {
     }
 
     private void update() {
-        this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR_ATTRIBUTION);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

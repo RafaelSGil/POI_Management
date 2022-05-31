@@ -21,6 +21,7 @@ public class ProfessorLockedUI extends BorderPane {
 
     private void createViews() {
         this.setStyle("-fx-background-color: #c09b51;");
+        this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR_LOCKED);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.setTop(lbCurrentState);
@@ -36,6 +37,7 @@ public class ProfessorLockedUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
+            this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR_LOCKED);
             update();
         });
 
@@ -53,7 +55,6 @@ public class ProfessorLockedUI extends BorderPane {
     }
 
     private void update() {
-        this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR_LOCKED);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }
