@@ -23,10 +23,14 @@ public class SearchUI extends BorderPane {
         this.setTop(lbCurrentState);
     }
 
-    private void registerHandlers() { }
+    private void registerHandlers() {
+        manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
+            update();
+        });
+    }
 
     private void update() {
-        this.setVisible(manager != null && manager.getState() == ApplicationState.SEARCH);
+        this.setVisible(manager.getState() == ApplicationState.SEARCH);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }
