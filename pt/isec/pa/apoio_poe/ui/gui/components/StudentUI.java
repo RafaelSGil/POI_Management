@@ -1,22 +1,19 @@
 package pt.isec.pa.apoio_poe.ui.gui.components;
 
-import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
-
-import java.awt.*;
 
 
 public class StudentUI extends BorderPane {
     private FSManager manager;
     Button btnProf, btnProp, btnClose, btnCandid;
     private Label lbCurrentState;
+    private TextField tfPathStudentData;
+    private Label lbListStudentData;
+    private Button btnLoadStudentData;
 
     public StudentUI(FSManager manager){
         this.manager = manager;
@@ -43,7 +40,15 @@ public class StudentUI extends BorderPane {
         hBox.setAlignment(Pos.CENTER);
         this.setBottom(hBox);
 
-        ListView<String> options = new ListView<>();
+        this.tfPathStudentData = new TextField();
+        this.tfPathStudentData.setPromptText("Enter path to student data file");
+        this.lbListStudentData = new Label();
+        this.btnLoadStudentData = new Button("Load");
+        HBox hBox1 = new HBox(tfPathStudentData, btnLoadStudentData);
+        VBox vBox = new VBox(hBox1, lbListStudentData);
+        this.setCenter(vBox);
+
+/*        ListView<String> options = new ListView<>();
         options.getItems().addAll("Insert student data", "Delete student data",
                 "Edit student data", "Consult student data", "Professor Management", "Proposal Management",
                 "Candidature Management",
@@ -53,12 +58,15 @@ public class StudentUI extends BorderPane {
         options.setStyle("-fx-background-color: #A08000;");
         options.setPadding(new Insets(20));
         VBox vBox = new VBox(options);
-        this.setCenter(vBox);
+        this.setCenter(vBox);*/
     }
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
             this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT);
+        });
+
+        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
             update();
         });
 
@@ -77,10 +85,15 @@ public class StudentUI extends BorderPane {
         btnClose.setOnAction(actionEvent -> {
             manager.closeState();
         });
+
+        btnLoadStudentData.setOnAction(actionEvent -> {
+            manager.insertData(tfPathStudentData.getText());
+        });
     }
 
     private void update() {
         //this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT);
         this.lbCurrentState.setText("Current State: " + manager.getState());
+        this.lbListStudentData.setText(manager.checkData());
     }
 }
