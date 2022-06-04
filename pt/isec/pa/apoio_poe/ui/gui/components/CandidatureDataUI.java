@@ -19,7 +19,7 @@ public class CandidatureDataUI extends BorderPane {
     }
 
     private void createViews(){
-        this.setStyle("-fx-background-color: white");
+        this.setStyle("-fx-background-color: pink");
         this.setVisible(manager != null && (manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED));
 
 
@@ -33,17 +33,18 @@ public class CandidatureDataUI extends BorderPane {
     }
 
     private void registerHandlers(){
-        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
-            update();
-        });
-
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
             this.setVisible(manager != null && (manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED));
+            this.lbCurrentState.setText("Current State: " + manager.getState());
+        });
+
+        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
+            if(manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED){
+                this.lbData.setText(manager.checkData());
+            }
         });
     }
 
     private void update(){
-        this.lbData.setText(manager.checkData());
-        this.lbCurrentState = new Label("Current State: " + manager.getState());
     }
 }

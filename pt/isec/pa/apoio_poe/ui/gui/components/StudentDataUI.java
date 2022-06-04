@@ -20,31 +20,31 @@ public class StudentDataUI extends BorderPane {
     }
 
     private void createViews(){
-        this.setStyle("-fx-background-color: white");
+        this.setStyle("-fx-background-color: blue");
         this.setVisible(manager != null && (manager.getState() == ApplicationState.STUDENT || manager.getState() == ApplicationState.STUDENT_LOCKED));
-
-
-        this.lbData = new Label();
-        this.lbData.setPadding(new Insets(20));
-        this.setCenter(lbData);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.setTop(lbCurrentState);
 
+        this.lbData = new Label();
+        this.lbData.setPadding(new Insets(20));
+        this.setCenter(lbData);
     }
 
     private void registerHandlers(){
-        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
-            update();
-        });
-
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
             this.setVisible(manager != null && (manager.getState() == ApplicationState.STUDENT || manager.getState() == ApplicationState.STUDENT_LOCKED));
+            this.lbCurrentState.setText("Current State: " + manager.getState());
         });
+        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
+            if((manager.getState() == ApplicationState.STUDENT || manager.getState() == ApplicationState.STUDENT_LOCKED)){
+                this.lbData.setText(manager.checkData());
+            }
+        });
+
     }
 
     private void update(){
-        this.lbData.setText(manager.checkData());
-        this.lbCurrentState = new Label("Current State: " + manager.getState());
+
     }
 }

@@ -77,11 +77,11 @@ public class Data implements Serializable {
         return arr;
     }
 
-    public ArrayList<String> addStudentFile(List<List<String>> attributes) {
+    public void addStudentFile(List<List<String>> attributes) {
 
         if(attributes == null){
             log.add("Path incorrect!");
-            return getLog();
+
         }
 
         Iterator<List<String>> listsOfListsIterator = attributes.iterator();
@@ -143,7 +143,6 @@ public class Data implements Serializable {
             }
             ++lineCSV;
         }
-        return getLog();
     }
 
     public boolean editStudent(String identifier, String change, String whatToChange) {
@@ -429,10 +428,10 @@ public class Data implements Serializable {
         students.add((Student.createStudent(name, email, id, course, courseBranch, classification, internship)));
     }
 
-    public ArrayList<String> addProfessorFile(List<List<String>> attributes) {
+    public void addProfessorFile(List<List<String>> attributes) {
         if(attributes == null){
             log.add("Path incorrect!");
-            return getLog();
+            return;
         }
 
         Iterator<List<String>> listsOfListsIterator = attributes.iterator();
@@ -459,8 +458,6 @@ public class Data implements Serializable {
             }
             ++lineCSV;
         }
-
-        return getLog();
     }
 
     public boolean editProfessor(String email, boolean advisor) {
@@ -484,10 +481,10 @@ public class Data implements Serializable {
         professors.add(Professor.createProfessor(name, email));
     }
 
-    public ArrayList<String> addProposalFile(List<List<String>> attributes) {
+    public void addProposalFile(List<List<String>> attributes) {
         if(attributes == null){
             log.add("Path incorrect!");
-            return getLog();
+            return;
         }
 
         Iterator<List<String>> listOfListsIterator = attributes.iterator();
@@ -595,8 +592,6 @@ public class Data implements Serializable {
             }
             ++lineCSV;
         }
-
-        return getLog();
     }
 
     public void addInternship(String idOfProposal, String title, Student student, List<String> branch,

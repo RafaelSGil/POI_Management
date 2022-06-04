@@ -72,7 +72,8 @@ public class CommandLineUI {
 
     public void insertData() {
         String file = InputProtection.readString("Specify the complete path to the csv file pls: ", false);
-        System.out.println(manager.insertData(file));
+        manager.insertData(file);
+        System.out.println(manager.getLogger());
     }
 
     public void deleteStudentData() {

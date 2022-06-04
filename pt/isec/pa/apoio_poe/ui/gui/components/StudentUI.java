@@ -42,37 +42,36 @@ public class StudentUI extends BorderPane {
         hBox.setAlignment(Pos.CENTER);
         this.setBottom(hBox);
 
-        this.tfRemoveStudent = new TextField();
-        this.tfRemoveStudent.setPromptText("Enter id of student to remove");
-        this.btnRemoveStudent = new Button("Remove");
-        HBox hBox2 = new HBox(tfRemoveStudent, btnRemoveStudent);
-
-
         this.tfPathStudentData = new TextField();
         this.tfPathStudentData.setPromptText("Enter path to student data file");
+        this.tfPathStudentData.setMinWidth(250);
         this.btnLoadStudentData = new Button("Load");
+        Label lbPlaceHolder = new Label("Insert Student Data ");
+        lbPlaceHolder.setPadding(new Insets(4));
+        HBox hBox1 = new HBox(lbPlaceHolder, tfPathStudentData, btnLoadStudentData);
 
-        HBox hBox1 = new HBox(tfPathStudentData, btnLoadStudentData);
+
+        this.tfRemoveStudent = new TextField();
+        this.tfRemoveStudent.setPromptText("Enter id of student to remove");
+        this.tfRemoveStudent.setMinWidth(250);
+        this.btnRemoveStudent = new Button("Remove");
+        Label lbPlaceholder1 = new Label("Remove Student     ");
+        lbPlaceholder1.setPadding(new Insets(4));
+        HBox hBox2 = new HBox(lbPlaceholder1, tfRemoveStudent, btnRemoveStudent);
+
         VBox vBox = new VBox(hBox1, hBox2);
         vBox.setPadding(new Insets(15));
         this.setCenter(vBox);
 
-/*        ListView<String> options = new ListView<>();
-        options.getItems().addAll("Insert student data", "Delete student data",
-                "Edit student data", "Consult student data", "Professor Management", "Proposal Management",
-                "Candidature Management",
-                "Close state", "Save & quit", "Load save");
-
-        options.getSelectionModel().setSelectionMode(SelectionMode.SINGLE);
-        options.setStyle("-fx-background-color: #A08000;");
-        options.setPadding(new Insets(20));
-        VBox vBox = new VBox(options);
-        this.setCenter(vBox);*/
     }
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
             this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT);
+        });
+
+        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
+            update();
         });
 
         btnProf.setOnAction(actionEvent -> {
@@ -101,7 +100,6 @@ public class StudentUI extends BorderPane {
     }
 
     private void update() {
-        //this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

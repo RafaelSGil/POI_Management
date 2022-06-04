@@ -18,17 +18,15 @@ public class ProposalPhase extends StateAdapter {
     }
 
     @Override
-    public ArrayList<String> insertData(String file) {
+    public void insertData(String file) {
         if (file == null)
-            return null;
+            return;
 
         List<List<String>> attributes = Files.openFile(file);
 
-        ArrayList<String> arr = data.addProposalFile(attributes);
+        data.addProposalFile(attributes);
 
         setState(ApplicationState.PROPOSAL);
-
-        return arr;
     }
 
     @Override

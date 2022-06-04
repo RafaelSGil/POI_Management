@@ -49,10 +49,9 @@ public class FSManager {
         return context.chooseType(type);
     }
 
-    public ArrayList<String> insertData(String file) {
-        ArrayList<String> arr =  context.insertData(file);
+    public void insertData(String file) {
+        context.insertData(file);
         pcs.firePropertyChange(PROP_DATA, null, context.getState());
-        return arr;
     }
 
     public String checkData() {

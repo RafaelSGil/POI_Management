@@ -18,16 +18,14 @@ public class StudentPhase extends StateAdapter {
     }
 
     @Override
-    public ArrayList<String> insertData(String file) {
+    public void insertData(String file) {
         if (file == null)
-            return null;
+            return;
 
         List<List<String>> attributes = Files.openFile(file);
-        ArrayList<String> arr = data.addStudentFile(attributes);
+        data.addStudentFile(attributes);
 
         setState(ApplicationState.STUDENT);
-
-        return arr;
     }
 
     @Override

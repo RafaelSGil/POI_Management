@@ -19,7 +19,7 @@ public class ProposalDataUI extends BorderPane {
     }
 
     private void createViews(){
-        this.setStyle("-fx-background-color: white");
+        this.setStyle("-fx-background-color: red");
         this.setVisible(manager != null && (manager.getState() == ApplicationState.PROPOSAL || manager.getState() == ApplicationState.PROPOSAL_LOCKED));
 
 
@@ -27,23 +27,24 @@ public class ProposalDataUI extends BorderPane {
         this.lbData.setPadding(new Insets(20));
         this.setCenter(lbData);
 
-        this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState = new Label();
         this.setTop(lbCurrentState);
 
     }
 
     private void registerHandlers(){
-        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
-            update();
-        });
-
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
             this.setVisible(manager != null && (manager.getState() == ApplicationState.PROPOSAL || manager.getState() == ApplicationState.PROPOSAL_LOCKED));
+            this.lbCurrentState.setText("Current State: " + manager.getState());
+        });
+
+        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
+            if((manager.getState() == ApplicationState.PROPOSAL || manager.getState() == ApplicationState.PROPOSAL_LOCKED)){
+                this.lbData.setText(manager.checkData());
+            }
         });
     }
 
     private void update(){
-        this.lbData.setText(manager.checkData());
-        this.lbCurrentState = new Label("Current State: " + manager.getState());
     }
 }
