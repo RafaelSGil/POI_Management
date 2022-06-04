@@ -27,6 +27,10 @@ public class ApplicationContext {
         this.state = state;
     }
 
+    public ArrayList<String> getLogger(){
+        return data.getLog();
+    }
+
     public boolean chooseType(String type) {
         return state.chooseType(type);
     }

@@ -36,6 +36,10 @@ public class FSManager {
         return context.getState();
     }
 
+    public ArrayList<String> getLogger(){
+        return context.getLogger();
+    }
+
     public void setState(IApplicationState state) {
         context.setState(state);
         pcs.firePropertyChange(PROP_STATE, null, context.getState());
