@@ -1,10 +1,13 @@
 package pt.isec.pa.apoio_poe.ui.gui.components;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
 
@@ -12,6 +15,8 @@ public class CandidatureUI extends BorderPane {
     private FSManager manager;
     Button btnPrev, btnClose, btnPropAttrib;
     private Label lbCurrentState;
+    private TextField tfPathCandidaturesData, tfRemoveCandidatures;
+    private Button btnLoadCandidaturesData, btnRemoveCandidatures;
 
     public CandidatureUI(FSManager manager){
         this.manager = manager;
@@ -34,6 +39,27 @@ public class CandidatureUI extends BorderPane {
         hBox.setSpacing(10);
         hBox.setAlignment(Pos.CENTER);
         this.setBottom(hBox);
+
+        this.tfPathCandidaturesData = new TextField();
+        this.tfPathCandidaturesData.setPromptText("Enter path to candidature data file");
+        this.tfPathCandidaturesData.setMinWidth(250);
+        this.btnLoadCandidaturesData = new Button("Load");
+        Label lbPlaceHolder = new Label("Insert Candidature Data ");
+        lbPlaceHolder.setPadding(new Insets(4));
+        HBox hBox1 = new HBox(lbPlaceHolder, tfPathCandidaturesData, btnLoadCandidaturesData);
+
+
+        this.tfRemoveCandidatures = new TextField();
+        this.tfRemoveCandidatures.setPromptText("Enter student id of the candidature to remove");
+        this.tfRemoveCandidatures.setMinWidth(250);
+        this.btnRemoveCandidatures = new Button("Remove");
+        Label lbPlaceholder1 = new Label("Remove Candidature    ");
+        lbPlaceholder1.setPadding(new Insets(4));
+        HBox hBox2 = new HBox(lbPlaceholder1, tfRemoveCandidatures, btnRemoveCandidatures);
+
+        VBox vBox = new VBox(hBox1, hBox2);
+        vBox.setPadding(new Insets(15));
+        this.setCenter(vBox);
     }
 
     private void registerHandlers() {
@@ -52,6 +78,16 @@ public class CandidatureUI extends BorderPane {
 
         btnClose.setOnAction(actionEvent -> {
             manager.closeState();
+        });
+
+        btnLoadCandidaturesData.setOnAction(actionEvent -> {
+            manager.insertData(tfPathCandidaturesData.getText());
+            tfPathCandidaturesData.setText("");
+        });
+
+        btnRemoveCandidatures.setOnAction(actionEvent -> {
+            manager.removeCandidature(tfRemoveCandidatures.getText());
+            tfRemoveCandidatures.setText("");
         });
     }
 

@@ -20,7 +20,7 @@ public class JFXMain extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         RootPane root = new RootPane(manager);
-        Scene scene = new Scene(root, 600, 400, Color.INDIGO);
+        Scene scene = new Scene(root, 600, 430, Color.INDIGO);
         stage.setScene(scene);
         stage.setTitle("JavaFX");
         stage.setMinWidth(500);

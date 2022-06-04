@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.ui.gui.components;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
@@ -44,6 +45,7 @@ public class StudentUI extends BorderPane {
 
         this.tfPathStudentData = new TextField();
         this.tfPathStudentData.setPromptText("Enter path to student data file");
+        this.tfPathStudentData.setText("");
         this.tfPathStudentData.setMinWidth(250);
         this.btnLoadStudentData = new Button("Load");
         Label lbPlaceHolder = new Label("Insert Student Data ");
@@ -92,10 +94,23 @@ public class StudentUI extends BorderPane {
 
         btnLoadStudentData.setOnAction(actionEvent -> {
             manager.insertData(tfPathStudentData.getText());
+            tfPathStudentData.setText("");
         });
 
         btnRemoveStudent.setOnAction(actionEvent -> {
             manager.deleteData(tfRemoveStudent.getText());
+            tfRemoveStudent.setText("");
+        });
+
+        tfPathStudentData.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode().equals(KeyCode.ENTER)){
+                if(!tfPathStudentData.getText().equals("")){
+                    manager.insertData(tfPathStudentData.getText());
+                    tfPathStudentData.setText("");
+                }else{
+                    tfPathStudentData.setStyle("-fx-background-color: red");
+                }
+            }
         });
     }
 

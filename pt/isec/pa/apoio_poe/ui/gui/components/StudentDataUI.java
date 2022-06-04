@@ -20,7 +20,7 @@ public class StudentDataUI extends BorderPane {
     }
 
     private void createViews(){
-        this.setStyle("-fx-background-color: blue");
+        this.setStyle("-fx-background-color: white");
         this.setVisible(manager != null && (manager.getState() == ApplicationState.STUDENT || manager.getState() == ApplicationState.STUDENT_LOCKED));
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());

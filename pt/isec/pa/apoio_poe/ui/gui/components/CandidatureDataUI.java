@@ -19,7 +19,7 @@ public class CandidatureDataUI extends BorderPane {
     }
 
     private void createViews(){
-        this.setStyle("-fx-background-color: pink");
+        this.setStyle("-fx-background-color: white");
         this.setVisible(manager != null && (manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED));
 
 

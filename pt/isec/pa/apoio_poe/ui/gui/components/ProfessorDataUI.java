@@ -19,7 +19,7 @@ public class ProfessorDataUI extends BorderPane {
     }
 
     private void createViews(){
-        this.setStyle("-fx-background-color: black");
+        this.setStyle("-fx-background-color: white");
         this.setVisible(manager != null && (manager.getState() == ApplicationState.PROFESSOR || manager.getState() == ApplicationState.PROFESSOR_LOCKED));
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
