@@ -18,7 +18,6 @@ public class Files {
                 fileTokens.add(Arrays.asList(values));
             }
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
         return fileTokens;
