@@ -21,15 +21,15 @@ public class CandidaturePhase extends StateAdapter {
     }
 
     @Override
-    public void insertData(String file) {
+    public boolean insertData(String file) {
         if (file == null)
-            return;
+            return false;
 
         List<List<String>> attributes = Files.openFile(file);
-        data.addCandidatureFile(attributes);
+        boolean bool = data.addCandidatureFile(attributes);
 
         setState(ApplicationState.CANDIDATURE);
-
+        return bool;
     }
 
     @Override

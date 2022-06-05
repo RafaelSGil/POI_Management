@@ -35,8 +35,8 @@ public class ApplicationContext {
         return state.chooseType(type);
     }
 
-    public void insertData(String file) {
-        state.insertData(file);
+    public boolean insertData(String file) {
+        return state.insertData(file);
     }
 
     public String checkData() {
@@ -214,9 +214,9 @@ public class ApplicationContext {
         return data.listAttributedProposals();
     }
 
-    public boolean serializationOfProgram(String path) {
+    public boolean serializationOfProgram() {
         try {
-            FileOutputStream fileOut = new FileOutputStream(path + "/data.ser");
+            FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.dir")+ "/pt/isec/pa/apoio_poe/files/data.ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(data);
             out.close();
@@ -228,9 +228,9 @@ public class ApplicationContext {
         return true;
     }
 
-    public boolean loadSave(String path) throws ClassNotFoundException {
+    public boolean loadSave() throws ClassNotFoundException {
         try {
-            FileInputStream fileIn = new FileInputStream(path);
+            FileInputStream fileIn = new FileInputStream(System.getProperty("user.dir")+ "/pt/isec/pa/apoio_poe/files/data.ser");
             ObjectInputStream in = new ObjectInputStream(fileIn);
             this.data = (Data) in.readObject();
             in.close();

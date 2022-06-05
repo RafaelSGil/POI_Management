@@ -45,9 +45,7 @@ public class CommandLineUI {
     }
 
     public boolean save() {
-        String path = InputProtection.readString("Specify the path to the folder you want to save: ", true);
-
-        if (manager.serializationOfProgram(path)) {
+        if (manager.serializationOfProgram()) {
             System.out.println("Successful serialization");
             return false;
         }
@@ -57,10 +55,8 @@ public class CommandLineUI {
     }
 
     public void loadSave() {
-        String path = InputProtection.readString("Specify the path to the file you want to load: ",
-                true);
         try {
-            if (manager.loadSave(path)) {
+            if (manager.loadSave()) {
                 System.out.println("Successful load");
             } else {
                 System.out.println("Could not load the file");

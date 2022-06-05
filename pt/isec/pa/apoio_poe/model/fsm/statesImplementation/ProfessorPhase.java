@@ -22,14 +22,16 @@ public class ProfessorPhase extends StateAdapter {
     }
 
     @Override
-    public void insertData(String file) {
+    public boolean insertData(String file) {
         if (file == null)
-            return;
+            return false;
 
         List<List<String>> attributes = Files.openFile(file);
-        data.addProfessorFile(attributes);
+        boolean bool = data.addProfessorFile(attributes);
 
         setState(ApplicationState.PROFESSOR);
+
+        return bool;
     }
 
     @Override

@@ -49,9 +49,10 @@ public class FSManager {
         return context.chooseType(type);
     }
 
-    public void insertData(String file) {
-        context.insertData(file);
+    public boolean insertData(String file) {
+        boolean bool = context.insertData(file);
         pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        return bool;
     }
 
     public String checkData() {
@@ -308,14 +309,14 @@ public class FSManager {
         return str;
     }
 
-    public boolean serializationOfProgram(String path) {
-        boolean bool = context.serializationOfProgram(path);
+    public boolean serializationOfProgram() {
+        boolean bool = context.serializationOfProgram();
         pcs.firePropertyChange(PROP_DATA, null, context.getState());
         return bool;
     }
 
-    public boolean loadSave(String path) throws ClassNotFoundException {
-        boolean bool = context.loadSave(path);
+    public boolean loadSave() throws ClassNotFoundException {
+        boolean bool = context.loadSave();
         pcs.firePropertyChange(PROP_DATA, null, context.getState());
         return bool;
     }

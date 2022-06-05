@@ -77,11 +77,11 @@ public class Data implements Serializable {
         return arr;
     }
 
-    public void addStudentFile(List<List<String>> attributes) {
+    public boolean addStudentFile(List<List<String>> attributes) {
 
         if(attributes == null){
             log.add("Path incorrect!");
-
+            return false;
         }
 
         Iterator<List<String>> listsOfListsIterator = attributes.iterator();
@@ -143,6 +143,7 @@ public class Data implements Serializable {
             }
             ++lineCSV;
         }
+        return true;
     }
 
     public boolean editStudent(String identifier, String change, String whatToChange) {
@@ -428,10 +429,10 @@ public class Data implements Serializable {
         students.add((Student.createStudent(name, email, id, course, courseBranch, classification, internship)));
     }
 
-    public void addProfessorFile(List<List<String>> attributes) {
+    public boolean addProfessorFile(List<List<String>> attributes) {
         if(attributes == null){
             log.add("Path incorrect!");
-            return;
+            return false;
         }
 
         Iterator<List<String>> listsOfListsIterator = attributes.iterator();
@@ -458,6 +459,8 @@ public class Data implements Serializable {
             }
             ++lineCSV;
         }
+
+        return false;
     }
 
     public boolean editProfessor(String email, boolean advisor) {
@@ -481,10 +484,10 @@ public class Data implements Serializable {
         professors.add(Professor.createProfessor(name, email));
     }
 
-    public void addProposalFile(List<List<String>> attributes) {
+    public boolean addProposalFile(List<List<String>> attributes) {
         if(attributes == null){
             log.add("Path incorrect!");
-            return;
+            return false;
         }
 
         Iterator<List<String>> listOfListsIterator = attributes.iterator();
@@ -592,6 +595,8 @@ public class Data implements Serializable {
             }
             ++lineCSV;
         }
+
+        return true;
     }
 
     public void addInternship(String idOfProposal, String title, Student student, List<String> branch,
@@ -682,7 +687,13 @@ public class Data implements Serializable {
 
     }
 
-    public boolean removeStudentGivenItsId(long idOfStudent) {
+    public boolean removeStudentGivenItsId(String id) {
+        long idOfStudent;
+        try{
+            idOfStudent =  Long.parseLong(id);
+        }catch (NumberFormatException e){
+            return false;
+        }
         for(Proposal auto : autoproposals){
             if(auto.getStudent() == idOfStudent){
                 removeAutoProposalGivenItsID(auto.getIdOfProposal());
@@ -920,10 +931,10 @@ public class Data implements Serializable {
                 && (counterSiStudents <= counterSiProposals);
     }
 
-    public ArrayList<String> addCandidatureFile(List<List<String>> attributes) {
+    public boolean addCandidatureFile(List<List<String>> attributes) {
         if(attributes == null){
             log.add("Path incorrect!");
-            return getLog();
+            return false;
         }
 
         Iterator<List<String>> listOfListsIterator = attributes.iterator();
@@ -997,7 +1008,7 @@ public class Data implements Serializable {
 
             ++lineCSV;
         }
-        return getLog();
+        return true;
     }
 
     public String getCandidatures() {

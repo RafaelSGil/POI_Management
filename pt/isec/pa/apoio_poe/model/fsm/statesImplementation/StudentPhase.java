@@ -18,14 +18,15 @@ public class StudentPhase extends StateAdapter {
     }
 
     @Override
-    public void insertData(String file) {
+    public boolean insertData(String file) {
         if (file == null)
-            return;
+            return false;
 
         List<List<String>> attributes = Files.openFile(file);
-        data.addStudentFile(attributes);
+        boolean bool = data.addStudentFile(attributes);
 
         setState(ApplicationState.STUDENT);
+        return bool;
     }
 
     @Override
@@ -37,8 +38,7 @@ public class StudentPhase extends StateAdapter {
 
     @Override
     public boolean deleteData(String identifier) {
-        long id = Long.parseLong(identifier);
-        boolean bool = data.removeStudentGivenItsId(id);
+        boolean bool = data.removeStudentGivenItsId(identifier);
         setState(ApplicationState.STUDENT);
         return bool;
     }

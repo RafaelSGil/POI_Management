@@ -31,7 +31,9 @@ public class LoggerUI extends BorderPane {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
             update();
         });
-
+        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
+            update();
+        });
     }
 
     private void update(){

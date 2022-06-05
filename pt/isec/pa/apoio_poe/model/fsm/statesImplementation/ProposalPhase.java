@@ -18,15 +18,17 @@ public class ProposalPhase extends StateAdapter {
     }
 
     @Override
-    public void insertData(String file) {
+    public boolean insertData(String file) {
         if (file == null)
-            return;
+            return false;
 
         List<List<String>> attributes = Files.openFile(file);
 
-        data.addProposalFile(attributes);
+        boolean bool = data.addProposalFile(attributes);
 
         setState(ApplicationState.PROPOSAL);
+
+        return bool;
     }
 
     @Override
