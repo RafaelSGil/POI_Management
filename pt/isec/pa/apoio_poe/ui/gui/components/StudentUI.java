@@ -24,8 +24,6 @@ public class StudentUI extends BorderPane {
     private Button btnRemoveStudent;
     private TextField tfEditIDStudent, tfEditFieldStudent, tfEditValueStudent;
     private Button btnEditStudentData;
-    private Menu menu;
-    private MenuItem menuItem1, menuItem2;
 
     public StudentUI(FSManager manager){
         this.manager = manager;
@@ -52,7 +50,6 @@ public class StudentUI extends BorderPane {
 
         this.tfPathStudentData = new TextField();
         this.tfPathStudentData.setPromptText("Enter path to student data file");
-        this.tfPathStudentData.setText("");
         this.tfPathStudentData.setMinWidth(250);
         this.btnLoadStudentData = new Button("Load");
         Label lbPlaceHolder = new Label("Insert Student Data ");
@@ -91,17 +88,9 @@ public class StudentUI extends BorderPane {
         VBox vBox1 = new VBox(hBox1, hBox2, hBox3);
         this.setCenter(vBox1);
 
-        this.menu = new Menu("File");
-        this.menuItem1 = new MenuItem("Save");
-        this.menuItem2 = new MenuItem("Load");
-        this.menu.getItems().addAll(menuItem1, menuItem2);
-        MenuBar menuBar = new MenuBar(menu);
-
         this.lbCurrentState = new Label("Current State: " + manager.getState());
-
-        VBox vBox2 = new VBox(menuBar, lbCurrentState);
-        vBox2.setSpacing(10);
-        this.setTop(vBox2);
+        this.lbCurrentState.setPadding(new Insets(2));
+        this.setTop(lbCurrentState);
 
     }
 
@@ -179,42 +168,6 @@ public class StudentUI extends BorderPane {
                 tfEditIDStudent.setStyle("-fx-background-color: #fa3434");
                 tfEditFieldStudent.setStyle("-fx-background-color: #fa3434");
                 tfEditValueStudent.setStyle("-fx-background-color: #fa3434");
-            }
-        });
-
-        menuItem1.setAccelerator(KeyCombination.keyCombination("Ctrl+S"));
-        menuItem1.setOnAction(actionEvent -> {
-            if(!manager.serializationOfProgram()){
-                Stage error = new Stage();
-                error.initModality(Modality.NONE);
-                VBox vBox = new VBox(20);
-                vBox.getChildren().addAll(new Text("Save did not work!"));
-                Scene scene = new Scene(vBox, 150, 100);
-                error.setScene(scene);
-                error.show();
-            }
-        });
-
-        menuItem2.setAccelerator(KeyCombination.keyCombination("Ctrl+A"));
-        menuItem2.setOnAction(actionEvent -> {
-            try {
-                if(!manager.loadSave()){
-                    Stage error = new Stage();
-                    error.initModality(Modality.NONE);
-                    VBox vBox = new VBox(20);
-                    vBox.getChildren().addAll(new Text("Load did not work!"));
-                    Scene scene = new Scene(vBox, 150, 100);
-                    error.setScene(scene);
-                    error.show();
-                }
-            } catch (ClassNotFoundException e) {
-                Stage error = new Stage();
-                error.initModality(Modality.NONE);
-                VBox vBox = new VBox(20);
-                vBox.getChildren().addAll(new Text("Load did not work!"));
-                Scene scene = new Scene(vBox, 150, 100);
-                error.setScene(scene);
-                error.show();
             }
         });
     }

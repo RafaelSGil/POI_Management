@@ -1,5 +1,6 @@
 package pt.isec.pa.apoio_poe.ui.gui.components;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -25,6 +26,7 @@ public class StudentLockedUI extends BorderPane {
         this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT_LOCKED);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setPadding(new Insets(2));
         this.setTop(lbCurrentState);
         this.btnProf = new Button("Professor state");
         this.btnProp = new Button("Proposal state");
