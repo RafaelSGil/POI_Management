@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.ui.gui.components;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -82,8 +83,7 @@ public class ProfessorUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
-            this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR);
-            update();
+             update();
         });
 
         btnStud.setOnAction(actionEvent -> {
@@ -103,13 +103,57 @@ public class ProfessorUI extends BorderPane {
         });
 
         btnLoadProfessorData.setOnAction(actionEvent -> {
-            manager.insertData(tfPathProfessorData.getText());
+            if(!manager.insertData(tfPathProfessorData.getText())){
+                tfPathProfessorData.setStyle("-fx-background-color: #fa3434");
+                tfPathProfessorData.setText("");
+                return;
+            }
+
+            tfPathProfessorData.setStyle("-fx-background-color: white");
             tfPathProfessorData.setText("");
         });
 
+        tfPathProfessorData.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode().equals(KeyCode.ENTER)){
+                if(!tfPathProfessorData.getText().equals("")){
+                    if(!manager.insertData(tfPathProfessorData.getText())){
+                        tfPathProfessorData.setText("");
+                        tfPathProfessorData.setStyle("-fx-background-color: #fa3434");
+                        return;
+                    }
+                    tfPathProfessorData.setText("");
+                    tfPathProfessorData.setStyle("-fx-background-color: white");
+                }else{
+                    tfPathProfessorData.setStyle("-fx-background-color: #fa3434");
+                }
+            }
+        });
+
         btnRemoveProfessor.setOnAction(actionEvent -> {
-            manager.deleteData(tfRemoveProfessor.getText());
+            if(!manager.deleteData(tfRemoveProfessor.getText())){
+                tfRemoveProfessor.setStyle("-fx-background-color: #fa3434");
+                tfRemoveProfessor.setText("");
+                return;
+            }
+
+            tfRemoveProfessor.setStyle("-fx-background-color: white");
             tfRemoveProfessor.setText("");
+        });
+
+        tfRemoveProfessor.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode().equals(KeyCode.ENTER)){
+                if(!tfRemoveProfessor.getText().equals("")){
+                    if(!manager.deleteData(tfRemoveProfessor.getText())){
+                        tfRemoveProfessor.setText("");
+                        tfRemoveProfessor.setStyle("-fx-background-color: #fa3434");
+                        return;
+                    }
+                    tfRemoveProfessor.setText("");
+                    tfRemoveProfessor.setStyle("-fx-background-color: white");
+                }else{
+                    tfRemoveProfessor.setStyle("-fx-background-color: #fa3434");
+                }
+            }
         });
 
         btnEditProfessorData.setOnAction(actionEvent -> {
@@ -133,7 +177,7 @@ public class ProfessorUI extends BorderPane {
     }
 
     private void update() {
-        //this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR);
+        this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }

@@ -308,7 +308,7 @@ public class CommandLineUI {
     }
 
     public void editProjectData(String identifier) {
-        switch (InputProtection.chooseOption("What attribute do you want to alter?", "title", "branch", "company",
+        switch (InputProtection.chooseOption("What attribute do you want to alter?", "title", "branch", "professor",
                 "student")) {
             case 1 -> {
                 String attribute = "title";

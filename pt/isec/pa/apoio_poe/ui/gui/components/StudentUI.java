@@ -100,10 +100,6 @@ public class StudentUI extends BorderPane {
 
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
-            this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT);
-        });
-
-        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
             update();
         });
 
@@ -137,10 +133,31 @@ public class StudentUI extends BorderPane {
             }
         });
 
+        tfRemoveStudent.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode().equals(KeyCode.ENTER)){
+                if(!tfRemoveStudent.getText().equals("")){
+                    if(!manager.deleteData(tfRemoveStudent.getText())){
+                        tfRemoveStudent.setText("");
+                        tfRemoveStudent.setStyle("-fx-background-color: #fa3434");
+                        return;
+                    }
+                    tfRemoveStudent.setText("");
+                    tfRemoveStudent.setStyle("-fx-background-color: white");
+                }else{
+                    tfRemoveStudent.setStyle("-fx-background-color: #fa3434");
+                }
+            }
+        });
+
         tfPathStudentData.setOnKeyPressed(keyEvent -> {
             if(keyEvent.getCode().equals(KeyCode.ENTER)){
                 if(!tfPathStudentData.getText().equals("")){
-                    manager.insertData(tfPathStudentData.getText());
+                    if(!manager.insertData(tfPathStudentData.getText())){
+                        tfPathStudentData.setText("");
+                        tfPathStudentData.setStyle("-fx-background-color: #fa3434");
+                        return;
+                    }
+
                     tfPathStudentData.setText("");
                     tfPathStudentData.setStyle("-fx-background-color: white");
                 }else{
@@ -177,6 +194,7 @@ public class StudentUI extends BorderPane {
     }
 
     private void update() {
+        this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT);
         this.lbCurrentState.setText("Current State: " + manager.getState());
     }
 }
