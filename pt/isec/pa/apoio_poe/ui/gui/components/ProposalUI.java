@@ -5,6 +5,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -35,10 +36,9 @@ public class ProposalUI extends BorderPane {
         this.btnCandid = new Button("Candidature state");
         this.btnClose = new Button("Close state");
 
-        HBox hBox = new HBox(btnProf, btnStud, btnCandid, btnClose);
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.CENTER);
-        this.setBottom(hBox);
+        ToolBar toolBar = new ToolBar(btnProf, btnStud, btnCandid, btnClose);
+        toolBar.setStyle("-fx-spacing: 20px; -fx-padding: 10 20 10 20; -fx-alignment: center");
+        this.setBottom(toolBar);
 
         this.tfPathProposalData = new TextField();
         this.tfPathProposalData.setPromptText("Enter path to proposal data file");

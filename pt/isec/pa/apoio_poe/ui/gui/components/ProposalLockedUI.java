@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.ui.gui.components;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
@@ -30,10 +31,9 @@ public class ProposalLockedUI extends BorderPane {
         this.btnStud = new Button("Student state");
         this.btnCandid = new Button("Candidature state");
 
-        HBox hBox = new HBox(btnStud, btnProf, btnCandid);
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.CENTER);
-        this.setBottom(hBox);
+        ToolBar toolBar = new ToolBar(btnStud, btnProf, btnCandid);
+        toolBar.setStyle("-fx-spacing: 20px; -fx-padding: 10 20 10 20; -fx-alignment: center");
+        this.setBottom(toolBar);
     }
 
     private void registerHandlers() {

@@ -3,6 +3,7 @@ package pt.isec.pa.apoio_poe.ui.gui.components;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
@@ -30,10 +31,9 @@ public class ProposalsAttributionUI extends BorderPane {
         this.btnClose = new Button("Close state");
         this.btnProfAttrib = new Button("Prof. Attribution state");
 
-        HBox hBox = new HBox(btnPrev, btnProfAttrib, btnClose);
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.CENTER);
-        this.setBottom(hBox);
+        ToolBar toolBar = new ToolBar(btnPrev, btnProfAttrib, btnClose);
+        toolBar.setStyle("-fx-spacing: 20px; -fx-padding: 10 20 10 20; -fx-alignment: center");
+        this.setBottom(toolBar);
     }
 
     private void registerHandlers() {

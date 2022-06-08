@@ -4,6 +4,7 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
@@ -32,10 +33,9 @@ public class StudentLockedUI extends BorderPane {
         this.btnProp = new Button("Proposal state");
         this.btnCandid = new Button("Candidature state");
 
-        HBox hBox = new HBox(btnProp, btnProf, btnCandid);
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.CENTER);
-        this.setBottom(hBox);
+        ToolBar toolBar = new ToolBar(btnProp, btnProf, btnCandid);
+        toolBar.setStyle("-fx-spacing: 20px; -fx-padding: 10 20 10 20; -fx-alignment: center");
+        this.setBottom(toolBar);
     }
 
     private void registerHandlers() {
