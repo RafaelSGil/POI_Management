@@ -83,7 +83,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public String checkData() {
+    public ArrayList<String> checkData() {
         return null;
     }
 

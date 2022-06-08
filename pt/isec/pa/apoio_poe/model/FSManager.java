@@ -55,8 +55,8 @@ public class FSManager {
         return bool;
     }
 
-    public String checkData() {
-        String str = context.checkData();
+    public ArrayList<String> checkData() {
+        ArrayList<String> str = context.checkData();
         pcs.firePropertyChange(PROP_STATE, null, context.getState());
         return str;
     }

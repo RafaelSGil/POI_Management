@@ -870,58 +870,58 @@ public class Data implements Serializable {
         return true;
     }
 
-    public String getAllStudents() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> getAllStudents() {
+        ArrayList<String> arr = new ArrayList<>();
 
         if (students.size() == 0) {
-            sb.append("No students registered");
-            return sb.toString();
+            arr.add("No students registered");
+            return arr;
         }
 
         for (Person student : students) {
-            sb.append(student.toString()).append("\n");
+            arr.add(student.toString());
         }
 
-        return sb.toString();
+        return arr;
     }
 
-    public String getAllProfessors() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> getAllProfessors() {
+        ArrayList<String> arr = new ArrayList<>();
 
         if (professors.size() == 0) {
-            sb.append("No professors registered");
-            return sb.toString();
+            arr.add("No professors registered");
+            return arr;
         }
 
         for (Person professor : professors) {
-            sb.append(professor.toString()).append("\n");
+            arr.add(professor.toString());
         }
-        return sb.toString();
+        return arr;
     }
 
-    public String getAllProjects() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> getAllProjects() {
+        ArrayList<String> arr = new ArrayList<>();
 
         if (autoproposals.size() == 0 && internships.size() == 0 && projects.size() == 0) {
-            sb.append("No projects registered");
-            return sb.toString();
+            arr.add("No projects registered");
+            return arr;
         }
 
-        sb.append(("\nAutoProposals: \n"));
+        arr.add(("\nAutoProposals: \n"));
         for (Proposal auto : autoproposals) {
-            sb.append(auto.toString()).append("\n");
+            arr.add(auto.toString());
         }
 
-        sb.append("\nProjects: \n");
+        arr.add("\nProjects: \n");
         for (MidProposal mid : projects) {
-            sb.append(mid.toString()).append("\n");
+            arr.add(mid.toString());
         }
 
-        sb.append("\nInternShips: \n");
+        arr.add("\nInternShips: \n");
         for (MidProposal mid : internships) {
-            sb.append(mid.toString()).append("\n");
+            arr.add(mid.toString());
         }
-        return sb.toString();
+        return arr;
     }
 
     public boolean lockPhase1() {
@@ -1046,18 +1046,19 @@ public class Data implements Serializable {
         return true;
     }
 
-    public String getCandidatures() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> getCandidatures() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (Long idStudent : candidatures.keySet()) {
+            StringBuilder sb = new StringBuilder();
             sb.append("Student with id = ").append(idStudent).append(" has filled a candidature for proposal ");
             for (String idProposal : candidatures.get(idStudent)) {
                 sb.append(idProposal).append("; ");
             }
-            sb.append("\n");
+            arr.add(sb.toString());
         }
 
-        return sb.toString();
+        return arr;
     }
 
     public boolean removeCandidatureGivenStudentID(String id, String proposal) {

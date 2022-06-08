@@ -7,7 +7,7 @@ import java.util.List;
 public interface IApplicationState {
     boolean insertData(String file);
 
-    String checkData();
+    ArrayList<String> checkData();
 
     boolean editDataProposal(String identifier, String attribute, List<String> newValue);
 

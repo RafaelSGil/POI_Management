@@ -6,6 +6,8 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 
+import java.util.ArrayList;
+
 public class StudentPhaseLocked extends StateAdapter {
 
     public StudentPhaseLocked(ApplicationContext context, Data data) {
@@ -13,8 +15,8 @@ public class StudentPhaseLocked extends StateAdapter {
     }
 
     @Override
-    public String checkData() {
-        String str = data.getAllStudents();
+    public ArrayList<String> checkData() {
+        ArrayList<String> str = data.getAllStudents();
         setState(ApplicationState.STUDENT_LOCKED);
         return str;
     }

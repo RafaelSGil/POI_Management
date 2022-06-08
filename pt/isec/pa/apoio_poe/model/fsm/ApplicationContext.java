@@ -39,7 +39,7 @@ public class ApplicationContext {
         return state.insertData(file);
     }
 
-    public String checkData() {
+    public ArrayList<String> checkData() {
         return state.checkData();
     }
 

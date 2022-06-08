@@ -6,6 +6,8 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.data.Data;
 
+import java.util.ArrayList;
+
 public class ProfessorPhaseLocked extends StateAdapter {
     public ProfessorPhaseLocked(ApplicationContext context, Data data) {
         super(context, data);
@@ -29,8 +31,8 @@ public class ProfessorPhaseLocked extends StateAdapter {
     }
 
     @Override
-    public String checkData() {
-        String str = data.getAllProfessors();
+    public ArrayList<String> checkData() {
+        ArrayList<String> str = data.getAllProfessors();
         setState(ApplicationState.PROFESSOR_LOCKED);
         return str;
     }

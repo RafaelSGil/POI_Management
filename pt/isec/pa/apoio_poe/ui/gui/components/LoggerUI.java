@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class LoggerUI extends BorderPane {
     private FSManager manager;
-    private Label lbLogger;
+    private Label lbLogger, lbState;
 
 
     public LoggerUI(FSManager manager){
@@ -23,6 +23,9 @@ public class LoggerUI extends BorderPane {
         this.setStyle("-fx-background-color: white");
         this.setPadding(new Insets(20));
 
+        this.lbState = new Label();
+        this.setTop(lbState);
+
         this.lbLogger = new Label();
         this.setCenter(lbLogger);
     }
@@ -35,6 +38,7 @@ public class LoggerUI extends BorderPane {
 
     private void update(){
         this.lbLogger.setText(formatLogger());
+        this.lbState.setText("Errors in: " + manager.getState());
     }
 
     private String formatLogger(){

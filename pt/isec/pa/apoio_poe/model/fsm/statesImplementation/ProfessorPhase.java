@@ -35,8 +35,8 @@ public class ProfessorPhase extends StateAdapter {
     }
 
     @Override
-    public String checkData() {
-        String str = data.getAllProfessors();
+    public ArrayList<String> checkData() {
+        ArrayList<String> str = data.getAllProfessors();
         setState(ApplicationState.PROFESSOR);
         return str;
     }

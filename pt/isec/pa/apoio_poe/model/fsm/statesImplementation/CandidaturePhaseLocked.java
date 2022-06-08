@@ -6,6 +6,8 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
+import java.util.ArrayList;
+
 public class CandidaturePhaseLocked extends StateAdapter {
     public CandidaturePhaseLocked(ApplicationContext context, Data data) {
         super(context, data);
@@ -28,8 +30,8 @@ public class CandidaturePhaseLocked extends StateAdapter {
     }
 
     @Override
-    public String checkData() {
-        String str = data.getCandidatures();
+    public ArrayList<String> checkData() {
+        ArrayList<String> str = data.getCandidatures();
         setState(ApplicationState.CANDIDATURE_LOCKED);
         return str;
     }

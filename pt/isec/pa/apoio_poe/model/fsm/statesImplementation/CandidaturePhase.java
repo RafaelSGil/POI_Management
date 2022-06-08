@@ -60,8 +60,8 @@ public class CandidaturePhase extends StateAdapter {
     }
 
     @Override
-    public String checkData() {
-        String str = data.getCandidatures();
+    public ArrayList<String> checkData() {
+        ArrayList<String> str = data.getCandidatures();
 
         setState(ApplicationState.CANDIDATURE);
 

@@ -30,8 +30,8 @@ public class StudentPhase extends StateAdapter {
     }
 
     @Override
-    public String checkData() {
-        String str = data.getAllStudents();
+    public ArrayList<String> checkData() {
+        ArrayList<String> str = data.getAllStudents();
         setState(ApplicationState.STUDENT);
         return str;
     }

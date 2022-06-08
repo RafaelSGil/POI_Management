@@ -56,8 +56,8 @@ public class ProposalPhase extends StateAdapter {
     }
 
     @Override
-    public String checkData() {
-        String str = data.getAllProjects();
+    public ArrayList<String> checkData() {
+        ArrayList<String> str = data.getAllProjects();
         setState(ApplicationState.PROPOSAL);
         return str;
     }

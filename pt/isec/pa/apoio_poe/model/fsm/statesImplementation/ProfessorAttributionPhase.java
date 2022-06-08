@@ -6,6 +6,7 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
 
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
@@ -52,8 +53,8 @@ public class ProfessorAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public String checkData() {
-        String str = data.getAllProfessors();
+    public ArrayList<String> checkData() {
+        ArrayList<String> str = data.getAllProfessors();
         setState(ApplicationState.PROFESSOR_ATTRIBUTION);
         return str;
     }
