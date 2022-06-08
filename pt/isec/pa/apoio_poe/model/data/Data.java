@@ -764,75 +764,90 @@ public class Data implements Serializable {
 
     public boolean editProposals(String identifier, String attribute, List<String> newValue) {
         if (internships.contains(Internship.createDummyInternship(identifier))) {
-            editInternships(identifier, attribute, newValue);
+            return editInternships(identifier, attribute, newValue);
         }
         if (projects.contains(Project.createDummyProject(identifier))) {
-            editProjects(identifier, attribute, newValue);
+            return editProjects(identifier, attribute, newValue);
         }
         if (autoproposals.contains(AutoProposal.createDummyAutoProposal(identifier))) {
-            editAutoProposals(identifier, attribute, newValue);
+            return editAutoProposals(identifier, attribute, newValue);
         }
         return true;
     }
 
-    public void editAutoProposals(String identifier, String attribute, List<String> newValue) {
-        for (Proposal auto : autoproposals) {
-            if (auto.getIdOfProposal().equals(identifier)) {
-                if (attribute.equals("title")) {
-                    auto.setTitle(newValue.get(0));
-                }
-                if (attribute.equals("student")) {
-                    if (students.contains(Student.createDummyStudent(Long.parseLong(newValue.get(0))))) {
-                        auto.setStudent((Student) Student.createDummyStudent(Long.parseLong(newValue.get(0))));
+    public boolean editAutoProposals(String identifier, String attribute, List<String> newValue) {
+        try {
+            for (Proposal auto : autoproposals) {
+                if (auto.getIdOfProposal().equals(identifier)) {
+                    if (attribute.equals("title")) {
+                        auto.setTitle(newValue.get(0));
+                    }
+                    if (attribute.equals("student")) {
+                        if (students.contains(Student.createDummyStudent(Long.parseLong(newValue.get(0))))) {
+                            auto.setStudent((Student) Student.createDummyStudent(Long.parseLong(newValue.get(0))));
+                        }
                     }
                 }
             }
+        }catch (Exception e){
+            return false;
         }
+        return true;
     }
 
-    public void editProjects(String identifier, String attribute, List<String> newValue) {
-        for (MidProposal mid : projects) {
-            if (mid.getIdOfProposal().equals(identifier)) {
-                if (attribute.equals("title")) {
-                    mid.setTitle(newValue.get(0));
-                }
-                if (attribute.equals("branch")) {
-                    mid.setBranch(newValue);
-                }
-                if (attribute.equals("professor")) {
-                    if (professors.contains(Professor.createDummyProfessor(newValue.get(0)))) {
-                        ((Project) mid).setProfessor((Professor) Professor.createDummyProfessor(newValue.get(0)));
+    public boolean editProjects(String identifier, String attribute, List<String> newValue) {
+        try {
+            for (MidProposal mid : projects) {
+                if (mid.getIdOfProposal().equals(identifier)) {
+                    if (attribute.equals("title")) {
+                        mid.setTitle(newValue.get(0));
                     }
-                }
-                if (attribute.equals("student")) {
-                    if (students.contains(Student.createDummyStudent(Long.parseLong(newValue.get(0))))) {
-                        mid.setStudent((Student) Student.createDummyStudent(Long.parseLong(newValue.get(0))));
+                    if (attribute.equals("branch")) {
+                        mid.setBranch(newValue);
                     }
+                    if (attribute.equals("professor")) {
+                        if (professors.contains(Professor.createDummyProfessor(newValue.get(0)))) {
+                            ((Project) mid).setProfessor((Professor) Professor.createDummyProfessor(newValue.get(0)));
+                        }
+                    }
+                    if (attribute.equals("student")) {
+                        if (students.contains(Student.createDummyStudent(Long.parseLong(newValue.get(0))))) {
+                            mid.setStudent((Student) Student.createDummyStudent(Long.parseLong(newValue.get(0))));
+                        }
 
+                    }
                 }
             }
+        }catch (Exception e){
+            return false;
         }
+        return true;
     }
 
-    public void editInternships(String identifier, String attribute, List<String> newValue) {
-        for (MidProposal mid : internships) {
-            if (mid.getIdOfProposal().equals(identifier)) {
-                if (attribute.equals("title")) {
-                    mid.setTitle(newValue.get(0));
-                }
-                if (attribute.equals("branch")) {
-                    mid.setBranch(newValue);
-                }
-                if (attribute.equals("company")) {
-                    ((Internship) mid).setNameOfCompany(newValue.get(0));
-                }
-                if (attribute.equals("student")) {
-                    if (students.contains(Student.createDummyStudent(Long.parseLong(newValue.get(0))))) {
-                        mid.setStudent((Student) Student.createDummyStudent(Long.parseLong(newValue.get(0))));
+    public boolean editInternships(String identifier, String attribute, List<String> newValue) {
+        try{
+            for (MidProposal mid : internships) {
+                if (mid.getIdOfProposal().equals(identifier)) {
+                    if (attribute.equals("title")) {
+                        mid.setTitle(newValue.get(0));
+                    }
+                    if (attribute.equals("branch")) {
+                        mid.setBranch(newValue);
+                    }
+                    if (attribute.equals("company")) {
+                        ((Internship) mid).setNameOfCompany(newValue.get(0));
+                    }
+                    if (attribute.equals("student")) {
+                        if (students.contains(Student.createDummyStudent(Long.parseLong(newValue.get(0))))) {
+                            mid.setStudent((Student) Student.createDummyStudent(Long.parseLong(newValue.get(0))));
+                        }
                     }
                 }
             }
+        }catch (Exception e){
+            return false;
         }
+        return true;
     }
 
     public String getAllStudents() {

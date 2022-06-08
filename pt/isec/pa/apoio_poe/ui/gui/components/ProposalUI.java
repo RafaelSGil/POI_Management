@@ -4,12 +4,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ProposalUI extends BorderPane {
     private FSManager manager;
@@ -31,6 +35,7 @@ public class ProposalUI extends BorderPane {
     private Button btnEditInternshipTitle, btnEditInternshipBranch, btnEditInternshipCompany, btnEditInternshipStudent;
     private Button btnEditProjectTitle, btnEditProjectBranch, btnEditProjectProfessor, btnEditProjectStudent;
     private Button btnEditAutoProposalTitle, btnEditAutoProposalStudent;
+    private String idOfProposal;
 
     public ProposalUI(FSManager manager){
         this.manager = manager;createViews();
@@ -326,6 +331,7 @@ public class ProposalUI extends BorderPane {
                 if(!tfEditProposalID.getText().equals("")){
                     switch (manager.checkTypeProposal(tfEditProposalID.getText())){
                         case -1 ->{
+                            idOfProposal = tfEditProposalID.getText();
                             tfEditProposalID.setStyle("-fx-background-color: #fa3434");
                             tfEditProposalID.setText("");
                             this.pInternship.setVisible(false);
@@ -333,6 +339,7 @@ public class ProposalUI extends BorderPane {
                             this.pAutoProposal.setVisible(false);
                         }
                         case 0 ->{
+                            idOfProposal = tfEditProposalID.getText();
                             tfEditProposalID.setStyle("-fx-background-color: white");
                             tfEditProposalID.setText("");
                             this.pInternship.setVisible(true);
@@ -340,6 +347,7 @@ public class ProposalUI extends BorderPane {
                             this.pAutoProposal.setVisible(false);
                         }
                         case 1 -> {
+                            idOfProposal = tfEditProposalID.getText();
                             tfEditProposalID.setStyle("-fx-background-color: white");
                             tfEditProposalID.setText("");
                             this.pInternship.setVisible(false);
@@ -347,6 +355,7 @@ public class ProposalUI extends BorderPane {
                             this.pAutoProposal.setVisible(false);
                         }
                         case 2 ->{
+                            idOfProposal = tfEditProposalID.getText();
                             tfEditProposalID.setStyle("-fx-background-color: white");
                             tfEditProposalID.setText("");
                             this.pInternship.setVisible(false);
@@ -453,6 +462,54 @@ public class ProposalUI extends BorderPane {
                     tfPathProposalData.setText("");
                 }
             }
+        });
+
+        btnEditInternshipTitle.setOnAction(actionEvent -> {
+            if(!manager.editDataProposals(idOfProposal, cbInternships.getSelectionModel().getSelectedItem(), List.of(tfEditInternshipTitle.getText()))){
+                tfEditInternshipTitle.setStyle("-fx-background-color: #fa3434");
+                tfEditInternshipTitle.setText("");
+                return;
+            }
+
+            tfEditInternshipTitle.setStyle("-fx-background-color: white");
+            tfEditInternshipTitle.setText("");
+        });
+
+        btnEditInternshipBranch.setOnAction(actionEvent -> {
+            String str = tfEditInternshipBranch.getText();
+            String[] aux = str.split(",");
+
+            if(!manager.editDataProposals(idOfProposal, cbInternships.getSelectionModel().getSelectedItem(), List.of(aux))){
+                tfEditInternshipBranch.setStyle("-fx-background-color: #fa3434");
+                tfEditInternshipBranch.setText("");
+                return;
+            }
+
+            tfEditInternshipBranch.setStyle("-fx-background-color: white");
+            tfEditInternshipBranch.setText("");
+
+        });
+
+        btnEditInternshipCompany.setOnAction(actionEvent -> {
+            if(!manager.editDataProposals(idOfProposal, cbInternships.getSelectionModel().getSelectedItem(), List.of(tfEditInternshipCompany.getText()))){
+                tfEditInternshipCompany.setStyle("-fx-background-color: #fa3434");
+                tfEditInternshipCompany.setText("");
+                return;
+            }
+
+            tfEditInternshipCompany.setStyle("-fx-background-color: white");
+            tfEditInternshipCompany.setText("");
+        });
+
+        btnEditInternshipStudent.setOnAction(actionEvent -> {
+            if(!manager.editDataProposals(idOfProposal, cbInternships.getSelectionModel().getSelectedItem(), List.of(tfEditInternshipStudent.getText()))){
+                tfEditInternshipStudent.setStyle("-fx-background-color: #fa3434");
+                tfEditInternshipStudent.setText("");
+                return;
+            }
+
+            tfEditInternshipStudent.setStyle("-fx-background-color: white");
+            tfEditInternshipStudent.setText("");
         });
     }
 
