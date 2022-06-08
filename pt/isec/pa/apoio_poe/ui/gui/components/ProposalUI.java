@@ -511,6 +511,75 @@ public class ProposalUI extends BorderPane {
             tfEditInternshipStudent.setStyle("-fx-background-color: white");
             tfEditInternshipStudent.setText("");
         });
+
+        btnEditProjectTitle.setOnAction(actionEvent -> {
+            if(!manager.editDataProposals(idOfProposal, cbProjects.getSelectionModel().getSelectedItem(), List.of(tfEditProjectTitle.getText()))){
+                tfEditProjectTitle.setStyle("-fx-background-color: #fa3434");
+                tfEditProjectTitle.setText("");
+                return;
+            }
+
+            tfEditProjectTitle.setStyle("-fx-background-color: white");
+            tfEditProjectTitle.setText("");
+        });
+
+        btnEditProjectBranch.setOnAction(actionEvent -> {
+            String str = tfEditProjectBranch.getText();
+            String[] aux = str.split(",");
+
+            if(!manager.editDataProposals(idOfProposal, cbProjects.getSelectionModel().getSelectedItem(), List.of(aux))){
+                tfEditProjectBranch.setStyle("-fx-background-color: #fa3434");
+                tfEditProjectBranch.setText("");
+                return;
+            }
+
+            tfEditProjectBranch.setStyle("-fx-background-color: white");
+            tfEditProjectBranch.setText("");
+        });
+
+        btnEditProjectProfessor.setOnAction(actionEvent -> {
+            if(!manager.editDataProposals(idOfProposal, cbProjects.getSelectionModel().getSelectedItem(), List.of(tfEditProjectProfessor.getText()))){
+                tfEditProjectProfessor.setStyle("-fx-background-color: #fa3434");
+                tfEditProjectProfessor.setText("");
+                return;
+            }
+
+            tfEditProjectProfessor.setStyle("-fx-background-color: white");
+            tfEditProjectProfessor.setText("");
+        });
+
+        btnEditProjectStudent.setOnAction(actionEvent -> {
+            if(!manager.editDataProposals(idOfProposal, cbProjects.getSelectionModel().getSelectedItem(), List.of(tfEditProjectStudent.getText()))){
+                tfEditProjectStudent.setStyle("-fx-background-color: #fa3434");
+                tfEditProjectStudent.setText("");
+                return;
+            }
+
+            tfEditProjectStudent.setStyle("-fx-background-color: white");
+            tfEditProjectStudent.setText("");
+        });
+
+        btnEditAutoProposalTitle.setOnAction(actionEvent -> {
+            if(!manager.editDataProposals(idOfProposal, cbProjects.getSelectionModel().getSelectedItem(), List.of(tfEditAutoProposalTitle.getText()))){
+                tfEditAutoProposalTitle.setStyle("-fx-background-color: #fa3434");
+                tfEditAutoProposalTitle.setText("");
+                return;
+            }
+
+            tfEditAutoProposalTitle.setStyle("-fx-background-color: white");
+            tfEditAutoProposalTitle.setText("");
+        });
+
+        btnEditAutoProposalStudent.setOnAction(actionEvent -> {
+            if(!manager.editDataProposals(idOfProposal, cbProjects.getSelectionModel().getSelectedItem(), List.of(tfEditAutoProposalStudent.getText()))){
+                tfEditAutoProposalStudent.setStyle("-fx-background-color: #fa3434");
+                tfEditAutoProposalStudent.setText("");
+                return;
+            }
+
+            tfEditAutoProposalStudent.setStyle("-fx-background-color: white");
+            tfEditAutoProposalStudent.setText("");
+        });
     }
 
     private void update() {
