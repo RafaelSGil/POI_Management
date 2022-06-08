@@ -436,6 +436,24 @@ public class ProposalUI extends BorderPane {
                 }
             }
         });
+
+        tfPathProposalData.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode().equals(KeyCode.ENTER)){
+                if(!tfPathProposalData.getText().equals("")){
+                    if(!manager.insertData(tfPathProposalData.getText())){
+                        tfPathProposalData.setStyle("-fx-background-color: #fa3434");
+                        tfPathProposalData.setText("");
+                        return;
+                    }
+
+                    tfPathProposalData.setStyle("-fx-background-color: white");
+                    tfPathProposalData.setText("");
+                }else{
+                    tfPathProposalData.setStyle("-fx-background-color: #fa3434");
+                    tfPathProposalData.setText("");
+                }
+            }
+        });
     }
 
     private void update() {
