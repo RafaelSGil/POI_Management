@@ -1,7 +1,6 @@
 package pt.isec.pa.apoio_poe.ui.gui.components;
 
 import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.layout.BorderPane;
@@ -12,7 +11,7 @@ import pt.isec.pa.apoio_poe.model.FSManager;
 
 public class ProfessorUI extends BorderPane {
     private FSManager manager;
-    Button btnStud, btnProp, btnClose, btnCandid;
+    private Button btnStud, btnProp, btnClose, btnCandid;
     private Label lbCurrentState;
     private TextField tfPathProfessorData, tfRemoveProfessor;
     private Button btnLoadProfessorData, btnRemoveProfessor;
