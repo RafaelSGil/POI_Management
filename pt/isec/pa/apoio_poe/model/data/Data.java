@@ -460,7 +460,7 @@ public class Data implements Serializable {
             ++lineCSV;
         }
 
-        return false;
+        return true;
     }
 
     public boolean editProfessor(String email, boolean advisor) {
