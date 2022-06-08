@@ -79,69 +79,74 @@ public class Data implements Serializable {
 
     public boolean addStudentFile(List<List<String>> attributes) {
 
-        if(attributes == null){
-            log.add("Path incorrect!");
-            return false;
-        }
+        try{
+            if(attributes == null){
+                log.add("Path incorrect!");
+                return false;
+            }
 
-        Iterator<List<String>> listsOfListsIterator = attributes.iterator();
+            Iterator<List<String>> listsOfListsIterator = attributes.iterator();
 
-        String name;
-        String email;
-        String course;
-        String courseBranch;
-        long id;
-        double classification;
-        boolean internship;
-        Set<String> courses = new HashSet<>();
-        Set<String> coursesBranches = new HashSet<>();
-        courses.add("LEI");
-        courses.add("LEI-PL");
-        coursesBranches.add("DA");
-        coursesBranches.add("SI");
-        coursesBranches.add("RAS");
+            String name;
+            String email;
+            String course;
+            String courseBranch;
+            long id;
+            double classification;
+            boolean internship;
+            Set<String> courses = new HashSet<>();
+            Set<String> coursesBranches = new HashSet<>();
+            courses.add("LEI");
+            courses.add("LEI-PL");
+            coursesBranches.add("DA");
+            coursesBranches.add("SI");
+            coursesBranches.add("RAS");
 
-        int lineCSV = 1;
+            int lineCSV = 1;
 
-        while (listsOfListsIterator.hasNext()) {
-            List<String> list = new ArrayList<String>();
-            list = (List<String>) listsOfListsIterator.next();
+            while (listsOfListsIterator.hasNext()) {
+                List<String> list = new ArrayList<String>();
+                list = (List<String>) listsOfListsIterator.next();
 
-            Iterator<String> eachListIterator = list.iterator();
+                Iterator<String> eachListIterator = list.iterator();
 
-            while (eachListIterator.hasNext()) {
-                id = Long.parseLong((String) eachListIterator.next());
-                name = (String) eachListIterator.next();
-                email = (String) eachListIterator.next();
-                course = (String) eachListIterator.next();
-                courseBranch = (String) eachListIterator.next();
-                classification = Double.parseDouble(eachListIterator.next());
-                internship = Boolean.parseBoolean(eachListIterator.next());
+                while (eachListIterator.hasNext()) {
+                    id = Long.parseLong((String) eachListIterator.next());
+                    name = (String) eachListIterator.next();
+                    email = (String) eachListIterator.next();
+                    course = (String) eachListIterator.next();
+                    courseBranch = (String) eachListIterator.next();
+                    classification = Double.parseDouble(eachListIterator.next());
+                    internship = Boolean.parseBoolean(eachListIterator.next());
 
-                if (!students.contains(Student.createDummyStudent(id))){
-                    if (courses.contains(course)){
-                        if (coursesBranches.contains(courseBranch)){
-                            if (classification % 1 != 0){
-                                if (internship == true || !internship){
-                                    addStudent(name, email, id, course, courseBranch, classification, internship);
+                    if (!students.contains(Student.createDummyStudent(id))){
+                        if (courses.contains(course)){
+                            if (coursesBranches.contains(courseBranch)){
+                                if (classification % 1 != 0){
+                                    if (internship == true || !internship){
+                                        addStudent(name, email, id, course, courseBranch, classification, internship);
+                                    }else{
+                                        log.add("Internship eligibility has to be a boolean [line " + lineCSV+ "]");
+                                    }
                                 }else{
-                                    log.add("Internship eligibility has to be a boolean [line " + lineCSV+ "]");
+                                    log.add("Classification value is wrong [line " + lineCSV+ "]");
                                 }
                             }else{
-                                log.add("Classification value is wrong [line " + lineCSV+ "]");
+                                log.add("Branch does not exist [line " + lineCSV+ "]");
                             }
                         }else{
-                            log.add("Branch does not exist [line " + lineCSV+ "]");
+                            log.add("Course does not exist [line " + lineCSV+ "]");
                         }
                     }else{
-                        log.add("Course does not exist [line " + lineCSV+ "]");
+                        log.add("Student already exists [line " + lineCSV+ "]");
                     }
-                }else{
-                    log.add("Student already exists [line " + lineCSV+ "]");
-                }
 
+                }
+                ++lineCSV;
             }
-            ++lineCSV;
+        }catch (Exception e){
+            log.add("Could not load student data file");
+            return false;
         }
         return true;
     }
@@ -191,172 +196,151 @@ public class Data implements Serializable {
     }
 
     public boolean exportData(boolean professor) throws FileNotFoundException {
-        String delimiter = ",";
-        String separator = "\n";
-        String header = "Student,Candidatures,Proposal,Order";
-        String headerProfessor = "Student,Candidatures,Proposal,Order,Professor";
-        FileWriter file = null;
-        int order = 0;
-        String proposalAttributed = "";
-        if (professor == false) {
-            try {
-                file = new FileWriter(
-                        "/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/files/proposals.csv");
-                file.append(header);
-                file.append(separator);
-
-                Iterator<Map.Entry<Long, List<String>>> itr = candidatures.entrySet().iterator();
-                Iterator<Map.Entry<Long, List<String>>> auxItr = candidatures.entrySet().iterator();
-                Iterator<Map.Entry<String, Long>> itrAttribuition = proposalAttributions.entrySet().iterator();
-                while (itr.hasNext()) {
-                    order = 1;
-                    Map.Entry<Long, List<String>> entry = itr.next();
-                    file.append(Long.toString(entry.getKey()));
-                    file.append(delimiter);
-                    Iterator<String> proposals = entry.getValue().iterator();
-                    while (proposals.hasNext()) {
-                        file.append(proposals.next());
-                        file.append(delimiter);
-                    }
-                    while (itrAttribuition.hasNext()) {
-                        Map.Entry<String, Long> entryAttribuition = itrAttribuition.next();
-                        if (entry.getKey() == entryAttribuition.getValue()) {
-                            file.append(entryAttribuition.getKey());
-                            file.append(delimiter);
-                            proposalAttributed = entryAttribuition.getKey();
-                            break;
-                        }
-                    }
-
-                    while (auxItr.hasNext()) {
-                        Map.Entry<Long, List<String>> entryAux = auxItr.next();
-                        proposals = entryAux.getValue().iterator();
-                        while (proposals.hasNext()) {
-                            if (proposals.next().equals(proposalAttributed)) {
-                                file.append(Integer.toString(order));
-                                break;
-                            } else {
-                                order++;
-                            }
-                        }
-                        break;
-                    }
+        try{
+            String delimiter = ",";
+            String separator = "\n";
+            String header = "Student,Candidatures,Proposal,Order";
+            String headerProfessor = "Student,Candidatures,Proposal,Order,Professor";
+            FileWriter file = null;
+            int order = 0;
+            String proposalAttributed = "";
+            if (professor == false) {
+                try {
+                    file = new FileWriter(
+                            "/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/files/proposals.csv");
+                    file.append(header);
                     file.append(separator);
-                }
 
-                for (Proposal auto : autoproposals) {
-                    if (auto.getStudent() != -1 && !candidatures.containsKey(auto.getStudent())) {
-                        file.append(Long.toString(auto.getStudent()));
+                    Iterator<Map.Entry<Long, List<String>>> itr = candidatures.entrySet().iterator();
+                    Iterator<Map.Entry<Long, List<String>>> auxItr = candidatures.entrySet().iterator();
+                    Iterator<Map.Entry<String, Long>> itrAttribuition = proposalAttributions.entrySet().iterator();
+                    while (itr.hasNext()) {
+                        order = 1;
+                        Map.Entry<Long, List<String>> entry = itr.next();
+                        file.append(Long.toString(entry.getKey()));
                         file.append(delimiter);
-                        file.append(auto.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(auto.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(Integer.toString(1));
-                        file.append(separator);
-                    }
-                }
-
-                for (MidProposal project : projects) {
-                    if (project.getStudent() != -1 && !candidatures.containsKey(project.getStudent())) {
-                        file.append(Long.toString(project.getStudent()));
-                        file.append(delimiter);
-                        file.append(project.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(project.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(Integer.toString(1));
-                        file.append(separator);
-                    }
-                }
-
-                for (MidProposal internship : internships) {
-                    if (internship.getStudent() != -1 && !candidatures.containsKey(internship.getStudent())) {
-                        file.append(Long.toString(internship.getStudent()));
-                        file.append(delimiter);
-                        file.append(internship.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(internship.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(Integer.toString(1));
-                        file.append(separator);
-                    }
-                }
-                file.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } else {
-            try {
-                file = new FileWriter(
-                        "/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/files/proposals.csv");
-                file.append(headerProfessor);
-                file.append(separator);
-
-                Iterator<Map.Entry<Long, List<String>>> itr = candidatures.entrySet().iterator();
-                Iterator<Map.Entry<Long, List<String>>> auxItr = candidatures.entrySet().iterator();
-                Iterator<Map.Entry<String, Long>> itrAttribuition = proposalAttributions.entrySet().iterator();
-                Iterator<Map.Entry<String, List<String>>> advisorItr = advisorAttribution.entrySet().iterator();
-                while (itr.hasNext()) {
-                    order = 1;
-                    Map.Entry<Long, List<String>> entry = itr.next();
-                    file.append(Long.toString(entry.getKey()));
-                    file.append(delimiter);
-                    Iterator<String> proposals = entry.getValue().iterator();
-                    while (proposals.hasNext()) {
-                        file.append(proposals.next());
-                        file.append(delimiter);
-                    }
-                    while (itrAttribuition.hasNext()) {
-                        Map.Entry<String, Long> entryAttribuition = itrAttribuition.next();
-                        if (entry.getKey() == entryAttribuition.getValue()) {
-                            file.append(entryAttribuition.getKey());
-                            file.append(delimiter);
-                            proposalAttributed = entryAttribuition.getKey();
-                            break;
-                        }
-                    }
-
-                    while (auxItr.hasNext()) {
-                        Map.Entry<Long, List<String>> entryAux = auxItr.next();
-                        proposals = entryAux.getValue().iterator();
+                        Iterator<String> proposals = entry.getValue().iterator();
                         while (proposals.hasNext()) {
-                            if (proposals.next().equals(proposalAttributed)) {
-                                file.append(Integer.toString(order));
+                            file.append(proposals.next());
+                            file.append(delimiter);
+                        }
+                        while (itrAttribuition.hasNext()) {
+                            Map.Entry<String, Long> entryAttribuition = itrAttribuition.next();
+                            if (entry.getKey() == entryAttribuition.getValue()) {
+                                file.append(entryAttribuition.getKey());
+                                file.append(delimiter);
+                                proposalAttributed = entryAttribuition.getKey();
                                 break;
-                            } else {
-                                order++;
                             }
                         }
-                        break;
-                    }
 
-                    while (advisorItr.hasNext()) {
-                        Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
-                        if (entryAdvisor.getValue().contains(proposalAttributed)) {
-                            file.append(delimiter);
-                            file.append(entryAdvisor.getKey());
+                        while (auxItr.hasNext()) {
+                            Map.Entry<Long, List<String>> entryAux = auxItr.next();
+                            proposals = entryAux.getValue().iterator();
+                            while (proposals.hasNext()) {
+                                if (proposals.next().equals(proposalAttributed)) {
+                                    file.append(Integer.toString(order));
+                                    break;
+                                } else {
+                                    order++;
+                                }
+                            }
                             break;
                         }
+                        file.append(separator);
                     }
+
+                    for (Proposal auto : autoproposals) {
+                        if (auto.getStudent() != -1 && !candidatures.containsKey(auto.getStudent())) {
+                            file.append(Long.toString(auto.getStudent()));
+                            file.append(delimiter);
+                            file.append(auto.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(auto.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(Integer.toString(1));
+                            file.append(separator);
+                        }
+                    }
+
+                    for (MidProposal project : projects) {
+                        if (project.getStudent() != -1 && !candidatures.containsKey(project.getStudent())) {
+                            file.append(Long.toString(project.getStudent()));
+                            file.append(delimiter);
+                            file.append(project.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(project.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(Integer.toString(1));
+                            file.append(separator);
+                        }
+                    }
+
+                    for (MidProposal internship : internships) {
+                        if (internship.getStudent() != -1 && !candidatures.containsKey(internship.getStudent())) {
+                            file.append(Long.toString(internship.getStudent()));
+                            file.append(delimiter);
+                            file.append(internship.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(internship.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(Integer.toString(1));
+                            file.append(separator);
+                        }
+                    }
+                    file.close();
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            } else {
+                try {
+                    file = new FileWriter(
+                            "/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/files/proposals.csv");
+                    file.append(headerProfessor);
                     file.append(separator);
-                }
-                advisorItr = advisorAttribution.entrySet().iterator();
 
-                for (Proposal auto : autoproposals) {
-                    if (auto.getStudent() != -1 && !candidatures.containsKey(auto.getStudent())) {
-                        file.append(Long.toString(auto.getStudent()));
+                    Iterator<Map.Entry<Long, List<String>>> itr = candidatures.entrySet().iterator();
+                    Iterator<Map.Entry<Long, List<String>>> auxItr = candidatures.entrySet().iterator();
+                    Iterator<Map.Entry<String, Long>> itrAttribuition = proposalAttributions.entrySet().iterator();
+                    Iterator<Map.Entry<String, List<String>>> advisorItr = advisorAttribution.entrySet().iterator();
+                    while (itr.hasNext()) {
+                        order = 1;
+                        Map.Entry<Long, List<String>> entry = itr.next();
+                        file.append(Long.toString(entry.getKey()));
                         file.append(delimiter);
-                        file.append(auto.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(auto.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(Integer.toString(1));
+                        Iterator<String> proposals = entry.getValue().iterator();
+                        while (proposals.hasNext()) {
+                            file.append(proposals.next());
+                            file.append(delimiter);
+                        }
+                        while (itrAttribuition.hasNext()) {
+                            Map.Entry<String, Long> entryAttribuition = itrAttribuition.next();
+                            if (entry.getKey() == entryAttribuition.getValue()) {
+                                file.append(entryAttribuition.getKey());
+                                file.append(delimiter);
+                                proposalAttributed = entryAttribuition.getKey();
+                                break;
+                            }
+                        }
+
+                        while (auxItr.hasNext()) {
+                            Map.Entry<Long, List<String>> entryAux = auxItr.next();
+                            proposals = entryAux.getValue().iterator();
+                            while (proposals.hasNext()) {
+                                if (proposals.next().equals(proposalAttributed)) {
+                                    file.append(Integer.toString(order));
+                                    break;
+                                } else {
+                                    order++;
+                                }
+                            }
+                            break;
+                        }
 
                         while (advisorItr.hasNext()) {
                             Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
-                            if (entryAdvisor.getValue().contains(auto.getIdOfProposal())) {
+                            if (entryAdvisor.getValue().contains(proposalAttributed)) {
                                 file.append(delimiter);
                                 file.append(entryAdvisor.getKey());
                                 break;
@@ -364,55 +348,81 @@ public class Data implements Serializable {
                         }
                         file.append(separator);
                     }
-                }
+                    advisorItr = advisorAttribution.entrySet().iterator();
 
-                for (MidProposal project : projects) {
-                    if (project.getStudent() != -1 && !candidatures.containsKey(project.getStudent())) {
-                        file.append(Long.toString(project.getStudent()));
-                        file.append(delimiter);
-                        file.append(project.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(project.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(Integer.toString(1));
+                    for (Proposal auto : autoproposals) {
+                        if (auto.getStudent() != -1 && !candidatures.containsKey(auto.getStudent())) {
+                            file.append(Long.toString(auto.getStudent()));
+                            file.append(delimiter);
+                            file.append(auto.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(auto.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(Integer.toString(1));
 
-                        while (advisorItr.hasNext()) {
-                            Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
-                            if (entryAdvisor.getValue().contains(project.getIdOfProposal())) {
-                                file.append(delimiter);
-                                file.append(entryAdvisor.getKey());
-                                break;
+                            while (advisorItr.hasNext()) {
+                                Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
+                                if (entryAdvisor.getValue().contains(auto.getIdOfProposal())) {
+                                    file.append(delimiter);
+                                    file.append(entryAdvisor.getKey());
+                                    break;
+                                }
                             }
+                            file.append(separator);
                         }
-                        file.append(separator);
                     }
-                }
 
-                for (MidProposal internship : internships) {
-                    if (internship.getStudent() != -1 && !candidatures.containsKey(internship.getStudent())) {
-                        file.append(Long.toString(internship.getStudent()));
-                        file.append(delimiter);
-                        file.append(internship.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(internship.getIdOfProposal());
-                        file.append(delimiter);
-                        file.append(Integer.toString(1));
+                    for (MidProposal project : projects) {
+                        if (project.getStudent() != -1 && !candidatures.containsKey(project.getStudent())) {
+                            file.append(Long.toString(project.getStudent()));
+                            file.append(delimiter);
+                            file.append(project.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(project.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(Integer.toString(1));
 
-                        while (advisorItr.hasNext()) {
-                            Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
-                            if (entryAdvisor.getValue().contains(internship.getIdOfProposal())) {
-                                file.append(delimiter);
-                                file.append(entryAdvisor.getKey());
-                                break;
+                            while (advisorItr.hasNext()) {
+                                Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
+                                if (entryAdvisor.getValue().contains(project.getIdOfProposal())) {
+                                    file.append(delimiter);
+                                    file.append(entryAdvisor.getKey());
+                                    break;
+                                }
                             }
+                            file.append(separator);
                         }
-                        file.append(separator);
                     }
+
+                    for (MidProposal internship : internships) {
+                        if (internship.getStudent() != -1 && !candidatures.containsKey(internship.getStudent())) {
+                            file.append(Long.toString(internship.getStudent()));
+                            file.append(delimiter);
+                            file.append(internship.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(internship.getIdOfProposal());
+                            file.append(delimiter);
+                            file.append(Integer.toString(1));
+
+                            while (advisorItr.hasNext()) {
+                                Map.Entry<String, List<String>> entryAdvisor = advisorItr.next();
+                                if (entryAdvisor.getValue().contains(internship.getIdOfProposal())) {
+                                    file.append(delimiter);
+                                    file.append(entryAdvisor.getKey());
+                                    break;
+                                }
+                            }
+                            file.append(separator);
+                        }
+                    }
+                    file.close();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
-                file.close();
-            } catch (Exception e) {
-                e.printStackTrace();
             }
+        }catch (Exception e){
+            log.add("Could not export data");
+            return false;
         }
         return true;
     }
@@ -430,34 +440,39 @@ public class Data implements Serializable {
     }
 
     public boolean addProfessorFile(List<List<String>> attributes) {
-        if(attributes == null){
-            log.add("Path incorrect!");
-            return false;
-        }
-
-        Iterator<List<String>> listsOfListsIterator = attributes.iterator();
-
-        String name;
-        String email;
-        int lineCSV = 1;
-
-        while (listsOfListsIterator.hasNext()) {
-            List<String> list = new ArrayList<String>();
-            list = (List<String>) listsOfListsIterator.next();
-
-            Iterator<String> eachListIterator = list.iterator();
-
-            while (eachListIterator.hasNext()) {
-                name = (String) eachListIterator.next();
-                email = (String) eachListIterator.next();
-
-                if (!professors.contains(Professor.createDummyProfessor(email))){
-                    addProfessor(name, email);
-                }else{
-                    log.add("Professor already exists [line " + lineCSV + "]");
-                }
+        try{
+            if(attributes == null){
+                log.add("Path incorrect!");
+                return false;
             }
-            ++lineCSV;
+
+            Iterator<List<String>> listsOfListsIterator = attributes.iterator();
+
+            String name;
+            String email;
+            int lineCSV = 1;
+
+            while (listsOfListsIterator.hasNext()) {
+                List<String> list = new ArrayList<String>();
+                list = (List<String>) listsOfListsIterator.next();
+
+                Iterator<String> eachListIterator = list.iterator();
+
+                while (eachListIterator.hasNext()) {
+                    name = (String) eachListIterator.next();
+                    email = (String) eachListIterator.next();
+
+                    if (!professors.contains(Professor.createDummyProfessor(email))){
+                        addProfessor(name, email);
+                    }else{
+                        log.add("Professor already exists [line " + lineCSV + "]");
+                    }
+                }
+                ++lineCSV;
+            }
+        }catch (Exception e){
+            log.add("Could not load professor data file");
+            return false;
         }
 
         return true;
@@ -485,115 +500,120 @@ public class Data implements Serializable {
     }
 
     public boolean addProposalFile(List<List<String>> attributes) {
-        if(attributes == null){
-            log.add("Path incorrect!");
-            return false;
-        }
-
-        Iterator<List<String>> listOfListsIterator = attributes.iterator();
-
-        String idOfProposal;
-        String title;
-        Student student;
-        List<String> branch;
-        Person professor;
-        String nameOfCompany;
-        Set<String> coursesBranches = new HashSet<>();
-        coursesBranches.add("DA");
-        coursesBranches.add("SI");
-        coursesBranches.add("RAS");
-        Set<Student> studentsAdded = new HashSet<>();
-        int lineCSV = 1;
-
-        while (listOfListsIterator.hasNext()) {
-            List<String> list = new ArrayList<String>();
-            list = (List<String>) listOfListsIterator.next();
-
-            Iterator<String> eachListIterator = list.iterator();
-            eachListIterator.next();
-
-            if (list.get(0).equals("T1")) { // Internship
-                idOfProposal = (String) eachListIterator.next();
-                branch = List.of(((String) eachListIterator.next()).split("[|]+"));
-                title = (String) eachListIterator.next();
-                nameOfCompany = (String) eachListIterator.next();
-
-                if (!projects.contains(Project.createDummyProject(idOfProposal))
-                        && !internships.contains(Internship.createDummyInternship(idOfProposal))
-                        && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))) {
-                    if (coursesBranches.containsAll(branch)) {
-                        if (list.size() > 5) {
-                            student = (Student) Student
-                                    .createDummyStudent(Long.parseLong((String) eachListIterator.next()));
-                            if (!studentsAdded.contains(student)) {
-                                addInternship(idOfProposal, title, student, branch, nameOfCompany);
-                                studentsAdded.add(student);
-                            }else{
-                                log.add("Student doesn't exist [line " + lineCSV + "]");
-                            }
-                        } else {
-                            addInternshipWithoutStudent(idOfProposal, title, branch, nameOfCompany);
-                        }
-                    }else{
-                        log.add("Course branch does not exist [line " + lineCSV + "]");
-                    }
-                }else{
-                    log.add("Proposal already exists [line " + lineCSV + "]");
-                }
+        try{
+            if(attributes == null){
+                log.add("Path incorrect!");
+                return false;
             }
 
-            else if (list.get(0).equals("T2")) { // Project
-                idOfProposal = (String) eachListIterator.next();
-                branch = List.of(((String) eachListIterator.next()).split("[|]+"));
-                title = (String) eachListIterator.next();
-                professor = (Professor) Professor.createDummyProfessor((String) eachListIterator.next());
+            Iterator<List<String>> listOfListsIterator = attributes.iterator();
 
-                if (!projects.contains(Project.createDummyProject(idOfProposal))
-                        && !internships.contains(Internship.createDummyInternship(idOfProposal))
-                        && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))) {
-                    if (coursesBranches.containsAll(branch)) {
-                        if (professors.contains(professor)) {
+            String idOfProposal;
+            String title;
+            Student student;
+            List<String> branch;
+            Person professor;
+            String nameOfCompany;
+            Set<String> coursesBranches = new HashSet<>();
+            coursesBranches.add("DA");
+            coursesBranches.add("SI");
+            coursesBranches.add("RAS");
+            Set<Student> studentsAdded = new HashSet<>();
+            int lineCSV = 1;
+
+            while (listOfListsIterator.hasNext()) {
+                List<String> list = new ArrayList<String>();
+                list = (List<String>) listOfListsIterator.next();
+
+                Iterator<String> eachListIterator = list.iterator();
+                eachListIterator.next();
+
+                if (list.get(0).equals("T1")) { // Internship
+                    idOfProposal = (String) eachListIterator.next();
+                    branch = List.of(((String) eachListIterator.next()).split("[|]+"));
+                    title = (String) eachListIterator.next();
+                    nameOfCompany = (String) eachListIterator.next();
+
+                    if (!projects.contains(Project.createDummyProject(idOfProposal))
+                            && !internships.contains(Internship.createDummyInternship(idOfProposal))
+                            && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))) {
+                        if (coursesBranches.containsAll(branch)) {
                             if (list.size() > 5) {
                                 student = (Student) Student
                                         .createDummyStudent(Long.parseLong((String) eachListIterator.next()));
                                 if (!studentsAdded.contains(student)) {
-                                    addProject(idOfProposal, title, student, branch, (Professor) professor);
+                                    addInternship(idOfProposal, title, student, branch, nameOfCompany);
                                     studentsAdded.add(student);
                                 }else{
-                                    log.add("Student does not exist [line " + lineCSV + "]");
+                                    log.add("Student doesn't exist [line " + lineCSV + "]");
                                 }
                             } else {
-                                addProjectWithoutStudent(idOfProposal, title, branch, (Professor) professor);
+                                addInternshipWithoutStudent(idOfProposal, title, branch, nameOfCompany);
                             }
                         }else{
-                            log.add("Professor does not exist [line " + lineCSV + "]");
+                            log.add("Course branch does not exist [line " + lineCSV + "]");
                         }
                     }else{
-                        log.add("Course branch does not exist [line " + lineCSV + "]");
+                        log.add("Proposal already exists [line " + lineCSV + "]");
                     }
-                }else{
-                    log.add("Proposal already exists [line " + lineCSV + "]");
                 }
-            }
 
-            else if (list.get(0).equals("T3")) { // Auto proposal
-                idOfProposal = (String) eachListIterator.next();
-                title = (String) eachListIterator.next();
-                student = (Student) Student.createDummyStudent(Long.parseLong((String) eachListIterator.next()));
-                if (!projects.contains(Project.createDummyProject(idOfProposal))
-                        && !internships.contains(Internship.createDummyInternship(idOfProposal))
-                        && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))){
-                    if (!studentsAdded.contains(student)) {
-                        addAutoProposal(idOfProposal, title, student);
-                        studentsAdded.add(student);
+                else if (list.get(0).equals("T2")) { // Project
+                    idOfProposal = (String) eachListIterator.next();
+                    branch = List.of(((String) eachListIterator.next()).split("[|]+"));
+                    title = (String) eachListIterator.next();
+                    professor = (Professor) Professor.createDummyProfessor((String) eachListIterator.next());
+
+                    if (!projects.contains(Project.createDummyProject(idOfProposal))
+                            && !internships.contains(Internship.createDummyInternship(idOfProposal))
+                            && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))) {
+                        if (coursesBranches.containsAll(branch)) {
+                            if (professors.contains(professor)) {
+                                if (list.size() > 5) {
+                                    student = (Student) Student
+                                            .createDummyStudent(Long.parseLong((String) eachListIterator.next()));
+                                    if (!studentsAdded.contains(student)) {
+                                        addProject(idOfProposal, title, student, branch, (Professor) professor);
+                                        studentsAdded.add(student);
+                                    }else{
+                                        log.add("Student does not exist [line " + lineCSV + "]");
+                                    }
+                                } else {
+                                    addProjectWithoutStudent(idOfProposal, title, branch, (Professor) professor);
+                                }
+                            }else{
+                                log.add("Professor does not exist [line " + lineCSV + "]");
+                            }
+                        }else{
+                            log.add("Course branch does not exist [line " + lineCSV + "]");
+                        }
                     }else{
-                        log.add("Student does not exist [line " + lineCSV + "]");
+                        log.add("Proposal already exists [line " + lineCSV + "]");
                     }
-                }else{
-                    log.add("Proposal already exists [line " + lineCSV + "]");
                 }
+
+                else if (list.get(0).equals("T3")) { // Auto proposal
+                    idOfProposal = (String) eachListIterator.next();
+                    title = (String) eachListIterator.next();
+                    student = (Student) Student.createDummyStudent(Long.parseLong((String) eachListIterator.next()));
+                    if (!projects.contains(Project.createDummyProject(idOfProposal))
+                            && !internships.contains(Internship.createDummyInternship(idOfProposal))
+                            && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))){
+                        if (!studentsAdded.contains(student)) {
+                            addAutoProposal(idOfProposal, title, student);
+                            studentsAdded.add(student);
+                        }else{
+                            log.add("Student does not exist [line " + lineCSV + "]");
+                        }
+                    }else{
+                        log.add("Proposal already exists [line " + lineCSV + "]");
+                    }
+                }
+                ++lineCSV;
             }
-            ++lineCSV;
+        }catch (Exception e){
+            log.add("Could not load proposals data file");
+            return false;
         }
 
         return true;
