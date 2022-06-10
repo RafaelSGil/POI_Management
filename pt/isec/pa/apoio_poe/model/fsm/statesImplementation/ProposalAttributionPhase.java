@@ -93,8 +93,8 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public String listProposalsFilters(List<Integer> filters) {
-        String str = data.listProposalsFilters(filters, ApplicationState.PROPOSAL_ATTRIBUTION);
+    public ArrayList<String> listProposalsFilters(List<String> filters) {
+        ArrayList<String> str = data.listProposalsFilters(filters, ApplicationState.PROPOSAL_ATTRIBUTION);
         setState(ApplicationState.PROPOSAL_ATTRIBUTION);
         return str;
     }

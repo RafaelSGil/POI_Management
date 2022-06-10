@@ -20,15 +20,18 @@ public class FSManager {
     public static final String PROP_SWC = "studentWithCandidature";
     public static final String PROP_SWNC = "studentWithoutCandidature";
     public static final String PROP_SWSP = "studentWithSelProposals";
+    public static final String PROP_PF = "proposalFilters";
 
     private ApplicationContext context;
     private CommandManager cmd;
     private PropertyChangeSupport pcs;
+    private ArrayList<String> proposalsFilters;
 
     public FSManager(){
         this.context = new ApplicationContext();
         this.cmd = new CommandManager();
         this.pcs = new PropertyChangeSupport(this);
+        this.proposalsFilters = new ArrayList<>();
     }
 
     public void addPropertyChangeListener(String property, PropertyChangeListener listener){
@@ -167,10 +170,20 @@ public class FSManager {
         pcs.firePropertyChange(PROP_SWSP, null, null);
     }
 
-    public String listProposalsFilters(List<Integer> filters) {
-        String str = context.listProposalsFilters(filters);
+    public ArrayList<String> listProposalsFilters(List<String> filters) {
+        ArrayList<String> str = context.listProposalsFilters(filters);
         pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
+    }
+
+    public ArrayList<String> listProposalFiltersGUI(){
+        ArrayList<String> arr = context.listProposalsFilters(proposalsFilters);
+        return arr;
+    }
+
+    public void callPF(List<String> filter){
+        proposalsFilters.addAll(filter);
+        pcs.firePropertyChange(PROP_PF, null, null);
     }
 
     public ArrayList<String> getBranches() {

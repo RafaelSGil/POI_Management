@@ -1,22 +1,26 @@
 package pt.isec.pa.apoio_poe.ui.gui.components;
 
 import javafx.geometry.Insets;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
+import javafx.geometry.Orientation;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CandidatureUI extends BorderPane {
     private FSManager manager;
     Button btnPrev, btnClose, btnPropAttrib;
     private Label lbCurrentState;
-    private TextField tfPathCandidaturesData, tfRemoveCandidatures;
-    private Button btnLoadCandidaturesData, btnRemoveCandidatures, btnListStudent, btnListSWC, btnListSWNC, btnListSWSP;
+    private TextField tfPathCandidaturesData, tfRemoveCandidatures, tfEditCandidatureStudent, tfEditCandidatureProposal, tfFilters;
+    private Button btnLoadCandidaturesData, btnRemoveCandidatures, btnEditCandidature, btnListStudent, btnListSWC, btnListSWNC, btnListSWSP, btnListProposals, btnListProposalsFilters;
+    private BorderPane bpListStudents, bpListProposals;
 
     public CandidatureUI(FSManager manager){
         this.manager = manager;
@@ -49,7 +53,7 @@ public class CandidatureUI extends BorderPane {
         hBox1.setStyle("-fx-padding: 20 10 10 10");
 
         this.tfRemoveCandidatures = new TextField();
-        this.tfRemoveCandidatures.setPromptText("Enter student id of the candidature to remove");
+        this.tfRemoveCandidatures.setPromptText("Student ID of the candidature to remove");
         this.tfRemoveCandidatures.setMinWidth(250);
         this.btnRemoveCandidatures = new Button("Remove");
         Label lbPlaceholder1 = new Label("Remove Candidature     ");
@@ -57,18 +61,61 @@ public class CandidatureUI extends BorderPane {
         HBox hBox2 = new HBox(lbPlaceholder1, tfRemoveCandidatures, btnRemoveCandidatures);
         hBox2.setStyle("-fx-padding: 20 10 10 10");
 
+        this.tfEditCandidatureStudent = new TextField();
+        this.tfEditCandidatureStudent.setPromptText("Student ID");
+        this.tfEditCandidatureStudent.setMinWidth(105);
+        this.tfEditCandidatureProposal = new TextField();
+        this.tfEditCandidatureProposal.setPromptText("Proposal ID");
+        this.tfEditCandidatureProposal.setMinWidth(105);
+        this.btnEditCandidature = new Button("Edit");
+        Label lbPlaceHolder2 = new Label("Edit Candidature           ");
+        lbPlaceHolder2.setPadding(new Insets(4));
+        HBox hBox4 = new HBox(lbPlaceHolder2, tfEditCandidatureStudent, tfEditCandidatureProposal, btnEditCandidature);
+        hBox4.setStyle("-fx-padding: 20 10 10 10");
+
+
         this.btnListStudent = new Button("List Students");
         this.btnListSWC = new Button("Student With Candidature");
         this.btnListSWNC = new Button("Student Without Candidature");
         this.btnListSWSP = new Button("Student With Self-Proposals");
         HBox hBox3 = new HBox(btnListSWC, btnListSWNC, btnListSWSP);
+        hBox3.setStyle("-fx-padding: 20 0 0 0");
         hBox3.setSpacing(20);
-        VBox vBox = new VBox(btnListStudent, hBox3);
-        vBox.setSpacing(10);
-        vBox.setStyle("-fx-alignment: center");
+        this.bpListStudents = new BorderPane();
+        this.bpListStudents.setCenter(hBox3);
+        this.bpListStudents.setVisible(false);
 
+        Label lbPlaceHolder31 = new Label("1 - AutoProposals from students");
+        Label lbPlaceHolder32 = new Label("2 - Proposals from professors");
+        Label lbPlaceHolder33 = new Label("3 - Available proposals");
+        Label lbPlaceHolder34 = new Label("4 - Proposals attributed");
+        VBox vBox13 = new VBox(lbPlaceHolder31, lbPlaceHolder33);
+        vBox13.setSpacing(20);
+        VBox vBox24 = new VBox(lbPlaceHolder32, lbPlaceHolder34);
+        vBox24.setSpacing(20);
+        HBox hBox1324 = new HBox(vBox13, new Separator(Orientation.VERTICAL), vBox24);
+        this.tfFilters = new TextField();
+        this.tfFilters.setPromptText("Select the filters");
+        this.tfFilters.setMinWidth(250);
+        this.btnListProposalsFilters = new Button("List");
+        HBox hBox6 = new HBox(tfFilters, btnListProposalsFilters);
+        VBox vBox2 = new VBox(hBox1324, hBox6);
+        vBox2.setSpacing(20);
+        this.bpListProposals = new BorderPane();
+        this.bpListProposals.setCenter(vBox2);
+        this.bpListProposals.setVisible(false);
+        this.bpListProposals.setPadding(new Insets(5));
 
-        VBox vBoxFinal = new VBox(hBox1, hBox2, vBox);
+        StackPane stackPane = new StackPane(bpListProposals, bpListStudents);
+        stackPane.setStyle("-fx-padding: 20 0 0 0");
+
+        this.btnListProposals = new Button("List proposals");
+
+        HBox hBox5 = new HBox(btnListStudent, btnListProposals);
+        hBox5.setSpacing(20);
+        hBox5.setStyle("-fx-alignment: center");
+
+        VBox vBoxFinal = new VBox(hBox1, hBox2, hBox4, hBox5, stackPane);
         vBoxFinal.setPadding(new Insets(15));
         this.setCenter(vBoxFinal);
     }
@@ -111,6 +158,57 @@ public class CandidatureUI extends BorderPane {
 
         btnListSWC.setOnAction(actionEvent -> {
             manager.callSWC();
+        });
+
+        btnEditCandidature.setOnAction(actionEvent -> {
+            tfEditCandidatureStudent.setStyle("-fx-background-color: white");
+            tfEditCandidatureProposal.setStyle("-fx-background-color: white");
+
+            if(tfEditCandidatureStudent.getText().equals("")){
+                tfEditCandidatureStudent.setStyle("-fx-background-color: #fa3434");
+                tfEditCandidatureStudent.setText("");
+                return;
+            }
+
+            if(tfEditCandidatureProposal.getText().equals("")){
+                tfEditCandidatureProposal.setStyle("-fx-background-color: #fa3434");
+                tfEditCandidatureProposal.setText("");
+                return;
+            }
+
+            if(!manager.editCandidatures(tfEditCandidatureStudent.getText(), tfEditCandidatureProposal.getText())){
+                tfEditCandidatureStudent.setStyle("-fx-background-color: #fa3434");
+                tfEditCandidatureStudent.setText("");
+                tfEditCandidatureProposal.setStyle("-fx-background-color: #fa3434");
+                tfEditCandidatureProposal.setText("");
+            }
+        });
+
+
+        btnListStudent.setOnAction(actionEvent -> {
+            if(bpListStudents.isVisible()){
+                bpListStudents.setVisible(false);
+                return;
+            }
+
+            bpListStudents.setVisible(true);
+            bpListProposals.setVisible(false);
+        });
+
+        btnListProposals.setOnAction(actionEvent -> {
+            if(bpListProposals.isVisible()){
+                bpListProposals.setVisible(false);
+                return;
+            }
+
+            bpListProposals.setVisible(true);
+            bpListStudents.setVisible(false);
+        });
+
+        btnListProposalsFilters.setOnAction(actionEvent -> {
+            String str = tfFilters.getText();
+            String [] div = str.split(",");
+            manager.callPF(List.of(div));
         });
     }
 

@@ -526,7 +526,7 @@ public class CommandLineUI {
     }
 
     public void listProposals() {
-        List<Integer> filters = new ArrayList<>();
+        List<String> filters = new ArrayList<>();
 
         if (manager.getState() == ApplicationState.CANDIDATURE
                 || manager.getState() == ApplicationState.CANDIDATURE_LOCKED) {
@@ -534,9 +534,9 @@ public class CommandLineUI {
                     "Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Proposals with candidatures \n\t4 - Proposals without candidatures");
 
             while (true) {
-                int filter = InputProtection.readInt("Specify the filters you want [type 5 to stop]: ");
+                String filter = InputProtection.readString("Specify the filters you want [type 5 to stop]: ", true);
 
-                if (filter == 5 || filters.size() >= 4) {
+                if (filter.equals("5") || filters.size() >= 4) {
                     break;
                 }
 
@@ -550,9 +550,9 @@ public class CommandLineUI {
                     "Filters available: \n\t1 - AutoProposals from students \n\t2 - Proposals from professors \n\t3 - Available proposals \n\t4 - Proposals attributed");
 
             while (true) {
-                int filter = InputProtection.readInt("Specify the filters you want [type 5 to stop]: ");
+                String filter = InputProtection.readString("Specify the filters you want [type 5 to stop]: ", true);
 
-                if (filter == 5 || filters.size() >= 4) {
+                if (filter.equals("5") || filters.size() >= 4) {
                     break;
                 }
 

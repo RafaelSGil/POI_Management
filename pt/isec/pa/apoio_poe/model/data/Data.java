@@ -1187,25 +1187,35 @@ public class Data implements Serializable {
         return arr;
     }
 
-    public String listProposalsFilters(List<Integer> filters, ApplicationState state) {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listProposalsFilters(List<String> strs, ApplicationState state) {
+        ArrayList<String> arr = new ArrayList<>();
+
+        ArrayList<Integer> filters = new ArrayList<>();
+
+        for (String s : strs){
+            try{
+                filters.add(Integer.parseInt(s));
+            }catch (NumberFormatException e){
+                return arr;
+            }
+        }
 
         for (int filter : filters) {
             if (filter == 1) {
-                sb.append("AutoProposals from students:\n");
+                arr.add("AutoProposals from students:\n");
                 for (Proposal auto : autoproposals) {
                     if (auto.getStudent() != -1) {
-                        sb.append(auto).append("\n");
+                        arr.add(auto.toString());
                     }
                 }
             }
             if (filter == 2) {
-                sb.append("Proposals from professors:\n");
+                arr.add("Proposals from professors:\n");
                 for (MidProposal project : projects) {
                     if (((Project) project).getProfessor() != null) {
                         for (Person professor : professors) {
                             if (professor.getEmail().equals(((Project) project).getProfessor())) {
-                                sb.append(project).append("\n");
+                                arr.add(professor.toString());
                             }
                         }
                     }
@@ -1214,38 +1224,38 @@ public class Data implements Serializable {
 
             if (state == ApplicationState.CANDIDATURE) {
                 if (filter == 3) {
-                    sb.append("Proposals with candidatures:\n");
+                    arr.add("Proposals with candidatures:\n");
                     for (Long ids : candidatures.keySet()) {
                         Iterator<String> proposals = candidatures.get(ids).iterator();
                         while (proposals.hasNext()) {
                             String aux = proposals.next();
                             for (MidProposal project : projects) {
                                 if (project.getIdOfProposal().equals(aux)) {
-                                    sb.append(project).append("\n");
+                                    arr.add(project.toString());
                                 }
                             }
                             for (MidProposal internship : internships) {
                                 if (internship.getIdOfProposal().equals(aux)) {
-                                    sb.append(internship).append("\n");
+                                    arr.add(internship.toString());
                                 }
                             }
                         }
                     }
                 }
                 if (filter == 4) {
-                    sb.append("Proposals without candidatures:\n");
+                    arr.add("Proposals without candidatures:\n");
                     for (Long ids : candidatures.keySet()) {
                         Iterator<String> proposals = candidatures.get(ids).iterator();
                         while (proposals.hasNext()) {
                             String aux = proposals.next();
                             for (MidProposal project : projects) {
                                 if (!project.getIdOfProposal().equals(aux)) {
-                                    sb.append(project).append("\n");
+                                    arr.add(project.toString());
                                 }
                             }
                             for (MidProposal internship : internships) {
                                 if (!internship.getIdOfProposal().equals(aux)) {
-                                    sb.append(internship).append("\n");
+                                    arr.add(internship.toString());
                                 }
                             }
                         }
@@ -1255,15 +1265,15 @@ public class Data implements Serializable {
 
             if (state == ApplicationState.PROPOSAL_ATTRIBUTION) {
                 if (filter == 3) {
-                    sb.append(listAvailableProposals());
+                    arr.add(listAvailableProposals());
                 }
                 if (filter == 4) {
-                    sb.append(listAttributedProposals());
+                    arr.add(listAttributedProposals());
                 }
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
     public Proposal checkAssociationProposals(String identifier) {

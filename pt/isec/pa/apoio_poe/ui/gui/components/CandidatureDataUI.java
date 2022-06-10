@@ -42,25 +42,36 @@ public class CandidatureDataUI extends BorderPane {
 
         manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
             if(manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED){
+                this.lvData.getItems().clear();
                 this.lvData.setItems(FXCollections.observableList(manager.checkData()));
             }
         });
 
         manager.addPropertyChangeListener(FSManager.PROP_SWC, evt -> {
             if(manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED){
+                this.lvData.getItems().clear();
                 this.lvData.setItems(FXCollections.observableList(manager.listStudentsWithCandidatures()));
             }
         });
 
         manager.addPropertyChangeListener(FSManager.PROP_SWNC, evt -> {
             if(manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED){
+                this.lvData.getItems().clear();
                 this.lvData.setItems(FXCollections.observableList(manager.listStudentsWithoutCandidatures()));
             }
         });
 
         manager.addPropertyChangeListener(FSManager.PROP_SWSP, evt -> {
             if(manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED){
+                this.lvData.getItems().clear();
                 this.lvData.setItems(FXCollections.observableList(manager.listStudentsWithAutoProposals()));
+            }
+        });
+
+        manager.addPropertyChangeListener(FSManager.PROP_PF, evt -> {
+            if(manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED){
+                this.lvData.getItems().clear();
+                this.lvData.setItems(FXCollections.observableList(manager.listProposalFiltersGUI()));
             }
         });
     }

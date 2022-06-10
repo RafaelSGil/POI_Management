@@ -7,6 +7,7 @@ import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -107,7 +108,7 @@ public class ApplicationContext {
         return state.listStudentsWithAutoProposal();
     }
 
-    public String listProposalsFilters(List<Integer> filters) {
+    public ArrayList<String> listProposalsFilters(List<String> filters) {
         return state.listProposalsFilters(filters);
     }
 

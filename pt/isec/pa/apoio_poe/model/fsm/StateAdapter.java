@@ -43,7 +43,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public String listProposalsFilters(List<Integer> filters) {
+    public ArrayList<String> listProposalsFilters(List<String> filters) {
         return null;
     }
 

@@ -83,7 +83,7 @@ public interface IApplicationState {
 
     boolean editCandidatures(String id, String proposal);
 
-    String listProposalsFilters(List<Integer> filters);
+    ArrayList<String> listProposalsFilters(List<String> filters);
 
     String listStudentWithProposalAttributed();
 
