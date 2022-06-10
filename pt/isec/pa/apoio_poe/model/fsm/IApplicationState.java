@@ -29,11 +29,11 @@ public interface IApplicationState {
 
     boolean candidatureTransitioning();
 
-    String listStudentsWithAutoProposal();
+    ArrayList<String> listStudentsWithAutoProposal();
 
-    String listStudentsWithCandidature();
+    ArrayList<String> listStudentsWithCandidature();
 
-    String listStudentsWithoutCandidature();
+    ArrayList<String> listStudentsWithoutCandidature();
 
     String listAutoProposalWithoutCandidatures();
 

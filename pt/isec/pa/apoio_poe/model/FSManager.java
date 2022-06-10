@@ -17,6 +17,9 @@ public class FSManager {
 
     public static final String PROP_STATE = "state";
     public static final String PROP_DATA = "data";
+    public static final String PROP_SWC = "studentWithCandidature";
+    public static final String PROP_SWNC = "studentWithoutCandidature";
+    public static final String PROP_SWSP = "studentWithSelProposals";
 
     private ApplicationContext context;
     private CommandManager cmd;
@@ -51,13 +54,13 @@ public class FSManager {
 
     public boolean insertData(String file) {
         boolean bool = context.insertData(file);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public ArrayList<String> checkData() {
         ArrayList<String> str = context.checkData();
-        pcs.firePropertyChange(PROP_STATE, null, context.getState());
+        pcs.firePropertyChange(PROP_STATE, null, null);
         return str;
     }
 
@@ -67,25 +70,25 @@ public class FSManager {
 
     public boolean editDataProposals(String identifier, String attribute, List<String> newValue) {
         boolean bool =  context.editDataProposals(identifier, attribute, newValue);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean editDataProfessor(String email, boolean advisor) {
         boolean bool =  context.editDataProfessor(email, advisor);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean editDataStudent(String identifier, String change, String whatToChange) {
         boolean bool = context.editDataStudent(identifier, change, whatToChange);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean deleteData(String identifier) {
         boolean bool = context.deleteData(identifier);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
@@ -121,43 +124,52 @@ public class FSManager {
 
     public boolean removeProposalFromCandidature(String id, String proposal) {
         boolean bool = context.removeProposalFromCandidature(id, proposal);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean removeCandidature(String id) {
         boolean bool = context.removeCandidature(id);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean editCandidatures(String id, String proposal) {
         boolean bool = context.editCandidatures(id, proposal);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
-    public String listStudentsWithCandidatures() {
-        String str = context.listStudentsWithCandidatures();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+    public ArrayList<String> listStudentsWithCandidatures() {
+        ArrayList<String> str = context.listStudentsWithCandidatures();
         return str;
     }
 
-    public String listStudentsWithoutCandidatures() {
-        String str = context.listStudentsWithoutCandidatures();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+    public void callSWC(){
+        pcs.firePropertyChange(PROP_SWC, null, null);
+    }
+
+    public ArrayList<String> listStudentsWithoutCandidatures() {
+        ArrayList<String> str = context.listStudentsWithoutCandidatures();
         return str;
     }
 
-    public String listStudentsWithAutoProposals() {
-        String str = context.listStudentsWithAutoProposals();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+    public void callSWNP(){
+        pcs.firePropertyChange(PROP_SWNC, null, null);
+    }
+
+    public ArrayList<String> listStudentsWithAutoProposals() {
+        ArrayList<String> str = context.listStudentsWithAutoProposals();
         return str;
+    }
+
+    public void callSWSP(){
+        pcs.firePropertyChange(PROP_SWSP, null, null);
     }
 
     public String listProposalsFilters(List<Integer> filters) {
         String str = context.listProposalsFilters(filters);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
@@ -167,73 +179,73 @@ public class FSManager {
 
     public boolean isLocked(ApplicationPhases s) {
         boolean bool = context.isLocked(s);
-        pcs.firePropertyChange(PROP_STATE, null, context.getState());
+        pcs.firePropertyChange(PROP_STATE, null, null);
         return bool;
     }
 
     public boolean associateAttribution() {
         boolean bool = context.associateAttribution();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean nonAssociatedAttribution() {
         boolean bool = context.nonAssociatedAttribution();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public ArrayList<Person> getTies(){
         ArrayList<Person> arr = context.getTies();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return arr;
     }
 
     public boolean chooseStudentToAssociate(int index) {
         boolean bool = context.chooseStudentToAssociate(index);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean proposalAttributionManager() {
         boolean bool = context.proposalAttributionManager();
-        pcs.firePropertyChange(PROP_STATE, null, context.getState());
+        pcs.firePropertyChange(PROP_STATE, null, null);
         return bool;
     }
 
     public String listStudentWithProposalAttributed() {
         String str = context.listStudentWithProposalAttributed();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listStudentWithoutProposalAttributed() {
         String str = context.listStudentWithoutProposalAttributed();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public boolean manualAttribution(String idOfProposal, long idOfStudent) {
         boolean bool = cmd.invokeProp(new AddPropAtrib(context, idOfProposal, idOfStudent));
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean manualRemoval(String idOfProposal, long idOfStudent) {
         boolean bool = cmd.invokeProp(new RemovePropAtrib(context, idOfProposal, idOfStudent));
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public String getProfessorByEmail(String email) {
         String str = context.getProfessorByEmail(email);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listProfessorAttributions() {
         String str = context.listProfessorAttributions();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
@@ -245,79 +257,79 @@ public class FSManager {
 
     public boolean manualProfessorAttribution(String idOfProposal, String email) {
         boolean bool = cmd.invokeProf(new AddProfAtrib(context, email, idOfProposal));
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean manualProfessorRemoval(String email, String idOfProposal) {
         boolean bool = cmd.invokeProf(new RemoveProfAtrib(context, email, idOfProposal));
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public String listStudentsWithProposalAndProfessorAttributed() {
         String str = context.listStudentsWithProposalAndProfessorAttributed();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
         String str = context.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listAverageAttributions() {
         String str = context.listAverageAttributions();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listMinimumAttributions() {
         String str = context.listMinimumAttributions();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listMaximumAttribution() {
         String str = context.listMaximumAttribution();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listSpecificProfessorAttribution(String email) {
         String str = context.listSpecificProfessorAttribution(email);
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listStudentWithoutProposalAttributedAndWithCandidature() {
         String str = context.listStudentWithoutProposalAttributedAndWithCandidature();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listAvailableProposals() {
         String str = context.listAvailableProposals();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public String listAttributedProposals() {
         String str = context.listAttributedProposals();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
     public boolean serializationOfProgram() {
         boolean bool = context.serializationOfProgram();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
     public boolean loadSave() throws ClassNotFoundException {
         boolean bool = context.loadSave();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
@@ -328,7 +340,7 @@ public class FSManager {
         }
 
         cmd.undoProf();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
     }
 
     public void redo(){
@@ -338,6 +350,6 @@ public class FSManager {
         }
 
         cmd.redoProf();
-        pcs.firePropertyChange(PROP_DATA, null, context.getState());
+        pcs.firePropertyChange(PROP_DATA, null, null);
     }
 }

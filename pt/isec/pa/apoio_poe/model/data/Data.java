@@ -1146,44 +1146,45 @@ public class Data implements Serializable {
         return sb.toString();
     }
 
-    public String listStudentsWithCandidatures() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listStudentsWithCandidatures() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (Person student : students) {
             if (candidatures.containsKey(((Student) student).getId())) {
-                sb.append(student).append("\n");
+                arr.add(student.toString());
             }
         }
 
-        return sb.toString();
+        System.out.println(arr);
+        return arr;
     }
 
-    public String listStudentsWithoutCandidatures() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listStudentsWithoutCandidatures() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (Person student : students) {
             if (!candidatures.containsKey(((Student) student).getId())) {
-                sb.append(student).append("\n");
+                arr.add(student.toString());
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
-    public String listStudentsWithAutoProposals() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listStudentsWithAutoProposals() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (Proposal auto : autoproposals) {
             if (auto.getStudent() != -1) {
                 for (Person student : students) {
                     if (auto.getStudent() == ((Student) student).getId()) {
-                        sb.append(student).append("\n");
+                        arr.add(student.toString());
                     }
                 }
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
     public String listProposalsFilters(List<Integer> filters, ApplicationState state) {

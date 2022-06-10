@@ -16,7 +16,7 @@ public class CandidatureUI extends BorderPane {
     Button btnPrev, btnClose, btnPropAttrib;
     private Label lbCurrentState;
     private TextField tfPathCandidaturesData, tfRemoveCandidatures;
-    private Button btnLoadCandidaturesData, btnRemoveCandidatures;
+    private Button btnLoadCandidaturesData, btnRemoveCandidatures, btnListStudent, btnListSWC, btnListSWNC, btnListSWSP;
 
     public CandidatureUI(FSManager manager){
         this.manager = manager;
@@ -46,19 +46,31 @@ public class CandidatureUI extends BorderPane {
         Label lbPlaceHolder = new Label("Insert Candidature Data ");
         lbPlaceHolder.setPadding(new Insets(4));
         HBox hBox1 = new HBox(lbPlaceHolder, tfPathCandidaturesData, btnLoadCandidaturesData);
-
+        hBox1.setStyle("-fx-padding: 20 10 10 10");
 
         this.tfRemoveCandidatures = new TextField();
         this.tfRemoveCandidatures.setPromptText("Enter student id of the candidature to remove");
         this.tfRemoveCandidatures.setMinWidth(250);
         this.btnRemoveCandidatures = new Button("Remove");
-        Label lbPlaceholder1 = new Label("Remove Candidature    ");
+        Label lbPlaceholder1 = new Label("Remove Candidature     ");
         lbPlaceholder1.setPadding(new Insets(4));
         HBox hBox2 = new HBox(lbPlaceholder1, tfRemoveCandidatures, btnRemoveCandidatures);
+        hBox2.setStyle("-fx-padding: 20 10 10 10");
 
-        VBox vBox = new VBox(hBox1, hBox2);
-        vBox.setPadding(new Insets(15));
-        this.setCenter(vBox);
+        this.btnListStudent = new Button("List Students");
+        this.btnListSWC = new Button("Student With Candidature");
+        this.btnListSWNC = new Button("Student Without Candidature");
+        this.btnListSWSP = new Button("Student With Self-Proposals");
+        HBox hBox3 = new HBox(btnListSWC, btnListSWNC, btnListSWSP);
+        hBox3.setSpacing(20);
+        VBox vBox = new VBox(btnListStudent, hBox3);
+        vBox.setSpacing(10);
+        vBox.setStyle("-fx-alignment: center");
+
+
+        VBox vBoxFinal = new VBox(hBox1, hBox2, vBox);
+        vBoxFinal.setPadding(new Insets(15));
+        this.setCenter(vBoxFinal);
     }
 
     private void registerHandlers() {
@@ -87,6 +99,18 @@ public class CandidatureUI extends BorderPane {
         btnRemoveCandidatures.setOnAction(actionEvent -> {
             manager.removeCandidature(tfRemoveCandidatures.getText());
             tfRemoveCandidatures.setText("");
+        });
+
+        btnListSWSP.setOnAction(actionEvent -> {
+            manager.callSWSP();
+        });
+
+        btnListSWNC.setOnAction(actionEvent -> {
+            manager.callSWNP();
+        });
+
+        btnListSWC.setOnAction(actionEvent -> {
+            manager.callSWC();
         });
     }
 

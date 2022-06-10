@@ -95,15 +95,15 @@ public class ApplicationContext {
         return state.editCandidatures(id, proposal);
     }
 
-    public String listStudentsWithCandidatures() {
+    public ArrayList<String> listStudentsWithCandidatures() {
         return state.listStudentsWithCandidature();
     }
 
-    public String listStudentsWithoutCandidatures() {
+    public ArrayList<String> listStudentsWithoutCandidatures() {
         return state.listStudentsWithoutCandidature();
     }
 
-    public String listStudentsWithAutoProposals() {
+    public ArrayList<String> listStudentsWithAutoProposals() {
         return state.listStudentsWithAutoProposal();
     }
 

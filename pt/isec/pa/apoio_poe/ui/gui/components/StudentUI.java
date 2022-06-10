@@ -42,12 +42,6 @@ public class StudentUI extends BorderPane {
         this.btnCandid = new Button("Candidature state");
         this.btnClose = new Button("Close state");
 
-/*        HBox hBox = new HBox(btnProp, btnProf, btnCandid, btnClose);
-        hBox.setSpacing(10);
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setPadding(new Insets(4));
-        this.setBottom(hBox);*/
-
         ToolBar toolBar = new ToolBar(btnProf, btnProp, btnCandid, btnClose);
         toolBar.setStyle("-fx-spacing: 20px; -fx-padding: 10 20 10 20; -fx-alignment: center");
         this.setBottom(toolBar);

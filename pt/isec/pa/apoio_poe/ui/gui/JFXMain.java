@@ -22,7 +22,7 @@ public class JFXMain extends Application {
         RootPane root = new RootPane(manager);
         Scene scene = new Scene(root, 600, 430, Color.INDIGO);
         stage.setScene(scene);
-        stage.setTitle("JavaFX");
+        stage.setTitle("POI_MANAGEMENT");
         stage.setMinWidth(500);
         stage.setMinHeight(150);
         stage.show();

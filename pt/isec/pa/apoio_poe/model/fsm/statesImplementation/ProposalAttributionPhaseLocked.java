@@ -6,6 +6,7 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import pt.isec.pa.apoio_poe.model.data.Data;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class ProposalAttributionPhaseLocked extends StateAdapter {
@@ -29,15 +30,15 @@ public class ProposalAttributionPhaseLocked extends StateAdapter {
     }
 
     @Override
-    public String listStudentsWithCandidature() {
-        String str = data.listStudentsWithCandidatures();
+    public ArrayList<String> listStudentsWithCandidature() {
+        ArrayList<String> str = data.listStudentsWithCandidatures();
         setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
         return str;
     }
 
     @Override
-    public String listStudentsWithAutoProposal() {
-        String str = data.listStudentsWithAutoProposals();
+    public ArrayList<String> listStudentsWithAutoProposal() {
+        ArrayList<String> str = data.listStudentsWithAutoProposals();
         setState(ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
         return str;
     }

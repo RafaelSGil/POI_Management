@@ -96,15 +96,15 @@ public class CandidaturePhase extends StateAdapter {
     }
 
     @Override
-    public String listStudentsWithCandidature() {
-        String str = data.listStudentsWithCandidatures();
+    public ArrayList<String> listStudentsWithCandidature() {
+        ArrayList<String> str = data.listStudentsWithCandidatures();
         setState(ApplicationState.CANDIDATURE);
         return str;
     }
 
     @Override
-    public String listStudentsWithoutCandidature() {
-        String str = data.listStudentsWithoutCandidatures();
+    public ArrayList<String> listStudentsWithoutCandidature() {
+        ArrayList<String> str = data.listStudentsWithoutCandidatures();
         setState(ApplicationState.CANDIDATURE);
         return str;
     }

@@ -65,15 +65,15 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public String listStudentsWithCandidature() {
-        String str = data.listStudentsWithCandidatures();
+    public ArrayList<String> listStudentsWithCandidature() {
+        ArrayList<String> str = data.listStudentsWithCandidatures();
         setState(ApplicationState.PROPOSAL_ATTRIBUTION);
         return str;
     }
 
     @Override
-    public String listStudentsWithAutoProposal() {
-        String str = data.listStudentsWithAutoProposals();
+    public ArrayList<String> listStudentsWithAutoProposal() {
+        ArrayList<String> str = data.listStudentsWithAutoProposals();
         setState(ApplicationState.PROPOSAL_ATTRIBUTION);
         return str;
     }

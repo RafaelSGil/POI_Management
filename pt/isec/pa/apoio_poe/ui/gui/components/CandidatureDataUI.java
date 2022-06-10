@@ -45,6 +45,24 @@ public class CandidatureDataUI extends BorderPane {
                 this.lvData.setItems(FXCollections.observableList(manager.checkData()));
             }
         });
+
+        manager.addPropertyChangeListener(FSManager.PROP_SWC, evt -> {
+            if(manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED){
+                this.lvData.setItems(FXCollections.observableList(manager.listStudentsWithCandidatures()));
+            }
+        });
+
+        manager.addPropertyChangeListener(FSManager.PROP_SWNC, evt -> {
+            if(manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED){
+                this.lvData.setItems(FXCollections.observableList(manager.listStudentsWithoutCandidatures()));
+            }
+        });
+
+        manager.addPropertyChangeListener(FSManager.PROP_SWSP, evt -> {
+            if(manager.getState() == ApplicationState.CANDIDATURE || manager.getState() == ApplicationState.CANDIDATURE_LOCKED){
+                this.lvData.setItems(FXCollections.observableList(manager.listStudentsWithAutoProposals()));
+            }
+        });
     }
 
     private void update(){

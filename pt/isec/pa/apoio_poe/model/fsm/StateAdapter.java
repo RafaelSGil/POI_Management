@@ -143,17 +143,17 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public String listStudentsWithAutoProposal() {
+    public ArrayList<String> listStudentsWithAutoProposal() {
         return null;
     }
 
     @Override
-    public String listStudentsWithCandidature() {
+    public ArrayList<String> listStudentsWithCandidature() {
         return null;
     }
 
     @Override
-    public String listStudentsWithoutCandidature() {
+    public ArrayList<String> listStudentsWithoutCandidature() {
         return null;
     }
 
