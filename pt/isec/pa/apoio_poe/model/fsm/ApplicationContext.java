@@ -143,11 +143,11 @@ public class ApplicationContext {
         return state.proposalAttributionTransitioning();
     }
 
-    public String listStudentWithProposalAttributed() {
+    public ArrayList<String> listStudentWithProposalAttributed() {
         return state.listStudentWithProposalAttributed();
     }
 
-    public String listStudentWithoutProposalAttributed() {
+    public ArrayList<String> listStudentWithoutProposalAttributed() {
         return state.listStudentWithoutProposalAttributed();
     }
 

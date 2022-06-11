@@ -4,6 +4,9 @@ import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
@@ -19,6 +22,9 @@ public class ProposalsAttributionUI extends BorderPane {
     private BorderPane bpListStudents, bpListProposals, bpManualRemoval, bpManualAttribution;
     private TextField tfFilters, tfMRStudentID, tfMRProposalID, tfMAStudentID, tfMAProposalID;
     private HBox hBox1;
+    private final KeyCombination ctrlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+
 
     public ProposalsAttributionUI(FSManager manager){
         this.manager = manager;
@@ -140,8 +146,19 @@ public class ProposalsAttributionUI extends BorderPane {
             this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION);
             if(manager.isLocked(ApplicationPhases.PHASE2)){
                 hBox1.setVisible(true);
+                btnClose.setVisible(true);
+                btnProfAttrib.setVisible(true);
             }
             update();
+        });
+
+        this.setOnKeyPressed(keyEvent -> {
+            if(ctrlN.match(keyEvent)){
+                manager.proposalAttributionManager();
+            }
+            if(ctrlB.match(keyEvent)){
+                manager.candidatureManager();
+            }
         });
 
         btnProfAttrib.setOnAction(actionEvent -> manager.professorAttributionManager());

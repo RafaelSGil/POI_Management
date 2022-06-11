@@ -5,6 +5,8 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 
+import java.util.ArrayList;
+
 public class SearchPhase extends StateAdapter {
     public SearchPhase(ApplicationContext context, Data data) {
         super(context, data);
@@ -16,8 +18,8 @@ public class SearchPhase extends StateAdapter {
     }
 
     @Override
-    public String listStudentWithProposalAttributed() {
-        String str = data.listStudentWithProposalAttributed();
+    public ArrayList<String> listStudentWithProposalAttributed() {
+        ArrayList<String> str = data.listStudentWithProposalAttributed();
         setState(ApplicationState.SEARCH);
         return str;
     }

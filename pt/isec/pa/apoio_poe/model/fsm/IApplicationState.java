@@ -85,9 +85,9 @@ public interface IApplicationState {
 
     ArrayList<String> listProposalsFilters(List<String> filters);
 
-    String listStudentWithProposalAttributed();
+    ArrayList<String> listStudentWithProposalAttributed();
 
-    String listStudentWithoutProposalAttributed();
+    ArrayList<String> listStudentWithoutProposalAttributed();
 
     boolean manualProfessorAttribution(String idOfProposal, String emailProfessor);
 

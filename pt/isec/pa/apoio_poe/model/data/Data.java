@@ -1154,8 +1154,6 @@ public class Data implements Serializable {
                 arr.add(student.toString());
             }
         }
-
-        System.out.println(arr);
         return arr;
     }
 
@@ -1489,28 +1487,26 @@ public class Data implements Serializable {
         return new ArrayList<>(ties);
     }
 
-    public String listStudentWithProposalAttributed() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listStudentWithProposalAttributed() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (String idProposal : proposalAttributions.keySet()) {
-            sb.append("Proposal ").append(idProposal).append(" is attributed to student ")
-                    .append(proposalAttributions.get(idProposal));
-            sb.append("\n");
+            arr.add("Proposal " + idProposal + " is attributed to student" + proposalAttributions.get(idProposal));
         }
 
-        return sb.toString();
+        return arr;
     }
 
-    public String listStudentWithoutProposalAttributed() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listStudentWithoutProposalAttributed() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (Person student : students) {
             if (!proposalAttributions.containsValue(((Student) student).getId())) {
-                sb.append(student).append("\n");
+                arr.add(student.toString());
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
     public boolean manualAttribution(String idOdProposal, String idOfStudent) {

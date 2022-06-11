@@ -228,7 +228,7 @@ public class CandidatureUI extends BorderPane {
                 tfFilters.setStyle("-fx-background-color: #fa3434");
                 return;
             }
-                String str = tfFilters.getText();
+            String str = tfFilters.getText();
             String [] div = str.split(",");
             manager.callPF(List.of(div));
         });

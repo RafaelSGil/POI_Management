@@ -5,6 +5,9 @@ import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ToolBar;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
@@ -14,6 +17,9 @@ public class StudentLockedUI extends BorderPane {
     private FSManager manager;
     Button btnProf, btnProp, btnCandid;
     private Label lbCurrentState;
+    private final KeyCombination ctrlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+
 
     public StudentLockedUI(FSManager manager){
         this.manager = manager;
@@ -29,6 +35,9 @@ public class StudentLockedUI extends BorderPane {
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.lbCurrentState.setPadding(new Insets(2));
         this.setTop(lbCurrentState);
+        Label label = new Label("PHASE 1 LOCKED");
+        label.setStyle("-fx-text-fill: white;-fx-font-size: 25");
+        this.setCenter(label);
         this.btnProf = new Button("Professor state");
         this.btnProp = new Button("Proposal state");
         this.btnCandid = new Button("Candidature state");
@@ -42,6 +51,15 @@ public class StudentLockedUI extends BorderPane {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
             this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT_LOCKED);
             update();
+        });
+
+        this.setOnKeyPressed(keyEvent -> {
+            if(ctrlN.match(keyEvent)){
+                manager.professorManager();
+            }
+            if(ctrlB.match(keyEvent)){
+                manager.proposalManager();
+            }
         });
 
         btnProf.setOnAction(actionEvent -> {

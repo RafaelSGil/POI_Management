@@ -180,6 +180,7 @@ public class FSManager {
 
     public ArrayList<String> listProposalFiltersGUI(){
         ArrayList<String> arr = context.listProposalsFilters(proposalsFilters);
+        proposalsFilters.clear();
         return arr;
     }
 
@@ -226,8 +227,8 @@ public class FSManager {
         return bool;
     }
 
-    public String listStudentWithProposalAttributed() {
-        String str = context.listStudentWithProposalAttributed();
+    public ArrayList<String> listStudentWithProposalAttributed() {
+        ArrayList<String> str = context.listStudentWithProposalAttributed();
         return str;
     }
 
@@ -235,8 +236,8 @@ public class FSManager {
         pcs.firePropertyChange(PROP_SWP, null, null);
     }
 
-    public String listStudentWithoutProposalAttributed() {
-        String str = context.listStudentWithoutProposalAttributed();
+    public ArrayList<String> listStudentWithoutProposalAttributed() {
+        ArrayList<String> str = context.listStudentWithoutProposalAttributed();
         return str;
     }
 

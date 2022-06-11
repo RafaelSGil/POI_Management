@@ -48,12 +48,12 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public String listStudentWithProposalAttributed() {
+    public ArrayList<String> listStudentWithProposalAttributed() {
         return null;
     }
 
     @Override
-    public String listStudentWithoutProposalAttributed() {
+    public ArrayList<String> listStudentWithoutProposalAttributed() {
         return null;
     }
 
