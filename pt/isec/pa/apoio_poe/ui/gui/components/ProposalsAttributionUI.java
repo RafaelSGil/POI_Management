@@ -110,8 +110,8 @@ public class ProposalsAttributionUI extends BorderPane {
         hBox4.setSpacing(20);
         this.bpManualAttribution = new BorderPane();
         this.bpManualAttribution.setCenter(hBox4);
-        this.bpManualAttribution.setPadding(new Insets(6));
         this.bpManualAttribution.setVisible(false);
+        this.bpManualAttribution.setStyle("-fx-padding: 0 0 0 -20");
 
         this.tfMRProposalID = new TextField();
         this.tfMRProposalID.setPromptText("Proposal ID");
@@ -127,11 +127,11 @@ public class ProposalsAttributionUI extends BorderPane {
         hBox5.setSpacing(20);
         this.bpManualRemoval = new BorderPane();
         this.bpManualRemoval.setCenter(hBox5);
-        this.bpManualRemoval.setPadding(new Insets(6));
         this.bpManualRemoval.setVisible(false);
+        this.bpManualRemoval.setStyle("-fx-padding: 0 0 0 -20");
 
         StackPane stackPane = new StackPane(bpListProposals, bpListStudents, bpManualAttribution, bpManualRemoval);
-        stackPane.setPadding(new Insets(6));
+        stackPane.setStyle("-fx-padding: 20 20 0 50");
 
         VBox vBoxFinal = new VBox(vBox, stackPane);
         this.setCenter(vBoxFinal);
