@@ -24,6 +24,8 @@ public class ProposalsAttributionUI extends BorderPane {
     private HBox hBox1;
     private final KeyCombination ctrlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
     private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlZ = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlY = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN);
 
 
     public ProposalsAttributionUI(FSManager manager){
@@ -158,6 +160,12 @@ public class ProposalsAttributionUI extends BorderPane {
             }
             if(ctrlB.match(keyEvent)){
                 manager.candidatureManager();
+            }
+            if(ctrlZ.match(keyEvent)){
+                manager.undo();
+            }
+            if(ctrlY.match(keyEvent)){
+                manager.redo();
             }
         });
 
