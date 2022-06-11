@@ -5,8 +5,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.MenuItem;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -16,6 +19,8 @@ public class RootPane extends BorderPane {
     private FSManager manager;
     private Menu menu;
     private MenuItem menuItem1, menuItem2;
+    private final KeyCombination newDataWindow = new KeyCodeCombination(KeyCode.D, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN);
+    private final KeyCombination newLoggerWindow = new KeyCodeCombination(KeyCode.L, KeyCombination.CONTROL_DOWN, KeyCombination.SHIFT_DOWN);
 
     public RootPane(FSManager manager) {
         this.manager = manager;
@@ -83,6 +88,30 @@ public class RootPane extends BorderPane {
             }
         });
 
+        this.setOnKeyPressed(keyEvent -> {
+            if(newDataWindow.match(keyEvent)){
+                try {
+                    Stage stage1 = new Stage();
+                    RootPane2 root2 = new RootPane2(manager);
+                    Scene scene1 = new Scene(root2, 400, 200, Color.INDIGO);
+                    stage1.setScene(scene1);
+                    stage1.setTitle("Data");
+                    stage1.show();
+                }catch (Exception ignored){
+                }
+            }
+            if(newLoggerWindow.match(keyEvent)){
+                try {
+                    Stage stage1 = new Stage();
+                    LoggerUI loggerUI = new LoggerUI(manager);
+                    Scene scene1 = new Scene(loggerUI, 400, 200, Color.INDIGO);
+                    stage1.setScene(scene1);
+                    stage1.setTitle("Logger");
+                    stage1.show();
+                }catch (Exception ignored){
+                }
+            }
+        });
     }
     private void update() {
 

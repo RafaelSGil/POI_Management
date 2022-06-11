@@ -2,11 +2,17 @@ package pt.isec.pa.apoio_poe.ui.gui.components;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Orientation;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
 
@@ -21,6 +27,9 @@ public class CandidatureUI extends BorderPane {
     private TextField tfPathCandidaturesData, tfRemoveCandidatures, tfEditCandidatureStudent, tfEditCandidatureProposal, tfFilters;
     private Button btnLoadCandidaturesData, btnRemoveCandidatures, btnEditCandidature, btnListStudent, btnListSWC, btnListSWNC, btnListSWSP, btnListProposals, btnListProposalsFilters;
     private BorderPane bpListStudents, bpListProposals;
+    private final KeyCombination ctrlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+
 
     public CandidatureUI(FSManager manager){
         this.manager = manager;
@@ -126,6 +135,15 @@ public class CandidatureUI extends BorderPane {
             update();
         });
 
+        this.setOnKeyPressed(keyEvent -> {
+            if(ctrlN.match(keyEvent)){
+                manager.proposalAttributionManager();
+            }
+            if(ctrlB.match(keyEvent)){
+                manager.studentManager();
+            }
+        });
+
         btnPropAttrib.setOnAction(actionEvent -> {
             manager.proposalAttributionManager();
         });
@@ -210,6 +228,39 @@ public class CandidatureUI extends BorderPane {
             String [] div = str.split(",");
             manager.callPF(List.of(div));
         });
+
+        tfPathCandidaturesData.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode().equals(KeyCode.ENTER)){
+                if(!tfPathCandidaturesData.getText().equals("")){
+                    if(!manager.insertData(tfPathCandidaturesData.getText())){
+                        tfPathCandidaturesData.setStyle("-fx-background-color: #fa3434");
+                        tfPathCandidaturesData.setText("");
+                        return;
+                    }
+                    tfPathCandidaturesData.setStyle("-fx-background-color: white");
+                    tfPathCandidaturesData.setText("");
+                }else{
+                    tfPathCandidaturesData.setStyle("-fx-background-color: #fa3434");
+                }
+            }
+        });
+
+        tfRemoveCandidatures.setOnKeyPressed(keyEvent -> {
+            if(keyEvent.getCode().equals(KeyCode.ENTER)){
+                if(!tfRemoveCandidatures.getText().equals("")){
+                    if(!manager.deleteData(tfRemoveCandidatures.getText())){
+                        tfRemoveCandidatures.setStyle("-fx-background-color: #fa3434");
+                        tfRemoveCandidatures.setText("");
+                        return;
+                    }
+                    tfRemoveCandidatures.setStyle("-fx-background-color: white");
+                    tfRemoveCandidatures.setText("");
+                }else{
+                    tfRemoveCandidatures.setStyle("-fx-background-color: #fa3434");
+                }
+            }
+        });
+
     }
 
     private void update() {

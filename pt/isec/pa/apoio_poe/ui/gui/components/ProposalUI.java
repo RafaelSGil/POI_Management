@@ -3,12 +3,17 @@ package pt.isec.pa.apoio_poe.ui.gui.components;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.stage.Stage;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
 
@@ -36,6 +41,9 @@ public class ProposalUI extends BorderPane {
     private Button btnEditProjectTitle, btnEditProjectBranch, btnEditProjectProfessor, btnEditProjectStudent;
     private Button btnEditAutoProposalTitle, btnEditAutoProposalStudent;
     private String idOfProposal;
+    private final KeyCombination ctrlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+
 
     public ProposalUI(FSManager manager){
         this.manager = manager;createViews();
@@ -299,6 +307,16 @@ public class ProposalUI extends BorderPane {
             this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL);
             update();
         });
+
+        this.setOnKeyPressed(keyEvent -> {
+            if(ctrlN.match(keyEvent)){
+                manager.candidatureManager();
+            }
+            if(ctrlB.match(keyEvent)){
+                manager.professorManager();
+            }
+        });
+
 
         btnStud.setOnAction(actionEvent -> {
             manager.studentManager();

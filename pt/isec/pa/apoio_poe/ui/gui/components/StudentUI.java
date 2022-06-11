@@ -5,8 +5,10 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -24,6 +26,8 @@ public class StudentUI extends BorderPane {
     private Button btnRemoveStudent;
     private TextField tfEditIDStudent, tfEditFieldStudent, tfEditValueStudent;
     private Button btnEditStudentData;
+    private final KeyCombination ctrlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
 
     public StudentUI(FSManager manager){
         this.manager = manager;
@@ -95,6 +99,15 @@ public class StudentUI extends BorderPane {
     private void registerHandlers() {
         manager.addPropertyChangeListener(FSManager.PROP_STATE, evt -> {
             update();
+        });
+
+        this.setOnKeyPressed(keyEvent -> {
+            if(ctrlN.match(keyEvent)){
+                manager.professorManager();
+            }
+            if(ctrlB.match(keyEvent)){
+                manager.proposalManager();
+            }
         });
 
         btnProf.setOnAction(actionEvent -> {
