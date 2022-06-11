@@ -1513,7 +1513,14 @@ public class Data implements Serializable {
         return sb.toString();
     }
 
-    public boolean manualAttribution(String idOdProposal, long idOdStudent) {
+    public boolean manualAttribution(String idOdProposal, String idOfStudent) {
+        long idOdStudent;
+        try{
+            idOdStudent = Long.parseLong(idOfStudent);
+        }catch (NumberFormatException e){
+            return false;
+        }
+
         if (proposalAttributions.containsKey(idOdProposal) || proposalAttributions.containsValue(idOdStudent)) {
             return false;
         }

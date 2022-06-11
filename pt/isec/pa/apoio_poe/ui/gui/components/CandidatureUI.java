@@ -96,8 +96,8 @@ public class CandidatureUI extends BorderPane {
 
         Label lbPlaceHolder31 = new Label("1 - AutoProposals from students");
         Label lbPlaceHolder32 = new Label("2 - Proposals from professors");
-        Label lbPlaceHolder33 = new Label("3 - Available proposals");
-        Label lbPlaceHolder34 = new Label("4 - Proposals attributed");
+        Label lbPlaceHolder33 = new Label("3 - Proposals with candidatures");
+        Label lbPlaceHolder34 = new Label("4 - Proposals without candidatures");
         VBox vBox13 = new VBox(lbPlaceHolder31, lbPlaceHolder33);
         vBox13.setSpacing(20);
         VBox vBox24 = new VBox(lbPlaceHolder32, lbPlaceHolder34);
@@ -171,7 +171,7 @@ public class CandidatureUI extends BorderPane {
         });
 
         btnListSWNC.setOnAction(actionEvent -> {
-            manager.callSWNP();
+            manager.callSWNC();
         });
 
         btnListSWC.setOnAction(actionEvent -> {
@@ -224,7 +224,11 @@ public class CandidatureUI extends BorderPane {
         });
 
         btnListProposalsFilters.setOnAction(actionEvent -> {
-            String str = tfFilters.getText();
+            if(tfFilters.getText().equals("")) {
+                tfFilters.setStyle("-fx-background-color: #fa3434");
+                return;
+            }
+                String str = tfFilters.getText();
             String [] div = str.split(",");
             manager.callPF(List.of(div));
         });

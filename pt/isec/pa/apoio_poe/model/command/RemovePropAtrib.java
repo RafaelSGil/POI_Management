@@ -6,9 +6,9 @@ public class RemovePropAtrib extends CommandAdapter{
     //REMOVE PROPOSALS ATTRIBUTION
 
     private String idOfProposal;
-    private long idOfStudent;
+    private String idOfStudent;
 
-    public RemovePropAtrib(ApplicationContext context, String idOfProposal, long idOfStudent){
+    public RemovePropAtrib(ApplicationContext context, String idOfProposal, String idOfStudent){
         super(context);
         this.idOfProposal = idOfProposal;
         this.idOfStudent = idOfStudent;

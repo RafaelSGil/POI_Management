@@ -49,7 +49,7 @@ public interface IApplicationState {
 
     ArrayList<Person> getTies();
 
-    boolean manualAttribution(String idOfProposal, long idOfStudent);
+    boolean manualAttribution(String idOfProposal, String idOfStudent);
 
     boolean manualRemoval(String idOfProposal);
 

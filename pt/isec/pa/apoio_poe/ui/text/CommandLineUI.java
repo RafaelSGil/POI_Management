@@ -645,21 +645,9 @@ public class CommandLineUI {
     public void manualAttribution() {
         if (manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
-            String idOfStudent;
+            String idOfStudent = InputProtection.readString("Specify the id of the student: ", true);
 
-            while (true) {
-                idOfStudent = InputProtection.readString("Specify the id of the student: ", true);
-
-                try {
-                    Long.parseLong(idOfStudent);
-                    break;
-                } catch (NumberFormatException e) {
-                    System.out.println("That's not a number");
-                }
-
-            }
-
-            if (!manager.manualAttribution(idOfProposal, Long.parseLong(idOfStudent))) {
+            if (!manager.manualAttribution(idOfProposal, idOfStudent)) {
                 System.out.println("Could not attribute manually");
             }
         }
@@ -685,21 +673,9 @@ public class CommandLineUI {
     public void manualRemoval() {
         if (manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
+            String idOfStudent = InputProtection.readString("Specify the id of the student: ", true);;
 
-            String idOfStudent;
-            while (true) {
-                idOfStudent = InputProtection.readString("Specify the id of the student: ", true);
-
-                try {
-                    Long.parseLong(idOfStudent);
-                    break;
-                } catch (NumberFormatException e) {
-                    System.out.println("That's not a number");
-                }
-
-            }
-
-            if (!manager.manualRemoval(idOfProposal, Long.parseLong(idOfStudent))) {
+            if (!manager.manualRemoval(idOfProposal, idOfStudent)) {
                 System.out.println("Could not remove manually");
             }
         }

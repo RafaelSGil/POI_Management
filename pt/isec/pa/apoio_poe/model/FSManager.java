@@ -19,8 +19,10 @@ public class FSManager {
     public static final String PROP_DATA = "data";
     public static final String PROP_SWC = "studentWithCandidature";
     public static final String PROP_SWNC = "studentWithoutCandidature";
-    public static final String PROP_SWSP = "studentWithSelProposals";
+    public static final String PROP_SWSP = "studentWithSelfProposals";
     public static final String PROP_PF = "proposalFilters";
+    public static final String PROP_SWNP = "studentWithoutProposalsAttributed";
+    public static final String PROP_SWP = "studentWithProposalsAttributed";
 
     private ApplicationContext context;
     private CommandManager cmd;
@@ -157,7 +159,7 @@ public class FSManager {
         return str;
     }
 
-    public void callSWNP(){
+    public void callSWNC(){
         pcs.firePropertyChange(PROP_SWNC, null, null);
     }
 
@@ -191,9 +193,7 @@ public class FSManager {
     }
 
     public boolean isLocked(ApplicationPhases s) {
-        boolean bool = context.isLocked(s);
-        pcs.firePropertyChange(PROP_STATE, null, null);
-        return bool;
+        return context.isLocked(s);
     }
 
     public boolean associateAttribution() {
@@ -228,23 +228,29 @@ public class FSManager {
 
     public String listStudentWithProposalAttributed() {
         String str = context.listStudentWithProposalAttributed();
-        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
+    }
+
+    public void callSWP(){
+        pcs.firePropertyChange(PROP_SWP, null, null);
     }
 
     public String listStudentWithoutProposalAttributed() {
         String str = context.listStudentWithoutProposalAttributed();
-        pcs.firePropertyChange(PROP_DATA, null, null);
         return str;
     }
 
-    public boolean manualAttribution(String idOfProposal, long idOfStudent) {
+    public void callSWNP(){
+        pcs.firePropertyChange(PROP_SWNP, null, null);
+    }
+
+    public boolean manualAttribution(String idOfProposal, String idOfStudent) {
         boolean bool = cmd.invokeProp(new AddPropAtrib(context, idOfProposal, idOfStudent));
         pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
     }
 
-    public boolean manualRemoval(String idOfProposal, long idOfStudent) {
+    public boolean manualRemoval(String idOfProposal, String idOfStudent) {
         boolean bool = cmd.invokeProp(new RemovePropAtrib(context, idOfProposal, idOfStudent));
         pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;

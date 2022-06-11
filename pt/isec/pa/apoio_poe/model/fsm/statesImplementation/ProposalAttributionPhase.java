@@ -51,7 +51,7 @@ public class ProposalAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public boolean manualAttribution(String idOfProposal, long idOfStudent) {
+    public boolean manualAttribution(String idOfProposal, String idOfStudent) {
         boolean bool = data.manualAttribution(idOfProposal, idOfStudent);
         setState(ApplicationState.PROPOSAL_ATTRIBUTION);
         return bool;

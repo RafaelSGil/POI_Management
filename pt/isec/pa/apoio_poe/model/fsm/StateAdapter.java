@@ -193,7 +193,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean manualAttribution(String idOfProposal, long idOfStudent) {
+    public boolean manualAttribution(String idOfProposal, String idOfStudent) {
         return false;
     }
 

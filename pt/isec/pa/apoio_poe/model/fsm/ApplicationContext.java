@@ -151,7 +151,7 @@ public class ApplicationContext {
         return state.listStudentWithoutProposalAttributed();
     }
 
-    public boolean manualAttribution(String idOfProposal, long idOfStudent) {
+    public boolean manualAttribution(String idOfProposal, String idOfStudent) {
         return state.manualAttribution(idOfProposal, idOfStudent);
     }
 

@@ -6,9 +6,9 @@ public class AddPropAtrib extends CommandAdapter{
     //ADD PROPOSALS ATTRIBUTION
 
     private String idOfProposal;
-    private long idOfStudent;
+    private String idOfStudent;
 
-    public AddPropAtrib(ApplicationContext context, String idOfProposal, long idOfStudent){
+    public AddPropAtrib(ApplicationContext context, String idOfProposal, String idOfStudent){
         super(context);
         this.idOfProposal = idOfProposal;
         this.idOfStudent = idOfStudent;
