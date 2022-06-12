@@ -17,7 +17,7 @@ import java.util.List;
 public class ProposalsAttributionUI extends BorderPane {
     private FSManager manager;
     private Button btnPrev, btnClose, btnProfAttrib, btnListStudent, btnListSWC, btnListSWSP, btnListSWP, btnListSWNP, btnListProposals, btnListProposalsFilters;
-    private Button btnAttribution, btnManualAttribution, btnManualRemoval, btnAttribute, btnRemove;
+    private Button btnAttribution, btnManualAttribution, btnManualRemoval, btnAttribute, btnRemove, btnNonAssociatedAttribution;
     private Label lbCurrentState;
     private BorderPane bpListStudents, bpListProposals, bpManualRemoval, bpManualAttribution;
     private TextField tfFilters, tfMRStudentID, tfMRProposalID, tfMAStudentID, tfMAProposalID;
@@ -54,10 +54,11 @@ public class ProposalsAttributionUI extends BorderPane {
         hBox.setSpacing(20);
         this.btnManualAttribution = new Button("Manual Attrib.");
         this.btnManualRemoval = new Button("Remove Attrib");
-        hBox1= new HBox(btnManualAttribution, btnManualRemoval);
+        this.btnNonAssociatedAttribution = new Button("Non Associated Attrib.");
+        hBox1= new HBox(btnManualAttribution, btnManualRemoval, btnNonAssociatedAttribution);
         hBox1.setSpacing(20);
         hBox1.setVisible(false);
-        hBox1.setStyle("-fx-padding: 10 0 0 50");
+        hBox1.setStyle("-fx-padding: 0 0 0 -30");
         VBox vBox = new VBox(hBox, hBox1);
         vBox.setSpacing(10);
         vBox.setStyle("-fx-padding: 30 50 20 120; -fx-alignment: center");
@@ -228,6 +229,14 @@ public class ProposalsAttributionUI extends BorderPane {
 
             if(!manager.associateAttribution()){
                 btnAttribution.setStyle("-fx-text-fill: #fa3434");
+            }
+        });
+
+        btnNonAssociatedAttribution.setOnAction(actionEvent -> {
+            btnNonAssociatedAttribution.setStyle("-fx-text-fill: #383838");
+
+            if(!manager.nonAssociatedAttribution()){
+                btnNonAssociatedAttribution.setStyle("-fx-text-fill: #fa3434");
             }
         });
 

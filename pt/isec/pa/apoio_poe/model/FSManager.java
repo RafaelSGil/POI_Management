@@ -205,7 +205,7 @@ public class FSManager {
 
     public boolean nonAssociatedAttribution() {
         boolean bool = context.nonAssociatedAttribution();
-        pcs.firePropertyChange(PROP_DATA, null, null);
+        pcs.firePropertyChange(PROP_STATE, null, null);
         return bool;
     }
 
