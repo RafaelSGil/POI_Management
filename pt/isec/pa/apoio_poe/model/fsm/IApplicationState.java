@@ -45,7 +45,7 @@ public interface IApplicationState {
 
     boolean nonAssociateAttribution();
 
-    boolean chooseStudentToAssociate(int index);
+    boolean chooseStudentToAssociate(String index);
 
     ArrayList<Person> getTies();
 

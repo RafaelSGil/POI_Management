@@ -233,11 +233,7 @@ public class ProposalsAttributionUI extends BorderPane {
         });
 
         btnNonAssociatedAttribution.setOnAction(actionEvent -> {
-            btnNonAssociatedAttribution.setStyle("-fx-text-fill: #383838");
-
-            if(!manager.nonAssociatedAttribution()){
-                btnNonAssociatedAttribution.setStyle("-fx-text-fill: #fa3434");
-            }
+            manager.nonAssociatedAttribution();
         });
 
         btnRemove.setOnAction(actionEvent -> {

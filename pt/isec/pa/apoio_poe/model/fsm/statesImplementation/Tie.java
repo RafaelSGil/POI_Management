@@ -27,7 +27,7 @@ public class Tie extends StateAdapter {
     }
 
     @Override
-    public boolean chooseStudentToAssociate(int index) {
+    public boolean chooseStudentToAssociate(String index) {
         boolean bool =  data.chooseStudentToAssociate(index);
         setState(ApplicationState.PROPOSAL_ATTRIBUTION);
         return bool;

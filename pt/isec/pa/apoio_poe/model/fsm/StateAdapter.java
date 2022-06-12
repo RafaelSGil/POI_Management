@@ -183,7 +183,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean chooseStudentToAssociate(int index) {
+    public boolean chooseStudentToAssociate(String index) {
         return false;
     }
 

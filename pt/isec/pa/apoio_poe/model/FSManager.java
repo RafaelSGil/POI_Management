@@ -210,14 +210,12 @@ public class FSManager {
     }
 
     public ArrayList<Person> getTies(){
-        ArrayList<Person> arr = context.getTies();
-        pcs.firePropertyChange(PROP_DATA, null, null);
-        return arr;
+        return context.getTies();
     }
 
-    public boolean chooseStudentToAssociate(int index) {
+    public boolean chooseStudentToAssociate(String index) {
         boolean bool = context.chooseStudentToAssociate(index);
-        pcs.firePropertyChange(PROP_DATA, null, null);
+        pcs.firePropertyChange(PROP_STATE, null, null);
         return bool;
     }
 

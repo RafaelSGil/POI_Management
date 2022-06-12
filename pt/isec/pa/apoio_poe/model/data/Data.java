@@ -1438,7 +1438,15 @@ public class Data implements Serializable {
         }
     }
 
-    public boolean chooseStudentToAssociate(int index) {
+    public boolean chooseStudentToAssociate(String indexStudent) {
+        int index;
+
+        try{
+            index = Integer.parseInt(indexStudent);
+        }catch (NumberFormatException e){
+            return false;
+        }
+
         if (ties != null) {
             for (Map.Entry<Long, List<String>> entry : candidatures.entrySet()) {
                 if (entry.getKey() == ties.get(index).getId()) {

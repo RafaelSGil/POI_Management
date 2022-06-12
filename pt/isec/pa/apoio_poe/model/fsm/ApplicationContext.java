@@ -135,7 +135,7 @@ public class ApplicationContext {
 
     public ArrayList<Person> getTies(){return state.getTies();}
 
-    public boolean chooseStudentToAssociate(int index) {
+    public boolean chooseStudentToAssociate(String index) {
         return state.chooseStudentToAssociate(index);
     }
 

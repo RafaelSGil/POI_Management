@@ -626,7 +626,7 @@ public class CommandLineUI {
         manager.associateAttribution();
     }
 
-    public void chooseStudentToAssociate(int index) {
+    public void chooseStudentToAssociate(String index) {
         manager.chooseStudentToAssociate(index);
     }
 
@@ -803,7 +803,7 @@ public class CommandLineUI {
 
         ArrayList<Person> studentsProposals = manager.getTies();
         int option = -1;
-        String opt;
+        String opt = null;
         int i = 0;
 
         System.out.println("\nYou have to choose between this students to get the priority: \n");
@@ -821,7 +821,7 @@ public class CommandLineUI {
             option = Integer.parseInt(opt);
         }
 
-        chooseStudentToAssociate(option);
+        chooseStudentToAssociate(opt);
 
         return true;
     }
