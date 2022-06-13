@@ -73,7 +73,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public String listProfessorAttributions() {
+    public ArrayList<String> listProfessorAttributions() {
         return null;
     }
 

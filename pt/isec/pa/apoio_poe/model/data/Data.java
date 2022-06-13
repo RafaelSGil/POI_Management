@@ -1607,29 +1607,28 @@ public class Data implements Serializable {
         return false;
     }
 
-    public String listProfessorAttributions() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listProfessorAttributions() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (String email : advisorAttribution.keySet()) {
-            sb.append("\nProfessor(").append(email).append(") is the advisor for proposal: \n");
+            arr.add("Professor(" + email + ") is the advisor for proposal: ");
             for (String id : advisorAttribution.get(email)) {
                 if (proposalAttributions.containsKey(id)) {
                     for (String idOfProposal : proposalAttributions.keySet()) {
                         if (idOfProposal.equals(id)) {
                             if (proposalAttributions.get(idOfProposal) != null) {
-                                sb.append(idOfProposal).append(" which is attributted to student ")
-                                        .append(proposalAttributions.get(idOfProposal)).append("\n");
+                                arr.add(idOfProposal + " which is attributted to student " + proposalAttributions.get(idOfProposal));
                             }
                         }
                     }
                 } else {
-                    sb.append(id).append(" with no student attributed").append("\n");
+                    arr.add(id + "with no student attributed");
                 }
 
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
     public String listStudentsWithProposalAndProfessorAttributed() {

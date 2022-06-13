@@ -67,8 +67,8 @@ public class ProfessorAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public String listProfessorAttributions() {
-        String str = data.listProfessorAttributions();
+    public ArrayList<String> listProfessorAttributions() {
+        ArrayList<String> str = data.listProfessorAttributions();
         setState(ApplicationState.PROFESSOR_ATTRIBUTION);
         return str;
     }

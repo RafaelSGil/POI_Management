@@ -23,11 +23,20 @@ public class FSManager {
     public static final String PROP_PF = "proposalFilters";
     public static final String PROP_SWNP = "studentWithoutProposalsAttributed";
     public static final String PROP_SWP = "studentWithProposalsAttributed";
+    public static final String PROP_PA = "professorAttributions";
+    public static final String PROP_PAA = "averageProfessorAttribution";
+    public static final String PROP_PMIN = "professorMinAttributions";
+    public static final String PROP_PMAX = "professorMaxAttributions";
+    public static final String PROP_SPA = "specificProfessorAttributions";
+    public static final String PROP_SWNCP = "studentWithCand&NoProf";
+    public static final String PROP_SWCP = "studentWithCand&Prof";
+    public static final String PROP_INDIVPROF = "individualProfessor";
 
     private ApplicationContext context;
     private CommandManager cmd;
     private PropertyChangeSupport pcs;
     private ArrayList<String> proposalsFilters;
+    private String emailSpecProf;
 
     public FSManager(){
         this.context = new ApplicationContext();
@@ -255,16 +264,23 @@ public class FSManager {
         return bool;
     }
 
-    public String getProfessorByEmail(String email) {
-        String str = context.getProfessorByEmail(email);
-        pcs.firePropertyChange(PROP_DATA, null, null);
+    public String getProfessorByEmail() {
+        return context.getProfessorByEmail(emailSpecProf);
+    }
+
+
+    public void callINDIVPROF(String email){
+        emailSpecProf = email;
+        pcs.firePropertyChange(PROP_INDIVPROF, null, null);
+    }
+
+    public ArrayList<String> listProfessorAttributions() {
+        ArrayList<String> str = context.listProfessorAttributions();
         return str;
     }
 
-    public String listProfessorAttributions() {
-        String str = context.listProfessorAttributions();
-        pcs.firePropertyChange(PROP_DATA, null, null);
-        return str;
+    public void callPA(){
+        pcs.firePropertyChange(PROP_PA, null, null);
     }
 
     public boolean professorAttributionManager() {
@@ -286,39 +302,52 @@ public class FSManager {
     }
 
     public String listStudentsWithProposalAndProfessorAttributed() {
-        String str = context.listStudentsWithProposalAndProfessorAttributed();
-        pcs.firePropertyChange(PROP_DATA, null, null);
-        return str;
+        return context.listStudentsWithProposalAndProfessorAttributed();
+    }
+
+    public void callSWCP(){
+        pcs.firePropertyChange(PROP_SWCP, null, null);
     }
 
     public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
-        String str = context.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
-        pcs.firePropertyChange(PROP_DATA, null, null);
-        return str;
+        return context.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
+    }
+
+    public void callSWNCP(){
+        pcs.firePropertyChange(PROP_SWNCP, null, null);
     }
 
     public String listAverageAttributions() {
-        String str = context.listAverageAttributions();
-        pcs.firePropertyChange(PROP_DATA, null, null);
-        return str;
+        return context.listAverageAttributions();
+    }
+
+    public void callPAA(){
+        pcs.firePropertyChange(PROP_PAA, null, null);
     }
 
     public String listMinimumAttributions() {
-        String str = context.listMinimumAttributions();
-        pcs.firePropertyChange(PROP_DATA, null, null);
-        return str;
+        return context.listMinimumAttributions();
+    }
+
+    public void callPMIN(){
+        pcs.firePropertyChange(PROP_PMIN, null, null);
     }
 
     public String listMaximumAttribution() {
-        String str = context.listMaximumAttribution();
-        pcs.firePropertyChange(PROP_DATA, null, null);
-        return str;
+        return context.listMaximumAttribution();
     }
 
-    public String listSpecificProfessorAttribution(String email) {
-        String str = context.listSpecificProfessorAttribution(email);
-        pcs.firePropertyChange(PROP_DATA, null, null);
-        return str;
+    public void callPMAX(){
+        pcs.firePropertyChange(PROP_PMAX, null, null);
+    }
+
+    public String listSpecificProfessorAttribution() {
+        return context.listSpecificProfessorAttribution(emailSpecProf);
+    }
+
+    public void callSPA(String email){
+        emailSpecProf = email;
+        pcs.firePropertyChange(PROP_SPA, null, null);
     }
 
     public String listStudentWithoutProposalAttributedAndWithCandidature() {

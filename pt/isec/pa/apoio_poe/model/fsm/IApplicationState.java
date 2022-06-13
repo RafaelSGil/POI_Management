@@ -95,7 +95,7 @@ public interface IApplicationState {
 
     String getProfessorByEmail(String email);
 
-    String listProfessorAttributions();
+    ArrayList<String> listProfessorAttributions();
 
     void exportData();
 }

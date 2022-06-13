@@ -637,8 +637,8 @@ public class CommandLineUI {
     public void manualAttributionMenu(){
         switch (InputProtection.chooseOption(null, "Insert attribution manually", "Undo", "Redo")){
             case 1 -> manualAttribution();
-            case 2 -> {manager.undo();}
-            case 3 -> {manager.redo();}
+            case 2 -> manager.undo();
+            case 3 -> manager.redo();
         }
     }
 
@@ -665,15 +665,15 @@ public class CommandLineUI {
     public void manualRemovalMenu(){
         switch (InputProtection.chooseOption(null, "Remove attribution manually", "Undo", "Redo")){
             case 1 -> manualRemoval();
-            case 2 -> {manager.undo();}
-            case 3 -> {manager.redo();}
+            case 2 -> manager.undo();
+            case 3 -> manager.redo();
         }
     }
 
     public void manualRemoval() {
         if (manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
-            String idOfStudent = InputProtection.readString("Specify the id of the student: ", true);;
+            String idOfStudent = InputProtection.readString("Specify the id of the student: ", true);
 
             if (!manager.manualRemoval(idOfProposal, idOfStudent)) {
                 System.out.println("Could not remove manually");
@@ -726,7 +726,8 @@ public class CommandLineUI {
 
     public void consultProfessorData() {
         String email = InputProtection.readString("Specify the email of the professor you want to consult: ", true);
-        System.out.println(manager.getProfessorByEmail(email));
+        manager.callINDIVPROF(email);
+        System.out.println(manager.getProfessorByEmail());
     }
 
     public void listStudentsWithProposalAndProfessorAttributed() {
@@ -761,7 +762,8 @@ public class CommandLineUI {
 
     public void listSpecificProfessorAttribution() {
         String email = InputProtection.readString("Specify the email of the professor: ", true);
-        System.out.println(manager.listSpecificProfessorAttribution(email));
+        manager.callSPA(email);
+        System.out.println(manager.listSpecificProfessorAttribution());
     }
 
     public boolean searchPhase() {

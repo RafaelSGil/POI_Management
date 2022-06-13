@@ -163,7 +163,7 @@ public class ApplicationContext {
         return state.getProfessorByEmail(email);
     }
 
-    public String listProfessorAttributions() {
+    public ArrayList<String> listProfessorAttributions() {
         return state.listProfessorAttributions();
     }
 
