@@ -1271,10 +1271,11 @@ public class Data implements Serializable {
 
             if (state == ApplicationState.PROPOSAL_ATTRIBUTION) {
                 if (filter == 3) {
-                    arr.add(listAvailableProposals());
+                    arr.addAll(listAvailableProposals());
                 }
                 if (filter == 4) {
-                    arr.add(listAttributedProposals());
+                    arr.addAll(listAttributedProposals());
+
                 }
             }
         }
@@ -1772,62 +1773,62 @@ public class Data implements Serializable {
         return sb.toString();
     }
 
-    public String listStudentWithoutProposalAttributedAndWithCandidature() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listStudentWithoutProposalAttributedAndWithCandidature() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (Person student : students) {
             if (!proposalAttributions.containsValue(student.getId()) && candidatures.containsKey(student.getId())) {
-                sb.append(student).append("\n");
+                arr.add(student.toString());
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
-    public String listAvailableProposals() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listAvailableProposals() {
+        ArrayList<String> arr = new ArrayList<>();
 
-        sb.append("Available proposals:\n");
+        arr.add("Available proposals:");
         for (Proposal internship : internships) {
             if (!proposalAttributions.containsKey(internship.getIdOfProposal())) {
-                sb.append(internship).append("\n");
+                arr.add(internship.toString());
             }
         }
         for (Proposal project : projects) {
             if (!proposalAttributions.containsKey(project.getIdOfProposal())) {
-                sb.append(project).append("\n");
+                arr.add(project.toString());
             }
         }
         for (Proposal auto : autoproposals) {
             if (!proposalAttributions.containsKey(auto.getIdOfProposal())) {
-                sb.append(auto).append("\n");
+                arr.add(auto.toString());
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
-    public String listAttributedProposals() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listAttributedProposals() {
+        ArrayList<String> arr = new ArrayList<>();
 
-        sb.append("Proposals attributed:\n");
+        arr.add("Proposals attributed:");
         for (Proposal internship : internships) {
             if (proposalAttributions.containsKey(internship.getIdOfProposal())) {
-                sb.append(internship).append("\n");
+                arr.add(internship.toString());
             }
         }
         for (Proposal project : projects) {
             if (proposalAttributions.containsKey(project.getIdOfProposal())) {
-                sb.append(project).append("\n");
+                arr.add(project.toString());
             }
         }
         for (Proposal auto : autoproposals) {
             if (proposalAttributions.containsKey(auto.getIdOfProposal())) {
-                sb.append(auto).append("\n");
+                arr.add(auto.toString());
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
     public ArrayList<String> getBranches(){

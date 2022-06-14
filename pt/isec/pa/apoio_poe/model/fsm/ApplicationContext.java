@@ -203,15 +203,15 @@ public class ApplicationContext {
         return state.specificProfessorAttributions(email);
     }
 
-    public String listStudentWithoutProposalAttributedAndWithCandidature() {
+    public ArrayList<String> listStudentWithoutProposalAttributedAndWithCandidature() {
         return data.listStudentWithoutProposalAttributedAndWithCandidature();
     }
 
-    public String listAvailableProposals() {
+    public ArrayList<String> listAvailableProposals() {
         return data.listAvailableProposals();
     }
 
-    public String listAttributedProposals() {
+    public ArrayList<String> listAttributedProposals() {
         return data.listAttributedProposals();
     }
 

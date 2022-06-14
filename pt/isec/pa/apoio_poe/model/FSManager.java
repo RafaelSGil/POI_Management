@@ -31,6 +31,9 @@ public class FSManager {
     public static final String PROP_SWNCP = "studentWithCand&NoProf";
     public static final String PROP_SWCP = "studentWithCand&Prof";
     public static final String PROP_INDIVPROF = "individualProfessor";
+    public static final String PROP_SWNPWC = "studentWithoutProposalsWithCandidatures";
+    public static final String PROP_AP = "availableProposals";
+    public static final String PROP_ATTRIBP = "attributedProposals";
 
     private ApplicationContext context;
     private CommandManager cmd;
@@ -350,22 +353,30 @@ public class FSManager {
         pcs.firePropertyChange(PROP_SPA, null, null);
     }
 
-    public String listStudentWithoutProposalAttributedAndWithCandidature() {
-        String str = context.listStudentWithoutProposalAttributedAndWithCandidature();
-        pcs.firePropertyChange(PROP_DATA, null, null);
+    public ArrayList<String> listStudentWithoutProposalAttributedAndWithCandidature() {
+        ArrayList<String> str = context.listStudentWithoutProposalAttributedAndWithCandidature();
         return str;
     }
 
-    public String listAvailableProposals() {
-        String str = context.listAvailableProposals();
-        pcs.firePropertyChange(PROP_DATA, null, null);
+    public void callSWNPWC(){
+        pcs.firePropertyChange(PROP_SWNPWC, null, null);
+    }
+
+    public ArrayList<String> listAvailableProposals() {
+        ArrayList<String> str = context.listAvailableProposals();
         return str;
     }
 
-    public String listAttributedProposals() {
-        String str = context.listAttributedProposals();
-        pcs.firePropertyChange(PROP_DATA, null, null);
+    public void callAP(){
+        pcs.firePropertyChange(PROP_AP, null, null);
+    }
+    public ArrayList<String> listAttributedProposals() {
+        ArrayList<String> str = context.listAttributedProposals();
         return str;
+    }
+
+    public void callATTRIBP(){
+        pcs.firePropertyChange(PROP_ATTRIBP, null, null);
     }
 
     public boolean serializationOfProgram() {
