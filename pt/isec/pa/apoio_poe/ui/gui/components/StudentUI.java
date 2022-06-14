@@ -34,7 +34,6 @@ public class StudentUI extends BorderPane {
         this.setStyle("-fx-background-color: #A08000;");
         this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT);
 
-
         this.btnProf = new Button("Professor state");
         this.btnProp = new Button("Proposal state");
         this.btnCandid = new Button("Candidature state");

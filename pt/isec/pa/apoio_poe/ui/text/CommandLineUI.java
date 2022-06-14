@@ -168,7 +168,7 @@ public class CommandLineUI {
 
         } while (!advisor.equals("true") && !advisor.equals("false"));
 
-        manager.editDataProfessor(identifier, Boolean.parseBoolean(advisor));
+        manager.editDataProfessor(identifier, advisor);
     }
 
     public void studentManagement() {

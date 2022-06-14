@@ -478,7 +478,15 @@ public class Data implements Serializable {
         return true;
     }
 
-    public boolean editProfessor(String email, boolean advisor) {
+    public boolean editProfessor(String email, String advisorValue) {
+        boolean advisor;
+
+        try{
+            advisor = Boolean.parseBoolean(advisorValue);
+        }catch (Exception e){
+            return false;
+        }
+
         for (Person professor : professors) {
             if (professor.equals(Professor.createDummyProfessor(email))) {
                 professor.setAdvisor(advisor);
@@ -1631,8 +1639,8 @@ public class Data implements Serializable {
         return arr;
     }
 
-    public String listStudentsWithProposalAndProfessorAttributed() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listStudentsWithProposalAndProfessorAttributed() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (Person student : students) {
             if (proposalAttributions.containsValue(student.getId())) {
@@ -1640,33 +1648,31 @@ public class Data implements Serializable {
                     if (proposalAttributions.get(idProposal).equals(student.getId())
                             && advisorAttribution.containsValue(List.of(idProposal))) {
                         for (String email : advisorAttribution.keySet()) {
-                            sb.append("Student ").append(student.getId()).append(" is attributed to proposal")
-                                    .append(idProposal).append(" with ").append(email).append(" has its advisor\n");
+                            arr.add("Student " + student.getId() + " is attributed to proposal " + idProposal + " with " + email + " has its advisor");
                         }
                     }
                 }
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
-    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
-        StringBuilder sb = new StringBuilder();
+    public ArrayList<String> listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
+        ArrayList<String> arr = new ArrayList<>();
 
         for (Person student : students) {
             if (proposalAttributions.containsValue(student.getId())) {
                 for (String idProposal : proposalAttributions.keySet()) {
                     if (proposalAttributions.get(idProposal).equals(student.getId())
                             && !advisorAttribution.containsValue(List.of(idProposal))) {
-                        sb.append("Student ").append(student.getId()).append(" is attributed to proposal").append(" ")
-                                .append(idProposal).append(" without an advisor\n");
+                        arr.add("Student " + student.getId() + " is attributed to proposal " + idProposal + " without advisor");
                     }
                 }
             }
         }
 
-        return sb.toString();
+        return arr;
     }
 
     public String getNumberOfAttributionsPerProfessor() {

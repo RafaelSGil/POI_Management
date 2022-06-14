@@ -88,7 +88,7 @@ public class FSManager {
         return bool;
     }
 
-    public boolean editDataProfessor(String email, boolean advisor) {
+    public boolean editDataProfessor(String email, String advisor) {
         boolean bool =  context.editDataProfessor(email, advisor);
         pcs.firePropertyChange(PROP_DATA, null, null);
         return bool;
@@ -301,7 +301,7 @@ public class FSManager {
         return bool;
     }
 
-    public String listStudentsWithProposalAndProfessorAttributed() {
+    public ArrayList<String> listStudentsWithProposalAndProfessorAttributed() {
         return context.listStudentsWithProposalAndProfessorAttributed();
     }
 
@@ -309,7 +309,7 @@ public class FSManager {
         pcs.firePropertyChange(PROP_SWCP, null, null);
     }
 
-    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
+    public ArrayList<String> listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
         return context.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
     }
 

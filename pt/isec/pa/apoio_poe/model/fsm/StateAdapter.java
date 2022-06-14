@@ -98,7 +98,7 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public boolean editDataProfessor(String email, boolean advisor) {
+    public boolean editDataProfessor(String email, String advisor) {
         return false;
     }
 
@@ -208,12 +208,12 @@ public class StateAdapter implements IApplicationState {
     }
 
     @Override
-    public String listStudentsWithProposalWithoutProfessor() {
+    public ArrayList<String> listStudentsWithProposalWithoutProfessor() {
         return null;
     }
 
     @Override
-    public String listStudentsWithProposalAndProfessor() {
+    public ArrayList<String> listStudentsWithProposalAndProfessor() {
         return null;
     }
 

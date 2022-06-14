@@ -16,7 +16,8 @@ public class RootPane2 extends BorderPane {
     }
 
     private void createViews() {
-        StackPane stackPane = new StackPane(new StudentDataUI(manager), new ProfessorDataUI(manager), new ProposalDataUI(manager), new CandidatureDataUI(manager), new ProposalsAttributionDataUI(manager));
+        StackPane stackPane = new StackPane(new StudentDataUI(manager), new ProfessorDataUI(manager), new ProposalDataUI(manager),
+                                            new CandidatureDataUI(manager), new ProposalsAttributionDataUI(manager), new ProfessorAttributionDataUI(manager));
 
         this.setCenter(stackPane);
     }

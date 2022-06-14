@@ -11,7 +11,7 @@ public interface IApplicationState {
 
     boolean editDataProposal(String identifier, String attribute, List<String> newValue);
 
-    boolean editDataProfessor(String email, boolean advisor);
+    boolean editDataProfessor(String email, String advisor);
 
     boolean editDataStudent(String identifier, String change, String whatToChange);
 
@@ -55,9 +55,9 @@ public interface IApplicationState {
 
     boolean professorAttributionTransitioning();
 
-    String listStudentsWithProposalWithoutProfessor();
+    ArrayList<String> listStudentsWithProposalWithoutProfessor();
 
-    String listStudentsWithProposalAndProfessor();
+    ArrayList<String> listStudentsWithProposalAndProfessor();
 
     String averageProfessorAttributions();
 

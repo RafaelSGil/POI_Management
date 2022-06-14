@@ -85,15 +85,15 @@ public class ProfessorAttributionPhase extends StateAdapter {
     }
 
     @Override
-    public String listStudentsWithProposalAndProfessor() {
-        String str = data.listStudentsWithProposalAndProfessorAttributed();
+    public ArrayList<String> listStudentsWithProposalAndProfessor() {
+        ArrayList<String> str = data.listStudentsWithProposalAndProfessorAttributed();
         setState(ApplicationState.PROFESSOR_ATTRIBUTION);
         return str;
     }
 
     @Override
-    public String listStudentsWithProposalWithoutProfessor() {
-        String str = data.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
+    public ArrayList<String> listStudentsWithProposalWithoutProfessor() {
+        ArrayList<String> str = data.listStudentsWithProposalAttributedAndWithoutProfessorAttributed();
         setState(ApplicationState.PROFESSOR_ATTRIBUTION);
         return str;
     }

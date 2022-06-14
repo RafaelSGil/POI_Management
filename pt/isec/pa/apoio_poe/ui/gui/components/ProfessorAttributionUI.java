@@ -4,6 +4,9 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.ToolBar;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
@@ -15,7 +18,7 @@ public class ProfessorAttributionUI extends BorderPane {
     private FSManager manager;
     private Button btnPrev, btnClose, btnAttribution, btnManualAttribution, btnManualRemoval, btnEdit, btnConsultProf;
     private Button btnListAttributions, btnListProfessors, btnListStudents, btnEditProfessor, btnAttributeManually, btnRemoveManually;
-    private Button btnListSWCP, btnListSWCNP, btnListPAA, btnListPMAX, btnListPMIN, btnListSPA, btnConsultSpecProf;
+    private Button btnListSWCP, btnListSWCNP, btnListPAA, btnListPMAX, btnListPMIN, btnListSPA, btnConsultSpecProf, btnConsultSpecProfData;
     private Label lbCurrentState;
     private TextField tfEditEmail, tfEditValue, tfAttributeEmailProf, tfAttributeIDProposal, tfRemoveEmailProf, tfRemoveIDProposal, tfEmailProf, tfEmailProfAttrib;
     private BorderPane bpManualAttribution;
@@ -25,6 +28,11 @@ public class ProfessorAttributionUI extends BorderPane {
     private BorderPane bpEdit;
     private BorderPane bpConsultProf;
     private VBox vBoxX;
+    private final KeyCombination ctrlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlZ = new KeyCodeCombination(KeyCode.Z, KeyCombination.CONTROL_DOWN);
+    private final KeyCombination ctrlY = new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_DOWN);
+
 
     public ProfessorAttributionUI(FSManager manager){
         this.manager = manager;
@@ -49,7 +57,7 @@ public class ProfessorAttributionUI extends BorderPane {
         this.btnManualAttribution = new Button("Manual attribution");
         this.btnManualRemoval = new Button("Remove");
         this.btnConsultProf = new Button("Consult professor");
-        this.btnEditProfessor = new Button("Edit Attribution");
+        this.btnEditProfessor = new Button("Edit Prof.");
         HBox hBox = new HBox(btnAttribution, btnManualAttribution, btnManualRemoval, btnConsultProf);
         hBox.setSpacing(20);
         HBox hBox1 = new HBox(btnEditProfessor, btnListAttributions, btnListProfessors, btnListStudents);
@@ -143,9 +151,9 @@ public class ProfessorAttributionUI extends BorderPane {
         this.tfEmailProf = new TextField();
         this.tfEmailProf.setPromptText("Email of the professor to consult");
         this.tfEmailProf.setMinWidth(250);
-        this.btnConsultSpecProf = new Button("Consult");
+        this.btnConsultSpecProfData = new Button("Consult");
         Label lbPlaceholder = new Label("Consult professor data individually");
-        HBox hBox8 = new HBox(tfEmailProf, btnConsultSpecProf);
+        HBox hBox8 = new HBox(tfEmailProf, btnConsultSpecProfData);
         hBox8.setSpacing(20);
         VBox vBox5 = new VBox(lbPlaceholder, hBox8);
         vBox5.setSpacing(10);
@@ -171,13 +179,28 @@ public class ProfessorAttributionUI extends BorderPane {
             update();
         });
 
+        this.setOnKeyPressed(keyEvent -> {
+            if(ctrlN.match(keyEvent)){
+                manager.closeState();
+            }
+            if(ctrlB.match(keyEvent)){
+                manager.proposalAttributionManager();
+            }
+            if(ctrlZ.match(keyEvent)){
+                manager.undo();
+            }
+            if(ctrlY.match(keyEvent)){
+                manager.redo();
+            }
+        });
+
         btnPrev.setOnAction(actionEvent -> manager.proposalAttributionManager());
 
         btnClose.setOnAction(actionEvent -> manager.closeState());
 
         btnListAttributions.setOnAction(actionEvent -> manager.callPA());
 
-        btnConsultSpecProf.setOnAction(actionEvent -> {
+        btnConsultSpecProfData.setOnAction(actionEvent -> {
             if(tfEmailProf.getText().equals("")){
                 tfEmailProf.setStyle("-fx-background-color: #fa3434");
                 return;
@@ -192,7 +215,7 @@ public class ProfessorAttributionUI extends BorderPane {
 
         btnListPMAX.setOnAction(actionEvent -> manager.callPMAX());
 
-        btnListSPA.setOnAction(actionEvent -> {
+        btnConsultSpecProf.setOnAction(actionEvent -> {
             if(tfEmailProfAttrib.getText().equals("")){
                 tfEmailProfAttrib.setStyle("-fx-background-color: #fa3434");
                 return;
@@ -200,7 +223,10 @@ public class ProfessorAttributionUI extends BorderPane {
             manager.callSPA(tfEmailProfAttrib.getText());
         });
 
-        btnAttribution.setOnAction(actionEvent -> manager.associateAttribution());
+        btnAttribution.setOnAction(actionEvent -> {
+            manager.associateAttribution();
+            manager.callPA();
+        });
 
         btnListSWCNP.setOnAction(actionEvent -> manager.callSWNCP());
 
@@ -297,6 +323,63 @@ public class ProfessorAttributionUI extends BorderPane {
             }
 
             vBoxX.setVisible(true);
+        });
+
+        btnRemoveManually.setOnAction(actionEvent -> {
+            tfRemoveIDProposal.setStyle("-fx-background-color: white");
+            tfRemoveEmailProf.setStyle("-fx-background-color: white");
+            if(tfRemoveIDProposal.getText().equals("")){
+                tfRemoveIDProposal.setStyle("-fx-background-color: #fa3434");
+                return;
+            }
+            if(tfRemoveEmailProf.getText().equals("")){
+                tfRemoveEmailProf.setStyle("-fx-background-color: #fa3434");
+                return;
+            }
+            if(!manager.manualProfessorRemoval(tfRemoveEmailProf.getText(), tfRemoveIDProposal.getText())){
+                tfRemoveIDProposal.setStyle("-fx-background-color: #fa3434");
+                tfRemoveEmailProf.setStyle("-fx-background-color: #fa3434");
+                tfRemoveEmailProf.setText("");
+                tfRemoveIDProposal.setText("");
+            }
+        });
+
+        btnAttributeManually.setOnAction(actionEvent -> {
+            tfAttributeEmailProf.setStyle("-fx-background-color: white");
+            tfAttributeIDProposal.setStyle("-fx-background-color: white");
+            if(tfAttributeIDProposal.getText().equals("")){
+                tfAttributeIDProposal.setStyle("-fx-background-color: #fa3434");
+                return;
+            }
+            if(tfAttributeEmailProf.getText().equals("")){
+                tfAttributeEmailProf.setStyle("-fx-background-color: #fa3434");
+                return;
+            }
+            if(!manager.manualProfessorAttribution(tfAttributeIDProposal.getText(), tfAttributeEmailProf.getText())){
+                tfAttributeEmailProf.setStyle("-fx-background-color: #fa3434");
+                tfAttributeIDProposal.setStyle("-fx-background-color: #fa3434");
+                tfAttributeEmailProf.setText("");
+                tfAttributeIDProposal.setText("");
+            }
+        });
+
+        btnEdit.setOnAction(actionEvent -> {
+            tfEditValue.setStyle("-fx-background-color: white");
+            tfEmailProf.setStyle("-fx-background-color: white");
+            if(tfEditValue.getText().equals("")){
+                tfEditValue.setStyle("-fx-background-color: #fa3434");
+                return;
+            }
+            if(tfEditEmail.getText().equals("")){
+                tfEditEmail.setStyle("-fx-background-color: #fa3434");
+                return;
+            }
+            if(!manager.editDataProfessor(tfEditEmail.getText(), tfEditValue.getText())){
+                tfEditValue.setStyle("-fx-background-color: #fa3434");
+                tfEmailProf.setStyle("-fx-background-color: #fa3434");
+                tfEditValue.setText("");
+                tfEmailProf.setText("");
+            }
         });
     }
 

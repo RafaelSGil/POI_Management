@@ -52,7 +52,7 @@ public class ApplicationContext {
         return state.editDataProposal(identifier, attribute, newValue);
     }
 
-    public boolean editDataProfessor(String email, boolean advisor) {
+    public boolean editDataProfessor(String email, String advisor) {
         return state.editDataProfessor(email, advisor);
     }
 
@@ -179,11 +179,11 @@ public class ApplicationContext {
         return state.manualProfessorRemoval(email, idOfProposal);
     }
 
-    public String listStudentsWithProposalAndProfessorAttributed() {
+    public ArrayList<String> listStudentsWithProposalAndProfessorAttributed() {
         return state.listStudentsWithProposalAndProfessor();
     }
 
-    public String listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
+    public ArrayList<String> listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
         return state.listStudentsWithProposalWithoutProfessor();
     }
 

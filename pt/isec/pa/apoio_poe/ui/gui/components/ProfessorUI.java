@@ -186,7 +186,7 @@ public class ProfessorUI extends BorderPane {
             }else{
                 tfEditValueProfessor.setStyle("-fx-background-color: #fa3434");
             }
-            if(!manager.editDataProfessor(tfEditEmailProfessor.getText(), Boolean.parseBoolean(tfEditValueProfessor.getText()))){
+            if(!manager.editDataProfessor(tfEditEmailProfessor.getText(), tfEditValueProfessor.getText())){
                 tfEditEmailProfessor.setStyle("-fx-background-color: #fa3434");
                 tfEditValueProfessor.setStyle("-fx-background-color: #fa3434");
             }

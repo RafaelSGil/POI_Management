@@ -55,7 +55,7 @@ public class ProfessorPhase extends StateAdapter {
     }
 
     @Override
-    public boolean editDataProfessor(String email, boolean advisor) {
+    public boolean editDataProfessor(String email, String advisor) {
         boolean bool = data.editProfessor(email, advisor);
         setState(ApplicationState.PROFESSOR);
         return bool;
