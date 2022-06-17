@@ -43,6 +43,7 @@ public class CandidatureUI extends BorderPane {
         this.setVisible(manager != null && manager.getState() == ApplicationState.CANDIDATURE);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
         this.btnPrev = new Button("Previous Phase");
         this.btnClose = new Button("Close state");
@@ -57,6 +58,7 @@ public class CandidatureUI extends BorderPane {
         this.tfPathCandidaturesData.setMinWidth(250);
         this.btnLoadCandidaturesData = new Button("Load");
         Label lbPlaceHolder = new Label("Insert Candidature Data ");
+        lbPlaceHolder.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceHolder.setPadding(new Insets(4));
         HBox hBox1 = new HBox(lbPlaceHolder, tfPathCandidaturesData, btnLoadCandidaturesData);
         hBox1.setStyle("-fx-padding: 20 10 10 10");
@@ -66,6 +68,7 @@ public class CandidatureUI extends BorderPane {
         this.tfRemoveCandidatures.setMinWidth(250);
         this.btnRemoveCandidatures = new Button("Remove");
         Label lbPlaceholder1 = new Label("Remove Candidature     ");
+        lbPlaceholder1.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceholder1.setPadding(new Insets(4));
         HBox hBox2 = new HBox(lbPlaceholder1, tfRemoveCandidatures, btnRemoveCandidatures);
         hBox2.setStyle("-fx-padding: 20 10 10 10");
@@ -77,7 +80,8 @@ public class CandidatureUI extends BorderPane {
         this.tfEditCandidatureProposal.setPromptText("Proposal ID");
         this.tfEditCandidatureProposal.setMinWidth(105);
         this.btnEditCandidature = new Button("Edit");
-        Label lbPlaceHolder2 = new Label("Edit Candidature           ");
+        Label lbPlaceHolder2 = new Label("Edit Candidature     ");
+        lbPlaceHolder2.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceHolder2.setPadding(new Insets(4));
         HBox hBox4 = new HBox(lbPlaceHolder2, tfEditCandidatureStudent, tfEditCandidatureProposal, btnEditCandidature);
         hBox4.setStyle("-fx-padding: 20 10 10 10");
@@ -95,9 +99,13 @@ public class CandidatureUI extends BorderPane {
         this.bpListStudents.setVisible(false);
 
         Label lbPlaceHolder31 = new Label("1 - AutoProposals from students");
+        lbPlaceHolder31.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         Label lbPlaceHolder32 = new Label("2 - Proposals from professors");
+        lbPlaceHolder32.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         Label lbPlaceHolder33 = new Label("3 - Proposals with candidatures");
+        lbPlaceHolder33.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         Label lbPlaceHolder34 = new Label("4 - Proposals without candidatures");
+        lbPlaceHolder34.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         VBox vBox13 = new VBox(lbPlaceHolder31, lbPlaceHolder33);
         vBox13.setSpacing(20);
         VBox vBox24 = new VBox(lbPlaceHolder32, lbPlaceHolder34);

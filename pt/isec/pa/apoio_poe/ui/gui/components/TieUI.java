@@ -6,12 +6,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.model.FSManager;
 import pt.isec.pa.apoio_poe.model.data.person.Person;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
+import pt.isec.pa.apoio_poe.ui.gui.resources.ImageManager;
 
 import java.util.ArrayList;
 
@@ -30,9 +29,12 @@ public class TieUI extends BorderPane {
     }
 
     private void createViews() {
-        this.setStyle("-fx-background-color: #fcba03;");
+        BackgroundImage BI = new BackgroundImage(ImageManager.getImage("deis.jpg"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(BI));
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
 
         BorderPane borderPane = new BorderPane();
@@ -45,6 +47,7 @@ public class TieUI extends BorderPane {
         this.tfIndex.setMinWidth(250);
         this.btnSubmit = new Button("Submit");
         Label lbPlaceHolder = new Label("Insert the student' index you wish to attribute to");
+        lbPlaceHolder.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         HBox hBox = new HBox(tfIndex, btnSubmit);
         VBox vBox = new VBox(lbPlaceHolder, hBox);
         vBox.setSpacing(10);

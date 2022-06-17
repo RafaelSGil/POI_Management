@@ -34,7 +34,7 @@ public class CandidatureLockedUI extends BorderPane {
         this.setVisible(manager != null && manager.getState() == ApplicationState.CANDIDATURE_LOCKED);
 
         this.lbCurrentState = new javafx.scene.control.Label("Current State: " + manager.getState());
-        this.lbCurrentState.setStyle("-fx-text-fill: white");
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
         this.btnPrev = new javafx.scene.control.Button("Previous Phase");
         this.btnPropAttrib = new Button("Prop. Attribution state");

@@ -35,6 +35,7 @@ public class StudentLockedUI extends BorderPane {
         this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT_LOCKED);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.lbCurrentState.setPadding(new Insets(2));
         this.setTop(lbCurrentState);
         Label label = new Label("PHASE 1 LOCKED");

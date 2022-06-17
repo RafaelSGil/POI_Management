@@ -43,6 +43,7 @@ public class ProposalsAttributionUI extends BorderPane {
         this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
         this.btnPrev = new Button("Previous Phase");
         this.btnClose = new Button("Close state");
@@ -67,9 +68,13 @@ public class ProposalsAttributionUI extends BorderPane {
         vBox.setStyle("-fx-padding: 30 50 20 120; -fx-alignment: center");
 
         Label lbPlaceHolder31 = new Label("1 - AutoProposals from students");
+        lbPlaceHolder31.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         Label lbPlaceHolder32 = new Label("2 - Proposals from professors");
+        lbPlaceHolder32.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         Label lbPlaceHolder33 = new Label("3 - Available proposals");
+        lbPlaceHolder33.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         Label lbPlaceHolder34 = new Label("4 - Proposals attributed");
+        lbPlaceHolder34.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         VBox vBox13 = new VBox(lbPlaceHolder31, lbPlaceHolder33);
         vBox13.setSpacing(20);
         VBox vBox24 = new VBox(lbPlaceHolder32, lbPlaceHolder34);
@@ -77,7 +82,7 @@ public class ProposalsAttributionUI extends BorderPane {
         HBox hBox1324 = new HBox(vBox13, new Separator(Orientation.VERTICAL), vBox24);
         this.tfFilters = new TextField();
         this.tfFilters.setPromptText("Select the filters");
-        this.tfFilters.setMinWidth(250);
+        this.tfFilters.setMinWidth(350);
         this.btnListProposalsFilters = new Button("List");
         HBox hBox6 = new HBox(tfFilters, btnListProposalsFilters);
         VBox vBox2 = new VBox(hBox1324, hBox6);
@@ -109,6 +114,7 @@ public class ProposalsAttributionUI extends BorderPane {
         this.tfMAStudentID.setPromptText("Student ID");
         this.tfMAStudentID.setMinWidth(250);
         Label lbPlaceHolder = new Label("Manually attribute a proposal to a student");
+        lbPlaceHolder.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.btnAttribute = new Button("Attribution");
         VBox vBox3 = new VBox(tfMAStudentID, tfMAProposalID, btnAttribute);
         vBox3.setSpacing(20);
@@ -126,6 +132,7 @@ public class ProposalsAttributionUI extends BorderPane {
         this.tfMRStudentID.setPromptText("Student ID");
         this.tfMRStudentID.setMinWidth(250);
         Label lbPlaceHolder1 = new Label("Remove an attribution from a student");
+        lbPlaceHolder1.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.btnRemove = new Button("Remove");
         VBox vBox4 = new VBox(tfMRStudentID, tfMRProposalID, btnRemove);
         vBox4.setSpacing(20);

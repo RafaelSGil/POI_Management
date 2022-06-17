@@ -38,6 +38,7 @@ public class ProfessorUI extends BorderPane {
         this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
         this.btnStud = new Button("Student state");
         this.btnProp = new Button("Proposal state");
@@ -53,6 +54,7 @@ public class ProfessorUI extends BorderPane {
         this.tfPathProfessorData.setMinWidth(250);
         this.btnLoadProfessorData = new Button("Load");
         Label lbPlaceHolder = new Label("Insert Professor Data ");
+        lbPlaceHolder.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceHolder.setPadding(new Insets(4));
         HBox hBox1 = new HBox(lbPlaceHolder, tfPathProfessorData, btnLoadProfessorData);
         hBox1.setStyle("-fx-padding: 20 10 10 10");
@@ -62,6 +64,7 @@ public class ProfessorUI extends BorderPane {
         this.tfRemoveProfessor.setMinWidth(250);
         this.btnRemoveProfessor = new Button("Remove");
         Label lbPlaceholder1 = new Label("Remove Professor    ");
+        lbPlaceholder1.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceholder1.setPadding(new Insets(4));
         HBox hBox2 = new HBox(lbPlaceholder1, tfRemoveProfessor, btnRemoveProfessor);
         hBox2.setStyle("-fx-padding: 20 10 10 10");
@@ -76,17 +79,12 @@ public class ProfessorUI extends BorderPane {
         vBox.setSpacing(20);
         vBox.setStyle("-fx-padding: 0 0 0 10");
         Label lbPlaceHolder2 = new Label("Edit Professor Data");
+        lbPlaceHolder2.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         HBox hBox3 = new HBox(lbPlaceHolder2, vBox);
         hBox3.setStyle("-fx-padding: 20 10 20 10");
 
         VBox vBox1 = new VBox(hBox1, hBox2, hBox3);
         this.setCenter(vBox1);
-
-        this.tfEditEmailProfessor = new TextField();
-
-        this.lbCurrentState = new Label("Current State: " + manager.getState());
-        this.lbCurrentState.setPadding(new Insets(2));
-        this.setTop(lbCurrentState);
     }
 
     private void registerHandlers() {

@@ -33,6 +33,7 @@ public class ProfessorLockedUI extends BorderPane {
         this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR_LOCKED);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
         this.btnStud = new Button("Student state");
         this.btnProp = new Button("Proposal state");

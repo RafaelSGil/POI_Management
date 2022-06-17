@@ -46,6 +46,7 @@ public class ProfessorAttributionUI extends BorderPane {
         this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR_ATTRIBUTION);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
         this.btnPrev = new Button("Previous Phase");
         this.btnClose = new Button("Close state");
@@ -76,6 +77,7 @@ public class ProfessorAttributionUI extends BorderPane {
         VBox vBox1 = new VBox(tfEditEmail, tfEditValue, btnEdit);
         vBox1.setSpacing(20);
         Label lbPlaceHolder2 = new Label("Edit Professor Data");
+        lbPlaceHolder2.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         HBox hBox3 = new HBox(lbPlaceHolder2, vBox1);
         hBox3.setSpacing(20);
         this.bpEdit = new BorderPane();
@@ -90,6 +92,7 @@ public class ProfessorAttributionUI extends BorderPane {
         this.tfAttributeIDProposal.setMinWidth(250);
         this.btnAttributeManually = new Button("Attribute");
         Label lbPlaceHolder = new Label("Attribute a professor manually");
+        lbPlaceHolder.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         VBox vBox2 = new VBox(tfAttributeEmailProf, tfAttributeIDProposal, btnAttributeManually);
         vBox2.setSpacing(20);
         HBox hBox2 = new HBox(lbPlaceHolder, vBox2);
@@ -106,6 +109,7 @@ public class ProfessorAttributionUI extends BorderPane {
         this.tfRemoveIDProposal.setMinWidth(250);
         this.btnRemoveManually = new Button("Remove");
         Label lbPlaceHolder3 = new Label("Remove an attribution manually");
+        lbPlaceHolder3.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         VBox vBox3 = new VBox(tfRemoveEmailProf, tfRemoveIDProposal, btnRemoveManually);
         vBox3.setSpacing(20);
         HBox hBox4 = new HBox(lbPlaceHolder3, vBox3);
@@ -129,6 +133,7 @@ public class ProfessorAttributionUI extends BorderPane {
         this.tfEmailProfAttrib.setMinWidth(250);
         this.btnConsultSpecProf = new Button("Consult");
         Label lbPlaceHolder1 = new Label("Consult professor attrib. individually");
+        lbPlaceHolder1.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         HBox hBox9 = new HBox(tfEmailProfAttrib, btnConsultSpecProf);
         this.vBoxX = new VBox(lbPlaceHolder1, hBox9);
         vBoxX.setSpacing(10);
@@ -153,6 +158,7 @@ public class ProfessorAttributionUI extends BorderPane {
         this.tfEmailProf.setMinWidth(250);
         this.btnConsultSpecProfData = new Button("Consult");
         Label lbPlaceholder = new Label("Consult professor data individually");
+        lbPlaceholder.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         HBox hBox8 = new HBox(tfEmailProf, btnConsultSpecProfData);
         hBox8.setSpacing(20);
         VBox vBox5 = new VBox(lbPlaceholder, hBox8);

@@ -40,6 +40,7 @@ public class ProposalsAttributionLockedUI extends BorderPane {
         this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
         this.btnPrev = new Button("Previous Phase");
         this.btnProfAttrib = new Button("Prof. Attribution state");
@@ -56,21 +57,23 @@ public class ProposalsAttributionLockedUI extends BorderPane {
         vBox.setStyle("-fx-padding: 30 50 20 150;");
 
         Label lbPlaceHolder31 = new Label("1 - AutoProposals from students");
+        lbPlaceHolder31.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         Label lbPlaceHolder32 = new Label("2 - Proposals from professors");
+        lbPlaceHolder32.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         Label lbPlaceHolder33 = new Label("3 - Available proposals");
+        lbPlaceHolder33.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         Label lbPlaceHolder34 = new Label("4 - Proposals attributed");
+        lbPlaceHolder34.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         VBox vBox13 = new VBox(lbPlaceHolder31, lbPlaceHolder33);
         vBox13.setSpacing(20);
         VBox vBox24 = new VBox(lbPlaceHolder32, lbPlaceHolder34);
         vBox24.setSpacing(20);
         HBox hBox1324 = new HBox(vBox13, new Separator(Orientation.VERTICAL), vBox24);
-        //hBox1324.setStyle("-fx-padding: 0 20 0 50");
         this.tfFilters = new TextField();
         this.tfFilters.setPromptText("Select the filters");
         this.tfFilters.setMinWidth(250);
         this.btnListProposalsFilters = new Button("List");
         HBox hBox6 = new HBox(tfFilters, btnListProposalsFilters);
-        //hBox6.setStyle("-fx-padding: 0 20 0 50");
         VBox vBox2 = new VBox(hBox1324, hBox6);
         vBox2.setSpacing(20);
         this.bpListProposals = new BorderPane();
