@@ -1708,9 +1708,13 @@ public class Data implements Serializable {
             }
         }
 
-        int averageValue = count / advisorAttribution.size();
+        try{
+            int averageValue = count / advisorAttribution.size();
 
-        sb.append("Average professor attribution ").append(averageValue);
+            sb.append("Average professor attribution ").append(averageValue);
+        }catch (Exception e){
+            sb.append("No professor attribution");
+        }
 
         return sb.toString();
     }
@@ -1835,11 +1839,114 @@ public class Data implements Serializable {
         ArrayList<String> branches = new ArrayList<>();
 
         for(Person student : students){
-            if(!branches.contains(((Student)student).getCourseBranch())){
-                branches.add(((Student)student).getCourseBranch());
+            if(!branches.contains(student.getCourseBranch())){
+                branches.add(student.getCourseBranch());
             }
         }
 
         return new ArrayList<>(branches);
+    }
+
+    public HashMap<String, Integer> getOrderedHashMap(HashMap<String, Integer> map){
+        List<Map.Entry<String, Integer>> list = new LinkedList<>(map.entrySet());
+
+        map.clear();
+
+        list.sort(Map.Entry.comparingByValue());
+
+        for(Map.Entry<String, Integer> m : list){
+            map.put(m.getKey(), m.getValue());
+        }
+
+        return map;
+    }
+
+    public HashMap<String, Integer> getTopCompanies(){
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for(MidProposal internship : internships){
+            if(map.containsKey(((Internship)internship).getNameOfCompany())){
+                int i = map.get(((Internship)internship).getNameOfCompany());
+                map.put(((Internship)internship).getNameOfCompany(), ++i);
+                continue;
+            }
+
+            map.put(((Internship)internship).getNameOfCompany(), 1);
+        }
+
+        return getOrderedHashMap(map);
+    }
+
+    public HashMap<String, Integer> getTopAdvisors(){
+        HashMap<String, Integer> map = new HashMap<>();
+
+        for(Map.Entry<String, List<String>> m : advisorAttribution.entrySet()){
+            map.put(m.getKey(), m.getValue().size());
+        }
+
+        return getOrderedHashMap(map);
+    }
+
+    public HashMap<String, Integer> getNumberProposalsPerBranches(){
+        HashMap<String, Integer> map = new HashMap<>();
+        Set<MidProposal> midProposals = new HashSet<>();
+
+        midProposals.addAll(internships);
+        midProposals.addAll(projects);
+
+
+        for(MidProposal mid : midProposals){
+            String[] str = mid.getBranches().split(" ");
+            List<String> list = new ArrayList<>(List.of(str));
+            for(String s : list){
+                if(map.containsKey(s)){
+                    int i = map.get(s);
+                    map.put(s, ++i);
+                    continue;
+                }
+
+                map.put(s, 1);
+            }
+        }
+
+        return getOrderedHashMap(map);
+    }
+
+    public HashMap<String, Integer> getNumberOfProposalsAttrAndNotAttrib(){
+        HashMap<String, Integer> map = new HashMap<>();
+        map.put("Attributed", 0);
+        map.put("Not Attributed", 0);
+
+        for(Proposal internship : internships){
+            if(proposalAttributions.containsKey(internship.getIdOfProposal())){
+                int i = map.get("Attributed");
+                map.put("Attributed", ++i);
+                continue;
+            }
+            int i = map.get("Not Attributed");
+            map.put("Not Attributed", ++i);
+        }
+
+        for(Proposal project : projects){
+            if(proposalAttributions.containsKey(project.getIdOfProposal())){
+                int i = map.get("Attributed");
+                map.put("Attributed", ++i);
+                continue;
+            }
+            int i = map.get("Not Attributed");
+            map.put("Not Attributed", ++i);
+        }
+
+        for(Proposal auto : autoproposals){
+            if(proposalAttributions.containsKey(auto.getIdOfProposal())){
+                int i = map.get("Attributed");
+                map.put("Attributed", ++i);
+                continue;
+            }
+            int i = map.get("Not Attributed");
+            map.put("Not Attributed", ++i);
+        }
+
+        return getOrderedHashMap(map);
     }
 }

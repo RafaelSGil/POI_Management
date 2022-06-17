@@ -9,6 +9,7 @@ import pt.isec.pa.apoio_poe.model.fsm.statesImplementation.StudentPhase;
 import java.io.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class ApplicationContext {
@@ -191,6 +192,7 @@ public class ApplicationContext {
         return state.averageProfessorAttributions();
     }
 
+
     public String listMinimumAttributions() {
         return state.minimumProfessorAttributions();
     }
@@ -243,5 +245,21 @@ public class ApplicationContext {
         } catch (IOException e) {
             return false;
         }
+    }
+
+    public HashMap<String, Integer> getTopCompanies(){
+        return data.getTopCompanies();
+    }
+
+    public HashMap<String, Integer> getTopAdvisors(){
+        return data.getTopAdvisors();
+    }
+
+    public HashMap<String, Integer> getNumberProposalsPerBranches(){
+        return data.getNumberProposalsPerBranches();
+    }
+
+    public HashMap<String, Integer> getNumberOfProposalsAttrAndNotAttrib(){
+        return data.getNumberOfProposalsAttrAndNotAttrib();
     }
 }

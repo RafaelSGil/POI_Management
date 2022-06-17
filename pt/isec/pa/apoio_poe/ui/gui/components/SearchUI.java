@@ -13,6 +13,7 @@ public class SearchUI extends BorderPane {
     private FSManager manager;
     private Label lbCurrentState;
     private Button btnListSWP, btnListAttribP, btnListSWNPWC, btnListAP, btnListPAA, btnListSPA, btnListPMAX, btnListPMIN, btnConsultSpecProf;
+    private Button btnChartBranches, btnChartPercentageAttrib, btnChartTopCompanies, btnChartTopAdvisors;
     private VBox vBoxSpec;
     private TextField tfEmailProfAttrib;
 
@@ -35,15 +36,24 @@ public class SearchUI extends BorderPane {
         this.btnListPMAX = new Button("Prof. Max. Attrib.");
         this.btnListPMIN = new Button("Prof. Min. Attrib.");
         this.btnListAttribP = new Button("Prop. attributed");
+        this.btnChartBranches = new Button("Branches Distribution");
+        this.btnChartPercentageAttrib= new Button("Attrib. Percentage");
+        this.btnChartTopAdvisors = new Button("Top Advisors");
+        this.btnChartTopCompanies = new Button("Top Companies");
         HBox hBox = new HBox(btnListAP, btnListSWP, btnListPAA);
         hBox.setSpacing(20);
         hBox.setStyle("-fx-alignment: center");
         HBox hBox1 = new HBox(btnListSPA, btnListPMAX, btnListPMIN);
         hBox1.setSpacing(20);
         hBox1.setStyle("-fx-alignment: center");
-        VBox vBox = new VBox(hBox, btnListSWNPWC, btnListAttribP, hBox1);
-        vBox.setSpacing(30);
-        vBox.setStyle("-fx-alignment: center");
+        HBox hBox2 = new HBox(btnListSWNPWC, btnListAttribP, btnChartBranches);
+        hBox2.setSpacing(20);
+        hBox2.setStyle("-fx-alignment: center");
+        HBox hBox3 = new HBox(btnChartPercentageAttrib, btnChartTopAdvisors, btnChartTopCompanies);
+        hBox3.setSpacing(20);
+        hBox3.setStyle("-fx-alignment: center");
+        VBox vBox = new VBox(hBox, hBox2, hBox3, hBox1);
+        vBox.setSpacing(10);
 
         this.tfEmailProfAttrib = new TextField();
         this.tfEmailProfAttrib.setPromptText("Email of professor");
@@ -102,6 +112,14 @@ public class SearchUI extends BorderPane {
         btnListAP.setOnAction(actionEvent -> manager.callAP());
 
         btnListAttribP.setOnAction(actionEvent -> manager.callATTRIBP());
+
+        btnChartTopCompanies.setOnAction(actionEvent -> manager.callTOPCOMPANY());
+
+        btnChartTopAdvisors.setOnAction(actionEvent -> manager.callTOPADVISOR());
+
+        btnChartBranches.setOnAction(actionEvent -> manager.callBRANCHES());
+
+        btnChartPercentageAttrib.setOnAction(actionEvent -> manager.callPERCENTATTRIB());
     }
 
     private void update() {

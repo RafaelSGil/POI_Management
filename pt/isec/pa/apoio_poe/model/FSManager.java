@@ -10,6 +10,7 @@ import pt.isec.pa.apoio_poe.model.fsm.IApplicationState;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 public class FSManager {
@@ -34,6 +35,10 @@ public class FSManager {
     public static final String PROP_SWNPWC = "studentWithoutProposalsWithCandidatures";
     public static final String PROP_AP = "availableProposals";
     public static final String PROP_ATTRIBP = "attributedProposals";
+    public static final String PROP_BRANCHES = "branches";
+    public static final String PROP_PERCENTATTRIB = "attributionPercentage";
+    public static final String PROP_TOPCOMPANY = "topCompany";
+    public static final String PROP_TOPADVISOR = "topAdvisor";
 
     private ApplicationContext context;
     private CommandManager cmd;
@@ -409,5 +414,37 @@ public class FSManager {
 
         cmd.redoProf();
         pcs.firePropertyChange(PROP_DATA, null, null);
+    }
+
+    public HashMap<String, Integer> getNumberProposalsPerBranches(){
+        return  context.getNumberProposalsPerBranches();
+    }
+
+    public void callBRANCHES(){
+        pcs.firePropertyChange(PROP_BRANCHES, null, null);
+    }
+
+    public HashMap<String, Integer> getNumberOfProposalsAttrAndNotAttrib(){
+        return context.getNumberOfProposalsAttrAndNotAttrib();
+    }
+
+    public void callPERCENTATTRIB(){
+        pcs.firePropertyChange(PROP_PERCENTATTRIB, null, null);
+    }
+
+    public HashMap<String, Integer> getTopCompanies(){
+        return context.getTopCompanies();
+    }
+
+    public void callTOPCOMPANY(){
+        pcs.firePropertyChange(PROP_TOPCOMPANY, null, null);
+    }
+
+    public HashMap<String, Integer> getTopAdvisors(){
+        return  context.getTopAdvisors();
+    }
+
+    public void callTOPADVISOR(){
+        pcs.firePropertyChange(PROP_TOPADVISOR, null, null);
     }
 }
