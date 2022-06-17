@@ -3,11 +3,10 @@ package pt.isec.pa.apoio_poe.ui.gui.components;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
+import pt.isec.pa.apoio_poe.ui.gui.resources.ImageManager;
 
 public class SearchUI extends BorderPane {
     private FSManager manager;
@@ -25,7 +24,9 @@ public class SearchUI extends BorderPane {
     }
 
     private void createViews() {
-        this.setStyle("-fx-background-color: #b53717;");
+        BackgroundImage BI = new BackgroundImage(ImageManager.getImage("deis.jpg"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(BI));
         this.setVisible(manager.getState() == ApplicationState.SEARCH);
 
         this.btnListAP = new Button("Available Prop.");
@@ -60,6 +61,7 @@ public class SearchUI extends BorderPane {
         this.tfEmailProfAttrib.setMinWidth(250);
         this.btnConsultSpecProf = new Button("Consult");
         Label lbPlaceHolder1 = new Label("Consult professor attrib. individually");
+        lbPlaceHolder1.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         HBox hBox9 = new HBox(tfEmailProfAttrib, btnConsultSpecProf);
         this.vBoxSpec = new VBox(lbPlaceHolder1, hBox9);
         vBoxSpec.setSpacing(10);
@@ -73,6 +75,7 @@ public class SearchUI extends BorderPane {
         this.setCenter(vBoxFinal);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
     }
 

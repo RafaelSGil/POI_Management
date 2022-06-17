@@ -6,13 +6,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
+import pt.isec.pa.apoio_poe.ui.gui.resources.ImageManager;
 
 public class ProfessorUI extends BorderPane {
     private FSManager manager;
@@ -33,7 +32,9 @@ public class ProfessorUI extends BorderPane {
     }
 
     private void createViews() {
-        this.setStyle("-fx-background-color: #A080FF;");
+        BackgroundImage BI = new BackgroundImage(ImageManager.getImage("deis.jpg"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(BI));
         this.setVisible(manager != null && manager.getState() == ApplicationState.PROFESSOR);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());

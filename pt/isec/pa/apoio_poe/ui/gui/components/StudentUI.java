@@ -8,6 +8,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
+import pt.isec.pa.apoio_poe.ui.gui.resources.ImageManager;
 
 
 public class StudentUI extends BorderPane {
@@ -31,7 +32,10 @@ public class StudentUI extends BorderPane {
     }
 
     private void createViews() {
-        this.setStyle("-fx-background-color: #A08000;");
+        BackgroundImage BI = new BackgroundImage(ImageManager.getImage("deis.jpg"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(BI));
+
         this.setVisible(manager != null && manager.getState() == ApplicationState.STUDENT);
 
         this.btnProf = new Button("Professor state");
@@ -48,6 +52,7 @@ public class StudentUI extends BorderPane {
         this.tfPathStudentData.setMinWidth(250);
         this.btnLoadStudentData = new Button("Load");
         Label lbPlaceHolder = new Label("Insert Student Data ");
+        lbPlaceHolder.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceHolder.setPadding(new Insets(4));
         HBox hBox1 = new HBox(lbPlaceHolder, tfPathStudentData, btnLoadStudentData);
         hBox1.setStyle("-fx-padding: 20 10 10 10");
@@ -58,6 +63,7 @@ public class StudentUI extends BorderPane {
         this.tfRemoveStudent.setMinWidth(250);
         this.btnRemoveStudent = new Button("Remove");
         Label lbPlaceholder1 = new Label("Remove Student     ");
+        lbPlaceholder1.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceholder1.setPadding(new Insets(4));
         HBox hBox2 = new HBox(lbPlaceholder1, tfRemoveStudent, btnRemoveStudent);
         hBox2.setStyle("-fx-padding: 20 10 10 10");
@@ -76,6 +82,7 @@ public class StudentUI extends BorderPane {
         vBox.setSpacing(20);
         vBox.setStyle("-fx-padding: 0 0 0 10");
         Label lbPlaceHolder2 = new Label("Edit Student Data");
+        lbPlaceHolder2.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceHolder2.setPadding(new Insets(6));
         HBox hBox3 = new HBox(lbPlaceHolder2, vBox);
         hBox3.setStyle("-fx-padding: 20 10 10 10");
@@ -85,6 +92,7 @@ public class StudentUI extends BorderPane {
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
         this.lbCurrentState.setPadding(new Insets(2));
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
 
     }

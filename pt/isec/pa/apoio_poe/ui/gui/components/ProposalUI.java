@@ -16,6 +16,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
+import pt.isec.pa.apoio_poe.ui.gui.resources.ImageManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,10 +53,13 @@ public class ProposalUI extends BorderPane {
     }
 
     private void createViews() {
-        this.setStyle("-fx-background-color: #c15fb0;");
+        BackgroundImage BI = new BackgroundImage(ImageManager.getImage("deis.jpg"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(BI));
         this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
+        this.lbCurrentState.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         this.setTop(lbCurrentState);
         this.btnStud = new Button("Student state");
         this.btnProf = new Button("Professor state");
@@ -71,6 +75,7 @@ public class ProposalUI extends BorderPane {
         this.tfPathProposalData.setMinWidth(250);
         this.btnLoadProposalData = new Button("Load");
         Label lbPlaceHolder = new Label("Insert Proposal Data ");
+        lbPlaceHolder.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceHolder.setPadding(new Insets(4));
         HBox hBox1 = new HBox(lbPlaceHolder, tfPathProposalData, btnLoadProposalData);
         hBox1.setStyle("-fx-padding: 20 10 10 10");
@@ -81,6 +86,7 @@ public class ProposalUI extends BorderPane {
         this.tfRemoveProposal.setMinWidth(250);
         this.btnRemoveProposal = new Button("Remove");
         Label lbPlaceholder1 = new Label("Remove Proposal      ");
+        lbPlaceholder1.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceholder1.setPadding(new Insets(4));
         HBox hBox2 = new HBox(lbPlaceholder1, tfRemoveProposal, btnRemoveProposal);
         hBox2.setStyle("-fx-padding: 20 10 10 10");
@@ -90,6 +96,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditProposalID.setPromptText("Enter id of proposal to edit");
         this.tfEditProposalID.setMinWidth(250);
         Label lbPlaceholder2 = new Label("Edit proposal data   ");
+        lbPlaceholder2.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbPlaceholder2.setPadding(new Insets(4));
         HBox hBox3 = new HBox(lbPlaceholder2, tfEditProposalID);
         hBox3.setStyle("-fx-padding: 20 10 10 10");
@@ -98,6 +105,7 @@ public class ProposalUI extends BorderPane {
 
         //INTERNSHIP OPTIONS
         Label lbInternship = new Label("Options to edit for internships");
+        lbInternship.setStyle("-fx-text-fill: white; -fx-font-size: 15");
 
         this.olOptionsInternship = new ArrayList<>();
         this.olOptionsInternship.add("title");
@@ -114,6 +122,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditInternshipTitle = new TextField();
         this.tfEditInternshipTitle.setPromptText("New Title");
         Label lbInternshipTitle = new Label("Insert new title");
+        lbInternshipTitle.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbInternshipTitle.setPadding(new Insets(4));
         this.btnEditInternshipTitle = new Button("Edit");
         HBox hBoxInternshipTitle = new HBox(lbInternshipTitle, tfEditInternshipTitle, btnEditInternshipTitle);
@@ -126,6 +135,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditInternshipBranch = new TextField();
         this.tfEditInternshipBranch.setPromptText("New Branch (use , to separate)");
         Label lbInternshipBranch = new Label("Insert new branch(es)");
+        lbInternshipBranch.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbInternshipBranch.setPadding(new Insets(4));
         this.btnEditInternshipBranch = new Button("Edit");
         HBox hBoxInternshipBranch = new HBox(lbInternshipBranch, tfEditInternshipBranch, btnEditInternshipBranch);
@@ -138,6 +148,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditInternshipCompany = new TextField();
         this.tfEditInternshipCompany.setPromptText("New Company");
         Label lbInternshipCompany = new Label("Insert new company");
+        lbInternshipCompany.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbInternshipCompany.setPadding(new Insets(4));
         this.btnEditInternshipCompany = new Button("Edit");
         HBox hBoxInternshipCompany = new HBox(lbInternshipCompany, tfEditInternshipCompany, btnEditInternshipCompany);
@@ -150,6 +161,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditInternshipStudent = new TextField();
         this.tfEditInternshipStudent.setPromptText("New Student");
         Label lbInternshipStudent = new Label("Insert new student ID");
+        lbInternshipStudent.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbInternshipStudent.setPadding(new Insets(4));
         this.btnEditInternshipStudent = new Button("Edit");
         HBox hBoxInternshipStudent = new HBox(lbInternshipStudent, tfEditInternshipStudent, btnEditInternshipStudent);
@@ -173,6 +185,7 @@ public class ProposalUI extends BorderPane {
 
         //PROJECT OPTIONS
         Label lbProject = new Label("Options to edit for projects");
+        lbProject.setStyle("-fx-text-fill: white; -fx-font-size: 15");
 
         this.olOptionsProject = new ArrayList<>();
         this.olOptionsProject.add("title");
@@ -188,6 +201,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditProjectTitle = new TextField();
         this.tfEditProjectTitle.setPromptText("New Title");
         Label lbProjectTitle = new Label("Insert new title");
+        lbProjectTitle.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbProjectTitle.setPadding(new Insets(4));
         this.btnEditProjectTitle = new Button("Edit");
         HBox hBoxProjectTitle = new HBox(lbProjectTitle, tfEditProjectTitle, btnEditProjectTitle);
@@ -200,6 +214,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditProjectBranch = new TextField();
         this.tfEditProjectBranch.setPromptText("New branch (use , to separate)");
         Label lbProjectBranch = new Label("Insert new branch(es)");
+        lbProjectBranch.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbProjectBranch.setPadding(new Insets(4));
         this.btnEditProjectBranch = new Button("Edit");
         HBox hBoxProjectBranch = new HBox(lbProjectBranch, tfEditProjectBranch, btnEditProjectBranch);
@@ -212,6 +227,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditProjectProfessor = new TextField();
         this.tfEditProjectProfessor.setPromptText("New professor");
         Label lbProjectProfessor = new Label("Insert new professor email");
+        lbProjectProfessor.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbProjectProfessor.setPadding(new Insets(4));
         this.btnEditProjectProfessor = new Button("Edit");
         HBox hBoxProjectProfessor = new HBox(lbProjectProfessor, tfEditProjectProfessor, btnEditProjectProfessor);
@@ -224,6 +240,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditProjectStudent = new TextField();
         this.tfEditProjectStudent.setPromptText("New student");
         Label lbProjectStudent = new Label("Insert new student ID");
+        lbProjectStudent.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbProjectStudent.setPadding(new Insets(4));
         this.btnEditProjectStudent = new Button("Edit");
         HBox hBoxProjectStudent = new HBox(lbProjectStudent, tfEditProjectStudent, btnEditProjectStudent);
@@ -248,6 +265,7 @@ public class ProposalUI extends BorderPane {
 
         //AUTOPROPOSALS OPTIONS
         Label lbAutoProposals = new Label("Options to edit for auto proposals");
+        lbAutoProposals.setStyle("-fx-text-fill: white; -fx-font-size: 15");
 
         this.olOptionsAutoProposal = new ArrayList<>();
         this.olOptionsAutoProposal.add("title");
@@ -261,6 +279,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditAutoProposalTitle = new TextField();
         this.tfEditAutoProposalTitle.setPromptText("New title");
         Label lbAutoProposalsTitle = new Label("Insert new title");
+        lbAutoProposalsTitle.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbAutoProposalsTitle.setPadding(new Insets(4));
         this.btnEditAutoProposalTitle = new Button("Edit");
         HBox hBoxAutoProposalTitle = new HBox(lbAutoProposalsTitle, tfEditAutoProposalTitle, btnEditAutoProposalTitle);
@@ -273,6 +292,7 @@ public class ProposalUI extends BorderPane {
         this.tfEditAutoProposalStudent = new TextField();
         this.tfEditAutoProposalStudent.setPromptText("New Student");
         Label lbAutoProposalsStudent = new Label("New Student ID");
+        lbAutoProposalsStudent.setStyle("-fx-text-fill: white; -fx-font-size: 15");
         lbAutoProposalsStudent.setPadding(new Insets(4));
         this.btnEditAutoProposalStudent = new Button("Edit");
         HBox hBoxAutoProposalStudent = new HBox(lbAutoProposalsStudent, tfEditAutoProposalStudent, btnEditAutoProposalStudent);

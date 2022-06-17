@@ -11,6 +11,7 @@ import javafx.scene.layout.*;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationPhases;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
+import pt.isec.pa.apoio_poe.ui.gui.resources.ImageManager;
 
 import java.util.List;
 
@@ -36,7 +37,9 @@ public class ProposalsAttributionUI extends BorderPane {
     }
 
     private void createViews() {
-        this.setStyle("-fx-background-color: #25f398;");
+        BackgroundImage BI = new BackgroundImage(ImageManager.getImage("deis.jpg"), BackgroundRepeat.REPEAT, BackgroundRepeat.NO_REPEAT, BackgroundPosition.DEFAULT,
+                BackgroundSize.DEFAULT);
+        this.setBackground(new Background(BI));
         this.setVisible(manager != null && manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION);
 
         this.lbCurrentState = new Label("Current State: " + manager.getState());
