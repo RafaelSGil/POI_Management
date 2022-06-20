@@ -1,14 +1,11 @@
 package pt.isec.pa.apoio_poe.ui.gui.components;
 
 import javafx.geometry.Insets;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCodeCombination;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.*;
-import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
 import pt.isec.pa.apoio_poe.ui.gui.resources.ImageManager;
@@ -19,7 +16,7 @@ public class ProfessorUI extends BorderPane {
     private Label lbCurrentState;
     private TextField tfPathProfessorData, tfRemoveProfessor;
     private Button btnLoadProfessorData, btnRemoveProfessor;
-    private TextField tfEditEmailProfessor, tfEditValueProfessor;
+    private TextField tfEditEmailProfessor, tfEditNameProfessor;
     private Button btnEditProfessorData;
     private final KeyCombination ctrlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
     private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
@@ -72,10 +69,10 @@ public class ProfessorUI extends BorderPane {
         this.tfEditEmailProfessor = new TextField();
         this.tfEditEmailProfessor.setPromptText("Email of professor");
         this.tfEditEmailProfessor.setMinWidth(350);
-        this.tfEditValueProfessor = new TextField();
-        this.tfEditValueProfessor.setPromptText("true/false");
+        this.tfEditNameProfessor = new TextField();
+        this.tfEditNameProfessor.setPromptText("New name");
         this.btnEditProfessorData = new Button("Edit");
-        VBox vBox = new VBox(tfEditEmailProfessor, tfEditValueProfessor, btnEditProfessorData);
+        VBox vBox = new VBox(tfEditEmailProfessor, tfEditNameProfessor, btnEditProfessorData);
         vBox.setSpacing(20);
         vBox.setStyle("-fx-padding: 0 0 0 10");
         Label lbPlaceHolder2 = new Label("Edit Professor Data");
@@ -179,15 +176,15 @@ public class ProfessorUI extends BorderPane {
             }else{
                 tfEditEmailProfessor.setStyle("-fx-background-color: white");
             }
-            if(tfEditValueProfessor.getText().equals("") || !tfEditValueProfessor.getText().equals("true") || !tfEditValueProfessor.getText().equals("false")){
-                tfEditValueProfessor.setStyle("-fx-background-color: #fa3434");
+            if(tfEditNameProfessor.getText().equals("") || !tfEditNameProfessor.getText().equals("true") || !tfEditNameProfessor.getText().equals("false")){
+                tfEditNameProfessor.setStyle("-fx-background-color: #fa3434");
                 return;
             }else{
-                tfEditValueProfessor.setStyle("-fx-background-color: #fa3434");
+                tfEditNameProfessor.setStyle("-fx-background-color: #fa3434");
             }
-            if(!manager.editDataProfessor(tfEditEmailProfessor.getText(), tfEditValueProfessor.getText())){
+            if(!manager.editDataProfessor(tfEditEmailProfessor.getText(), tfEditNameProfessor.getText())){
                 tfEditEmailProfessor.setStyle("-fx-background-color: #fa3434");
-                tfEditValueProfessor.setStyle("-fx-background-color: #fa3434");
+                tfEditNameProfessor.setStyle("-fx-background-color: #fa3434");
             }
         });
     }

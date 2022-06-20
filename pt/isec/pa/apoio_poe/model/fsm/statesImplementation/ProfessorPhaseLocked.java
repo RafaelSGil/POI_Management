@@ -8,6 +8,11 @@ import pt.isec.pa.apoio_poe.model.data.Data;
 
 import java.util.ArrayList;
 
+/**
+ * <p>Class that represents the Professor locked state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class ProfessorPhaseLocked extends StateAdapter {
     public ProfessorPhaseLocked(ApplicationContext context, Data data) {
         super(context, data);

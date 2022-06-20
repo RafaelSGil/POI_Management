@@ -7,6 +7,11 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * <p>Class that represents the Search state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class SearchPhase extends StateAdapter {
     public SearchPhase(ApplicationContext context, Data data) {
         super(context, data);

@@ -10,6 +10,11 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>Class that represents the Candidature state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class CandidaturePhase extends StateAdapter {
     public CandidaturePhase(ApplicationContext context, Data data) {
         super(context, data);

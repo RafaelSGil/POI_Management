@@ -12,10 +12,17 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * <p>FSM Context</p>
+ * @author Rafel Gil and Hugo Ferreira
+ */
 public class ApplicationContext {
     private Data data;
     private IApplicationState state;
 
+    /**
+     *
+     */
     public ApplicationContext() {
         this.data = new Data();
         state = new StudentPhase(this, data);
@@ -128,6 +135,10 @@ public class ApplicationContext {
 
     public boolean associateAttribution() {
         return state.associateAttribution();
+    }
+
+    public ArrayList<String> getProposalAttributions(){
+        return data.getProposalAttributions();
     }
 
     public boolean nonAssociatedAttribution() {

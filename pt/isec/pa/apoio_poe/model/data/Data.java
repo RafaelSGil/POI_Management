@@ -14,25 +14,75 @@ import java.io.Serial;
 import java.io.Serializable;
 import java.util.*;
 
+/**
+ * Class that holds all the data anda data manipulation of the program
+ *
+ * @author RafaelGil and HugoFerreira
+ * @version 1.0.0
+ */
+
 public class Data implements Serializable {
     @Serial
     private static final long serialVersionUID = 1L;
 
+    /**
+     * Collections to store the values
+     */
+
+    /**
+     * stores the self proposals the students submit'
+     */
     private Set<Proposal> autoproposals;
+    /**
+     * stores all the students
+     */
     private Set<Person> students;
+    /**
+     * stores all the professors
+     */
     private Set<Person> professors;
+    /**
+     * stores all the internships available
+     */
     private Set<MidProposal> internships;
+    /**
+     * stores all the projects available
+     */
     private Set<MidProposal> projects;
+    /**
+     * stores all the candidatures made
+     */
     private Map<Long, List<String>> candidatures;
+    /**
+     * stores all the phases that have been locked
+     * true if locked, false if unlocked
+     */
     private Map<ApplicationPhases, Boolean> lockedPhases;
+    /**
+     * <p></p>stores all the proposals that been attributed to students
+     * key = id of proposals, value = id of student
+     */
     private Map<String, Long> proposalAttributions;
+    /**
+     * <p>stores all the attributed to professors
+     * key = id of professor, value = List of proposals' id</p>
+     */
     private Map<String, List<String>> advisorAttribution;
+    /**
+     * <p>stores the logger messages</p>>
+     */
     private ArrayList<String> log;
+    /**
+     * <p>stores all the ties that have occurred when attributing a proposal</p>
+     *
+     */
     private ArrayList<Person> ties;
 
 
+    /**
+     * default and only constructor of this class
+     */
     public Data() {
-
         this.students = new HashSet<>();
         this.professors = new HashSet<>();
         this.autoproposals = new HashSet<>();
@@ -48,26 +98,36 @@ public class Data implements Serializable {
     }
 
     private void startMap() {
-        // initializes the map with all enum states and gives them the value false,
-        // which means the state has not yet been locked
-
         for (ApplicationPhases phase : ApplicationPhases.values()) {
             lockedPhases.put(phase, false);
         }
     }
 
+    /**
+     *
+     * @param phase enum that indicates the phase of the program
+     * @return boolean - whether the phase is locked or not
+     */
     public boolean isLocked(ApplicationPhases phase) {
         // checks if given state is already locked
 
         return lockedPhases.get(phase);
     }
 
+    /**
+     *
+     * @param phase the phase of the program it wishes to lock
+     */
     public void lockPhase(ApplicationPhases phase) {
         // locks the given state by attributing it a true value
 
         lockedPhases.put(phase, true);
     }
 
+    /**
+     *
+     * @return ArrayList- array with all the messages of the log, cleans the log
+     */
     public ArrayList<String> getLog() {
         ArrayList<String> arr = new ArrayList<>(log);
         if(arr.size() == 0){
@@ -77,6 +137,11 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @param attributes List of Lists with the line of information read from a file, regarding a student
+     * @return boolean - whether the data insertion was successful or not
+     */
     public boolean addStudentFile(List<List<String>> attributes) {
 
         try{
@@ -151,6 +216,13 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @param identifier id of the student to change
+     * @param change identifies the field of the data to change
+     * @param whatToChange new value
+     * @return whether the edit was successful or not
+     */
     public boolean editStudent(String identifier, String change, String whatToChange) {
         Student aux = (Student) Student.createDummyStudent((Long.parseLong(identifier)));
 
@@ -427,6 +499,16 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     * <p>Receives all the data, creates and inserts a new student in the collection</p>
+     * @param name name of the student
+     * @param email email of the student
+     * @param id id of the student
+     * @param course course of the student
+     * @param courseBranch branch of the student
+     * @param classification classification of the student
+     * @param internship internship accessibility
+     */
     public void addStudent(String name, String email, long id, String course, String courseBranch,
             double classification, boolean internship) {
 
@@ -439,6 +521,11 @@ public class Data implements Serializable {
         students.add((Student.createStudent(name, email, id, course, courseBranch, classification, internship)));
     }
 
+    /**
+     *
+     * @param attributes List of Lists with the line of information read from a file, regarding a professor
+     * @return whether the data insertion was successful or not
+     */
     public boolean addProfessorFile(List<List<String>> attributes) {
         try{
             if(attributes == null){
@@ -478,23 +565,27 @@ public class Data implements Serializable {
         return true;
     }
 
-    public boolean editProfessor(String email, String advisorValue) {
-        boolean advisor;
-
-        try{
-            advisor = Boolean.parseBoolean(advisorValue);
-        }catch (Exception e){
-            return false;
-        }
-
+    /**
+     *
+     * @param email email of the professor to change
+     * @param name new name
+     * @return whether the edit was successful or not
+     */
+    public boolean editProfessor(String email, String name  ) {
         for (Person professor : professors) {
             if (professor.equals(Professor.createDummyProfessor(email))) {
-                professor.setAdvisor(advisor);
+                professor.setName(name);
                 return true;
             }
         }
         return false;
     }
+
+    /**
+     * <p>Receives the data, creates and inserts a new professor in the collection</p>
+     * @param name name of the professor to insert
+     * @param email email of the professor to insert
+     */
 
     public void addProfessor(String name, String email) {
 
@@ -506,6 +597,12 @@ public class Data implements Serializable {
 
         professors.add(Professor.createProfessor(name, email));
     }
+
+    /**
+     *
+     * @param attributes List of Lists with the line of information read from a file, regarding a proposal
+     * @return whether the data insertion was successful or not
+     */
 
     public boolean addProposalFile(List<List<String>> attributes) {
         try{
@@ -627,6 +724,14 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     * <p>Receives the data, creates an adds an internship to the collection</p>
+     * @param idOfProposal id of the internship
+     * @param title title of the internship
+     * @param student id of the student it is attributed to
+     * @param branch List with the branches that may take the internship
+     * @param nameOfCompany name of the company where the internship will take place
+     */
     public void addInternship(String idOfProposal, String title, Student student, List<String> branch,
             String nameOfCompany) {
         if (idOfProposal == null || title == null || nameOfCompany == null)
@@ -641,6 +746,13 @@ public class Data implements Serializable {
         internships.add(Internship.createInternship(idOfProposal, title, student, branch, nameOfCompany));
     }
 
+    /**
+     * <p>Receives the data, creates an adds an internship to the collection</p>
+     * @param idOfProposal id of the internship
+     * @param title title of the internship
+     * @param branch List with the branches that may take the internship
+     * @param nameOfCompany name of the company where the internship will take place
+     */
     public void addInternshipWithoutStudent(String idOfProposal, String title, List<String> branch,
             String nameOfCompany) {
         if (idOfProposal == null || title == null || nameOfCompany == null)
@@ -654,6 +766,14 @@ public class Data implements Serializable {
 
     }
 
+    /**
+     * <p>Receives the data, creates an adds a project to the collection</p>
+     * @param idOfProposal id o the project
+     * @param title title of the project
+     * @param student id of the student it is attributed to
+     * @param branch List with the branches that may take this project
+     * @param professor professor that submitted this project
+     */
     public void addProject(String idOfProposal, String title, Student student, List<String> branch,
             Professor professor) {
         if (idOfProposal == null || title == null || branch == null)
@@ -671,6 +791,13 @@ public class Data implements Serializable {
         projects.add(Project.createProject(idOfProposal, title, student, branch, professor));
     }
 
+    /**
+     * <p>Receives the data, creates an adds a project to the collection</p>
+     * @param idOfProposal id o the project
+     * @param title title of the project
+     * @param branch List with the branches that may take this project
+     * @param professor professor that submitted this project
+     */
     public void addProjectWithoutStudent(String idOfProposal, String title, List<String> branch,
             Professor professor) {
         if (idOfProposal == null || title == null || branch == null)
@@ -682,6 +809,12 @@ public class Data implements Serializable {
         projects.add(Project.createProject(idOfProposal, title, null, branch, professor));
     }
 
+    /**
+     * <p>Receives the data, creates an adds a self-proposal to the collection</p>
+     * @param idOfProposal id of the proposal
+     * @param title title of the proposal
+     * @param student id of the student that submitted the self-proposal
+     */
     public void addAutoProposal(String idOfProposal, String title, Student student) {
         if (idOfProposal == null || title == null)
             return;
@@ -705,6 +838,11 @@ public class Data implements Serializable {
         return "Could not find the given student";
     }
 
+    /**
+     *
+     * @param email email of the professor
+     * @return string - information of the professor requested
+     */
     public String getProfessorGivenItsEmail(String email) {
         for (Person pf : professors) {
             if (pf.equals(Professor.createDummyProfessor(email))) {
@@ -715,6 +853,11 @@ public class Data implements Serializable {
 
     }
 
+    /**
+     * <p>Removing a student implies removing all of his self-proposals</p>
+     * @param id id of the student to remove
+     * @return whether the removal was successful or not
+     */
     public boolean removeStudentGivenItsId(String id) {
         long idOfStudent;
         try{
@@ -731,10 +874,20 @@ public class Data implements Serializable {
         return students.remove(Student.createDummyStudent(idOfStudent));
     }
 
+    /**
+     *
+     * @param email email of the professor to remove
+     * @return boolean - whether the removal was successful or not
+     */
     public boolean removeProfessorGivenItsEmail(String email) {
         return professors.remove(Professor.createDummyProfessor(email));
     }
 
+    /**
+     *
+     * @param idOfProposal if of the proposal to remove
+     * @return boolean - whether the removal was successful or not
+     */
     public boolean removeProposals(String idOfProposal) {
         if (removeInternshipsGivenItsID(idOfProposal))
             return true;
@@ -745,6 +898,11 @@ public class Data implements Serializable {
         return removeAutoProposalGivenItsID(idOfProposal);
     }
 
+    /**
+     *
+     * @param idOfProposal if of the internship to remove
+     * @return boolean - whether the removal was successful or not
+     */
     public boolean removeInternshipsGivenItsID(String idOfProposal) {
         if (idOfProposal == null) {
             return false;
@@ -756,6 +914,11 @@ public class Data implements Serializable {
         return internships.remove(Internship.createDummyInternship(idOfProposal));
     }
 
+    /**
+     *
+     * @param idOfProposal if of the self-proposal to remove
+     * @return boolean - whether the removal was successful or not
+     */
     public boolean removeAutoProposalGivenItsID(String idOfProposal) {
         if (idOfProposal == null)
             return false;
@@ -766,6 +929,11 @@ public class Data implements Serializable {
         return autoproposals.remove(AutoProposal.createDummyAutoProposal(idOfProposal));
     }
 
+    /**
+     *
+     * @param idOfProposal if of the project to remove
+     * @return boolean - whether the removal was successful or not
+     */
     public boolean removeProjectsGivenItsID(String idOfProposal) {
         if (idOfProposal == null)
             return false;
@@ -776,6 +944,11 @@ public class Data implements Serializable {
         return projects.remove(Project.createDummyProject(idOfProposal));
     }
 
+    /**
+     * <p>Indicates what is the type of the given proposal</p>
+     * @param identifier id of the proposal
+     * @return -1 -> not found; 0 -> internship; 1 -> project; 3 -> self-proposal
+     */
     public int checkTypeProposal(String identifier) {
         if (internships.contains(Internship.createDummyInternship(identifier))) {
             return 0;
@@ -790,6 +963,13 @@ public class Data implements Serializable {
         return -1;
     }
 
+    /**
+     *
+     * @param identifier id of the proposal to edit
+     * @param attribute parameter to alter
+     * @param newValue List with the new values
+     * @return boolean - whether the edit was successful or not
+     */
     public boolean editProposals(String identifier, String attribute, List<String> newValue) {
         if (internships.contains(Internship.createDummyInternship(identifier))) {
             return editInternships(identifier, attribute, newValue);
@@ -803,6 +983,13 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @param identifier id of the self-proposal to alter
+     * @param attribute attribute to alter
+     * @param newValue List of new values
+     * @return whether the edit was successful or not
+     */
     public boolean editAutoProposals(String identifier, String attribute, List<String> newValue) {
         try {
             for (Proposal auto : autoproposals) {
@@ -823,6 +1010,13 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @param identifier id of the project to alter
+     * @param attribute attribute to alter
+     * @param newValue List of new values
+     * @return whether the edit was successful or not
+     */
     public boolean editProjects(String identifier, String attribute, List<String> newValue) {
         try {
             for (MidProposal mid : projects) {
@@ -852,6 +1046,13 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @param identifier id of the internship to alter
+     * @param attribute attribute to alter
+     * @param newValue List of new values
+     * @return whether the edit was successful or not
+     */
     public boolean editInternships(String identifier, String attribute, List<String> newValue) {
         try{
             for (MidProposal mid : internships) {
@@ -878,6 +1079,10 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @return ArrayList- list with the data of every student registered
+     */
     public ArrayList<String> getAllStudents() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -893,6 +1098,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @return ArrayList - list with the data of every professor registered
+     */
     public ArrayList<String> getAllProfessors() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -907,6 +1116,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @return ArrayList - list with the data of every proposal registered
+     */
     public ArrayList<String> getAllProjects() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -932,6 +1145,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @return whether the Phase1 was locked successfully or not
+     */
     public boolean lockPhase1() {
 
         int counterDaProposals = 0;
@@ -974,6 +1191,11 @@ public class Data implements Serializable {
                 && (counterSiStudents <= counterSiProposals);
     }
 
+    /**
+     *
+     * @param attributes List of Lists with the line of information read from a file, regarding a candidature
+     * @return whether the data insertion was successful or not
+     */
     public boolean addCandidatureFile(List<List<String>> attributes) {
         if(attributes == null){
             log.add("Path incorrect!");
@@ -1054,6 +1276,10 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @return whether the Phase1 was locked successfully or not
+     */
     public ArrayList<String> getCandidatures() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1069,6 +1295,12 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @param id id of the candidature to remove from
+     * @param proposal  id of the proposal to remove from candidature
+     * @return whether the removal was successful or not
+     */
     public boolean removeCandidatureGivenStudentID(String id, String proposal) {
         if (id == null || proposal == null)
             return false;
@@ -1087,6 +1319,12 @@ public class Data implements Serializable {
         return false;
     }
 
+    /**
+     *
+     * @param id id of the candidature to edit
+     * @param proposal if of the proposal to add
+     * @return boolean - whether the edit was successful or not
+     */
     public boolean editCandidatures(String id, String proposal) {
         if (id == null || proposal == null)
             return false;
@@ -1114,6 +1352,11 @@ public class Data implements Serializable {
         return false;
     }
 
+    /**
+     *
+     * @param id id of the proposal to completely remove
+     * @return boolean - whether the removal was successful or not
+     */
     public boolean removeCompleteCandidatureGivenItsID(String id) {
         Long identifier = Long.parseLong(id);
         if (candidatures.containsKey(identifier)) {
@@ -1123,37 +1366,45 @@ public class Data implements Serializable {
         return false;
     }
 
-    public String getProposalAttributions() {
-        StringBuilder sb = new StringBuilder();
+    /**
+     *
+     * @return ArrayList - List with all the proposals attributed
+     */
+    public ArrayList<String> getProposalAttributions() {
+        ArrayList<String> arr = new ArrayList<>();
 
         if (autoproposals.size() == 0 && internships.size() == 0 && projects.size() == 0) {
-            sb.append("No projects registered");
-            return sb.toString();
+            arr.add("No projects registered");
+            return arr;
         }
 
-        sb.append(("AutoProposals: \n\n"));
+        arr.add(("AutoProposals:"));
         for (Proposal auto : autoproposals) {
             if (auto.getStudent() != -1) {
-                sb.append(auto).append("\n");
+                arr.add(auto.toString());
             }
         }
 
-        sb.append("Projects: \n\n");
+        arr.add("Projects:");
         for (MidProposal mid : projects) {
             if (mid.getStudent() != -1) {
-                sb.append(mid).append("\n");
+                arr.add(mid.toString());
             }
         }
 
-        sb.append("InternShips: \n\n");
+        arr.add("InternShips:");
         for (MidProposal mid : internships) {
             if (mid.getStudent() != -1) {
-                sb.append(mid.toString()).append("\n");
+                arr.add(mid.toString());
             }
         }
-        return sb.toString();
+        return arr;
     }
 
+    /**
+     *
+     * @return ArrayList - List with all the students that submitted a candidature
+     */
     public ArrayList<String> listStudentsWithCandidatures() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1165,6 +1416,11 @@ public class Data implements Serializable {
         return arr;
     }
 
+
+    /**
+     *
+     * @return ArrayList - List with all the students that didn't submitted a candidature
+     */
     public ArrayList<String> listStudentsWithoutCandidatures() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1177,6 +1433,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @return ArrayList - List with all the students that  submitted a self-proposal
+     */
     public ArrayList<String> listStudentsWithAutoProposals() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1193,6 +1453,12 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @param strs list with all the filters selected
+     * @param state enum the indicates the state in which the application is in
+     * @return ArrayList - List with all the information solicited by the filters
+     */
     public ArrayList<String> listProposalsFilters(List<String> strs, ApplicationState state) {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1283,6 +1549,11 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @param identifier
+     * @return
+     */
     public Proposal checkAssociationProposals(String identifier) {
         // checks if a given proposal is already associated with a student
 
@@ -1317,6 +1588,10 @@ public class Data implements Serializable {
         return null;
     }
 
+    /**
+     *
+     * @return boolean - whether it managed to associate all the students that were pre-associated
+     */
     public boolean associatedAttribution() {
         for (Proposal auto : autoproposals) {
             if (auto.getStudent() != -1) {
@@ -1345,6 +1620,10 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @return boolean - whether it managed to automatically associate the students left with no proposal association
+     */
     public boolean nonAssociateAttribution() {
         ArrayList<Person> studentsProposals = new ArrayList<>();
         double highestGrade = 0;
@@ -1420,6 +1699,9 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     *
+     */
     public void fixAttributions() {
         for (String idProposal : proposalAttributions.keySet()) {
             if (internships.contains(Internship.createDummyInternship(idProposal))) {
@@ -1447,6 +1729,11 @@ public class Data implements Serializable {
         }
     }
 
+    /**
+     * <p>When there is a tie between two students, chooses which one to attribute first</p>
+     * @param indexStudent index of the desired student in the collection that stores the ties
+     * @return boolean - whether it managed to associate the student or not
+     */
     public boolean chooseStudentToAssociate(String indexStudent) {
         int index;
 
@@ -1500,10 +1787,18 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     *
+     * @return ArrayList - List with all the ties;
+     */
     public ArrayList<Person> getTies(){
         return new ArrayList<>(ties);
     }
 
+    /**
+     *
+     * @return ArrayList- List with all the students with proposals attributed
+     */
     public ArrayList<String> listStudentWithProposalAttributed() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1514,6 +1809,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @return ArrayList - List with all the students without proposals attributed
+     */
     public ArrayList<String> listStudentWithoutProposalAttributed() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1526,6 +1825,12 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @param idOdProposal id of the proposal to associate
+     * @param idOfStudent id of the student to associate
+     * @return boolean - whether it managed to attribute or not
+     */
     public boolean manualAttribution(String idOdProposal, String idOfStudent) {
         long idOdStudent;
         try{
@@ -1552,6 +1857,11 @@ public class Data implements Serializable {
         return false;
     }
 
+    /**
+     *
+     * @param idOdProposal id of the proposal to remove the attribution
+     * @return boolean - whether it managed to remove or not
+     */
     public boolean manualRemoval(String idOdProposal) {
         if (proposalAttributions.containsKey(idOdProposal)) {
             proposalAttributions.remove(idOdProposal);
@@ -1571,6 +1881,9 @@ public class Data implements Serializable {
         return true;
     }
 
+    /**
+     * <p>Automatically associate professors that were pre-associated</p>
+     */
     public void associatedAdvisor() {
         for (MidProposal project : projects) {
             if (!advisorAttribution.containsValue(List.of(project.getIdOfProposal()))) {
@@ -1583,6 +1896,12 @@ public class Data implements Serializable {
         }
     }
 
+    /**
+     *
+     * @param idOfProposal id of the proposal to associate
+     * @param emailProfessor email of the professor to associate
+     * @return boolean - whether it managed to associate or not
+     */
     public boolean manualProfessorAttribution(String idOfProposal, String emailProfessor) {
         if (!professors.contains(Professor.createDummyProfessor(emailProfessor))) {
             return false;
@@ -1601,6 +1920,12 @@ public class Data implements Serializable {
         return false;
     }
 
+    /**
+     *
+     * @param emailProfessor email of the professor to remove from
+     * @param idOfProposal id of the proposal to remove
+     * @return boolean - whether it managed to remove the proposal from the professor
+     */
     public boolean manualProfessorRemoval(String emailProfessor, String idOfProposal) {
         if(advisorAttribution.containsKey(emailProfessor)){
             if(advisorAttribution.get(emailProfessor).size() > 1){
@@ -1616,6 +1941,11 @@ public class Data implements Serializable {
         return false;
     }
 
+
+    /**
+     *
+     * @return Arraylist - List with all the professors attributions
+     */
     public ArrayList<String> listProfessorAttributions() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1640,6 +1970,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @return Arraylist - List with all the with proposals and professors attributed
+     */
     public ArrayList<String> listStudentsWithProposalAndProfessorAttributed() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1659,6 +1993,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @return Arraylist - List with all the with proposals attributed but without professors attributed
+     */
     public ArrayList<String> listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1676,25 +2014,11 @@ public class Data implements Serializable {
         return arr;
     }
 
-    public String getNumberOfAttributionsPerProfessor() {
-        StringBuilder sb = new StringBuilder();
 
-        int count = 0;
-
-        for (Person prof : professors) {
-            for (String emailOfProf : advisorAttribution.keySet()) {
-                if (emailOfProf.equals(prof.getEmail())) {
-                    ++count;
-                }
-            }
-
-            sb.append("Professor ").append(prof.getEmail()).append(" has ").append(count).append(" attributions\n");
-            count = 0;
-        }
-
-        return sb.toString();
-    }
-
+    /**
+     *
+     * @return String - average number of professor attributions
+     */
     public String getAverageNumberOfAttributionsForProfessors() {
         StringBuilder sb = new StringBuilder();
 
@@ -1719,6 +2043,10 @@ public class Data implements Serializable {
         return sb.toString();
     }
 
+    /**
+     *
+     * @return String - minimum attributions from all professors
+     */
     public String getMinProfessorsAttributions() {
         StringBuilder sb = new StringBuilder();
 
@@ -1741,6 +2069,11 @@ public class Data implements Serializable {
         return sb.toString();
     }
 
+
+    /**
+     *
+     * @return String - maximum attributions from all professors
+     */
     public String getMaxProfessorsAttributions() {
         StringBuilder sb = new StringBuilder();
 
@@ -1763,6 +2096,11 @@ public class Data implements Serializable {
         return sb.toString();
     }
 
+    /**
+     *
+     * @param email email of the desired professor
+     * @return String - attributions from the desired professor
+     */
     public String getSpecificProfessorAttributions(String email) {
         StringBuilder sb = new StringBuilder();
 
@@ -1777,6 +2115,10 @@ public class Data implements Serializable {
         return sb.toString();
     }
 
+    /**
+     *
+     * @return ArrayList - List with all the students without proposals but with candidatures
+     */
     public ArrayList<String> listStudentWithoutProposalAttributedAndWithCandidature() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1789,6 +2131,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @return ArrayList - List with all available proposals
+     */
     public ArrayList<String> listAvailableProposals() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1812,6 +2158,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+     * @return List with all attributed proposals
+     */
     public ArrayList<String> listAttributedProposals() {
         ArrayList<String> arr = new ArrayList<>();
 
@@ -1835,6 +2185,10 @@ public class Data implements Serializable {
         return arr;
     }
 
+    /**
+     *
+      * @return ArrayList - List with all the branches that have students
+     */
     public ArrayList<String> getBranches(){
         ArrayList<String> branches = new ArrayList<>();
 
@@ -1847,6 +2201,11 @@ public class Data implements Serializable {
         return new ArrayList<>(branches);
     }
 
+    /**
+     *
+     * @param map map to order
+     * @return HashMap - ordered map from highest to smallest value
+     */
     public HashMap<String, Integer> getOrderedHashMap(HashMap<String, Integer> map){
         List<Map.Entry<String, Integer>> list = new LinkedList<>(map.entrySet());
 
@@ -1861,6 +2220,10 @@ public class Data implements Serializable {
         return map;
     }
 
+    /**
+     *
+     * @return HashMap - ordered map from highest to smallest value
+     */
     public HashMap<String, Integer> getTopCompanies(){
         HashMap<String, Integer> map = new HashMap<>();
 
@@ -1877,6 +2240,10 @@ public class Data implements Serializable {
         return getOrderedHashMap(map);
     }
 
+    /**
+     *
+     * @return HashMap - ordered map from highest to smallest value
+     */
     public HashMap<String, Integer> getTopAdvisors(){
         HashMap<String, Integer> map = new HashMap<>();
 
@@ -1887,6 +2254,10 @@ public class Data implements Serializable {
         return getOrderedHashMap(map);
     }
 
+    /**
+     *
+     * @return HashMap - ordered map from highest to smallest value
+     */
     public HashMap<String, Integer> getNumberProposalsPerBranches(){
         HashMap<String, Integer> map = new HashMap<>();
         Set<MidProposal> midProposals = new HashSet<>();
@@ -1912,6 +2283,10 @@ public class Data implements Serializable {
         return getOrderedHashMap(map);
     }
 
+    /**
+     *
+     * @return HashMap - ordered map from highest to smallest value
+     */
     public HashMap<String, Integer> getNumberOfProposalsAttrAndNotAttrib(){
         HashMap<String, Integer> map = new HashMap<>();
         map.put("Attributed", 0);

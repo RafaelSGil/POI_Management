@@ -10,6 +10,11 @@ import pt.isec.pa.apoio_poe.files.csv_files.Files;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>Class that represents the Professor state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class ProfessorPhase extends StateAdapter {
 
     public ProfessorPhase(ApplicationContext context, Data data) {

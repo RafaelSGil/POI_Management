@@ -6,6 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * <p>Class that reads a file and returns a List of Lists with the lines read</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class Files {
     public static List<List<String>> openFile(String pathFile) {
         List<List<String>> fileTokens = new ArrayList<>();
@@ -18,6 +23,7 @@ public class Files {
                 fileTokens.add(Arrays.asList(values));
             }
         } catch (Exception e) {
+            return null;
         }
 
         return fileTokens;

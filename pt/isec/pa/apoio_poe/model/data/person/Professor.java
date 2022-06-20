@@ -2,6 +2,11 @@ package pt.isec.pa.apoio_poe.model.data.person;
 
 import java.util.Objects;
 
+/**
+ * <p>Class that represents a Professor</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class Professor extends Person {
     public Professor(String name, String email) {
         super(name, email);

@@ -8,7 +8,17 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
 import java.util.ArrayList;
 
+/**
+ * <p>Class that represents the Candidature locked state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class CandidaturePhaseLocked extends StateAdapter {
+    /**
+     *
+     * @param context reference to FSM context
+     * @param data reference to Data
+     */
     public CandidaturePhaseLocked(ApplicationContext context, Data data) {
         super(context, data);
     }

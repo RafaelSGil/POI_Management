@@ -39,6 +39,13 @@ public class ProposalsAttributionDataUI extends BorderPane {
             this.lbCurrentState.setText("Current State: " + manager.getState());
         });
 
+        manager.addPropertyChangeListener(FSManager.PROP_DATA, evt -> {
+            if(manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION || manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED){
+                this.lvData.getItems().clear();
+                this.lvData.setItems(FXCollections.observableList(manager.getProposalAttributions()));
+            }
+        });
+
         manager.addPropertyChangeListener(FSManager.PROP_SWC, evt -> {
             if(manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION || manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION_LOCKED){
                 this.lvData.getItems().clear();

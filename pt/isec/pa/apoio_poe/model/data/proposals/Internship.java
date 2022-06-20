@@ -4,6 +4,11 @@ import java.util.List;
 
 import pt.isec.pa.apoio_poe.model.data.person.Student;
 
+/**
+ * <p>Class that represents an Internship</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class Internship extends MidProposal {
     private String nameOfCompany;
 

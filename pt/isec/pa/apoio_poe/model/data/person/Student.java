@@ -2,6 +2,11 @@ package pt.isec.pa.apoio_poe.model.data.person;
 
 import java.util.Objects;
 
+/**
+ * <p>Class that represents a Student</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class Student extends Person {
     private final long id;
     private String course;

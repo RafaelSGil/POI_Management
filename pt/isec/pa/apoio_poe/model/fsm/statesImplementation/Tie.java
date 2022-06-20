@@ -9,6 +9,11 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
+/**
+ * <p>Class that represents the Tie state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class Tie extends StateAdapter {
     public Tie(ApplicationContext context, Data data) {
         super(context, data);

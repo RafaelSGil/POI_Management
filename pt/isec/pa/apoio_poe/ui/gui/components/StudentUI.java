@@ -10,6 +10,10 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.model.FSManager;
 import pt.isec.pa.apoio_poe.ui.gui.resources.ImageManager;
 
+/**
+ * @author RafaelGil and HugoFerreira
+ */
+
 
 public class StudentUI extends BorderPane {
     private FSManager manager;
@@ -19,7 +23,8 @@ public class StudentUI extends BorderPane {
     private TextField tfRemoveStudent;
     private Button btnLoadStudentData;
     private Button btnRemoveStudent;
-    private TextField tfEditIDStudent, tfEditFieldStudent, tfEditValueStudent;
+    private Button btnManualAdd;
+    private TextField tfEditIDStudent, tfEditFieldStudent, tfEditValueStudent, tfManualAddName, tfManualAddID;
     private Button btnEditStudentData;
     private final KeyCombination ctrlN = new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_DOWN);
     private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);

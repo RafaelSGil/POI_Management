@@ -18,6 +18,9 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * @author RafaelGil and HugoFerreira
+ */
 public class CandidatureUI extends BorderPane {
     private FSManager manager;
     Button btnPrev, btnClose, btnPropAttrib;
@@ -29,6 +32,10 @@ public class CandidatureUI extends BorderPane {
     private final KeyCombination ctrlB = new KeyCodeCombination(KeyCode.B, KeyCombination.CONTROL_DOWN);
 
 
+    /**
+     *
+     * @param manager reference to the model facade
+     */
     public CandidatureUI(FSManager manager){
         this.manager = manager;
         createViews();

@@ -9,13 +9,24 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationState;
 import pt.isec.pa.apoio_poe.ui.util.InputProtection;
 import pt.isec.pa.apoio_poe.model.FSManager;
 
+/**
+ *
+ */
 public class CommandLineUI {
     private FSManager manager;
 
+    /**
+     *
+     * @param manager model facade
+     */
     public CommandLineUI(FSManager manager) {
         this.manager = manager;
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public boolean studentPhase() {
         System.out.println("Current state: " + manager.getState());
 
@@ -44,6 +55,10 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public boolean save() {
         if (manager.serializationOfProgram()) {
             System.out.println("Successful serialization");
@@ -54,6 +69,9 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
     public void loadSave() {
         try {
             if (manager.loadSave()) {
@@ -66,17 +84,26 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     */
     public void insertData() {
         String file = InputProtection.readString("Specify the complete path to the csv file pls: ", false);
         manager.insertData(file);
         System.out.println(manager.getLogger());
     }
 
+    /**
+     *
+     */
     public void deleteStudentData() {
         String identifier = InputProtection.readString("Specify the id of the student you want to delete: ", false);
         manager.deleteData(identifier);
     }
 
+    /**
+     *
+     */
     public void editStudentData() {
         String identifier = InputProtection.readString("Specify the id of the student you want to edit: ", true);
 
@@ -89,22 +116,38 @@ public class CommandLineUI {
         manager.editDataStudent(identifier, change, whatToChange);
     }
 
+    /**
+     *
+     */
     public void consultData() {
         System.out.println(manager.checkData());
     }
 
+    /**
+     *
+     */
     public void professorManagement() {
         manager.professorManager();
     }
 
+    /**
+     *
+     */
     public void proposalManagement() {
         manager.proposalManager();
     }
 
+    /**
+     *
+      */
     public void closePhase() {
         manager.closeState();
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public boolean studentPhaseLocked() {
         System.out.println("Current state: " + manager.getState());
 
@@ -126,6 +169,10 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public boolean professorPhase() {
         System.out.println("Current state: " + manager.getState());
 
@@ -152,12 +199,18 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
     public void deleteProfessorData() {
         String identifier = InputProtection.readString("Specify the email of the professor you want to delete: ",
                 false);
         manager.deleteData(identifier);
     }
 
+    /**
+     *
+     */
     public void editProfessorData() {
         String identifier = InputProtection.readString("Specify the email of the professor you want to edit: ", false);
         String advisor;
@@ -171,10 +224,17 @@ public class CommandLineUI {
         manager.editDataProfessor(identifier, advisor);
     }
 
+    /**
+     *
+     */
     public void studentManagement() {
         manager.studentManager();
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public boolean professorPhaseLocked() {
         System.out.println("Current state: " + manager.getState());
 
@@ -196,6 +256,10 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public boolean proposalPhase() {
         System.out.println("Current state: " + manager.getState());
 
@@ -222,11 +286,17 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
     public void deleteProposalData() {
         String identifier = InputProtection.readString("Specify the id of the proposal you want to delete: ", true);
         manager.deleteData(identifier);
     }
 
+    /**
+     *
+     */
     public void deleteCandidatureData() {
         switch (InputProtection.chooseOption(null, "Remove single proposal from candidature",
                 "Remove an entire candidature")) {
@@ -242,6 +312,9 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     */
     public void editProposalData() {
         String identifier = InputProtection.readString("Specify the id of the proposal you want to edit: ", true);
         int input = manager.checkTypeProposal(identifier);
@@ -253,6 +326,10 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     * @param identifier id of proposal
+     */
     public void editInternshipData(String identifier) {
         switch (InputProtection.chooseOption("What attribute do you want to alter?", "title", "branch", "company",
                 "student")) {
@@ -307,6 +384,10 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     * @param identifier id of project
+     */
     public void editProjectData(String identifier) {
         switch (InputProtection.chooseOption("What attribute do you want to alter?", "title", "branch", "professor",
                 "student")) {
@@ -361,6 +442,10 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     * @param identifier id of self-proposal
+     */
     public void editAutoProposalData(String identifier) {
         switch (InputProtection.chooseOption("what attribute do you want to alter?", "title", "student")) {
             case 1 -> {
@@ -388,6 +473,10 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public boolean proposalPhaseLocked() {
         System.out.println("Current state: " + manager.getState());
 
@@ -409,12 +498,19 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
     public void editCandidatureData() {
         String id = InputProtection.readString("Insert the id of the student that applied to the candidature: ", true);
         String proposal = InputProtection.readString("Insert the proposal you want to add to the student: ", true);
         manager.editCandidatures(id, proposal);
     }
 
+    /**
+     *
+     * @return boolean
+     */
     public boolean candidaturePhase() {
         System.out.println("Current state: " + manager.getState());
 
@@ -442,10 +538,17 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
     public void proposalAttributionManagement() {
         manager.proposalAttributionManager();
     }
 
+    /**
+     *
+     * @return bool
+     */
     public boolean candidaturePhaseLocked() {
         System.out.println("Current state: " + manager.getState());
 
@@ -466,10 +569,16 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
     public void candidatureManagement() {
         manager.candidatureManager();
     }
 
+    /**
+     *
+     */
     public void listStudents() {
         if (manager.getState() == ApplicationState.CANDIDATURE
                 || manager.getState() == ApplicationState.CANDIDATURE_LOCKED) {
@@ -505,27 +614,45 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     */
     public void listStudentWithoutProposalAttributed() {
         System.out.println(manager.listStudentWithoutProposalAttributed());
     }
-
+    /**
+     *
+     */
     public void listStudentWithProposalAttributed() {
         System.out.println(manager.listStudentWithProposalAttributed());
     }
 
+    /**
+     *
+     */
     public void listStudentsWithCandidature() {
         System.out.println(manager.listStudentsWithCandidatures());
     }
 
+    /**
+     *
+     */
     public void listStudentsWithoutCandidature() {
         System.out.println(manager.listStudentsWithoutCandidatures());
     }
 
+    /**
+     *
+     */
     public void listStudentsWithAutoProposals() {
         System.out.println(manager.listStudentsWithAutoProposals());
     }
 
+    /**
+     *
+     */
     public void listProposals() {
+
         List<String> filters = new ArrayList<>();
 
         if (manager.getState() == ApplicationState.CANDIDATURE
@@ -563,6 +690,10 @@ public class CommandLineUI {
         System.out.println(manager.listProposalsFilters(filters));
     }
 
+    /**
+     *
+     * @return bool
+     */
     public boolean proposalAttributionPhase() {
         System.out.println("Current state: " + manager.getState());
 
@@ -604,6 +735,10 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     * @return bool
+     */
     public boolean proposalAttributionPhaseLocked() {
         System.out.println("Current state: " + manager.getState());
 
@@ -622,18 +757,31 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
     public void associateAttribution() {
         manager.associateAttribution();
     }
 
+    /**
+     *
+     * @param index of student
+     */
     public void chooseStudentToAssociate(String index) {
         manager.chooseStudentToAssociate(index);
     }
 
+    /**
+     *
+     */
     public void nonAssociatedAttribution() {
         manager.nonAssociatedAttribution();
     }
 
+    /**
+     *
+     */
     public void manualAttributionMenu(){
         switch (InputProtection.chooseOption(null, "Insert attribution manually", "Undo", "Redo")){
             case 1 -> manualAttribution();
@@ -642,6 +790,9 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     */
     public void manualAttribution() {
         if (manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
@@ -662,6 +813,9 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     */
     public void manualRemovalMenu(){
         switch (InputProtection.chooseOption(null, "Remove attribution manually", "Undo", "Redo")){
             case 1 -> manualRemoval();
@@ -670,6 +824,9 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     */
     public void manualRemoval() {
         if (manager.getState() == ApplicationState.PROPOSAL_ATTRIBUTION) {
             String idOfProposal = InputProtection.readString("Specify the id of the proposal: ", true);
@@ -690,10 +847,17 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     */
     public void professorAttributionManagement() {
         manager.professorAttributionManager();
     }
 
+    /**
+     *
+     * @return bool
+     */
     public boolean professorAttributionPhase() {
         System.out.println("Current state: " + manager.getState());
 
@@ -720,24 +884,40 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
+
     public void listProfessorAttributions() {
         System.out.println(manager.listProfessorAttributions());
     }
 
+    /**
+     *
+     */
     public void consultProfessorData() {
         String email = InputProtection.readString("Specify the email of the professor you want to consult: ", true);
         manager.callINDIVPROF(email);
         System.out.println(manager.getProfessorByEmail());
     }
 
+    /**
+     *
+     */
     public void listStudentsWithProposalAndProfessorAttributed() {
         System.out.println(manager.listStudentsWithProposalAndProfessorAttributed());
     }
 
+    /**
+     *
+     */
     public void listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
         System.out.println(manager.listStudentsWithProposalAttributedAndWithoutProfessorAttributed());
     }
 
+    /**
+     *
+     */
     public void listProfessorData() {
         switch (InputProtection.chooseOption(null, "List average attributions", "List minimum attributions",
                 "List maximum attributions", "List specific professor attributions")) {
@@ -748,24 +928,40 @@ public class CommandLineUI {
         }
     }
 
+    /**
+     *
+     */
     public void listAverageAttributions() {
         System.out.println(manager.listAverageAttributions());
     }
 
+    /**
+     *
+     */
     public void listMinimumAttributions() {
         System.out.println(manager.listMinimumAttributions());
     }
 
+    /**
+     *
+     */
     public void listMaximumAttribution() {
         System.out.println(manager.listMaximumAttribution());
     }
 
+    /**
+     *
+     */
     public void listSpecificProfessorAttribution() {
         String email = InputProtection.readString("Specify the email of the professor: ", true);
         manager.callSPA(email);
         System.out.println(manager.listSpecificProfessorAttribution());
     }
 
+    /**
+     *
+     * @return bool
+     */
     public boolean searchPhase() {
         System.out.println("Current state: " + manager.getState());
 
@@ -787,19 +983,31 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
     public void listStudentWithoutProposalAttributedAndWithCandidature() {
         System.out.println(manager.listStudentWithoutProposalAttributedAndWithCandidature());
     }
 
+    /**
+     *
+     */
     public void listAvailableProposals() {
         System.out.println(manager.listAvailableProposals());
     }
 
+    /**
+     *
+     */
     public void listAttributedProposals() {
         System.out.println(manager.listAttributedProposals());
     }
 
-
+    /**
+     *
+     * @return bool
+     */
     private boolean tiePhase() {
         System.out.println("Current State: " + manager.getState());
 
@@ -828,6 +1036,9 @@ public class CommandLineUI {
         return true;
     }
 
+    /**
+     *
+     */
     public void start() {
         while (switch (manager.getState()) {
             case STUDENT -> studentPhase();

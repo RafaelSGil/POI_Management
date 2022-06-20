@@ -2,8 +2,19 @@ package pt.isec.pa.apoio_poe.model.data.proposals;
 
 import pt.isec.pa.apoio_poe.model.data.person.Student;
 
+/**
+ * <p>Class that represents a Self-Proposal</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class AutoProposal extends Proposal {
 
+    /**
+     *
+     * @param idOfProposal id of proposal
+     * @param title title
+     * @param student reference to student
+     */
     public AutoProposal(String idOfProposal, String title, Student student) {
         super(idOfProposal, title, student);
     }

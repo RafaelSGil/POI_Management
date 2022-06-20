@@ -8,6 +8,11 @@ import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
 import java.util.ArrayList;
 
+/**
+ * <p>Class that represents the Proposal locked state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class ProposalPhaseLocked extends StateAdapter {
     public ProposalPhaseLocked(ApplicationContext context, Data data) {
         super(context, data);

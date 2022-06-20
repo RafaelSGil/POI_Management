@@ -13,6 +13,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * <p>Facade to interact with model</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class FSManager {
     //Facade for FSM
 
@@ -285,6 +290,10 @@ public class FSManager {
     public ArrayList<String> listProfessorAttributions() {
         ArrayList<String> str = context.listProfessorAttributions();
         return str;
+    }
+
+    public ArrayList<String> getProposalAttributions(){
+        return context.getProposalAttributions();
     }
 
     public void callPA(){

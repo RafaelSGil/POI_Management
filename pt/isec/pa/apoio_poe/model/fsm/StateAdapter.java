@@ -9,6 +9,12 @@ import java.io.ObjectInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * <p>Class that represents the adapter for all the states</p>
+ *<p>Will call the function corresponding to the current state</p>
+ * @author RafelGil and HugoFerreira
+ */
 public class StateAdapter implements IApplicationState {
     protected ApplicationContext context;
     protected Data data;
@@ -251,10 +257,4 @@ public class StateAdapter implements IApplicationState {
     public boolean listStudentsWithProposals() {
         return false;
     }
-
-    @Override
-    public boolean listStudentsWithoutProposalsWithCandidature() {
-        return false;
-    }
-
 }

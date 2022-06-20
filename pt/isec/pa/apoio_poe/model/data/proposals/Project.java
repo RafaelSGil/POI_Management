@@ -5,6 +5,11 @@ import java.util.List;
 import pt.isec.pa.apoio_poe.model.data.person.Professor;
 import pt.isec.pa.apoio_poe.model.data.person.Student;
 
+/**
+ * <p>Class that represents a Project</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class Project extends MidProposal {
     private Professor professor;
 

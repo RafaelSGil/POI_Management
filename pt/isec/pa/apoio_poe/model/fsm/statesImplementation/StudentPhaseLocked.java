@@ -8,6 +8,11 @@ import pt.isec.pa.apoio_poe.model.fsm.StateAdapter;
 
 import java.util.ArrayList;
 
+/**
+ * <p>Class that represents the Student locked state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class StudentPhaseLocked extends StateAdapter {
 
     public StudentPhaseLocked(ApplicationContext context, Data data) {

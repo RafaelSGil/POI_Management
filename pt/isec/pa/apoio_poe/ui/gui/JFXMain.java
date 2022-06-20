@@ -9,6 +9,11 @@ import pt.isec.pa.apoio_poe.ui.gui.components.LoggerUI;
 import pt.isec.pa.apoio_poe.ui.gui.components.RootPane;
 import pt.isec.pa.apoio_poe.ui.gui.components.RootPane2;
 
+/**
+ * <p>Class that wil launch the GUI</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class JFXMain extends Application {
     private FSManager manager;
 
@@ -17,6 +22,11 @@ public class JFXMain extends Application {
     }
 
 
+    /**
+     *
+     * @param stage stage
+     * @throws Exception when launch unsuccessful
+     */
     @Override
     public void start(Stage stage) throws Exception {
         RootPane root = new RootPane(manager);
@@ -25,6 +35,7 @@ public class JFXMain extends Application {
         stage.setTitle("POI_MANAGEMENT");
         stage.setMinWidth(500);
         stage.setMinHeight(150);
+        stage.setResizable(false);
         stage.show();
 
         Stage stage1 = new Stage();
@@ -34,6 +45,7 @@ public class JFXMain extends Application {
         stage1.setX(stage.getX()+stage.getWidth());
         stage1.setY(stage.getY());
         stage1.setTitle("Data");
+        stage1.setResizable(false);
         stage1.show();
 
         Stage stage2 = new Stage();
@@ -43,6 +55,8 @@ public class JFXMain extends Application {
         stage2.setX(stage.getX()+stage.getWidth());
         stage2.setY(stage1.getY()+stage1.getHeight());
         stage2.setTitle("Logger");
+        stage2.setResizable(false);
+
         stage2.show();
     }
     @Override

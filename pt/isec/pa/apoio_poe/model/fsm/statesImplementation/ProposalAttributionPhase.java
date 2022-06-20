@@ -11,6 +11,11 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <p>Class that represents the Proposal Attribution state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class ProposalAttributionPhase extends StateAdapter {
     public ProposalAttributionPhase(ApplicationContext context, Data data) {
         super(context, data);

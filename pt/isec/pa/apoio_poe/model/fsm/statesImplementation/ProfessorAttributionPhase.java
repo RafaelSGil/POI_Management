@@ -10,6 +10,11 @@ import java.util.ArrayList;
 
 import pt.isec.pa.apoio_poe.model.fsm.ApplicationContext;
 
+/**
+ * <p>Class that represents the Professor Attribution state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class ProfessorAttributionPhase extends StateAdapter {
     public ProfessorAttributionPhase(ApplicationContext context, Data data) {
         super(context, data);

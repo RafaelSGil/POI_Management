@@ -11,6 +11,11 @@ import java.util.List;
 
 import pt.isec.pa.apoio_poe.files.csv_files.Files;
 
+/**
+ * <p>Class that represents the Student state</p>
+ *
+ * @author RafelGil and HugoFerreira
+ */
 public class StudentPhase extends StateAdapter {
 
     public StudentPhase(ApplicationContext context, Data data) {

@@ -66,10 +66,6 @@ public abstract class Person implements Serializable, Cloneable {
         return;
     }
 
-    public void setAdvisor(boolean advisor) {
-        return;
-    }
-
     public boolean getInternship() {
         return false;
     }
