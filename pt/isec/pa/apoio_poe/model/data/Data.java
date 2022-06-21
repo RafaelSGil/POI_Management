@@ -59,25 +59,33 @@ public class Data implements Serializable {
      */
     private Map<ApplicationPhases, Boolean> lockedPhases;
     /**
-     * <p></p>stores all the proposals that been attributed to students
+     * <p>
+     * </p>
+     * stores all the proposals that been attributed to students
      * key = id of proposals, value = id of student
      */
     private Map<String, Long> proposalAttributions;
     /**
-     * <p>stores all the attributed to professors
-     * key = id of professor, value = List of proposals' id</p>
+     * <p>
+     * stores all the attributed to professors
+     * key = id of professor, value = List of proposals' id
+     * </p>
      */
     private Map<String, List<String>> advisorAttribution;
     /**
-     * <p>stores the logger messages</p>>
+     * <p>
+     * stores the logger messages
+     * </p>
+     * >
      */
     private ArrayList<String> log;
     /**
-     * <p>stores all the ties that have occurred when attributing a proposal</p>
+     * <p>
+     * stores all the ties that have occurred when attributing a proposal
+     * </p>
      *
      */
     private ArrayList<Person> ties;
-
 
     /**
      * default and only constructor of this class
@@ -130,7 +138,7 @@ public class Data implements Serializable {
      */
     public ArrayList<String> getLog() {
         ArrayList<String> arr = new ArrayList<>(log);
-        if(arr.size() == 0){
+        if (arr.size() == 0) {
             arr.add("No errors");
         }
         log.clear();
@@ -139,13 +147,14 @@ public class Data implements Serializable {
 
     /**
      *
-     * @param attributes List of Lists with the line of information read from a file, regarding a student
+     * @param attributes List of Lists with the line of information read from a
+     *                   file, regarding a student
      * @return boolean - whether the data insertion was successful or not
      */
     public boolean addStudentFile(List<List<String>> attributes) {
 
-        try{
-            if(attributes == null){
+        try {
+            if (attributes == null) {
                 log.add("Path incorrect!");
                 return false;
             }
@@ -184,32 +193,32 @@ public class Data implements Serializable {
                     classification = Double.parseDouble(eachListIterator.next());
                     internship = Boolean.parseBoolean(eachListIterator.next());
 
-                    if (!students.contains(Student.createDummyStudent(id))){
-                        if (courses.contains(course)){
-                            if (coursesBranches.contains(courseBranch)){
-                                if (classification % 1 != 0){
-                                    if (internship == true || !internship){
+                    if (!students.contains(Student.createDummyStudent(id))) {
+                        if (courses.contains(course)) {
+                            if (coursesBranches.contains(courseBranch)) {
+                                if (classification % 1 != 0) {
+                                    if (internship == true || !internship) {
                                         addStudent(name, email, id, course, courseBranch, classification, internship);
-                                    }else{
-                                        log.add("Internship eligibility has to be a boolean [line " + lineCSV+ "]");
+                                    } else {
+                                        log.add("Internship eligibility has to be a boolean [line " + lineCSV + "]");
                                     }
-                                }else{
-                                    log.add("Classification value is wrong [line " + lineCSV+ "]");
+                                } else {
+                                    log.add("Classification value is wrong [line " + lineCSV + "]");
                                 }
-                            }else{
-                                log.add("Branch does not exist [line " + lineCSV+ "]");
+                            } else {
+                                log.add("Branch does not exist [line " + lineCSV + "]");
                             }
-                        }else{
-                            log.add("Course does not exist [line " + lineCSV+ "]");
+                        } else {
+                            log.add("Course does not exist [line " + lineCSV + "]");
                         }
-                    }else{
-                        log.add("Student already exists [line " + lineCSV+ "]");
+                    } else {
+                        log.add("Student already exists [line " + lineCSV + "]");
                     }
 
                 }
                 ++lineCSV;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.add("Could not load student data file");
             return false;
         }
@@ -218,8 +227,8 @@ public class Data implements Serializable {
 
     /**
      *
-     * @param identifier id of the student to change
-     * @param change identifies the field of the data to change
+     * @param identifier   id of the student to change
+     * @param change       identifies the field of the data to change
      * @param whatToChange new value
      * @return whether the edit was successful or not
      */
@@ -268,7 +277,7 @@ public class Data implements Serializable {
     }
 
     public boolean exportData(boolean professor) throws FileNotFoundException {
-        try{
+        try {
             String delimiter = ",";
             String separator = "\n";
             String header = "Student,Candidatures,Proposal,Order";
@@ -279,7 +288,7 @@ public class Data implements Serializable {
             if (professor == false) {
                 try {
                     file = new FileWriter(
-                            "/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/files/proposals.csv");
+                            "..\\..\\files\\proposals.csv");
                     file.append(header);
                     file.append(separator);
 
@@ -368,7 +377,7 @@ public class Data implements Serializable {
             } else {
                 try {
                     file = new FileWriter(
-                            "/home/rafa/dev/GitHub/POI_Management/pt/isec/pa/apoio_poe/files/proposals.csv");
+                            "..\\..\\files\\proposals.csv");
                     file.append(headerProfessor);
                     file.append(separator);
 
@@ -492,7 +501,7 @@ public class Data implements Serializable {
                     e.printStackTrace();
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.add("Could not export data");
             return false;
         }
@@ -500,14 +509,17 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Receives all the data, creates and inserts a new student in the collection</p>
-     * @param name name of the student
-     * @param email email of the student
-     * @param id id of the student
-     * @param course course of the student
-     * @param courseBranch branch of the student
+     * <p>
+     * Receives all the data, creates and inserts a new student in the collection
+     * </p>
+     * 
+     * @param name           name of the student
+     * @param email          email of the student
+     * @param id             id of the student
+     * @param course         course of the student
+     * @param courseBranch   branch of the student
      * @param classification classification of the student
-     * @param internship internship accessibility
+     * @param internship     internship accessibility
      */
     public void addStudent(String name, String email, long id, String course, String courseBranch,
             double classification, boolean internship) {
@@ -523,12 +535,13 @@ public class Data implements Serializable {
 
     /**
      *
-     * @param attributes List of Lists with the line of information read from a file, regarding a professor
+     * @param attributes List of Lists with the line of information read from a
+     *                   file, regarding a professor
      * @return whether the data insertion was successful or not
      */
     public boolean addProfessorFile(List<List<String>> attributes) {
-        try{
-            if(attributes == null){
+        try {
+            if (attributes == null) {
                 log.add("Path incorrect!");
                 return false;
             }
@@ -549,15 +562,15 @@ public class Data implements Serializable {
                     name = (String) eachListIterator.next();
                     email = (String) eachListIterator.next();
 
-                    if (!professors.contains(Professor.createDummyProfessor(email))){
+                    if (!professors.contains(Professor.createDummyProfessor(email))) {
                         addProfessor(name, email);
-                    }else{
+                    } else {
                         log.add("Professor already exists [line " + lineCSV + "]");
                     }
                 }
                 ++lineCSV;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.add("Could not load professor data file");
             return false;
         }
@@ -568,10 +581,10 @@ public class Data implements Serializable {
     /**
      *
      * @param email email of the professor to change
-     * @param name new name
+     * @param name  new name
      * @return whether the edit was successful or not
      */
-    public boolean editProfessor(String email, String name  ) {
+    public boolean editProfessor(String email, String name) {
         for (Person professor : professors) {
             if (professor.equals(Professor.createDummyProfessor(email))) {
                 professor.setName(name);
@@ -582,8 +595,11 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Receives the data, creates and inserts a new professor in the collection</p>
-     * @param name name of the professor to insert
+     * <p>
+     * Receives the data, creates and inserts a new professor in the collection
+     * </p>
+     * 
+     * @param name  name of the professor to insert
      * @param email email of the professor to insert
      */
 
@@ -600,13 +616,14 @@ public class Data implements Serializable {
 
     /**
      *
-     * @param attributes List of Lists with the line of information read from a file, regarding a proposal
+     * @param attributes List of Lists with the line of information read from a
+     *                   file, regarding a proposal
      * @return whether the data insertion was successful or not
      */
 
     public boolean addProposalFile(List<List<String>> attributes) {
-        try{
-            if(attributes == null){
+        try {
+            if (attributes == null) {
                 log.add("Path incorrect!");
                 return false;
             }
@@ -649,16 +666,16 @@ public class Data implements Serializable {
                                 if (!studentsAdded.contains(student)) {
                                     addInternship(idOfProposal, title, student, branch, nameOfCompany);
                                     studentsAdded.add(student);
-                                }else{
+                                } else {
                                     log.add("Student doesn't exist [line " + lineCSV + "]");
                                 }
                             } else {
                                 addInternshipWithoutStudent(idOfProposal, title, branch, nameOfCompany);
                             }
-                        }else{
+                        } else {
                             log.add("Course branch does not exist [line " + lineCSV + "]");
                         }
-                    }else{
+                    } else {
                         log.add("Proposal already exists [line " + lineCSV + "]");
                     }
                 }
@@ -680,19 +697,19 @@ public class Data implements Serializable {
                                     if (!studentsAdded.contains(student)) {
                                         addProject(idOfProposal, title, student, branch, (Professor) professor);
                                         studentsAdded.add(student);
-                                    }else{
+                                    } else {
                                         log.add("Student does not exist [line " + lineCSV + "]");
                                     }
                                 } else {
                                     addProjectWithoutStudent(idOfProposal, title, branch, (Professor) professor);
                                 }
-                            }else{
+                            } else {
                                 log.add("Professor does not exist [line " + lineCSV + "]");
                             }
-                        }else{
+                        } else {
                             log.add("Course branch does not exist [line " + lineCSV + "]");
                         }
-                    }else{
+                    } else {
                         log.add("Proposal already exists [line " + lineCSV + "]");
                     }
                 }
@@ -703,20 +720,20 @@ public class Data implements Serializable {
                     student = (Student) Student.createDummyStudent(Long.parseLong((String) eachListIterator.next()));
                     if (!projects.contains(Project.createDummyProject(idOfProposal))
                             && !internships.contains(Internship.createDummyInternship(idOfProposal))
-                            && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))){
+                            && !autoproposals.contains(AutoProposal.createDummyAutoProposal(idOfProposal))) {
                         if (!studentsAdded.contains(student)) {
                             addAutoProposal(idOfProposal, title, student);
                             studentsAdded.add(student);
-                        }else{
+                        } else {
                             log.add("Student does not exist [line " + lineCSV + "]");
                         }
-                    }else{
+                    } else {
                         log.add("Proposal already exists [line " + lineCSV + "]");
                     }
                 }
                 ++lineCSV;
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             log.add("Could not load proposals data file");
             return false;
         }
@@ -725,11 +742,14 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Receives the data, creates an adds an internship to the collection</p>
-     * @param idOfProposal id of the internship
-     * @param title title of the internship
-     * @param student id of the student it is attributed to
-     * @param branch List with the branches that may take the internship
+     * <p>
+     * Receives the data, creates an adds an internship to the collection
+     * </p>
+     * 
+     * @param idOfProposal  id of the internship
+     * @param title         title of the internship
+     * @param student       id of the student it is attributed to
+     * @param branch        List with the branches that may take the internship
      * @param nameOfCompany name of the company where the internship will take place
      */
     public void addInternship(String idOfProposal, String title, Student student, List<String> branch,
@@ -747,10 +767,13 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Receives the data, creates an adds an internship to the collection</p>
-     * @param idOfProposal id of the internship
-     * @param title title of the internship
-     * @param branch List with the branches that may take the internship
+     * <p>
+     * Receives the data, creates an adds an internship to the collection
+     * </p>
+     * 
+     * @param idOfProposal  id of the internship
+     * @param title         title of the internship
+     * @param branch        List with the branches that may take the internship
      * @param nameOfCompany name of the company where the internship will take place
      */
     public void addInternshipWithoutStudent(String idOfProposal, String title, List<String> branch,
@@ -767,12 +790,15 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Receives the data, creates an adds a project to the collection</p>
+     * <p>
+     * Receives the data, creates an adds a project to the collection
+     * </p>
+     * 
      * @param idOfProposal id o the project
-     * @param title title of the project
-     * @param student id of the student it is attributed to
-     * @param branch List with the branches that may take this project
-     * @param professor professor that submitted this project
+     * @param title        title of the project
+     * @param student      id of the student it is attributed to
+     * @param branch       List with the branches that may take this project
+     * @param professor    professor that submitted this project
      */
     public void addProject(String idOfProposal, String title, Student student, List<String> branch,
             Professor professor) {
@@ -792,11 +818,14 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Receives the data, creates an adds a project to the collection</p>
+     * <p>
+     * Receives the data, creates an adds a project to the collection
+     * </p>
+     * 
      * @param idOfProposal id o the project
-     * @param title title of the project
-     * @param branch List with the branches that may take this project
-     * @param professor professor that submitted this project
+     * @param title        title of the project
+     * @param branch       List with the branches that may take this project
+     * @param professor    professor that submitted this project
      */
     public void addProjectWithoutStudent(String idOfProposal, String title, List<String> branch,
             Professor professor) {
@@ -810,10 +839,13 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Receives the data, creates an adds a self-proposal to the collection</p>
+     * <p>
+     * Receives the data, creates an adds a self-proposal to the collection
+     * </p>
+     * 
      * @param idOfProposal id of the proposal
-     * @param title title of the proposal
-     * @param student id of the student that submitted the self-proposal
+     * @param title        title of the proposal
+     * @param student      id of the student that submitted the self-proposal
      */
     public void addAutoProposal(String idOfProposal, String title, Student student) {
         if (idOfProposal == null || title == null)
@@ -854,23 +886,26 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Removing a student implies removing all of his self-proposals</p>
+     * <p>
+     * Removing a student implies removing all of his self-proposals
+     * </p>
+     * 
      * @param id id of the student to remove
      * @return whether the removal was successful or not
      */
     public boolean removeStudentGivenItsId(String id) {
         long idOfStudent;
-        try{
-            idOfStudent =  Long.parseLong(id);
-        }catch (NumberFormatException e){
+        try {
+            idOfStudent = Long.parseLong(id);
+        } catch (NumberFormatException e) {
             return false;
         }
-        for(Proposal auto : autoproposals){
-            if(auto.getStudent() == idOfStudent){
+        for (Proposal auto : autoproposals) {
+            if (auto.getStudent() == idOfStudent) {
                 removeAutoProposalGivenItsID(auto.getIdOfProposal());
             }
         }
-        
+
         return students.remove(Student.createDummyStudent(idOfStudent));
     }
 
@@ -945,7 +980,10 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Indicates what is the type of the given proposal</p>
+     * <p>
+     * Indicates what is the type of the given proposal
+     * </p>
+     * 
      * @param identifier id of the proposal
      * @return -1 -> not found; 0 -> internship; 1 -> project; 3 -> self-proposal
      */
@@ -966,8 +1004,8 @@ public class Data implements Serializable {
     /**
      *
      * @param identifier id of the proposal to edit
-     * @param attribute parameter to alter
-     * @param newValue List with the new values
+     * @param attribute  parameter to alter
+     * @param newValue   List with the new values
      * @return boolean - whether the edit was successful or not
      */
     public boolean editProposals(String identifier, String attribute, List<String> newValue) {
@@ -986,8 +1024,8 @@ public class Data implements Serializable {
     /**
      *
      * @param identifier id of the self-proposal to alter
-     * @param attribute attribute to alter
-     * @param newValue List of new values
+     * @param attribute  attribute to alter
+     * @param newValue   List of new values
      * @return whether the edit was successful or not
      */
     public boolean editAutoProposals(String identifier, String attribute, List<String> newValue) {
@@ -1004,7 +1042,7 @@ public class Data implements Serializable {
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
@@ -1013,8 +1051,8 @@ public class Data implements Serializable {
     /**
      *
      * @param identifier id of the project to alter
-     * @param attribute attribute to alter
-     * @param newValue List of new values
+     * @param attribute  attribute to alter
+     * @param newValue   List of new values
      * @return whether the edit was successful or not
      */
     public boolean editProjects(String identifier, String attribute, List<String> newValue) {
@@ -1040,7 +1078,7 @@ public class Data implements Serializable {
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
@@ -1049,12 +1087,12 @@ public class Data implements Serializable {
     /**
      *
      * @param identifier id of the internship to alter
-     * @param attribute attribute to alter
-     * @param newValue List of new values
+     * @param attribute  attribute to alter
+     * @param newValue   List of new values
      * @return whether the edit was successful or not
      */
     public boolean editInternships(String identifier, String attribute, List<String> newValue) {
-        try{
+        try {
             for (MidProposal mid : internships) {
                 if (mid.getIdOfProposal().equals(identifier)) {
                     if (attribute.equals("title")) {
@@ -1073,7 +1111,7 @@ public class Data implements Serializable {
                     }
                 }
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             return false;
         }
         return true;
@@ -1193,11 +1231,12 @@ public class Data implements Serializable {
 
     /**
      *
-     * @param attributes List of Lists with the line of information read from a file, regarding a candidature
+     * @param attributes List of Lists with the line of information read from a
+     *                   file, regarding a candidature
      * @return whether the data insertion was successful or not
      */
     public boolean addCandidatureFile(List<List<String>> attributes) {
-        if(attributes == null){
+        if (attributes == null) {
             log.add("Path incorrect!");
             return false;
         }
@@ -1237,10 +1276,11 @@ public class Data implements Serializable {
                                     if (internship.getIdOfProposal().equals(aux)) {
                                         if (internship.getStudent() == -1) {
                                             proposals.add(aux);
-                                        }else{
-                                            log.add("Internship " + aux + " already has a student attributed [line " + lineCSV + "]");
+                                        } else {
+                                            log.add("Internship " + aux + " already has a student attributed [line "
+                                                    + lineCSV + "]");
                                         }
-                                    }else{
+                                    } else {
                                         log.add("Internship " + aux + " does not exist [line " + lineCSV + "]");
                                     }
                                 }
@@ -1249,15 +1289,16 @@ public class Data implements Serializable {
                                     if (project.getIdOfProposal().equals(aux)) {
                                         if (project.getStudent() == -1) {
                                             proposals.add(aux);
-                                        }else{
-                                            log.add("Project " + aux + " already has a student attributed [line " + lineCSV + "]");
+                                        } else {
+                                            log.add("Project " + aux + " already has a student attributed [line "
+                                                    + lineCSV + "]");
                                         }
-                                    }else{
+                                    } else {
                                         log.add("Project " + aux + " does not exist [line " + lineCSV + "]");
                                     }
                                 }
                             }
-                        }else{
+                        } else {
                             log.add("Student can't fill a candidature for a autoproposal [line " + lineCSV + "]");
                         }
                     }
@@ -1297,8 +1338,8 @@ public class Data implements Serializable {
 
     /**
      *
-     * @param id id of the candidature to remove from
-     * @param proposal  id of the proposal to remove from candidature
+     * @param id       id of the candidature to remove from
+     * @param proposal id of the proposal to remove from candidature
      * @return whether the removal was successful or not
      */
     public boolean removeCandidatureGivenStudentID(String id, String proposal) {
@@ -1321,7 +1362,7 @@ public class Data implements Serializable {
 
     /**
      *
-     * @param id id of the candidature to edit
+     * @param id       id of the candidature to edit
      * @param proposal if of the proposal to add
      * @return boolean - whether the edit was successful or not
      */
@@ -1416,10 +1457,10 @@ public class Data implements Serializable {
         return arr;
     }
 
-
     /**
      *
-     * @return ArrayList - List with all the students that didn't submitted a candidature
+     * @return ArrayList - List with all the students that didn't submitted a
+     *         candidature
      */
     public ArrayList<String> listStudentsWithoutCandidatures() {
         ArrayList<String> arr = new ArrayList<>();
@@ -1435,7 +1476,7 @@ public class Data implements Serializable {
 
     /**
      *
-     * @return ArrayList - List with all the students that  submitted a self-proposal
+     * @return ArrayList - List with all the students that submitted a self-proposal
      */
     public ArrayList<String> listStudentsWithAutoProposals() {
         ArrayList<String> arr = new ArrayList<>();
@@ -1455,7 +1496,7 @@ public class Data implements Serializable {
 
     /**
      *
-     * @param strs list with all the filters selected
+     * @param strs  list with all the filters selected
      * @param state enum the indicates the state in which the application is in
      * @return ArrayList - List with all the information solicited by the filters
      */
@@ -1464,10 +1505,10 @@ public class Data implements Serializable {
 
         ArrayList<Integer> filters = new ArrayList<>();
 
-        for (String s : strs){
-            try{
+        for (String s : strs) {
+            try {
                 filters.add(Integer.parseInt(s));
-            }catch (NumberFormatException e){
+            } catch (NumberFormatException e) {
                 return arr;
             }
         }
@@ -1590,7 +1631,8 @@ public class Data implements Serializable {
 
     /**
      *
-     * @return boolean - whether it managed to associate all the students that were pre-associated
+     * @return boolean - whether it managed to associate all the students that were
+     *         pre-associated
      */
     public boolean associatedAttribution() {
         for (Proposal auto : autoproposals) {
@@ -1622,7 +1664,8 @@ public class Data implements Serializable {
 
     /**
      *
-     * @return boolean - whether it managed to automatically associate the students left with no proposal association
+     * @return boolean - whether it managed to automatically associate the students
+     *         left with no proposal association
      */
     public boolean nonAssociateAttribution() {
         ArrayList<Person> studentsProposals = new ArrayList<>();
@@ -1730,16 +1773,21 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>When there is a tie between two students, chooses which one to attribute first</p>
-     * @param indexStudent index of the desired student in the collection that stores the ties
+     * <p>
+     * When there is a tie between two students, chooses which one to attribute
+     * first
+     * </p>
+     * 
+     * @param indexStudent index of the desired student in the collection that
+     *                     stores the ties
      * @return boolean - whether it managed to associate the student or not
      */
     public boolean chooseStudentToAssociate(String indexStudent) {
         int index;
 
-        try{
+        try {
             index = Integer.parseInt(indexStudent);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
 
@@ -1791,7 +1839,7 @@ public class Data implements Serializable {
      *
      * @return ArrayList - List with all the ties;
      */
-    public ArrayList<Person> getTies(){
+    public ArrayList<Person> getTies() {
         return new ArrayList<>(ties);
     }
 
@@ -1828,14 +1876,14 @@ public class Data implements Serializable {
     /**
      *
      * @param idOdProposal id of the proposal to associate
-     * @param idOfStudent id of the student to associate
+     * @param idOfStudent  id of the student to associate
      * @return boolean - whether it managed to attribute or not
      */
     public boolean manualAttribution(String idOdProposal, String idOfStudent) {
         long idOdStudent;
-        try{
+        try {
             idOdStudent = Long.parseLong(idOfStudent);
-        }catch (NumberFormatException e){
+        } catch (NumberFormatException e) {
             return false;
         }
 
@@ -1882,7 +1930,9 @@ public class Data implements Serializable {
     }
 
     /**
-     * <p>Automatically associate professors that were pre-associated</p>
+     * <p>
+     * Automatically associate professors that were pre-associated
+     * </p>
      */
     public void associatedAdvisor() {
         for (MidProposal project : projects) {
@@ -1898,7 +1948,7 @@ public class Data implements Serializable {
 
     /**
      *
-     * @param idOfProposal id of the proposal to associate
+     * @param idOfProposal   id of the proposal to associate
      * @param emailProfessor email of the professor to associate
      * @return boolean - whether it managed to associate or not
      */
@@ -1923,13 +1973,14 @@ public class Data implements Serializable {
     /**
      *
      * @param emailProfessor email of the professor to remove from
-     * @param idOfProposal id of the proposal to remove
-     * @return boolean - whether it managed to remove the proposal from the professor
+     * @param idOfProposal   id of the proposal to remove
+     * @return boolean - whether it managed to remove the proposal from the
+     *         professor
      */
     public boolean manualProfessorRemoval(String emailProfessor, String idOfProposal) {
-        if(advisorAttribution.containsKey(emailProfessor)){
-            if(advisorAttribution.get(emailProfessor).size() > 1){
-                for(Map.Entry<String, List<String>> attributions : advisorAttribution.entrySet()){
+        if (advisorAttribution.containsKey(emailProfessor)) {
+            if (advisorAttribution.get(emailProfessor).size() > 1) {
+                for (Map.Entry<String, List<String>> attributions : advisorAttribution.entrySet()) {
                     attributions.getValue().removeIf(a -> a.equals(idOfProposal));
                 }
                 return true;
@@ -1940,7 +1991,6 @@ public class Data implements Serializable {
 
         return false;
     }
-
 
     /**
      *
@@ -1956,7 +2006,8 @@ public class Data implements Serializable {
                     for (String idOfProposal : proposalAttributions.keySet()) {
                         if (idOfProposal.equals(id)) {
                             if (proposalAttributions.get(idOfProposal) != null) {
-                                arr.add(idOfProposal + " which is attributted to student " + proposalAttributions.get(idOfProposal));
+                                arr.add(idOfProposal + " which is attributted to student "
+                                        + proposalAttributions.get(idOfProposal));
                             }
                         }
                     }
@@ -1972,7 +2023,8 @@ public class Data implements Serializable {
 
     /**
      *
-     * @return Arraylist - List with all the with proposals and professors attributed
+     * @return Arraylist - List with all the with proposals and professors
+     *         attributed
      */
     public ArrayList<String> listStudentsWithProposalAndProfessorAttributed() {
         ArrayList<String> arr = new ArrayList<>();
@@ -1983,7 +2035,8 @@ public class Data implements Serializable {
                     if (proposalAttributions.get(idProposal).equals(student.getId())
                             && advisorAttribution.containsValue(List.of(idProposal))) {
                         for (String email : advisorAttribution.keySet()) {
-                            arr.add("Student " + student.getId() + " is attributed to proposal " + idProposal + " with " + email + " has its advisor");
+                            arr.add("Student " + student.getId() + " is attributed to proposal " + idProposal + " with "
+                                    + email + " has its advisor");
                         }
                     }
                 }
@@ -1995,7 +2048,8 @@ public class Data implements Serializable {
 
     /**
      *
-     * @return Arraylist - List with all the with proposals attributed but without professors attributed
+     * @return Arraylist - List with all the with proposals attributed but without
+     *         professors attributed
      */
     public ArrayList<String> listStudentsWithProposalAttributedAndWithoutProfessorAttributed() {
         ArrayList<String> arr = new ArrayList<>();
@@ -2005,7 +2059,8 @@ public class Data implements Serializable {
                 for (String idProposal : proposalAttributions.keySet()) {
                     if (proposalAttributions.get(idProposal).equals(student.getId())
                             && !advisorAttribution.containsValue(List.of(idProposal))) {
-                        arr.add("Student " + student.getId() + " is attributed to proposal " + idProposal + " without advisor");
+                        arr.add("Student " + student.getId() + " is attributed to proposal " + idProposal
+                                + " without advisor");
                     }
                 }
             }
@@ -2013,7 +2068,6 @@ public class Data implements Serializable {
 
         return arr;
     }
-
 
     /**
      *
@@ -2032,11 +2086,11 @@ public class Data implements Serializable {
             }
         }
 
-        try{
+        try {
             int averageValue = count / advisorAttribution.size();
 
             sb.append("Average professor attribution ").append(averageValue);
-        }catch (Exception e){
+        } catch (Exception e) {
             sb.append("No professor attribution");
         }
 
@@ -2068,7 +2122,6 @@ public class Data implements Serializable {
 
         return sb.toString();
     }
-
 
     /**
      *
@@ -2117,7 +2170,8 @@ public class Data implements Serializable {
 
     /**
      *
-     * @return ArrayList - List with all the students without proposals but with candidatures
+     * @return ArrayList - List with all the students without proposals but with
+     *         candidatures
      */
     public ArrayList<String> listStudentWithoutProposalAttributedAndWithCandidature() {
         ArrayList<String> arr = new ArrayList<>();
@@ -2187,13 +2241,13 @@ public class Data implements Serializable {
 
     /**
      *
-      * @return ArrayList - List with all the branches that have students
+     * @return ArrayList - List with all the branches that have students
      */
-    public ArrayList<String> getBranches(){
+    public ArrayList<String> getBranches() {
         ArrayList<String> branches = new ArrayList<>();
 
-        for(Person student : students){
-            if(!branches.contains(student.getCourseBranch())){
+        for (Person student : students) {
+            if (!branches.contains(student.getCourseBranch())) {
                 branches.add(student.getCourseBranch());
             }
         }
@@ -2206,14 +2260,14 @@ public class Data implements Serializable {
      * @param map map to order
      * @return HashMap - ordered map from highest to smallest value
      */
-    public HashMap<String, Integer> getOrderedHashMap(HashMap<String, Integer> map){
+    public HashMap<String, Integer> getOrderedHashMap(HashMap<String, Integer> map) {
         List<Map.Entry<String, Integer>> list = new LinkedList<>(map.entrySet());
 
         map.clear();
 
         list.sort(Map.Entry.comparingByValue());
 
-        for(Map.Entry<String, Integer> m : list){
+        for (Map.Entry<String, Integer> m : list) {
             map.put(m.getKey(), m.getValue());
         }
 
@@ -2224,17 +2278,17 @@ public class Data implements Serializable {
      *
      * @return HashMap - ordered map from highest to smallest value
      */
-    public HashMap<String, Integer> getTopCompanies(){
+    public HashMap<String, Integer> getTopCompanies() {
         HashMap<String, Integer> map = new HashMap<>();
 
-        for(MidProposal internship : internships){
-            if(map.containsKey(((Internship)internship).getNameOfCompany())){
-                int i = map.get(((Internship)internship).getNameOfCompany());
-                map.put(((Internship)internship).getNameOfCompany(), ++i);
+        for (MidProposal internship : internships) {
+            if (map.containsKey(((Internship) internship).getNameOfCompany())) {
+                int i = map.get(((Internship) internship).getNameOfCompany());
+                map.put(((Internship) internship).getNameOfCompany(), ++i);
                 continue;
             }
 
-            map.put(((Internship)internship).getNameOfCompany(), 1);
+            map.put(((Internship) internship).getNameOfCompany(), 1);
         }
 
         return getOrderedHashMap(map);
@@ -2244,10 +2298,10 @@ public class Data implements Serializable {
      *
      * @return HashMap - ordered map from highest to smallest value
      */
-    public HashMap<String, Integer> getTopAdvisors(){
+    public HashMap<String, Integer> getTopAdvisors() {
         HashMap<String, Integer> map = new HashMap<>();
 
-        for(Map.Entry<String, List<String>> m : advisorAttribution.entrySet()){
+        for (Map.Entry<String, List<String>> m : advisorAttribution.entrySet()) {
             map.put(m.getKey(), m.getValue().size());
         }
 
@@ -2258,19 +2312,18 @@ public class Data implements Serializable {
      *
      * @return HashMap - ordered map from highest to smallest value
      */
-    public HashMap<String, Integer> getNumberProposalsPerBranches(){
+    public HashMap<String, Integer> getNumberProposalsPerBranches() {
         HashMap<String, Integer> map = new HashMap<>();
         Set<MidProposal> midProposals = new HashSet<>();
 
         midProposals.addAll(internships);
         midProposals.addAll(projects);
 
-
-        for(MidProposal mid : midProposals){
+        for (MidProposal mid : midProposals) {
             String[] str = mid.getBranches().split(" ");
             List<String> list = new ArrayList<>(List.of(str));
-            for(String s : list){
-                if(map.containsKey(s)){
+            for (String s : list) {
+                if (map.containsKey(s)) {
                     int i = map.get(s);
                     map.put(s, ++i);
                     continue;
@@ -2287,13 +2340,13 @@ public class Data implements Serializable {
      *
      * @return HashMap - ordered map from highest to smallest value
      */
-    public HashMap<String, Integer> getNumberOfProposalsAttrAndNotAttrib(){
+    public HashMap<String, Integer> getNumberOfProposalsAttrAndNotAttrib() {
         HashMap<String, Integer> map = new HashMap<>();
         map.put("Attributed", 0);
         map.put("Not Attributed", 0);
 
-        for(Proposal internship : internships){
-            if(proposalAttributions.containsKey(internship.getIdOfProposal())){
+        for (Proposal internship : internships) {
+            if (proposalAttributions.containsKey(internship.getIdOfProposal())) {
                 int i = map.get("Attributed");
                 map.put("Attributed", ++i);
                 continue;
@@ -2302,8 +2355,8 @@ public class Data implements Serializable {
             map.put("Not Attributed", ++i);
         }
 
-        for(Proposal project : projects){
-            if(proposalAttributions.containsKey(project.getIdOfProposal())){
+        for (Proposal project : projects) {
+            if (proposalAttributions.containsKey(project.getIdOfProposal())) {
                 int i = map.get("Attributed");
                 map.put("Attributed", ++i);
                 continue;
@@ -2312,8 +2365,8 @@ public class Data implements Serializable {
             map.put("Not Attributed", ++i);
         }
 
-        for(Proposal auto : autoproposals){
-            if(proposalAttributions.containsKey(auto.getIdOfProposal())){
+        for (Proposal auto : autoproposals) {
+            if (proposalAttributions.containsKey(auto.getIdOfProposal())) {
                 int i = map.get("Attributed");
                 map.put("Attributed", ++i);
                 continue;
